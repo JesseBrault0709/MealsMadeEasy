@@ -84,25 +84,29 @@ export function OrderedScreenCollection(props) {
         }
     }
 
-    if (currentScreenIndex === 0) { // i.e., the first screen
-        return <OrderedScreen onNext={onNext}>
-            {props.children[currentScreenIndex]}
-        </OrderedScreen>
-    } else if (currentScreenIndex === props.children.length - 1) { // i.e., the last screen
-
-        if (props.onLastNext !== undefined && props.onLastNext !== null) { // if we have a callback for the last screen's next button, show it
-            return <OrderedScreen onPrevious={onPrevious} onNext={props.onLastNext}>
+    if (props.children !== undefined && props.children !== null) {
+        if (currentScreenIndex === 0) { // i.e., the first screen
+            return <OrderedScreen onNext={onNext}>
                 {props.children[currentScreenIndex]}
             </OrderedScreen>
+        } else if (currentScreenIndex === props.children.length - 1) { // i.e., the last screen
+    
+            if (props.onLastNext !== undefined && props.onLastNext !== null) { // if we have a callback for the last screen's next button, show it
+                return <OrderedScreen onPrevious={onPrevious} onNext={props.onLastNext}>
+                    {props.children[currentScreenIndex]}
+                </OrderedScreen>
+            } else {
+                return <OrderedScreen onPrevious={onPrevious}>
+                    {props.children[currentScreenIndex]}
+                </OrderedScreen>
+            }
+    
         } else {
-            return <OrderedScreen onPrevious={onPrevious}>
+            return <OrderedScreen onPrevious={onPrevious} onNext={onNext}>
                 {props.children[currentScreenIndex]}
             </OrderedScreen>
-        }
-
+        }   
     } else {
-        return <OrderedScreen onPrevious={onPrevious} onNext={onNext}>
-            {props.children[currentScreenIndex]}
-        </OrderedScreen>
+        return ''
     }
 }
