@@ -22,24 +22,22 @@ function OnboardingScreen(props) {
 
 
 /**
- * For now these are hard-coded but eventually we want to move these elsewhere.
- */
-const timeOptions = ['No limit', '10 mins', '20 mins', '30 mins']
-const diets = ['Vegetarian', 'Vegan', 'No Preference']
-const mouths = [1, 2, 3, 4, 5, 6, 7, 8] // haha
-
-
-/**
  * The collection of onboarding screens. Will eventually have a prop
  * which is a callback which will take the selected values.
+ * 
+ * Props:
+ *  * cookingTimes: string[]: an array of cooking time options
+ *  * diets: string[]: an array of dietary options
+ *  * mouths: number[]: an array of number of mouths to feed
+ *  * onSubmit: (timeOption: string, diet: string, mouths: number) => void, optional: a callback to be run when the user submits their options
  */
-export function Onboarding() {
+export function Onboarding(props) {
 
     // not using useState() since no rendering needs to be triggered when this changes
-    let currentTimeOptionIndex = 0
+    let currentCookingTimeIndex = 0
 
-    function onTimeOptionChange(selectedIndex) {
-        currentTimeOptionIndex = selectedIndex
+    function onCookingTimeChange(selectedIndex) {
+        currentCookingTimeIndex = selectedIndex
     }
 
 
@@ -58,7 +56,13 @@ export function Onboarding() {
 
 
     function onLastNext() { // i.e., submit for the whole set
-        console.log(`currentTimeOptionIndex: ${currentTimeOptionIndex}, currentDietIndex: ${currentDietIndex}, currentMouthsIndex: ${currentMouthsIndex}`)
+        if (props.onSubmit !== undefined && props.onSubmit !== null) {
+            props.onSubmit(
+                props.cookingTimes[currentCookingTimeIndex],
+                props.diets[currentDietIndex],
+                props.mouths[currentMouthsIndex]
+            )
+        }
     }
 
 
@@ -68,7 +72,7 @@ export function Onboarding() {
             prompt="How much time do you have?"
             instruction="Drag to let us know your ideal cooking time."
         >
-            <CarouselInput options={timeOptions} onChange={onTimeOptionChange} initialIndex={currentTimeOptionIndex}/>
+            <CarouselInput options={props.cookingTimes} onChange={onCookingTimeChange} initialIndex={currentCookingTimeIndex}/>
         </OnboardingScreen>
 
         <OnboardingScreen
@@ -77,7 +81,7 @@ export function Onboarding() {
         >
 
             <ToggleButtonGroup type="radio" name="diet" onChange={onDietSelection} vertical>
-                {diets.map((diet, index) => <ToggleButton key={diet} value={index}>{diet}</ToggleButton>)}
+                {props.diets.map((diet, index) => <ToggleButton key={diet} value={index}>{diet}</ToggleButton>)}
             </ToggleButtonGroup>
 
         </OnboardingScreen>
@@ -86,7 +90,7 @@ export function Onboarding() {
             prompt="How many mouths to feed?"
             instruction="Drag to select how many people you're cooking for."
         >
-            <CarouselInput options={mouths} onChange={onMouthsChange} initialIndex={currentMouthsIndex} />
+            <CarouselInput options={props.mouths} onChange={onMouthsChange} initialIndex={currentMouthsIndex} />
         </OnboardingScreen>
 
     </OrderedScreenCollection>
