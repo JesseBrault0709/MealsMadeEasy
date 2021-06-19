@@ -87,12 +87,12 @@ export function Onboarding(props) {
 
         </OnboardingScreen>
 
-        <OnboardingScreen
+        {/* <OnboardingScreen
             prompt="How many mouths to feed?"
             instruction="Drag to select how many people you're cooking for."
         >
             <CarouselInput options={props.mouths} onChange={onMouthsChange} initialIndex={currentMouthsIndex} />
-        </OnboardingScreen>
+        </OnboardingScreen> */}
 
     </OrderedScreenCollection>
 }
