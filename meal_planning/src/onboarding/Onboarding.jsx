@@ -1,5 +1,6 @@
 import { CarouselInput } from "../inputs/CarouselInput";
 import { OrderedScreenCollection } from "../screens/OrderedScreenCollection";
+import { ClockSlider } from "../inputs/ClockSlider";
 
 import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 
@@ -72,7 +73,7 @@ export function Onboarding(props) {
             prompt="How much time do you have?"
             instruction="Drag to let us know your ideal cooking time."
         >
-            <CarouselInput options={props.cookingTimes} onChange={onCookingTimeChange} initialIndex={currentCookingTimeIndex}/>
+            <ClockSlider options={props.cookingTimes} onChange={onCookingTimeChange} initialOption={currentCookingTimeIndex}/>
         </OnboardingScreen>
 
         <OnboardingScreen
