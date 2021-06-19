@@ -26,7 +26,7 @@ self.addEventListener("activate", (event) => {
   newCache.push(CACHE);
   event.waitUntil(caches.keys()).then((cacheNames) =>
     Promise.all(
-      cacheNames.map((cacheName) => {
+      cacheNames.forEach((cacheName) => {
         if (!newCache.includes(cacheName)) {
           return caches.delete(cacheName);
         }
