@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react'
 import { Onboarding } from './Onboarding'
 
-it('renders without throwing', () => {
+it('renders without throwing when given correct props', () => {
     const props = {
-        cookingTimes: [],
+        cookingTimes: ['10 mins'],
         diets: [],
         mouths: []
     }
