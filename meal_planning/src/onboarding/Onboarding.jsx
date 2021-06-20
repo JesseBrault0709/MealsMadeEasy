@@ -1,26 +1,9 @@
-import { CarouselInput } from "../inputs/CarouselInput";
+import { useState } from "react";
+
 import { OrderedScreenCollection } from "../screens/OrderedScreenCollection";
-import { ClockSlider } from "../inputs/ClockSlider";
-
-import { ToggleButtonGroup, ToggleButton } from "react-bootstrap";
-
-/**
- * Props:
- *  * prompt: string: the prompt displayed at the top of the screen.
- *  * instruction: string: the instruction to the user what to do with the control(s)
- * 
- * Children: the control(s) to render beneath the prompt/instructions
- */
-function OnboardingScreen(props) {
-    return <>
-        <h1>Let's get you started!</h1>
-        <h2>{props.prompt}</h2>
-        <span>({props.instruction})</span>
-
-        <div>{props.children}</div>
-    </>
-}
-
+import { CookingTime } from "./CookingTime";
+import { Diet } from "./Diet";
+import { Restrictions } from "./Restrictions";
 
 /**
  * The collection of onboarding screens. Will eventually have a prop
@@ -29,31 +12,43 @@ function OnboardingScreen(props) {
  * Props:
  *  * cookingTimes: string[]: an array of cooking time options
  *  * diets: string[]: an array of dietary options
- *  * mouths: number[]: an array of number of mouths to feed
- *  * onSubmit: (timeOption: string, diet: string, mouths: number) => void, optional: a callback to be run when the user submits their options
+ *  * restrictions: string[]: an array of dietary restrictions
+ * 
+ *  * onSubmit: (timeOption: string, diet: string, restrictions: string[]) => void, optional: a callback to be run when the user submits their options
  */
 export function Onboarding(props) {
 
-    // not using useState() since no rendering needs to be triggered when this changes
-    let currentCookingTimeIndex = 0
+    // cookingTime state
+    const [currentCookingTimeIndex, setCurrentCookingTimeIndex] = useState(0)
 
     function onCookingTimeChange(selectedIndex) {
-        currentCookingTimeIndex = selectedIndex
+        setCurrentCookingTimeIndex(selectedIndex)
     }
 
-
-    let currentDietIndex = null
+    // diet state
+    const [currentDietIndex, setCurrentDietIndex] = useState(null)
 
     function onDietSelection(dietIndex) {
-        currentDietIndex = dietIndex
+        setCurrentDietIndex(dietIndex)
     }
 
 
-    let currentMouthsIndex = 0
+    // restrictions state
+    const [restrictions, setRestrictions] = useState(props.restrictions.map(restriction => {
+        return [restriction, false]
+    }))
 
-    function onMouthsChange(selectedIndex) {
-        currentMouthsIndex = selectedIndex
+    function onRestrictionClick(clickedRestriction, preClickValue) {
+        setRestrictions(restrictions.map(restrictionAndValue => {
+            const [restriction, value] = restrictionAndValue
+            if (restriction === clickedRestriction) {
+                return [clickedRestriction, !preClickValue]
+            } else {
+                return [restriction, value]
+            }
+        }))
     }
+
 
 
     function onLastNext() { // i.e., submit for the whole set
@@ -61,7 +56,13 @@ export function Onboarding(props) {
             props.onSubmit(
                 props.cookingTimes[currentCookingTimeIndex],
                 props.diets[currentDietIndex],
-                props.mouths[currentMouthsIndex]
+                restrictions.reduce((resultArr, restrictionAndValue) => {
+                    const [restriction, value] = restrictionAndValue
+                    if (value) {
+                        resultArr.push(restriction)
+                    }
+                    return resultArr
+                }, [])
             )
         }
     }
@@ -69,30 +70,15 @@ export function Onboarding(props) {
 
     return <OrderedScreenCollection onLastNext={onLastNext}>
 
-        <OnboardingScreen
-            prompt="How much time do you have?"
-            instruction="Drag to let us know your ideal cooking time."
-        >
-            <ClockSlider options={props.cookingTimes} onChange={onCookingTimeChange} initialOption={currentCookingTimeIndex}/>
-        </OnboardingScreen>
+        <CookingTime
+            cookingTimes={props.cookingTimes}
+            onChange={onCookingTimeChange}
+            initialOption={currentCookingTimeIndex}
+        />
 
-        <OnboardingScreen
-            prompt="What diet do you follow?"
-            instruction="Tap on your preference."
-        >
+        <Diet diets={props.diets} onDietSelection={onDietSelection} />
 
-            <ToggleButtonGroup type="radio" name="diet" onChange={onDietSelection} vertical>
-                {props.diets.map((diet, index) => <ToggleButton key={diet} value={index}>{diet}</ToggleButton>)}
-            </ToggleButtonGroup>
-
-        </OnboardingScreen>
-
-        {/* <OnboardingScreen
-            prompt="How many mouths to feed?"
-            instruction="Drag to select how many people you're cooking for."
-        >
-            <CarouselInput options={props.mouths} onChange={onMouthsChange} initialIndex={currentMouthsIndex} />
-        </OnboardingScreen> */}
+        <Restrictions restrictions={restrictions} onClick={onRestrictionClick}/>
 
     </OrderedScreenCollection>
 }

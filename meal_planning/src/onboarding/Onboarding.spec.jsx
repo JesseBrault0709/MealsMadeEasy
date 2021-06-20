@@ -5,7 +5,7 @@ it('renders without throwing when given correct props', () => {
     const props = {
         cookingTimes: ['10 mins'],
         diets: [],
-        mouths: []
+        restrictions: []
     }
     render(<Onboarding {...props}/>)
 })
