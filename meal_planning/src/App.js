@@ -16,7 +16,12 @@ const Screens = Object.freeze({
  */
 const cookingTimes = ['No limit', '10 mins', '20 mins', '30 mins']
 const diets = ['Vegetarian', 'Vegan', 'No Preference']
-const mouths = [1, 2, 3, 4, 5, 6, 7, 8] // haha
+const restrictions = [
+    'Dairy free', 'Egg free',
+    'Gluten free', 'Grain free',
+    'Peanut free', 'Seafood free',
+    'Wheat free', 'No restrictions'
+]
  
 function App() {
 
@@ -24,9 +29,9 @@ function App() {
 
     if (currentScreen === Screens.ONBOARDING) {
 
-        function onOnboardingSubmit(cookingTime, diet, mouths) {
+        function onOnboardingSubmit(cookingTime, diet, restrictions) {
             console.log({
-                cookingTime, diet, mouths
+                cookingTime, diet, restrictions
             })
             setCurrentScreen(Screens.SWEET)
         }
@@ -35,7 +40,7 @@ function App() {
             <Onboarding
                 cookingTimes={cookingTimes}
                 diets={diets}
-                mouths={mouths}
+                restrictions={restrictions}
                 onSubmit={onOnboardingSubmit}
             />
         </div>
