@@ -4,8 +4,11 @@ import { Button } from "react-bootstrap"
 
 /**
  * Props:
- *  * restrictions: string[]
- *  * onClick: (restriction: string, oldValue: boolean) => void, optional: a callback for when a restriction button is clicked
+ *  * restrictions: [string, boolean][]: an array of tuples consisting of a 
+ *      restriction-string and a boolean indicating
+ *      wether the restriction is currently selected.
+ *  * onClick: (restriction: string, oldValue: boolean) => void, optional: 
+ *      a callback for when a restriction button is clicked.
  */
 export function Restrictions(props) {
     return <OnboardingScreen
