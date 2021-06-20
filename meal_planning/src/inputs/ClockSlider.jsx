@@ -100,40 +100,47 @@ export function ClockSlider(props) {
 
     function clockwise() {
 
-        const leftHiddenAnimation = leftHiddenRef.current.animate(leftHiddenToLeft, timingOptions)
-        const leftAnimation = leftRef.current.animate(leftToCenter, timingOptions)
-        const centerAnimation = centerRef.current.animate(centerToRight, timingOptions)
-        const rightAnimation = rightRef.current.animate(rightToRightHidden, timingOptions)
+        // check if we are greater than 0 first before rotating
+        if (currentCenter > 0) {
+            const leftHiddenAnimation = leftHiddenRef.current.animate(leftHiddenToLeft, timingOptions)
+            const leftAnimation = leftRef.current.animate(leftToCenter, timingOptions)
+            const centerAnimation = centerRef.current.animate(centerToRight, timingOptions)
+            const rightAnimation = rightRef.current.animate(rightToRightHidden, timingOptions)
 
-        Promise.all([
-            leftHiddenAnimation.finished,
-            leftAnimation.finished,
-            centerAnimation.finished,
-            rightAnimation.finished
-        ]).then(() => {
-            const nextCenter = (currentCenter - 1 < 0) ? 0 : currentCenter - 1
-            setCurrentCenter(nextCenter)
-            runOnChangeCallback(nextCenter)
-        })
+            Promise.all([
+                leftHiddenAnimation.finished,
+                leftAnimation.finished,
+                centerAnimation.finished,
+                rightAnimation.finished
+            ]).then(() => {
+                const nextCenter = currentCenter - 1 // guaranteed to be greater than or equal to zero
+                setCurrentCenter(nextCenter)
+                runOnChangeCallback(nextCenter)
+            })
+        }
+
     }
 
     function counterClockwise() {
 
-        const rightHiddenAnimation = rightHiddenRef.current.animate(rightHiddenToRight, timingOptions)
-        const rightAnimation = rightRef.current.animate(rightToCenter, timingOptions)
-        const centerAnimation = centerRef.current.animate(centerToLeft, timingOptions)
-        const leftAnimation = leftRef.current.animate(leftToLeftHidden, timingOptions)
+        // check that we aren't centered on the last element already
+        if (currentCenter < options.length - 1) {
+            const rightHiddenAnimation = rightHiddenRef.current.animate(rightHiddenToRight, timingOptions)
+            const rightAnimation = rightRef.current.animate(rightToCenter, timingOptions)
+            const centerAnimation = centerRef.current.animate(centerToLeft, timingOptions)
+            const leftAnimation = leftRef.current.animate(leftToLeftHidden, timingOptions)
 
-        Promise.all([
-            rightHiddenAnimation.finished,
-            rightAnimation.finished,
-            centerAnimation.finished,
-            leftAnimation.finished
-        ]).then(() => {
-            const nextCenter = (currentCenter + 1 >= options.length) ? currentCenter : currentCenter + 1
-            setCurrentCenter(nextCenter)
-            runOnChangeCallback(nextCenter)
-        })
+            Promise.all([
+                rightHiddenAnimation.finished,
+                rightAnimation.finished,
+                centerAnimation.finished,
+                leftAnimation.finished
+            ]).then(() => {
+                const nextCenter = currentCenter + 1 // guaranteed to be less than or equal to index of last element
+                setCurrentCenter(nextCenter)
+                runOnChangeCallback(nextCenter)
+            })
+        }
 
     }
 
