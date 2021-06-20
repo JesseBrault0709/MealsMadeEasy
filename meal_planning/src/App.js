@@ -14,7 +14,7 @@ const Screens = Object.freeze({
  * For now these are hard-coded but eventually we want to move these elsewhere,
  * if possible.
  */
-const cookingTimes = ['No limit', '10 mins', '20 mins', '30 mins']
+const cookingTimes = ['No limit', '15 mins', '30 mins', '45 mins', '60 minutes', '90 minutes']
 
 const diets = [
     'Vegan', 'Vegetarian',
