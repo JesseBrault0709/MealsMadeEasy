@@ -15,7 +15,13 @@ const Screens = Object.freeze({
  * if possible.
  */
 const cookingTimes = ['No limit', '10 mins', '20 mins', '30 mins']
-const diets = ['Vegetarian', 'Vegan', 'No Preference']
+
+const diets = [
+    'Vegan', 'Vegetarian',
+    'Ketogenic', 'Pescatarian',
+    'Paleo', 'Whole30',
+]
+
 const restrictions = [
     'Dairy free', 'Egg free',
     'Gluten free', 'Grain free',

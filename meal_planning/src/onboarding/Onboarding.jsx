@@ -26,12 +26,18 @@ export function Onboarding(props) {
     }
 
     // diet state
-    const [currentDietIndex, setCurrentDietIndex] = useState(null)
+    const [dietsAndValues, setDietsAndValues] = useState(props.diets.map(diet => [diet, false]))
 
-    function onDietSelection(dietIndex) {
-        setCurrentDietIndex(dietIndex)
+    function onDietClick(clickedDiet, preClickValue) {
+        setDietsAndValues(dietsAndValues.map(dietAndValue => {
+            const [diet, value] = dietAndValue
+            if (diet === clickedDiet) {
+                return [clickedDiet, !preClickValue]
+            } else {
+                return [diet, value]
+            }
+        }))
     }
-
 
     // restrictions state
     const [restrictions, setRestrictions] = useState(props.restrictions.map(restriction => {
@@ -55,7 +61,13 @@ export function Onboarding(props) {
         if (props.onSubmit !== undefined && props.onSubmit !== null) {
             props.onSubmit(
                 props.cookingTimes[currentCookingTimeIndex],
-                props.diets[currentDietIndex],
+                dietsAndValues.reduce((resultArr, dietAndValue) => {
+                    const [diet, value] = dietAndValue
+                    if (value) {
+                        resultArr.push(diet)
+                    }
+                    return resultArr
+                }, []),
                 restrictions.reduce((resultArr, restrictionAndValue) => {
                     const [restriction, value] = restrictionAndValue
                     if (value) {
@@ -76,7 +88,7 @@ export function Onboarding(props) {
             initialOption={currentCookingTimeIndex}
         />
 
-        <Diet diets={props.diets} onDietSelection={onDietSelection} />
+        <Diet diets={dietsAndValues} onClick={onDietClick} />
 
         <Restrictions restrictions={restrictions} onClick={onRestrictionClick}/>
 
