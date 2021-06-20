@@ -1,5 +1,5 @@
 import { OnboardingScreen } from "./OnboardingScreen"
-import { ClockSlider } from "../inputs/ClockSlider"
+import { ClockSlider } from "../../inputs/ClockSlider"
 
 /**
  * Props:

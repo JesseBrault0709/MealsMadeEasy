@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { useState } from 'react';
 
 import "./App.css";
-import { Onboarding } from './onboarding/Onboarding'
-import { Sweet } from './transitionScreens/Sweet';
+import { Onboarding } from './screens/onboarding/Onboarding'
+import { Sweet } from './screens/transitions/Sweet';
 
 const Screens = Object.freeze({
     ONBOARDING: "ONBOARDING",

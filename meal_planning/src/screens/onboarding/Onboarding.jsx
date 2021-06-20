@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { OrderedScreenCollection } from "../screens/OrderedScreenCollection";
+import { OrderedScreenCollection } from "../OrderedScreenCollection";
 import { CookingTime } from "./CookingTime";
 import { Diet } from "./Diet";
 import { Restrictions } from "./Restrictions";
