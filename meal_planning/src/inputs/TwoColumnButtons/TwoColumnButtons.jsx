@@ -1,5 +1,8 @@
 import { Container, Row, Col } from "react-bootstrap"
 
+/**
+ * Children: any set of buttons; must be an even number of buttons and greater than 0.
+ */
 export function TwoColumnButtons(props) {
     
     if (props.children === undefined || props.children === null) {
