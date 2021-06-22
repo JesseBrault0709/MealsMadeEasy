@@ -3,7 +3,7 @@ import './SearchBar.css'
 
 import { InputGroup, FormControl } from "react-bootstrap";
 
-export function SearchBar(props) {
+export function SearchBar() {
     return <InputGroup>
         <InputGroup.Prepend>
             <InputGroup.Text>
