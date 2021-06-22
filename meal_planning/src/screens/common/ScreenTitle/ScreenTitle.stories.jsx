@@ -1,7 +1,7 @@
 import { ScreenTitle } from "./ScreenTitle";
 
 export default {
-    title: 'ScreenTitle',
+    title: 'Common/ScreenTitle',
     component: ScreenTitle
 }
 
