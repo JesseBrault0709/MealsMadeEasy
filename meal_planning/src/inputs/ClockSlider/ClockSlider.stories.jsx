@@ -1,7 +1,7 @@
 import { ClockSlider } from "./ClockSlider"
 
 export default {
-    title: 'ClockSlider',
+    title: 'Inputs/ClockSlider',
     component: ClockSlider
 }
 
