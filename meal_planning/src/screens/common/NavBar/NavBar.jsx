@@ -24,7 +24,7 @@ export const ActiveNavBarButton = Object.freeze({
  * }} props
  */
 export function NavBar(props) {
-    return <Container>
+    return <Container id="nav-bar-container">
         <Row>
             <Col>
                 <div className="nav-button">
