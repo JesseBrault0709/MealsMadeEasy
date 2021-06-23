@@ -1,13 +1,12 @@
 import './ScreenTitle.css'
 import { Container, Button } from "react-bootstrap"
 
-/**
- * @param {{
- *  title: string,
- *  onBackButtonClick?: () => void
- * }} props 
- */
-export function ScreenTitle(props) {
+export type ScreenTitleProps = {
+    title: string,
+    onBackButtonClick?: () => void
+}
+
+export function ScreenTitle(props: ScreenTitleProps) {
     return <div className="screen-title">
         {
             props.onBackButtonClick !== undefined && props.onBackButtonClick !== null ?
