@@ -1,0 +1,5 @@
+/* TODO: Find a responsive way to set the height. */
+
+input.form-control {
+    height: 44px;
+}
