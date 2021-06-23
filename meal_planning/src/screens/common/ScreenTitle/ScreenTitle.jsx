@@ -1,3 +1,4 @@
+import './ScreenTitle.css'
 import { Container, Button } from "react-bootstrap"
 
 /**
@@ -7,7 +8,7 @@ import { Container, Button } from "react-bootstrap"
  * }} props 
  */
 export function ScreenTitle(props) {
-    return <Container fluid>
+    return <div className="screen-title">
         {
             props.onBackButtonClick !== undefined && props.onBackButtonClick !== null ?
                 <Button onClick={props.onBackButtonClick}>
@@ -16,5 +17,5 @@ export function ScreenTitle(props) {
                 : ''
         }
         <h1>{props.title}</h1>
-    </Container>
+    </div>
 }
