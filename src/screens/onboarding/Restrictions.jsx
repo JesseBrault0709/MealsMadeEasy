@@ -1,5 +1,5 @@
 import { OnboardingScreen } from "./OnboardingScreen"
-import { TwoColumnButtons } from "../../inputs/TwoColumnButtons"
+import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
 import { Button } from "react-bootstrap"
 
 /**
