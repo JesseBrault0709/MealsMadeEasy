@@ -10,6 +10,7 @@ export type HomeProps = {
         recipes: ReadonlyArray<Recipe>
     }>
 }
+
 export function Home(props: HomeProps) {
     return <ScreenWithTitleAndNav title="Recipes" activeNavButton="RECIPES">
         <SearchBar />
