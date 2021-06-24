@@ -2,19 +2,17 @@ import { Container, Row } from "react-bootstrap";
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 
 import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
+import { Recipe } from "../../../recipes/Recipe";
 
-/**
- * @param {{
- *  recipes?: {
- *     title: string 
- *  }[],
- *  rowTitle?: string
- * }} props 
- */
-export function RecipeRow(props) {
+export type RecipeRowProps = {
+    title: string,
+    recipes: ReadonlyArray<Recipe>
+}
+
+export function RecipeRow(props: RecipeRowProps) {
     return <Container>
         <Row>
-            <h2>{props.rowTitle}</h2>
+            <h2>{props.title}</h2>
         </Row>
         <Row>
             {props.recipes?.map(recipe =>
