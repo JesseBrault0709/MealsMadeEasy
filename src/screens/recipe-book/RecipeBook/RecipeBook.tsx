@@ -1,37 +1,18 @@
-import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
-
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
-import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
-import { Tag } from "../TimeDietAllergies/Tag"
+import { TimeDietAllergies, TimeDietAllergiesProps } from "../TimeDietAllergies/TimeDietAllergies"
 import { MealTabBar, MealTabBarProps } from "../MealTabBar/MealTabBar"
-import { Recipe } from "../../../recipes/Recipe"
-import { Container, Row } from "react-bootstrap"
-import { RecipeCard } from "../RecipeCard/RecipeCard"
+import { RecipesGrid, RecipesGridProps } from "../RecipesGrid/RecipesGrid"
 
 export type RecipeBookProps = {
-    tags: ReadonlyArray<Tag>,
+    tags: TimeDietAllergiesProps['tags']
     tabs: MealTabBarProps['tabs']
-    recipes: ReadonlyArray<Recipe>
+    recipes: RecipesGridProps['recipes']
 }
 
 export function RecipeBook(props: RecipeBookProps) {
     return <ScreenWithTitleAndNav title="Recipe Book" activeNavButton="RECIPES" >
         <TimeDietAllergies tags={props.tags}/>
         <MealTabBar tabs={props.tabs} />
-        <Container>
-            {
-                props.recipes?.map((recipe1, index) => {
-                    if (index % 2 === 0) {
-                        const recipe2 = props.recipes[index + 1]
-                        return <Row>
-                            <RecipeCard title={recipe1.title} rating={recipe1.rating} imgSrc={DevRecipePicture} />
-                            <RecipeCard title={recipe2?.title} rating={recipe2?.rating} imgSrc={DevRecipePicture} />
-                        </Row>
-                    } else {
-                        return ''
-                    }
-                })
-            }
-        </Container>
+        <RecipesGrid recipes={props.recipes} />
     </ScreenWithTitleAndNav>
 }
