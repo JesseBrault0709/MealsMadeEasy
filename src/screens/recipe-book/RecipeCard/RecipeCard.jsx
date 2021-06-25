@@ -1,3 +1,5 @@
+import DevRecipePicture from './assets/DevRecipePicture.png'
+
 import { Card } from "react-bootstrap"
 import { RecipeRating } from "../RecipeRating/RecipeRating"
 
@@ -10,7 +12,7 @@ import { RecipeRating } from "../RecipeRating/RecipeRating"
  */
 export function RecipeCard(props) {
     return <Card style={{ width: '90px' }}>
-        <Card.Img src={props.imgSrc} />
+        <Card.Img src={props.imgSrc ?? DevRecipePicture} />
         <Card.Title>{props.title}</Card.Title>
         {props.rating ? <RecipeRating rating={props.rating} /> : ''}
     </Card>
