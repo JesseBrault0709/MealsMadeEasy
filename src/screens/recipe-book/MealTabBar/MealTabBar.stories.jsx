@@ -1,14 +1,13 @@
-import { Story } from '@storybook/react'
-import { MealTabBar, MealTabBarProps } from './MealTabBar'
+import { MealTabBar } from './MealTabBar'
 
 export default {
     title: "RecipeBook/MealTabBar",
     component: MealTabBar
 }
 
-const Template: Story<MealTabBarProps> = args => <MealTabBar {...args} />
+const Template = args => <MealTabBar {...args} />
 
-export const Primary: Story<MealTabBarProps> = Template.bind({})
+export const Primary = Template.bind({})
 Primary.args = {
     tabs: [
         {

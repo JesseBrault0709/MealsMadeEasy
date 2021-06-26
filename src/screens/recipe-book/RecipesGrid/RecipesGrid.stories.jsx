@@ -1,16 +1,15 @@
 import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
 
-import { Story } from '@storybook/react'
-import { RecipesGrid, RecipesGridProps } from './RecipesGrid'
+import { RecipesGrid } from './RecipesGrid'
 
 export default { 
     title: 'RecipeBook/RecipesGrid',
     component: RecipesGrid
 }
 
-const Template: Story<RecipesGridProps> = args => <RecipesGrid {...args} />
+const Template = args => <RecipesGrid {...args} />
 
-export const Primary: Story<RecipesGridProps> = Template.bind({})
+export const Primary = Template.bind({})
 Primary.args = {
     recipes: [
         {

@@ -1,14 +1,13 @@
-import { Story } from '@storybook/react'
-import { TimeDietAllergies, TimeDietAllergiesProps } from "./TimeDietAllergies";
+import { TimeDietAllergies } from "./TimeDietAllergies";
 
 export default {
     title: "Home/TimeDietAllergies",
     component: TimeDietAllergies
 }
 
-const Template: Story<TimeDietAllergiesProps> = args => <TimeDietAllergies {...args} />
+const Template = args => <TimeDietAllergies {...args} />
 
-export const Primary: Story<TimeDietAllergiesProps> = Template.bind({})
+export const Primary = Template.bind({})
 Primary.args = {
     tags: [
         {

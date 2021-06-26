@@ -1,13 +1,16 @@
 import './TimeDietAllergies.css'
 import { TagChip } from "./TagChip/TagChip"
-import { Tag } from './Tag'
 
-export type TimeDietAllergiesProps = {
-    onFilterClick?: () => void
-    tags: ReadonlyArray<Tag>
-}
-
-export function TimeDietAllergies(props: TimeDietAllergiesProps) {
+/**
+ * @param {{
+ *  onFliterClick: () => void,
+ *  tags: ReadonlyArray<{
+ *     name: string,
+ *     values: ReadonlyArray<string>
+ *  }>
+ * }} props
+ */
+export function TimeDietAllergies(props) {
     return <div className="time-diet-allergies">
         <button type="button" onClick={props.onFilterClick}>[filter icon]</button>
         {   

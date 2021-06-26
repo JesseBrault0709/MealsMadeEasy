@@ -6,9 +6,9 @@ export default {
     component: TagChip
 }
 
-const template: Story<TagChipProps> = args => <TagChip {...args} />
+const template = args => <TagChip {...args} />
 
-export const TimeChip: Story<TagChipProps> = template.bind({})
+export const TimeChip = template.bind({})
 TimeChip.args = {
     tag: {
         name: 'Time',
@@ -16,7 +16,7 @@ TimeChip.args = {
     }
 }
 
-export const DietChip: Story<TagChipProps> = template.bind({})
+export const DietChip = template.bind({})
 DietChip.args = {
     tag: {
         name: 'Diet',
@@ -24,7 +24,7 @@ DietChip.args = {
     }
 }
 
-export const AllergyChip: Story<TagChipProps> = template.bind({})
+export const AllergyChip = template.bind({})
 AllergyChip.args = {
     tag: {
         name: 'Allergies',

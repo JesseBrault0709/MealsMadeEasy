@@ -2,11 +2,12 @@ import { RecipeCard } from '../RecipeCard/RecipeCard'
 import { Container, Row, Col } from 'react-bootstrap'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 
-export type RecipesGridProps = {
-    recipes: ReadonlyArray<RecipeOverview>
-}
-
-export function RecipesGrid(props: RecipesGridProps) {
+/**
+ * @param {{
+ *  recipes: ReadonlyArray<RecipeOverview>
+ * }} props
+ */
+export function RecipesGrid(props) {
     return <Container>
         {
         props.recipes.map((recipe1, index) => {

@@ -1,31 +1,37 @@
-import { Tag } from "../Tag"
-
-function TagChipBodyWithOneValue(props: {
-    value: string
-}) {
+/**
+ * @param {{
+ *  value: string
+ * }} props 
+ */
+function TagChipBodyWithOneValue(props) {
     return <>
         <span className="tag-chip-number">[check mark]</span>
         <span className="tag-chip-text">{props.value}</span>
     </>
 }
 
-
-function TagChipBodyWithZeroOrGreaterThanOneValues(props: {
-    name: string,
-    numberOfValues: number
-}) {
+/**
+ * @param {{
+ *  name: string,
+ *  numberOfValues: number
+ * }} props
+ */
+function TagChipBodyWithZeroOrGreaterThanOneValues(props) {
     return <>
         <span className="tag-chip-number">{props.numberOfValues === 0 ? 'X' : props.numberOfValues}</span>
         <span className="tag-chip-text">{props.name}</span>
     </>
 }
 
-
-export type TagChipProps = {
-    tag: Tag
-}
-
-export function TagChip(props: TagChipProps) {
+/**
+ * @param {{
+ *  tag: {
+ *     name: string,
+ *     values: ReadonlyArray<string>
+ *  }
+ * }} props
+ */
+export function TagChip(props) {
     const { tag } = props
     return <div className="tag-chip">
         {

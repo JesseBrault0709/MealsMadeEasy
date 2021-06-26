@@ -4,7 +4,12 @@ import { Card } from "react-bootstrap"
 import { RecipeRating } from "../RecipeRating/RecipeRating"
 import { RecipeOverview } from '../../../client/RecipeOverview'
 
-export function RecipeCard(props: { recipe: RecipeOverview }) {
+/**
+ * @param {{
+ *  recipe: RecipeOverview
+ * }} props
+ */
+export function RecipeCard(props) {
     const { recipe } = props
 
     // spoonacular score is 0-100; divide by 20 to get 0-5

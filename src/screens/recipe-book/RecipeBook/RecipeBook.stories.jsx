@@ -1,16 +1,15 @@
 import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
 
-import { RecipeBook, RecipeBookProps } from "./RecipeBook";
-import { Story } from '@storybook/react'
+import { RecipeBook } from "./RecipeBook";
 
 export default {
     title: 'RecipeBook/RecipeBook',
     component: RecipeBook
 }
 
-const Template: Story<RecipeBookProps> = args => <RecipeBook {...args} />
+const Template = args => <RecipeBook {...args} />
 
-export const Primary: Story<RecipeBookProps> = Template.bind({})
+export const Primary = Template.bind({})
 Primary.args = {
     tags: [
         {
