@@ -5,7 +5,7 @@ import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { Sweet } from './screens/transitions/Sweet';
 import { RecipeBook, RecipeBookProps } from './screens/recipe-book/RecipeBook/RecipeBook';
-import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
+import { SPDiet, SPIntolerance, SPType } from './client/spoonacularTypes';
 import { getByComplexSearch } from './client/complexSearch'
 import { RecipeOverview } from './client/RecipeOverview';
 
@@ -19,31 +19,19 @@ const Screens = Object.freeze({
  * For now these are hard-coded but eventually we want to move these elsewhere,
  * if possible.
  */
-const cookingTimes = ['No limit', '15 mins', '30 mins', '45 mins', '60 minutes', '90 minutes']
+const availableCookingTimes = ['No limit', '15 mins', '30 mins', '45 mins', '60 minutes', '90 minutes']
 
-const diets: ReadonlyArray<SPDiet> = [
+const availableDiets: ReadonlyArray<SPDiet> = [
     'Vegan', 'Vegetarian',
     'Ketogenic', 'Pescetarian',
     'Paleo', 'Whole30'
 ]
 
-const restrictions: ReadonlyArray<SPIntolerance> = [
+const availableIntolerances: ReadonlyArray<SPIntolerance> = [
     'Dairy', 'Egg',
     'Gluten', 'Grain',
     'Peanut', 'Seafood',
     'Wheat'
-]
-
-const tabs: RecipeBookProps['tabs'] = [
-    {
-        name: 'Breakfast'
-    },
-    {
-        name: 'Lunch'
-    },
-    {
-        name: 'Dinner'
-    }
 ]
 
 function App() {
@@ -56,6 +44,37 @@ function App() {
 
     const [tags, setTags] = useState([] as RecipeBookProps['tags'])
     const [recipes, setRecipes] = useState([] as ReadonlyArray<RecipeOverview>)
+
+    const refreshRecipes = (diet?: SPDiet, intolerances?: ReadonlyArray<SPIntolerance>, type?: SPType) => {
+        getByComplexSearch({
+            diet, intolerances, type,
+            addRecipeInformation: true
+        }).then(setRecipes)
+    }
+
+    const tabs: RecipeBookProps['tabs'] = [
+        {
+            name: 'Breakfast',
+            type: 'breakfast',
+            onClick: () => {
+                refreshRecipes(diet, intolerances, 'breakfast')
+            }
+        },
+        {
+            name: 'Lunch',
+            type: 'main course',
+            onClick: () => {
+                refreshRecipes(diet, intolerances, 'main course')
+            }
+        },
+        {
+            name: 'Dinner',
+            type: 'main course',
+            onClick: () => {
+                refreshRecipes(diet, intolerances, 'main course')
+            }
+        }
+    ]
 
     if (currentScreen === Screens.ONBOARDING) {
 
@@ -89,9 +108,9 @@ function App() {
 
         return <div className="App">
             <Onboarding
-                cookingTimes={cookingTimes}
-                diets={diets}
-                restrictions={restrictions}
+                cookingTimes={availableCookingTimes}
+                diets={availableDiets}
+                restrictions={availableIntolerances}
                 onSubmit={onOnboardingSubmit}
             />
         </div>
@@ -103,7 +122,8 @@ function App() {
         })
 
         const searchPromise = getByComplexSearch({
-            diet, intolerances
+            diet, intolerances, type: tabs[0].type,
+            addRecipeInformation: true
         })
 
         Promise.all([
