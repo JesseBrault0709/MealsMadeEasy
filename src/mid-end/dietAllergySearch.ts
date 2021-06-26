@@ -30,7 +30,7 @@ export async function dietAllergySearch(
         { params, headers: { ...rapidAPIHeaders } }
     ).then(response => {
         logRemainingHeaders(response.headers as RapidAPIResponseHeaders)
-        return Promise.resolve(response.data.results)
+        return response.data.results
     })
 
     return result

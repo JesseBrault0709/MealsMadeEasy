@@ -37,7 +37,7 @@ export async function getRecipeById(id: number): Promise<Recipe> {
             imgSrc: data.image,
             rating: Math.floor(data.spoonacularScore / 20) // score is 0-100; convert to 0-5 by dividing by 20
         }
-        return Promise.resolve(recipe)
+        return recipe
     })
 
     return result
