@@ -1,3 +1,4 @@
+// https://spoonacular.com/food-api/docs#Diets
 export type SPDiet = 
     "Gluten Free" | 
     "Ketogenic" | 
@@ -10,6 +11,7 @@ export type SPDiet =
     "Primal" | 
     "Whole30"
 
+// https://spoonacular.com/food-api/docs#Intolerances
 export type SPIntolerance = 
     "Dairy" |
     "Egg" |
