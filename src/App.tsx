@@ -72,6 +72,20 @@ function App() {
             setCookingTime(cookingTime)
             setDiet(diets[0])
             setAllergies(restrictions)
+            setTags([
+                {
+                    name: "Time",
+                    values: [cookingTime]
+                },
+                {
+                    name: "Diet",
+                    values: [diets[0]]
+                },
+                {
+                    name: "Allergies",
+                    values: restrictions
+                }
+            ])
         }
 
         return <div className="App">
