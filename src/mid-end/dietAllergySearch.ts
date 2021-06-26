@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { rapidAPIHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders'
+import { rapidAPIRequestHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders'
 import { SPComplexSearchRecipe, SPComplexSearchResult, SPDiet, SPIntolerance, SPType } from './spoonacularTypes'
 import { calcUrl, logRemainingHeaders } from './util'
 
@@ -27,7 +27,7 @@ export async function dietAllergySearch(
 
     const result = await axios.get<SPComplexSearchResult>(
         calcUrl('/recipes/complexSearch'),
-        { params, headers: { ...rapidAPIHeaders } }
+        { params, headers: { ...rapidAPIRequestHeaders } }
     ).then(response => {
         logRemainingHeaders(response.headers as RapidAPIResponseHeaders)
         return response.data.results

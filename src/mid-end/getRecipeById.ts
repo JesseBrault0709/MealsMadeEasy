@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Recipe } from './Recipe'
-import { rapidAPIHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders'
+import { rapidAPIRequestHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders'
 import { calcUrl, logRemainingHeaders } from './util'
 
 type RequestParams = {
@@ -25,7 +25,7 @@ export async function getRecipeById(id: number): Promise<Recipe> {
     const result: Recipe = await axios.get<ResponseData>(
         calcUrl(`/recipes/${id}/information`),
         {
-            headers: { ...rapidAPIHeaders },
+            headers: { ...rapidAPIRequestHeaders },
             params
         }
     ).then(response => {
