@@ -22,17 +22,17 @@ const Screens = Object.freeze({
  */
 const cookingTimes = ['No limit', '15 mins', '30 mins', '45 mins', '60 minutes', '90 minutes']
 
-const diets = [
+const diets: ReadonlyArray<SPDiet> = [
     'Vegan', 'Vegetarian',
-    'Ketogenic', 'Pescatarian',
-    'Paleo', 'Whole30',
+    'Ketogenic', 'Pescetarian',
+    'Paleo', 'Whole30'
 ]
 
-const restrictions = [
-    'Dairy free', 'Egg free',
-    'Gluten free', 'Grain free',
-    'Peanut free', 'Seafood free',
-    'Wheat free', 'No restrictions'
+const restrictions: ReadonlyArray<SPIntolerance> = [
+    'Dairy', 'Egg',
+    'Gluten', 'Grain',
+    'Peanut', 'Seafood',
+    'Wheat'
 ]
 
 const tabs: RecipeBookProps['tabs'] = [
@@ -52,8 +52,8 @@ function App() {
     const [currentScreen, setCurrentScreen] = useState(Screens.ONBOARDING)
 
     const [cookingTime, setCookingTime] = useState(null as string | null)
-    const [diet, setDiet] = useState(null as string | null)
-    const [allergies, setAllergies] = useState(null as ReadonlyArray<string> | null)
+    const [diet, setDiet] = useState(null as SPDiet | null)
+    const [intolerances, setIntolerances] = useState(null as ReadonlyArray<SPIntolerance> | null)
 
     const [tags, setTags] = useState([] as RecipeBookProps['tags'])
     const [recipes, setRecipes] = useState([] as RecipeBookProps['recipes'])
@@ -62,16 +62,16 @@ function App() {
 
         const onOnboardingSubmit = (
             cookingTime: string, 
-            diets: ReadonlyArray<string>, 
-            restrictions: ReadonlyArray<string>
+            diet: SPDiet, 
+            intolerances: ReadonlyArray<SPIntolerance>
         ) => {
             console.log({
-                cookingTime, diets, restrictions
+                cookingTime, diet, intolerances
             })
             setCurrentScreen(Screens.SWEET)
             setCookingTime(cookingTime)
-            setDiet(diets[0])
-            setAllergies(restrictions)
+            setDiet(diet)
+            setIntolerances(intolerances)
             setTags([
                 {
                     name: "Time",
@@ -79,11 +79,11 @@ function App() {
                 },
                 {
                     name: "Diet",
-                    values: [diets[0]]
+                    values: [diet[0]]
                 },
                 {
                     name: "Allergies",
-                    values: restrictions
+                    values: intolerances
                 }
             ])
         }
@@ -104,8 +104,8 @@ function App() {
         })
 
         const dietAllergySearchPromise = dietAllergySearch(
-            diet as SPDiet, 
-            allergies as SPIntolerance[], 
+            diet, 
+            intolerances, 
             null
         )
 
