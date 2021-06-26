@@ -1,3 +1,5 @@
+import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
+
 import { RecipeBook, RecipeBookProps } from "./RecipeBook";
 import { Story } from '@storybook/react'
 
@@ -39,17 +41,20 @@ Primary.args = {
         {
             id: 0,
             title: "Eggs",
-            rating: 4
+            image: DevRecipePicture,
+            imageType: 'png'
         },
         {
             id: 1,
             title: "Bacon",
-            rating: 5
+            image: DevRecipePicture,
+            imageType: 'png'
         },
         {
             id: 2,
             title: "Sausage",
-            rating: 3
+            image: DevRecipePicture,
+            imageType: 'png'
         }
     ]
 }

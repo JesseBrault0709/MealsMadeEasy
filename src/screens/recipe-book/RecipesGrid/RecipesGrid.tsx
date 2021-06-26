@@ -1,9 +1,9 @@
-import { Recipe } from '../../../mid-end/Recipe'
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 import { Container, Row, Col } from 'react-bootstrap'
+import { RecipeOverview } from '../../../client/RecipeOverview'
 
 export type RecipesGridProps = {
-    recipes: ReadonlyArray<Recipe>
+    recipes: ReadonlyArray<RecipeOverview>
 }
 
 export function RecipesGrid(props: RecipesGridProps) {
@@ -14,10 +14,10 @@ export function RecipesGrid(props: RecipesGridProps) {
                 const recipe2 = props.recipes[index + 1]
                 return <Row>
                     <Col>
-                        <RecipeCard title={recipe1.title} rating={recipe1.rating} imgSrc={recipe1.imgSrc} />
+                        <RecipeCard title={recipe1.title} imgSrc={recipe1.image} />
                     </Col>
                     <Col>
-                        {recipe2 !== undefined && recipe2 !== null ? <RecipeCard title={recipe2.title} rating={recipe2.rating} imgSrc={recipe2.imgSrc} /> : ''}
+                        {recipe2 !== undefined && recipe2 !== null ? <RecipeCard title={recipe2.title} imgSrc={recipe2.image} /> : ''}
                     </Col>
                 </Row>
             } else {

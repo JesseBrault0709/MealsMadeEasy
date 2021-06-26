@@ -1,3 +1,5 @@
+import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
+
 import { Story } from '@storybook/react'
 import { RecipesGrid, RecipesGridProps } from './RecipesGrid'
 
@@ -14,17 +16,20 @@ Primary.args = {
         {
             id: 0,
             title: 'Eggs',
-            rating: 1
+            image: DevRecipePicture,
+            imageType: 'png'
         },
         {
             id: 1,
             title: 'Sausage',
-            rating: 5
+            image: DevRecipePicture,
+            imageType: 'png'
         },
         {
             id: 2,
             title: 'Bacon',
-            rating: 5
+            image: DevRecipePicture,
+            imageType: 'png'
         }
     ]
 }
