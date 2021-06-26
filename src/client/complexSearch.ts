@@ -7,7 +7,8 @@ import { calcUrl, logRemainingHeaders } from './util';
 export type ComplexSearchParams = {
     diet?: SPDiet,
     intolerances?: ReadonlyArray<SPIntolerance>
-    type?: SPType
+    type?: SPType,
+    addRecipeInformation?: boolean
 }
 
 type Result = {
