@@ -5,10 +5,9 @@ import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { Sweet } from './screens/transitions/Sweet';
 import { RecipeBook, RecipeBookProps } from './screens/recipe-book/RecipeBook/RecipeBook';
-import { dietAllergySearch } from './mid-end/dietAllergySearch'
-import { SPDiet, SPIntolerance } from './mid-end/spoonacularTypes';
-import { Recipe } from './mid-end/Recipe';
-import { getRecipeById } from './mid-end/getRecipeById'
+import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
+import { getByComplexSearch } from './client/complexSearch'
+import { RecipeOverview } from './client/RecipeOverview';
 
 const Screens = Object.freeze({
     ONBOARDING: "ONBOARDING",
@@ -51,12 +50,12 @@ function App() {
 
     const [currentScreen, setCurrentScreen] = useState(Screens.ONBOARDING)
 
-    const [cookingTime, setCookingTime] = useState(null as string | null)
-    const [diet, setDiet] = useState(null as SPDiet | null)
-    const [intolerances, setIntolerances] = useState(null as ReadonlyArray<SPIntolerance> | null)
+    const [cookingTime, setCookingTime] = useState(undefined as string | undefined)
+    const [diet, setDiet] = useState(undefined as SPDiet | undefined)
+    const [intolerances, setIntolerances] = useState(undefined as ReadonlyArray<SPIntolerance> | undefined)
 
     const [tags, setTags] = useState([] as RecipeBookProps['tags'])
-    const [recipes, setRecipes] = useState([] as RecipeBookProps['recipes'])
+    const [recipes, setRecipes] = useState([] as ReadonlyArray<RecipeOverview>)
 
     if (currentScreen === Screens.ONBOARDING) {
 
@@ -103,23 +102,15 @@ function App() {
             setTimeout(resolve, 1000)
         })
 
-        const dietAllergySearchPromise = dietAllergySearch(
-            diet, 
-            intolerances, 
-            null
-        )
+        const searchPromise = getByComplexSearch({
+            diet, intolerances
+        })
 
         Promise.all([
-            dietAllergySearchPromise, timeoutPromise
+            searchPromise, timeoutPromise
         ]).then(results => {
             setCurrentScreen(Screens.RECIPE_BOOK)
-            const recipeResults = results[0]
-            const infoPromises: Promise<Recipe>[] = recipeResults.map(recipeResult => {
-                return getRecipeById(recipeResult.id)
-            })
-            Promise.all(infoPromises).then(results => {
-                setRecipes(results)
-            })
+            setRecipes(results[0])
         })
 
         return <div className="App">

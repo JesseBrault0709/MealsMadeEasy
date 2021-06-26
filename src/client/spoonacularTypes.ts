@@ -41,18 +41,3 @@ export type SPType =
     "fingerfood" |
     "snack" |
     "drink"
-
-export type SPComplexSearchRecipe = {
-    id: number,
-    title: string,
-    image: string,
-    imageType: string
-}
-
-export type SPComplexSearchResult = {
-    results: ReadonlyArray<SPComplexSearchRecipe>,
-    offset: number,
-    number: number,
-    totalResults: number
-}
-
