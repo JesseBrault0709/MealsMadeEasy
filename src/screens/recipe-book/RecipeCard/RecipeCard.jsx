@@ -11,7 +11,7 @@ import { RecipeRating } from "../RecipeRating/RecipeRating"
  * }} props 
  */
 export function RecipeCard(props) {
-    return <Card style={{ width: '90px' }}>
+    return <Card>
         <Card.Img src={props.imgSrc ?? DevRecipePicture} />
         <Card.Title>{props.title}</Card.Title>
         {props.rating ? <RecipeRating rating={props.rating} /> : ''}

@@ -14,10 +14,10 @@ export function RecipesGrid(props: RecipesGridProps) {
                 const recipe2 = props.recipes[index + 1]
                 return <Row>
                     <Col>
-                        <RecipeCard title={recipe1.title} rating={recipe1.rating} />
+                        <RecipeCard title={recipe1.title} rating={recipe1.rating} imgSrc={recipe1.imgSrc} />
                     </Col>
                     <Col>
-                        {recipe2 !== undefined && recipe2 !== null ? <RecipeCard title={recipe2.title} rating={recipe2.rating} /> : ''}
+                        {recipe2 !== undefined && recipe2 !== null ? <RecipeCard title={recipe2.title} rating={recipe2.rating} imgSrc={recipe2.imgSrc} /> : ''}
                     </Col>
                 </Row>
             } else {
