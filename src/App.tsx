@@ -4,7 +4,7 @@ import { useState } from 'react';
 import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { Sweet } from './screens/transitions/Sweet';
-import { RecipeBook, RecipeBookProps } from './screens/recipe-book/RecipeBook/RecipeBook';
+import { RecipeBook } from './screens/recipe-book/RecipeBook/RecipeBook';
 import { SPDiet, SPIntolerance, SPType } from './client/spoonacularTypes';
 import { getByComplexSearch } from './client/complexSearch'
 import { RecipeOverview } from './client/RecipeOverview';
@@ -42,7 +42,10 @@ function App() {
     const [diet, setDiet] = useState(undefined as SPDiet | undefined)
     const [intolerances, setIntolerances] = useState(undefined as ReadonlyArray<SPIntolerance> | undefined)
 
-    const [tags, setTags] = useState([] as RecipeBookProps['tags'])
+    const [tags, setTags] = useState([] as ReadonlyArray<{
+        name: string,
+        values: ReadonlyArray<string>
+    }>)
     const [recipes, setRecipes] = useState([] as ReadonlyArray<RecipeOverview>)
 
     const refreshRecipes = (diet?: SPDiet, intolerances?: ReadonlyArray<SPIntolerance>, type?: SPType) => {
@@ -52,7 +55,11 @@ function App() {
         }).then(setRecipes)
     }
 
-    const tabs: RecipeBookProps['tabs'] = [
+    const tabs: ReadonlyArray<{
+        name: string,
+        type: SPType,
+        onClick: () => void
+    }> = [
         {
             name: 'Breakfast',
             type: 'breakfast',
