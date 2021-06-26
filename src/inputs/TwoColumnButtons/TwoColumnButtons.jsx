@@ -9,10 +9,6 @@ export function TwoColumnButtons(props) {
         throw new Error('props.children must not be null or undefined')
     }
 
-    if (props.children.length % 2 !== 0) {
-        throw new Error('props.children must contain an even number of buttons')
-    }
-
     return <Container>
         {
             props.children.map((button, index) => {
