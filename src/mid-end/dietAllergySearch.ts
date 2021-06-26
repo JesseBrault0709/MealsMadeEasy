@@ -29,6 +29,7 @@ export async function dietAllergySearch(
         calcUrl('/recipes/complexSearch'),
         { params, headers: { ...rapidAPIRequestHeaders } }
     ).then(response => {
+        console.log(response)
         logRemainingHeaders(response.headers as RapidAPIResponseHeaders)
         return response.data.results
     })
