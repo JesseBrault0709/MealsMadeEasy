@@ -37,14 +37,17 @@ Primary.args = {
     ],
     recipes: [
         {
+            id: 0,
             title: "Eggs",
             rating: 4
         },
         {
+            id: 1,
             title: "Bacon",
             rating: 5
         },
         {
+            id: 2,
             title: "Sausage",
             rating: 3
         }

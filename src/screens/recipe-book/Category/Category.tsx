@@ -5,7 +5,7 @@ import { SearchBar } from '../../../inputs/SearchBar/SearchBar'
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
 import { Container, Row, Col } from "react-bootstrap"
 import { RecipeCard } from '../RecipeCard/RecipeCard'
-import { Recipe } from '../../../recipes/Recipe'
+import { Recipe } from '../../../mid-end/Recipe'
 
 export type CategoryProps = {
     title: string

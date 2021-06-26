@@ -1,4 +1,4 @@
-import { Recipe } from '../../../recipes/Recipe'
+import { Recipe } from '../../../mid-end/Recipe'
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 import { Container, Row, Col } from 'react-bootstrap'
 

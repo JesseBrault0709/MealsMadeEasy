@@ -2,7 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 
 import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
-import { Recipe } from "../../../recipes/Recipe";
+import { Recipe } from "../../../mid-end/Recipe";
 
 export type RecipeRowProps = {
     title: string,

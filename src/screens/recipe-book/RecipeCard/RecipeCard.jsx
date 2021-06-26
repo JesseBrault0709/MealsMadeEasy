@@ -6,7 +6,7 @@ import { RecipeRating } from "../RecipeRating/RecipeRating"
 /**
  * @param {{
  *  title?: string,
- *  rating?: 0 | 1 | 2 | 3 | 4 | 5,
+ *  rating?: 0 | 1 | 2 | 3 | 4 | 5 | number,
  *  imgSrc?: any
  * }} props 
  */

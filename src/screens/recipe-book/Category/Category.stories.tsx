@@ -14,10 +14,12 @@ Primary.args = {
     title: 'Breakfast',
     recipes: [
         {
+            id: 0,
             title: 'Sausage',
             rating: 4
         },
         {
+            id: 1,
             title: 'Eggs',
             rating: 2
         }
