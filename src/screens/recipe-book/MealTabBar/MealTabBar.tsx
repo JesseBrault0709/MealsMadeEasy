@@ -1,8 +1,10 @@
+import { SPType } from '../../../client/spoonacularTypes'
 import './MealTabBar.css'
 
 export type MealTabBarProps = {
     tabs: ReadonlyArray<{
         name: string,
+        type: SPType,
         onClick?: () => void
     }>
 }

@@ -28,13 +28,16 @@ Primary.args = {
     ],
     tabs: [
         {
-            name: 'Breakfast'
+            name: 'Breakfast',
+            type: 'breakfast',
         },
         {
-            name: 'Lunch'
+            name: 'Lunch',
+            type: 'main course'
         },
         {
-            name: 'Dinner'
+            name: 'Dinner',
+            type: 'main course'
         }
     ],
     recipes: [
