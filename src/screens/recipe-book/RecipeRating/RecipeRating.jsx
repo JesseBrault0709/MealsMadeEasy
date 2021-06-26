@@ -2,7 +2,7 @@ import Star from './assets/Star.png'
 
 /**
  * @param {{
- *  rating: 0 | 1 | 2 | 3 | 4 | 5
+ *  rating: 0 | 1 | 2 | 3 | 4 | 5 | number
  * }} props 
  */
 export function RecipeRating(props) {
