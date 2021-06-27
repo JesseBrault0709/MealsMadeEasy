@@ -1,7 +1,7 @@
 import { TimeServingsRating } from "./TimeServingsRating";
 
 export default {
-    title: 'RecipeInfo/TimeServingsRating',
+    title: 'RecipeBook/TimeServingsRating',
     component: TimeServingsRating
 }
 

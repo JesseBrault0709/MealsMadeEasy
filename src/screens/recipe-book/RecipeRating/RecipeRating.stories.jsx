@@ -1,7 +1,7 @@
 import { RecipeRating } from "./RecipeRating"
 
 export default {
-    title: 'Home/RecipeRating',
+    title: 'RecipeBook/RecipeRating',
     component: RecipeRating
 }
 

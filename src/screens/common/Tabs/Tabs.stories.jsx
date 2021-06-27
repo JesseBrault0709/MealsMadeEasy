@@ -1,7 +1,7 @@
 import { Tab, Tabs } from "./Tabs";
 
 export default {
-    title: "RecipeInfo/Tabs",
+    title: "Common/Tabs",
     component: Tabs
 }
 

@@ -2,7 +2,7 @@ import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
 import { RecipeInfo } from './RecipeInfo'
 
 export default {
-    title: 'RecipeInfo/RecipeInfo',
+    title: 'RecipeBook/RecipeInfo',
     component: RecipeInfo
 }
 
@@ -10,7 +10,8 @@ const Template = args => <RecipeInfo {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    recipe: {
+    onBackButtonClick: () => console.log("back button clicked"),
+    getRecipe: () => Promise.resolve({
         id: 0,
         title: 'Sausage and Gravy',
         image: DevRecipePicture,
@@ -182,5 +183,5 @@ Primary.args = {
                 "unit": "ounces"
             },
         ]
-    }
+    })
 }

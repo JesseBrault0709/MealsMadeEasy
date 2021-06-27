@@ -1,16 +1,8 @@
-import { RowsOfPairs } from "../../common/RowsOfPairs/RowsOfPairs"
 import { useEffect, useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
-import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
-import { RecipeCard } from "../RecipeCard/RecipeCard"
-import { Container } from 'react-bootstrap'
-import { Tab, Tabs } from "../../common/Tabs/Tabs"
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { getRecipeInformation } from "../../../client/recipeInformation"
-
-const tabs = [
-    "Breakfast", "Lunch", "Dinner"
-]
+import { RecipeList } from '../RecipeList/RecipeList'
 
 const SubScreen = Object.freeze({
     RECIPE_LIST: "Recipe List",
@@ -25,48 +17,51 @@ const SubScreen = Object.freeze({
  */
 export function RecipeBook(props) {
 
-    const [listOrInfo, setListOrInfo] = useState(SubScreen.RECIPE_LIST)
-
-    const [recipes, setRecipes] = useState([])
-    const [activeTab, setActiveTab] = useState(0)
-
-    useEffect(() => {
-        getByComplexSearch({
-            addRecipeInformation: true,
-            diet: props.diet,
-            intolerances: props.intolerances,
-            type: activeTab === 0 ? "breakfast" : "main course"
-        }).then(setRecipes)
-    }, [activeTab])
+    const [subScreen, setSubScreen] = useState(SubScreen.RECIPE_LIST)
 
     const [currentRecipeId, setCurrentRecipeId] = useState()
 
-    const getOnRecipeCardClick = recipe => () => {
+    const onRecipeCardClick = recipe => {
         setCurrentRecipeId(recipe.id)
-        setListOrInfo(SubScreen.RECIPE_INFO)
+        setSubScreen(SubScreen.RECIPE_INFO)
     }
 
-    if (listOrInfo === SubScreen.RECIPE_LIST) {
-        return <Container>
-            <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
-            <Tabs>
-                {
-                    tabs.map((tab, index) => 
-                        <Tab
-                            key={`${index}_${tab}`}
-                            onClick={() => setActiveTab(index)}
-                            active={activeTab === index}
-                        >{tab}</Tab>
-                    )
-                }
-            </Tabs>
-            <RowsOfPairs>
-                {
-                    recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
-                }
-            </RowsOfPairs>
-        </Container>
-    } else if (listOrInfo === SubScreen.RECIPE_INFO) {
+    const getRecipesGetter = type => () => getByComplexSearch({
+            addRecipeInformation: true,
+            diet: props.diet,
+            intolerances: props.intolerances,
+            type
+        })
+
+
+    const tabs = [
+        {
+            name: 'Breakfast',
+            getRecipes: getRecipesGetter('breakfast')
+        },
+        {
+            name: 'Lunch',
+            getRecipes: getRecipesGetter('main course')
+        },
+        {
+            name: 'Dinner',
+            getRecipes: getRecipesGetter('main course')
+        }
+    ]
+
+    if (subScreen === SubScreen.RECIPE_LIST) {
+        
+        return <RecipeList 
+            cookingTime={props.cookingTime}
+            diet={props.diet} 
+            intolerances={props.intolerances}
+            
+            onRecipeCardClick={onRecipeCardClick}
+
+            tabs={tabs}
+        />
+
+    } else if (subScreen === SubScreen.RECIPE_INFO) {
 
         return <RecipeInfo 
                     getRecipe={() => {
@@ -74,7 +69,7 @@ export function RecipeBook(props) {
                     }}
                     onBackButtonClick={() => {
                         console.log('hello world')
-                        setListOrInfo(SubScreen.RECIPE_LIST)
+                        setSubScreen(SubScreen.RECIPE_LIST)
                     }}
         />
 

@@ -1,8 +1,8 @@
 import DevRecipePicture from './assets/DevRecipePicture.png'
 
 import { Card } from "react-bootstrap"
-import { RecipeRating } from "../RecipeRating/RecipeRating"
-import { RecipeOverview } from '../../../client/RecipeOverview'
+import { RecipeRating } from '../../RecipeRating/RecipeRating'
+import { RecipeOverview } from '../../../../client/RecipeOverview'
 
 /**
  * @param {{

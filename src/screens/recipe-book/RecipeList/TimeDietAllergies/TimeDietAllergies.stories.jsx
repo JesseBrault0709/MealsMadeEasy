@@ -1,7 +1,7 @@
 import { TimeDietAllergies } from "./TimeDietAllergies";
 
 export default {
-    title: "Home/TimeDietAllergies",
+    title: "RecipeBook/TimeDietAllergies",
     component: TimeDietAllergies
 }
 
