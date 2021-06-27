@@ -1,5 +1,5 @@
-import './TimeDietAllergies.css'
 import { TagChip } from "./TagChip/TagChip"
+import { Row, Col } from 'react-bootstrap'
 
 export function TimeDietAllergies({ 
     onFilterClick,
@@ -7,10 +7,10 @@ export function TimeDietAllergies({
     diet,
     intolerances
 }) {
-    return <div className="time-diet-allergies">
-        <button type="button" onClick={onFilterClick}>[filter icon]</button>
-        <TagChip tag={{ name: "Cooking Time", values: [cookingTime] }} />
-        <TagChip tag={{ name: "Diet", values: [diet] }} />
-        <TagChip tag={{ name: "Allergies", values: intolerances }} />
-    </div>
+    return <Row>
+        <Col><button type="button" onClick={onFilterClick}>[filter icon]</button></Col>
+        <Col><TagChip tag={{ name: "Cooking Time", values: [cookingTime] }} /></Col>
+        <Col><TagChip tag={{ name: "Diet", values: [diet] }} /></Col>
+        <Col><TagChip tag={{ name: "Allergies", values: intolerances }} /></Col>
+    </Row>
 }

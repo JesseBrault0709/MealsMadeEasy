@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import Back from './assets/back.png'
+
+import { useEffect, useState } from 'react'
 import { FullRecipe } from '../../../client/FullRecipe'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
@@ -8,23 +10,48 @@ import { InstructionsTab } from './InstructionsTab/InstructionsTab'
 
 /**
  * @param {{
- *  recipe: FullRecipe
+ *  getRecipe: () => Promise<FullRecipe>,
+ *  onBackButtonClick?: () => void
  * }} props
  */
 export function RecipeInfo(props) {
 
-    const { spoonacularScore } = props.recipe
+    const [recipe, setRecipe] = useState({
+        title: '',
+        readyInMinutes: 0,
+        servings: 0,
+        image: '',
+        spoonacularScore: 0,
+        extendedIngredients: [],
+        instructions: ''
+    })
+
+    useEffect(() => {
+        props.getRecipe().then(setRecipe)
+    }, [])
+
+    const {
+        title,
+        readyInMinutes,
+        servings,
+        image,
+        spoonacularScore,
+        extendedIngredients,
+        instructions
+    } = recipe
 
     const rating = spoonacularScore !== undefined && spoonacularScore !== null ? Math.floor(spoonacularScore / 20) : 0
 
     const [currentTab, setCurrentTab] = useState("Ingredients")
 
     return <Container>
-        <Row><Col><h2>{props.recipe.title}</h2></Col></Row>
+        <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} /></Button></Col></Row>
+        
+        <Row><Col><h2>{title}</h2></Col></Row>
 
-        <TimeServingsRating time={props.recipe.readyInMinutes} servings={props.recipe.servings} rating={rating} />
+        <TimeServingsRating time={readyInMinutes} servings={servings} rating={rating} />
 
-        <Row><Col><img src={props.recipe.image} alt="Recipe Picture" /></Col></Row>
+        <Row><Col><img src={image} alt="Recipe Picture" /></Col></Row>
 
         <Tabs>
             <Tab active={currentTab === "Ingredients"} onClick={() => setCurrentTab("Ingredients")}>Ingredients</Tab>
@@ -33,9 +60,9 @@ export function RecipeInfo(props) {
 
         {
             currentTab === "Ingredients" ? 
-            <IngredientsTab ingredients={props.recipe.extendedIngredients} /> : 
+            <IngredientsTab ingredients={extendedIngredients} /> : 
                 currentTab === "Instructions" ?
-                <InstructionsTab instructions={props.recipe.instructions} /> :
+                <InstructionsTab instructions={instructions} /> :
                 ''
         }
     </Container>

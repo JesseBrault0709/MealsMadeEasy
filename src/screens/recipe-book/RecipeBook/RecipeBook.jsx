@@ -1,12 +1,21 @@
-import { MealTabBar } from "../MealTabBar/MealTabBar"
-import { RecipesGrid } from "../RecipesGrid/RecipesGrid"
+import { RowsOfPairs } from "../../common/RowsOfPairs/RowsOfPairs"
 import { useEffect, useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
 import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
+import { RecipeCard } from "../RecipeCard/RecipeCard"
+import { Container } from 'react-bootstrap'
+import { Tab, Tabs } from "../../common/Tabs/Tabs"
+import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
+import { getRecipeInformation } from "../../../client/recipeInformation"
 
 const tabs = [
     "Breakfast", "Lunch", "Dinner"
 ]
+
+const SubScreen = Object.freeze({
+    RECIPE_LIST: "Recipe List",
+    RECIPE_INFO: "Recipe Info"
+})
 
 /**
  * Props:
@@ -16,12 +25,10 @@ const tabs = [
  */
 export function RecipeBook(props) {
 
+    const [listOrInfo, setListOrInfo] = useState(SubScreen.RECIPE_LIST)
+
     const [recipes, setRecipes] = useState([])
     const [activeTab, setActiveTab] = useState(0)
-
-    const onTabClick = tabIndex => {
-        setActiveTab(tabIndex)
-    }
 
     useEffect(() => {
         getByComplexSearch({
@@ -32,9 +39,46 @@ export function RecipeBook(props) {
         }).then(setRecipes)
     }, [activeTab])
 
-    return <>
-        <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
-        <MealTabBar tabs={tabs} activeTab={activeTab} onClick={onTabClick} />
-        <RecipesGrid recipes={recipes} />
-    </>
+    const [currentRecipeId, setCurrentRecipeId] = useState()
+
+    const getOnRecipeCardClick = recipe => () => {
+        setCurrentRecipeId(recipe.id)
+        setListOrInfo(SubScreen.RECIPE_INFO)
+    }
+
+    if (listOrInfo === SubScreen.RECIPE_LIST) {
+        return <Container>
+            <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
+            <Tabs>
+                {
+                    tabs.map((tab, index) => 
+                        <Tab
+                            key={`${index}_${tab}`}
+                            onClick={() => setActiveTab(index)}
+                            active={activeTab === index}
+                        >{tab}</Tab>
+                    )
+                }
+            </Tabs>
+            <RowsOfPairs>
+                {
+                    recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
+                }
+            </RowsOfPairs>
+        </Container>
+    } else if (listOrInfo === SubScreen.RECIPE_INFO) {
+
+        return <RecipeInfo 
+                    getRecipe={() => {
+                        return getRecipeInformation(currentRecipeId)
+                    }}
+                    onBackButtonClick={() => {
+                        console.log('hello world')
+                        setListOrInfo(SubScreen.RECIPE_LIST)
+                    }}
+        />
+
+    } else {
+        throw new Error("unknown value for listOrInfo")
+    }
 }

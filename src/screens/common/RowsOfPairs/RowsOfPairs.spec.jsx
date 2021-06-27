@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
-import { RecipesGrid } from './RecipesGrid'
+import { RowsOfPairs } from './RowsOfPairs'
 
 it('renders without throwing', () => {
-    render(<RecipesGrid recipes={[]} />)
+    render(<RowsOfPairs />)
 })

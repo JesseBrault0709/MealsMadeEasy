@@ -25,10 +25,6 @@ export function Tab(props) {
  */
 export function Tabs(props) {
     return <Row>
-        <Col>
-            <Row>
-                {props.children}
-            </Row>
-        </Col>
+        {props.children}
     </Row>
 }
