@@ -25,7 +25,7 @@ export function Home(props: HomeProps) {
 
     const [cookingTime, setCookingTime] = useState(props.initialCookingTime)
     const [diet, setDiet] = useState(props.initialDiet)
-    const [intolerances, setIntolerances] = useState(props.initialIntolerances)
+    const [intolerances, setIntolerances] = useState(props.initialIntolerances ?? [])
 
     if (currentScreen === "Loading") {
 
