@@ -32,7 +32,7 @@ function fillUsingFiller(arr, filler, startIndex, endIndex) {
  * }} props 
  */
 function Star(props) {
-    return <img key={`star${props.index}`} src={StarImg} alt="star" />
+    return <img src={StarImg} alt="star" />
 }
 
 /**
@@ -42,6 +42,6 @@ function Star(props) {
  */
 export function RecipeRating(props) {
     return <div>
-        {fillUsingFiller(new Array(5), index => <Star index={index} />, 0, props.rating)}
+        {fillUsingFiller(new Array(5), index => <Star key={`star${index}`} index={index} />, 0, props.rating)}
     </div>
 }
