@@ -1,10 +1,27 @@
-export type FullRecipe = {
+import { RecipeOverview } from "./RecipeOverview"
+
+export type Measure = {
+    amount: number,
+    unitLong: string,
+    unitShort: string
+}
+
+export type ExtendedIngredient = {
     id: number,
-    title: string,
+    amount: number,
     image: string,
-    imageType: string,
-    servings: number,
-    readyInMinutes: number,
-    spoonacularScore: number,
-    summary: string
+    measures: {
+        metric: Measure,
+        us: Measure
+    },
+    name: string,
+    original: string,
+    originalName: string,
+    unit: string
+}
+
+export type FullRecipe = Required<Omit<RecipeOverview, "preparationMinutes" | "cookingMinutes">> & {
+    analyzedInstructions: ReadonlyArray<string>,
+    instructions: string,
+    extendedIngredients: ReadonlyArray<ExtendedIngredient>
 }
