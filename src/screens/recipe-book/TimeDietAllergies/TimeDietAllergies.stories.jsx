@@ -9,18 +9,8 @@ const Template = args => <TimeDietAllergies {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    tags: [
-        {
-            name: 'Time',
-            values: ['15 mins']
-        },
-        {
-            name: 'Diet',
-            values: ['Vegan', 'Pescatarian']
-        },
-        {
-            name: 'Allergies',
-            values: ['Gluten']
-        }
-    ]
+    onFilterClick: () => console.log('hello world!'),
+    cookingTime: '30 minutes',
+    diet: 'Vegan',
+    intolerances: []
 }

@@ -10,7 +10,10 @@ const Template = args => <RecipeCard {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    title: 'Chicken',
-    rating: 0,
-    imgSrc: DevRecipePicture
+    recipe: {
+        id: 0,
+        title: 'Hello recipe!',
+        image: DevRecipePicture,
+        imageType: 'png'
+    }
 }

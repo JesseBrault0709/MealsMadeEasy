@@ -9,21 +9,7 @@ const Template = args => <MealTabBar {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    tabs: [
-        {
-            name: "Breakfast",
-            type: 'breakfast',
-            onClick: () => console.log("breakfast clicked")
-        },
-        {
-            name: "Lunch",
-            type: 'main course',
-            onClick: () => console.log("lunch clicked")
-        },
-        {
-            name: "Dinner",
-            type: 'main course',
-            onClick: () => console.log("dinner clicked")
-        }
-    ]
+    tabs: ['Breakfast', 'Lunch/Dinner', 'Snack'],
+    activeTab: 0,
+    onClick: tabIndex => console.log(tabIndex)
 }
