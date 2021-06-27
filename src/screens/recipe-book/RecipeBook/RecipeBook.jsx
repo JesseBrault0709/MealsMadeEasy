@@ -1,27 +1,40 @@
-import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
-import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
 import { MealTabBar } from "../MealTabBar/MealTabBar"
 import { RecipesGrid } from "../RecipesGrid/RecipesGrid"
-import { RecipeOverview } from "../../../client/RecipeOverview"
+import { useEffect, useState } from "react"
+import { getByComplexSearch } from "../../../client/complexSearch"
+import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
+
+const tabs = [
+    "Breakfast", "Lunch", "Dinner"
+]
 
 /**
- * @param {{
- *  tags: ReadonlyArray<{
- *      name: string,
- *      values: ReadonlyArray<string>
- *  }>,
- *  tabs: ReadonlyArray<{
- *      name: string,
- *      type: SPType,
- *      onClick?: () => void
- *  }>,
- *  recipes: ReadonlyArray<RecipeOverview>
- * }} props
+ * Props:
+ *  cookingTime: string
+ *  diet: SPDiet
+ *  intolerances: readonly SPIntolerance[]
  */
 export function RecipeBook(props) {
-    return <ScreenWithTitleAndNav title="Recipe Book" activeNavButton="RECIPES" >
-        <TimeDietAllergies tags={props.tags}/>
-        <MealTabBar tabs={props.tabs} />
-        <RecipesGrid recipes={props.recipes} />
-    </ScreenWithTitleAndNav>
+
+    const [recipes, setRecipes] = useState([])
+    const [activeTab, setActiveTab] = useState(0)
+
+    const onTabClick = tabIndex => {
+        setActiveTab(tabIndex)
+    }
+
+    useEffect(() => {
+        getByComplexSearch({
+            addRecipeInformation: true,
+            diet: props.diet,
+            intolerances: props.intolerances,
+            type: activeTab === 0 ? "breakfast" : "main course"
+        }).then(setRecipes)
+    }, [activeTab])
+
+    return <>
+        <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
+        <MealTabBar tabs={tabs} activeTab={activeTab} onClick={onTabClick} />
+        <RecipesGrid recipes={recipes} />
+    </>
 }
