@@ -12,9 +12,9 @@ export function MealTabBar({ tabs, activeTab, onClick }) {
         {
             tabs.map((tab, index) => {
                 if (activeTab === index) {
-                    return <Button active onClick={() => onClick(index)}>{tab}</Button>
+                    return <Button active key={`${index}_${tab}`} onClick={() => onClick(index)}>{tab}</Button>
                 } else {
-                    return <Button onClick={() => onClick(index)}>{tab}</Button>
+                    return <Button key={`${index}_${tab}`} onClick={() => onClick(index)}>{tab}</Button>
                 }
             })
         }
