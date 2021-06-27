@@ -1,18 +1,22 @@
 import './MealTabBar.css'
+import { Button } from 'react-bootstrap'
 
 /**
- * @param {{
- *  tabs: ReadonlyArray<{ // the tabs in this bar
- *      name: string, // the name of the tab
- *      type: SPType, // the Spoonacular type this tab represents
- *      onClick?: () => void // a callback for when the tab is clicked
- *  }>
- * }} props
+ * Props:
+ *  tabs: string[]
+ *  activeTab: number
+ *  onClick: (tabIndex: number) => void
  */
-export function MealTabBar(props) {
+export function MealTabBar({ tabs, activeTab, onClick }) {
     return <div className="meal-tab-bar">
         {
-            props.tabs.map(({ name, onClick }) => <button type="button" onClick={onClick}>{name}</button>)
+            tabs.map((tab, index) => {
+                if (activeTab === index) {
+                    return <Button active onClick={() => onClick(index)}>{tab}</Button>
+                } else {
+                    return <Button onClick={() => onClick(index)}>{tab}</Button>
+                }
+            })
         }
     </div>
 }
