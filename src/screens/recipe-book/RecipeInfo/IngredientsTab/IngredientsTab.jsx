@@ -1,3 +1,10 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Make checkmark circle functional even though
+ *      the add to grocery list functionality is
+ *      not until MVP 2
+ */
+
 import CheckCircle from './assets/CheckCircle.png'
 import { ExtendedIngredient } from "../../../../client/FullRecipe"
 import { Row, Col, Button } from 'react-bootstrap'

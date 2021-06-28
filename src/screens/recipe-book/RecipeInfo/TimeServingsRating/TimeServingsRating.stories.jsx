@@ -1,3 +1,8 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Fix spacing
+ */
+
 import { TimeServingsRating } from "./TimeServingsRating";
 
 export default {

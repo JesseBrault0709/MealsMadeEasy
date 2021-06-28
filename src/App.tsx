@@ -1,3 +1,8 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Move the time/diet/intolerance choices to a JSON file which is then imported here.
+ */
+
 import 'bootstrap/dist/css/bootstrap.css'
 import { useState } from 'react';
 

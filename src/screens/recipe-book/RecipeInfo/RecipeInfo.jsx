@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Remove back button in favor of button up in
+ *      ScreenTitle
+ */
+
 import Back from './assets/back.png'
 
 import { useEffect, useState } from 'react'

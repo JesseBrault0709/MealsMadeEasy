@@ -1,3 +1,8 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Do styling, esp of the filter button.
+ */
+
 import { TagChip } from "./TagChip/TagChip"
 import { Row, Col } from 'react-bootstrap'
 

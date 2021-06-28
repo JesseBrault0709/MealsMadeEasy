@@ -1,3 +1,10 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Instructions can either be a single string
+ *      or an array of strings; in the latter case,
+ *      render with bullet points.
+ */
+
 import { Row, Col, Button } from "react-bootstrap"
 
 /**

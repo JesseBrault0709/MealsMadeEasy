@@ -1,3 +1,8 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Get rid of DevRecipePicture behavior
+ */
+
 import DevRecipePicture from './assets/DevRecipePicture.png'
 
 import { Card } from "react-bootstrap"

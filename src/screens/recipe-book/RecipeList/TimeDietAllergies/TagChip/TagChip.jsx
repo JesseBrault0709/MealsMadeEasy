@@ -1,4 +1,9 @@
 /**
+ * TODO as of 6/28/21:
+ *  * Style these like Material-UI chips.
+ */
+
+/**
  * @param {{
  *  value: string
  * }} props 

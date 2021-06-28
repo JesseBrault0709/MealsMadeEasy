@@ -1,3 +1,11 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Pull from figma board the greyed out star
+ *      and any missing stars should be greyed out.
+ *      For example, a rating of 3 would be 3 yellow
+ *      stars + 2 greyed out stars.
+ */
+
 import StarImg from './assets/Star.png'
 
 /**
