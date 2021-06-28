@@ -15,7 +15,7 @@ export function IngredientsTab(props) {
             props.ingredients.map(ingredient => 
                 <Row key={ingredient.original}>
                     <Col>{ingredient.amount} {ingredient.unit} {ingredient.name}</Col>
-                    <Col><img src={CheckCircle} /></Col>
+                    <Col><img src={CheckCircle} alt="Empty Checkmark Circle"/></Col>
                 </Row>    
             )
         }

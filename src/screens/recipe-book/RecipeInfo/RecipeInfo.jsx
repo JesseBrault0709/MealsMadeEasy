@@ -28,7 +28,7 @@ export function RecipeInfo(props) {
 
     useEffect(() => {
         props.getRecipe().then(setRecipe)
-    }, [])
+    }, [props])
 
     const {
         title,
@@ -45,13 +45,13 @@ export function RecipeInfo(props) {
     const [currentTab, setCurrentTab] = useState("Ingredients")
 
     return <Container>
-        <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} /></Button></Col></Row>
+        <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button></Col></Row>
         
         <Row><Col><h2>{title}</h2></Col></Row>
 
         <TimeServingsRating time={readyInMinutes} servings={servings} rating={rating} />
 
-        <Row><Col><img src={image} alt="Recipe Picture" /></Col></Row>
+        <Row><Col><img src={image} alt="Recipe" /></Col></Row>
 
         <Tabs>
             <Tab active={currentTab === "Ingredients"} onClick={() => setCurrentTab("Ingredients")}>Ingredients</Tab>
