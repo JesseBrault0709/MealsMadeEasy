@@ -5,10 +5,13 @@ import type { SPDiet, SPIntolerance, SPType } from './spoonacularTypes'
 import { calcUrl, logRemainingHeaders } from './util';
 
 export type ComplexSearchParams = {
+    maxReadyTime?: number,
     diet?: SPDiet,
     intolerances?: ReadonlyArray<SPIntolerance>
     type?: SPType,
-    addRecipeInformation?: boolean
+    addRecipeInformation?: boolean,
+    offset?: number,
+    number?: number
 }
 
 type Result = {
