@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { getRecipeInformation } from "../../../client/recipeInformation"
