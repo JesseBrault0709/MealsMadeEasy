@@ -2,7 +2,7 @@ import { RecipeCard } from "./RecipeCard";
 import DevRecipePicture from './assets/DevRecipePicture.png'
 
 export default {
-    title: 'Home/RecipeCard',
+    title: 'RecipeBook/RecipeCard',
     component: RecipeCard
 }
 

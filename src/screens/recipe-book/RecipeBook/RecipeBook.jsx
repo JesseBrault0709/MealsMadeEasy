@@ -1,12 +1,13 @@
-import { MealTabBar } from "../MealTabBar/MealTabBar"
-import { RecipesGrid } from "../RecipesGrid/RecipesGrid"
 import { useEffect, useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
-import { TimeDietAllergies } from "../TimeDietAllergies/TimeDietAllergies"
+import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
+import { getRecipeInformation } from "../../../client/recipeInformation"
+import { RecipeList } from '../RecipeList/RecipeList'
 
-const tabs = [
-    "Breakfast", "Lunch", "Dinner"
-]
+const SubScreen = Object.freeze({
+    RECIPE_LIST: "Recipe List",
+    RECIPE_INFO: "Recipe Info"
+})
 
 /**
  * Props:
@@ -16,25 +17,63 @@ const tabs = [
  */
 export function RecipeBook(props) {
 
-    const [recipes, setRecipes] = useState([])
-    const [activeTab, setActiveTab] = useState(0)
+    const [subScreen, setSubScreen] = useState(SubScreen.RECIPE_LIST)
 
-    const onTabClick = tabIndex => {
-        setActiveTab(tabIndex)
+    const [currentRecipeId, setCurrentRecipeId] = useState()
+
+    const onRecipeCardClick = recipe => {
+        setCurrentRecipeId(recipe.id)
+        setSubScreen(SubScreen.RECIPE_INFO)
     }
 
-    useEffect(() => {
-        getByComplexSearch({
+    const getRecipesGetter = type => () => getByComplexSearch({
             addRecipeInformation: true,
             diet: props.diet,
             intolerances: props.intolerances,
-            type: activeTab === 0 ? "breakfast" : "main course"
-        }).then(setRecipes)
-    }, [activeTab])
+            type
+        })
 
-    return <>
-        <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
-        <MealTabBar tabs={tabs} activeTab={activeTab} onClick={onTabClick} />
-        <RecipesGrid recipes={recipes} />
-    </>
+
+    const tabs = [
+        {
+            name: 'Breakfast',
+            getRecipes: getRecipesGetter('breakfast')
+        },
+        {
+            name: 'Lunch',
+            getRecipes: getRecipesGetter('main course')
+        },
+        {
+            name: 'Dinner',
+            getRecipes: getRecipesGetter('main course')
+        }
+    ]
+
+    if (subScreen === SubScreen.RECIPE_LIST) {
+        
+        return <RecipeList 
+            cookingTime={props.cookingTime}
+            diet={props.diet} 
+            intolerances={props.intolerances}
+            
+            onRecipeCardClick={onRecipeCardClick}
+
+            tabs={tabs}
+        />
+
+    } else if (subScreen === SubScreen.RECIPE_INFO) {
+
+        return <RecipeInfo 
+                    getRecipe={() => {
+                        return getRecipeInformation(currentRecipeId)
+                    }}
+                    onBackButtonClick={() => {
+                        console.log('hello world')
+                        setSubScreen(SubScreen.RECIPE_LIST)
+                    }}
+        />
+
+    } else {
+        throw new Error("unknown value for listOrInfo")
+    }
 }
