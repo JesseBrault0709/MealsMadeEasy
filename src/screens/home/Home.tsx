@@ -21,7 +21,7 @@ type HomeScreen =
 
 export function Home(props: HomeProps) {
     
-    const [currentScreen, setCurrentScreen] = useState(props.showLoadingScreen ? "Loading" as HomeScreen : "Recipe Book" as HomeScreen)
+    const [currentScreen, setCurrentScreen] = useState<HomeScreen>(props.showLoadingScreen ? "Loading" : "Recipe Book")
 
     const [cookingTime, setCookingTime] = useState(props.initialCookingTime)
     const [diet, setDiet] = useState(props.initialDiet)
