@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21: 
+ *  * Update documentation to include JSDoc types
+ *  * Clean up and prune unused code/comments
+ */
+
 import { useState } from "react";
 
 import { OrderedScreenCollection } from "../OrderedScreenCollection";

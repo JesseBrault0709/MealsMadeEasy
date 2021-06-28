@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Move groupIntoPairs function into a util.js file
+ *      to be created in the root src dir.
+ */
+
 import { Row, Col } from 'react-bootstrap'
 
 function groupIntoPairs(arr) {

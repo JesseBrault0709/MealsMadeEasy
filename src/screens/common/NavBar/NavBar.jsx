@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Write logic for switching between buttons,
+ *      probably as callback props for each button.
+ */
+
 import './NavBar.css'
 
 import RecipesInactive from './assets/Recipes_inactive.png'

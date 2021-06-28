@@ -1,3 +1,10 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Remove clockwise/counter-clockwise buttons.
+ *  * Write code for touch/swipe
+ *  * Write code for click-and-drag 
+ */
+
 import './ClockSlider.css'
 
 import { useRef, useState } from 'react'

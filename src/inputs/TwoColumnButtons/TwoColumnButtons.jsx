@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * This component should be removed in favor of 
+ *      the RowsOfPairs component.
+ */
+
 import { Container, Row, Col } from "react-bootstrap"
 
 /**

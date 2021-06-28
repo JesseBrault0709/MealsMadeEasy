@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Update documentation to include JSDoc types
+ *  * Nested function should be of form const func = lambda
+ */
+
 import { OnboardingScreen } from "./OnboardingScreen"
 import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
 import { Button } from "react-bootstrap"

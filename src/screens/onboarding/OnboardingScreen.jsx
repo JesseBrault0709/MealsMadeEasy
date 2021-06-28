@@ -1,4 +1,9 @@
 /**
+ * TODO as of 6/28/21:
+ *  * Update documentation to include JSDoc types
+ */
+
+/**
  * Props:
  *  * prompt: string: the prompt displayed at the top of the screen.
  *  * instruction: string: the instruction to the user what to do with the control(s)
