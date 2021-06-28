@@ -4,7 +4,7 @@ import { RowsOfPairs } from './RowsOfPairs'
 import { RecipeCard } from '../../recipe-book/RecipeList/RecipeCard/RecipeCard'
 
 export default { 
-    title: 'RecipeBook/RecipesGrid',
+    title: 'Common/RowsOfPairs',
     component: RowsOfPairs
 }
 
