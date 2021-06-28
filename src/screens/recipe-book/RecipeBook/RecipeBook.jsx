@@ -1,3 +1,11 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Pull up some of the magic variables
+ *      (the getRecipeGetter func, the resultSetSize, etc)
+ *      as props
+ *  * Incorporate cooking time into the complexSearch
+ */
+
 import { useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
@@ -26,10 +34,12 @@ export function RecipeBook(props) {
         setSubScreen(SubScreen.RECIPE_INFO)
     }
 
-    const getRecipesGetter = type => () => getByComplexSearch({
+    const getRecipesGetter = type => (offset, limit) => getByComplexSearch({
             addRecipeInformation: true,
             diet: props.diet,
             intolerances: props.intolerances,
+            offset,
+            number: limit,
             type
         })
 
@@ -56,6 +66,7 @@ export function RecipeBook(props) {
             diet={props.diet} 
             intolerances={props.intolerances}
             
+            recipeResultSetSize={6}
             onRecipeCardClick={onRecipeCardClick}
 
             tabs={tabs}
