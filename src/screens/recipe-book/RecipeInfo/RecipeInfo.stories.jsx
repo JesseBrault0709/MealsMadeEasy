@@ -1,4 +1,4 @@
-import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
+import DevRecipePicture from '../RecipeList/RecipeCard/assets/DevRecipePicture.png'
 import { RecipeInfo } from './RecipeInfo'
 
 export default {

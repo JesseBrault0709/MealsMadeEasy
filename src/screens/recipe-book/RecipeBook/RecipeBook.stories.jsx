@@ -1,5 +1,3 @@
-import DevRecipePicture from '../RecipeCard/assets/DevRecipePicture.png'
-
 import { RecipeBook } from "./RecipeBook";
 
 export default {
