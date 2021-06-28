@@ -18,6 +18,11 @@ function groupIntoPairs(arr) {
  * }} props
  */
 export function RowsOfPairs(props) {
+    
+    if (props.children === undefined || props.children === null) {
+        throw new Error("RowOfPairs must have at least one child element.")
+    }
+
     return <>
         {
             groupIntoPairs(props.children).map((pair, index) => {
