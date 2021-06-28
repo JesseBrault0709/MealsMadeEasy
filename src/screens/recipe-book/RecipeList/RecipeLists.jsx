@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Container } from "react-bootstrap"
 import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
-import { RowsOfPairs } from '../../common/RowsOfPairs/RowsOfPairs'
-import { RecipeCard } from './RecipeCard/RecipeCard'
+import { RecipeListTab } from './RecipeListTab/RecipeListTab'
 
 /**
  * @param {{
@@ -11,28 +10,25 @@ import { RecipeCard } from './RecipeCard/RecipeCard'
  *  diet: SPDiet,
  *  intolerances: ReadonlyArray<SPIntolerance>,
  * 
+ *  recipeResultSetSize: number
  *  onRecipeCardClick: (recipe: RecipeOverview) => void,
  * 
  *  tabs: ReadonlyArray<{
  *      name: string,
- *      getRecipes: () => Promise<ReadonlyArray<RecipeOverview>>
+ *      getRecipes: (
+ *          offset?: number,
+ *          limit?: number
+ *      ) => Promise<ReadonlyArray<RecipeOverview>>
  *  }>
  * }} props 
  */
 export function RecipeList(props) {
 
     const [activeTab, setActiveTab] = useState(props.tabs[0])
-    const [recipes, setRecipes] = useState([])
 
     const getOnTabClick = tab => () => {
         setActiveTab(tab)
     }
-
-    const getOnRecipeCardClick = recipe => () => props.onRecipeCardClick(recipe)
-
-    useEffect(() => {
-        activeTab.getRecipes().then(setRecipes)
-    }, [activeTab])
 
     return <Container>
         <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
@@ -47,10 +43,16 @@ export function RecipeList(props) {
                 )
             }
         </Tabs>
-        <RowsOfPairs>
-            {
-                recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
-            }
-        </RowsOfPairs>
+        {
+            props.tabs.map((tab, index) => 
+                <RecipeListTab
+                    key={tab.name}
+                    active={tab === activeTab}
+                    getRecipes={tab.getRecipes}
+                    onRecipeCardClick={props.onRecipeCardClick}
+                    recipeResultSetSize={props.recipeResultSetSize}
+                />
+            )
+        }
     </Container>
 }

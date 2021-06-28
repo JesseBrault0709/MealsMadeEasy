@@ -2,7 +2,7 @@ import { useState } from "react"
 import { getByComplexSearch } from "../../../client/complexSearch"
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { getRecipeInformation } from "../../../client/recipeInformation"
-import { RecipeList } from '../RecipeList/RecipeList'
+import { RecipeList } from '../RecipeList/RecipeLists'
 
 const SubScreen = Object.freeze({
     RECIPE_LIST: "Recipe List",
