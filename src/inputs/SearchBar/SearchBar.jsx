@@ -1,3 +1,9 @@
+/**
+ * TODO as of 6/28/21:
+ *  * This control may or may not end up being used so
+ *      let's leave it alone for now.
+ */
+
 import MagnifyingGlass from './assets/MagnifyingGlass.png'
 import './SearchBar.css'
 

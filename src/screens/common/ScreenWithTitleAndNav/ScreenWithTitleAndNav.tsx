@@ -1,3 +1,10 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Figure out widths
+ *  * Figure out a way for a child to control whether the title is showing or not,
+ *      probably via some kind of prop or via a React Context
+ */
+
 import { ScreenTitle, ScreenTitleProps } from "../ScreenTitle/ScreenTitle"
 import { NavBar } from "../NavBar/NavBar"
 import { Container, Row, Col } from "react-bootstrap"

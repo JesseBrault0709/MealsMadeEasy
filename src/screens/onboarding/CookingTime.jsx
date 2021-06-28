@@ -1,3 +1,8 @@
+/**
+ * TODO as of 6/28/21:
+ *  * Update documentation to include JSDoc types
+ */
+
 import { OnboardingScreen } from "./OnboardingScreen"
 import { ClockSlider } from "../../inputs/ClockSlider/ClockSlider"
 
