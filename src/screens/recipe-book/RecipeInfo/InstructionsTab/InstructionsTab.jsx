@@ -1,5 +1,10 @@
 import { Row, Col, Button } from "react-bootstrap"
 
+/**
+ * @param {{
+ *  instructions: string
+ * }} props 
+ */
 export function InstructionsTab(props) {
     return <>
         <Row>
