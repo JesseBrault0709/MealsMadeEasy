@@ -16,31 +16,33 @@ import SettingsInactive from './assets/Settings_inactive.png'
 
 import { Container, Row, Col } from 'react-bootstrap'
 
-export const ActiveNavBarButton = Object.freeze({
-    RECIPES: "RECIPES",
-    PLANNER: "PLANNER"
-})
+export enum NavBarButton {
+    RECIPE_BOOK = "Recipe Book",
+    PLANNER = "Planner"
+}
 
-/**
- * Props:
- *  * activeButton: a member of the exported ActiveNavBarButton 'enum'
- * 
- * @param {{
- *  activeButton: "RECIPES" | "PLANNER"
- * }} props
- */
-export function NavBar(props) {
+export type NavBarProps = {
+    activeButton: NavBarButton,
+    onButtonClick: (button: NavBarButton) => void
+}
+
+export function NavBar(props: NavBarProps) {
+
+    const getOnClick = (button: NavBarButton) => () => {
+        props.onButtonClick(button)
+    }
+
     return <Container id="nav-bar-container">
         <Row>
             <Col>
-                <div className="nav-button">
-                    <img src={props.activeButton === "RECIPES" ? RecipesActive : RecipesInactive} alt="Recipes" />
+                <div className="nav-button" onClick={getOnClick(NavBarButton.RECIPE_BOOK)}>
+                    <img src={props.activeButton === NavBarButton.RECIPE_BOOK ? RecipesActive : RecipesInactive} alt="Recipes" />
                     <p>Recipes</p>
                 </div>
             </Col>
             <Col>
-                <div className="nav-button">
-                    <img src={props.activeButton === "PLANNER" ? PlannerActive : PlannerInactive} alt="Planner" />
+                <div className="nav-button" onClick={getOnClick(NavBarButton.PLANNER)}>
+                    <img src={props.activeButton === NavBarButton.PLANNER ? PlannerActive : PlannerInactive} alt="Planner" />
                     <p>Planner</p>
                 </div>
             </Col>
