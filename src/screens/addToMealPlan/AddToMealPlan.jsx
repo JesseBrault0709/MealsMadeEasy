@@ -7,7 +7,7 @@ import { SelectMealType } from './SelectMealType/SelectMealType'
 
 /**
  * @param {{
- *  onSubmit: (meal: string, date: Date) => void
+ *  onSubmit: (meal: string, order: number, date: Date) => void
  * }} props 
  * @returns 
  */
@@ -67,7 +67,7 @@ export function AddToMealPlan(props) {
             </Col>
             <Col>
                 <Button onClick={() => {
-                    props.onSubmit(selectedMeal, selectedDate)
+                    props.onSubmit(selectedMeal, meals.findIndex(meal => meal === selectedMeal), selectedDate)
                 }}>Confirm</Button>
             </Col>
         </Row>

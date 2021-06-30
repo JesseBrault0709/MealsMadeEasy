@@ -54,6 +54,10 @@ function MealCol(props) {
  * }} props
  */
 function DayRow(props) {
+
+    const sorted = [...props.dayMealPlan.meals]
+    sorted.sort((a, b) => a.order - b.order)
+
     return <Row>
         <Col xs={3}>
             <Row>{formatDate(props.dayMealPlan.date)}</Row>
@@ -61,7 +65,7 @@ function DayRow(props) {
         </Col>
 
         {
-            props.dayMealPlan.meals.map(meal => <MealCol recipes={meal.recipes} />)
+            sorted.map(meal => <MealCol recipes={meal.recipes} />)
         }
     </Row>    
 }

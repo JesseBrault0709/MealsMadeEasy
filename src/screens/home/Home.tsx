@@ -27,6 +27,7 @@ type Screen =
 function getNewDayMealPlans(
     recipe: RecipeOverview,
     targetMealPlanName: string,
+    targetMealPlanOrder: number,
     targetDate: Date,
     oldDayMealPlans: ReadonlyArray<DayMealPlan>
 ) {
@@ -40,6 +41,7 @@ function getNewDayMealPlans(
             meals: [
                 {
                     name: targetMealPlanName,
+                    order: targetMealPlanOrder,
                     recipes: [recipe]
                 }
             ]
@@ -52,11 +54,13 @@ function getNewDayMealPlans(
         if (targetMealPlan === undefined) {
             mealResults.push({
                 name: targetMealPlanName,
+                order: targetMealPlanOrder,
                 recipes: [recipe]
             }, ...targetDayMealPlan.meals)
         } else {
             mealResults.push({
                 name: targetMealPlan.name,
+                order: targetMealPlan.order,
                 recipes: [...targetMealPlan.recipes, recipe]
             }, ...targetDayMealPlan.meals.filter(mealPlan => mealPlan !== targetMealPlan))
         }
@@ -91,13 +95,13 @@ export function Home(props: HomeProps) {
 
     const onAddToMealPlan = (recipe: FullRecipe) => {
         
-        const onSubmit = (targetMeal: string, targetDate: Date) => {
+        const onSubmit = (targetMeal: string, targetOrder: number, targetDate: Date) => {
             console.log({
                 recipe, mealName: targetMeal, date: targetDate
             })
             setShowOverlay(false)
             setCurrentScreen("Planner")
-            setDayMealPlans(getNewDayMealPlans(recipe, targetMeal, targetDate, dayMealPlans))
+            setDayMealPlans(getNewDayMealPlans(recipe, targetMeal, targetOrder, targetDate, dayMealPlans))
         }
 
         setOverlay(<AddToMealPlan onSubmit={onSubmit} />)
