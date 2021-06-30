@@ -11,7 +11,8 @@ import { Row, Col, Button } from 'react-bootstrap'
 
 /**
  * @param {{
- *  ingredients: ReadonlyArray<ExtendedIngredient>
+ *  ingredients: ReadonlyArray<ExtendedIngredient>,
+ *  onAddToMealPlan: () => void
  * }} props 
  */
 export function IngredientsTab(props) {
@@ -32,7 +33,7 @@ export function IngredientsTab(props) {
                 <Button>Add to Grocery List</Button>
             </Col>
             <Col>
-                <Button>Add to Meal Plan</Button>
+                <Button onClick={props.onAddToMealPlan}>Add to Meal Plan</Button>
             </Col>
         </Row>
 

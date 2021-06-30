@@ -18,10 +18,11 @@ const SubScreen = Object.freeze({
 })
 
 /**
- * Props:
- *  cookingTime: string
- *  diet: SPDiet
- *  intolerances: readonly SPIntolerance[]
+ * @param {{
+ *  recipePreferences: RecipePreferences,
+ *  onAddToMealPlan: (recipe: FullRecipe) => void
+ * }} props 
+ * @returns 
  */
 export function RecipeBook(props) {
 
@@ -62,9 +63,9 @@ export function RecipeBook(props) {
     if (subScreen === SubScreen.RECIPE_LIST) {
         
         return <RecipeList 
-            cookingTime={props.cookingTime}
-            diet={props.diet} 
-            intolerances={props.intolerances}
+            cookingTime={props.recipePreferences.cookingTime}
+            diet={props.recipePreferences.diet} 
+            intolerances={props.recipePreferences.intolerances}
             
             recipeResultSetSize={6}
             onRecipeCardClick={onRecipeCardClick}
@@ -82,6 +83,7 @@ export function RecipeBook(props) {
                         console.log('hello world')
                         setSubScreen(SubScreen.RECIPE_LIST)
                     }}
+                    onAddToMealPlan={props.onAddToMealPlan}
         />
 
     } else {

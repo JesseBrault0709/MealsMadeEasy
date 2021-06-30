@@ -1,5 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap'
 import { RecipeOverview } from '../../client/RecipeOverview'
+import { DayMealPlan } from '../../types/MealPlanTypes'
 
 /**
  * @param {number} day
@@ -49,38 +50,34 @@ function MealCol(props) {
 
 /**
  * @param {{
- *  date: Date,
- *  breakfast: ReadonlyArray<RecipeOverview>
- *  lunch: ReadonlyArray<RecipeOverview>
- *  dinner: ReadonlyArray<RecipeOverview>
+ *  dayMealPlan: DayMealPlan
  * }} props
  */
 function DayRow(props) {
     return <Row>
         <Col>
-            <Row>{formatDate(props.date)}</Row>
-            <Row>{getDayAbbrev(props.date.getDay())}</Row>
+            <Row>{formatDate(props.dayMealPlan.date)}</Row>
+            <Row>{getDayAbbrev(props.dayMealPlan.date.getDay())}</Row>
         </Col>
 
-        <MealCol recipes={props.breakfast} />
-        <MealCol recipes={props.lunch} />
-        <MealCol recipes={props.dinner} />
+        {
+            props.dayMealPlan.meals.map(meal => <MealCol recipes={meal.recipes} />)
+        }
     </Row>    
 }
 
 
 /**
  * @param {{
- *  days: ReadonlyArray<{
- *      date: Date,
- *      breakfast: ReadonlyArray<RecipeOverview>
- *      lunch: ReadonlyArray<RecipeOverview>
- *      dinner: ReadonlyArray<RecipeOverview>
- *  }>
+ *  dayMealPlans: ReadonlyArray<DayMealPlan>
  * }} props 
  * @returns 
  */
 export function Planner(props) {
+
+    const sorted = [...props.dayMealPlans]
+    sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
+
     return <Container>
         <Row>
             <Col>Date</Col>
@@ -90,8 +87,8 @@ export function Planner(props) {
         </Row>
 
         {
-            props.days.map(day => 
-                <DayRow key={formatDate(day.date)} {...day} />
+            sorted.map(day => 
+                <DayRow key={formatDate(day.date)} dayMealPlan={day} />
             )
         }
     </Container>

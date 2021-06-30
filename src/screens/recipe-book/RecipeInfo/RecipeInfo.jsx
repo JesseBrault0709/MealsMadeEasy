@@ -17,7 +17,8 @@ import { InstructionsTab } from './InstructionsTab/InstructionsTab'
 /**
  * @param {{
  *  getRecipe: () => Promise<FullRecipe>,
- *  onBackButtonClick?: () => void
+ *  onBackButtonClick?: () => void,
+ *  onAddToMealPlan: (recipe: FullRecipe) => void
  * }} props
  */
 export function RecipeInfo(props) {
@@ -50,6 +51,10 @@ export function RecipeInfo(props) {
 
     const [currentTab, setCurrentTab] = useState("Ingredients")
 
+    const onAddToMealPlan = () => {
+        props.onAddToMealPlan(recipe)
+    }
+
     return <Container>
         <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button></Col></Row>
         
@@ -66,9 +71,9 @@ export function RecipeInfo(props) {
 
         {
             currentTab === "Ingredients" ? 
-            <IngredientsTab ingredients={extendedIngredients} /> : 
+            <IngredientsTab ingredients={extendedIngredients} onAddToMealPlan={onAddToMealPlan} /> : 
                 currentTab === "Instructions" ?
-                <InstructionsTab instructions={instructions} /> :
+                <InstructionsTab instructions={instructions} onAddToMealPlan={onAddToMealPlan} /> :
                 ''
         }
     </Container>

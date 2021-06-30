@@ -1,0 +1,10 @@
+.bottom-overlay {
+    position: fixed;
+    box-sizing: content-box;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    border: 1px solid red;
+    background: rgba(255, 255, 255, 1);
+    z-index: 1;
+}

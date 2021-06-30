@@ -9,67 +9,33 @@ const Template = args => <Planner {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    days: [
+    dayMealPlans: [
         {
             date: new Date("June 29, 2021"),
-            breakfast: [
+            meals: [
                 {
-                    title: 'Eggs'
+                    title: 'Breakfast',
+                    recipes: [
+                        {
+                            title: 'Sausage'
+                        }
+                    ]
                 },
                 {
-                    title: 'Bacon'
-                }
-            ],
-            lunch: [
-                {
-                    title: 'Sushi'
-                }
-            ],
-            dinner: [
-                {
-                    title: 'Onion soup'
-                }
-            ]
-        },
-        {
-            date: new Date("June 30, 2021"),
-            breakfast: [
-                {
-                    title: 'Sausage'
+                    title: 'Lunch',
+                    recipes: [
+                        {
+                            title: 'Grilled Cheese'
+                        }
+                    ]
                 },
                 {
-                    title: 'Gravy'
-                }
-            ],
-            lunch: [
-                {
-                    title: 'Pizza'
-                }
-            ],
-            dinner: [
-                {
-                    title: 'Chicken'
-                }
-            ]
-        },
-        {
-            date: new Date("July 1, 2021"),
-            breakfast: [
-                {
-                    title: 'Sausage'
-                },
-                {
-                    title: 'Gravy'
-                }
-            ],
-            lunch: [
-                {
-                    title: 'Pizza'
-                }
-            ],
-            dinner: [
-                {
-                    title: 'Chicken'
+                    title: 'Dinner',
+                    recipes: [
+                        {
+                            title: 'Soup'
+                        }
+                    ]
                 }
             ]
         }

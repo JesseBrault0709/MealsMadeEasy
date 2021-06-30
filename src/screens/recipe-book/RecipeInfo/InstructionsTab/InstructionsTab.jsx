@@ -9,7 +9,8 @@ import { Row, Col, Button } from "react-bootstrap"
 
 /**
  * @param {{
- *  instructions: string
+ *  instructions: string,
+ *  onAddToMealPlan: () => void
  * }} props 
  */
 export function InstructionsTab(props) {
@@ -26,7 +27,7 @@ export function InstructionsTab(props) {
                 <Button>Back</Button>
             </Col>
             <Col>
-                <Button>Add to Meal Plan</Button>
+                <Button onClick={props.onAddToMealPlan}>Add to Meal Plan</Button>
             </Col>
         </Row>
 

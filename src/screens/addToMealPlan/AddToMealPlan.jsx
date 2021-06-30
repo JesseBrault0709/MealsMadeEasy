@@ -5,6 +5,12 @@ import Calendar from 'react-calendar'
 import { useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'
 
+/**
+ * @param {{
+ *  onSubmit: (meal: string, date: Date) => void
+ * }} props 
+ * @returns 
+ */
 export function AddToMealPlan(props) {
 
     const [selectedMeal, setSelectedMeal] = useState()
@@ -61,9 +67,7 @@ export function AddToMealPlan(props) {
             </Col>
             <Col>
                 <Button onClick={() => {
-                    console.log({
-                        selectedMeal, selectedDate
-                    })
+                    props.onSubmit(selectedMeal, selectedDate)
                 }}>Confirm</Button>
             </Col>
         </Row>
