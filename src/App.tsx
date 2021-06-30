@@ -10,6 +10,8 @@ import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
 import { Home } from './screens/home/Home';
+import { RecipePreferences } from './types/RecipePreferences';
+import { DayMealPlan } from './types/MealPlanTypes';
 
 type Screen = "Onboarding" | "Home"
 
@@ -17,7 +19,7 @@ type Screen = "Onboarding" | "Home"
  * For now these are hard-coded but eventually we want to move these elsewhere,
  * if possible.
  */
-const availableCookingTimes = ['No limit', '15 mins', '30 mins', '45 mins', '60 minutes', '90 minutes']
+const availableCookingTimes: ReadonlyArray<RecipePreferences['cookingTime']> = ['No Limit', 15, 30, 45, 60]
 
 const availableDiets: ReadonlyArray<SPDiet> = [
     'Vegan', 'Vegetarian',
@@ -36,33 +38,25 @@ function App() {
 
     const [currentScreen, setCurrentScreen] = useState<Screen>("Onboarding")
 
-    const [userPreferences, setUserPreferences] = useState<{
-        cookingTime?: string,
-        diet?: SPDiet,
-        intolerances?: ReadonlyArray<SPIntolerance>
-    }>({})
+    const [userPreferences, setUserPreferences] = useState<RecipePreferences>({
+        cookingTime: 'No Limit',
+        intolerances: []
+    })
+
+    const [dayMealPlans, setDayMealPlans] = useState<ReadonlyArray<DayMealPlan>>([])
 
     if (currentScreen === "Onboarding") {
 
-        const onOnboardingSubmit = (
-            cookingTime: string, 
-            diet: SPDiet, 
-            intolerances: ReadonlyArray<SPIntolerance>
-        ) => {
-            console.log({
-                cookingTime, diet, intolerances
-            })
-            setUserPreferences({
-                cookingTime, diet, intolerances
-            })
+        const onOnboardingSubmit = (preferences: RecipePreferences) => {
+            setUserPreferences(preferences)
             setCurrentScreen("Home")
         }
 
         return <div className="App">
             <Onboarding
-                cookingTimes={availableCookingTimes}
-                diets={availableDiets}
-                restrictions={availableIntolerances}
+                allCookingTimes={availableCookingTimes}
+                allDiets={availableDiets}
+                allIntolerances={availableIntolerances}
                 onSubmit={onOnboardingSubmit}
             />
         </div>
@@ -72,9 +66,8 @@ function App() {
         return <div className="App">
             <Home 
                 showLoadingScreen 
-                initialCookingTime={userPreferences.cookingTime} 
-                initialDiet={userPreferences.diet} 
-                initialIntolerances={userPreferences.intolerances} 
+                initialRecipePreferences={userPreferences}
+                initialDayMealPlans={dayMealPlans}
             />
         </div>
     }

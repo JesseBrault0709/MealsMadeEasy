@@ -7,7 +7,7 @@
 
 import './ClockSlider.css'
 
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 
 /**
@@ -82,17 +82,17 @@ const timingOptions = {
  *  3. Runs the given onFinished callback when all animations are finished.
  * 
  * If the checkPredicate returns false, it is a no-op.
- * 
- * @param {() => boolean} checkPredicate 
- * @param {() => Animation[]} getAnimations 
- * @param {() => void} onFinished 
  */
-function getRotation(checkPredicate, getAnimations, onFinished) {
+function getRotation(
+    checkPredicate: () => boolean, 
+    getAnimations: () => ReadonlyArray<Animation | undefined>, 
+    onFinished: () => void
+) {
 
     return () => {
         if (checkPredicate()) {
             Promise.all(
-                getAnimations().map(animation => animation.finished)
+                getAnimations().map(animation => animation?.finished)
             )
                 .then(onFinished)
                 .catch(console.log)
@@ -101,20 +101,13 @@ function getRotation(checkPredicate, getAnimations, onFinished) {
 
 }
 
+export type ClockSliderProps = {
+    options: string[]
+    initialOption?: number
+    onChange?: (newValue: string) => void
+}
 
-/**
- * Props:
- *  * options: string[]: an array of string options containing at least one element
- *  * initialOption: number, default = 0: the index of the initially selected option
- *  * onChange: (selectedIndex: number) => void: a callback for when the selected option changes
- * 
- * @param {{
- *  options: string[],
- *  initialOption?: number,
- *  onChange?: (selectedIndex: number) => void
- * }} props
- */
-export function ClockSlider(props) {
+export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
 
     const { options } = props
 
@@ -125,28 +118,25 @@ export function ClockSlider(props) {
 
     const [currentCenter, setCurrentCenter] = useState(props.initialOption ?? 0)
 
-    const leftHiddenRef = useRef()
-    const leftRef = useRef()
-    const centerRef = useRef()
-    const rightRef = useRef()
-    const rightHiddenRef = useRef()
+    const leftHiddenRef = useRef<HTMLDivElement>(null)
+    const leftRef = useRef<HTMLDivElement>(null)
+    const centerRef = useRef<HTMLDivElement>(null)
+    const rightRef = useRef<HTMLDivElement>(null)
+    const rightHiddenRef = useRef<HTMLDivElement>(null)
 
-    /**
-     * @param {number} nextCenter 
-     */
-    function runOnChangeCallback(nextCenter) {
-        if (props.onChange !== undefined && props.onChange !== null) {
-            props.onChange(nextCenter)
+    const runOnChangeCallback = (nextCenter: number) => {
+        if (props.onChange !== undefined) {
+            props.onChange(options[nextCenter])
         }
     }
 
     const clockwise = getRotation(
         () => currentCenter > 0,
         () => [
-            leftHiddenRef.current.animate(leftHiddenToLeft, timingOptions),
-            leftRef.current.animate(leftToCenter, timingOptions),
-            centerRef.current.animate(centerToRight, timingOptions),
-            rightRef.current.animate(rightToRightHidden, timingOptions)
+            leftHiddenRef.current?.animate(leftHiddenToLeft, timingOptions),
+            leftRef.current?.animate(leftToCenter, timingOptions),
+            centerRef.current?.animate(centerToRight, timingOptions),
+            rightRef.current?.animate(rightToRightHidden, timingOptions)
         ],
         () => {
             const nextCenter = currentCenter - 1 // guaranteed to be greater than or equal to zero
@@ -158,10 +148,10 @@ export function ClockSlider(props) {
     const counterClockwise = getRotation(
         () => currentCenter < options.length - 1,
         () => [
-            rightHiddenRef.current.animate(rightHiddenToRight, timingOptions),
-            rightRef.current.animate(rightToCenter, timingOptions),
-            centerRef.current.animate(centerToLeft, timingOptions),
-            leftRef.current.animate(leftToLeftHidden, timingOptions)
+            rightHiddenRef.current?.animate(rightHiddenToRight, timingOptions),
+            rightRef.current?.animate(rightToCenter, timingOptions),
+            centerRef.current?.animate(centerToLeft, timingOptions),
+            leftRef.current?.animate(leftToLeftHidden, timingOptions)
         ],
         () => {
             const nextCenter = currentCenter + 1 // guaranteed to be less than or equal to index of last element

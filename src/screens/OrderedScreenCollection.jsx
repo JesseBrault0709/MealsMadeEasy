@@ -107,6 +107,6 @@ export function OrderedScreenCollection(props) {
             </OrderedScreen>
         }   
     } else {
-        return ''
+        return null
     }
 }
