@@ -41,7 +41,7 @@ function formatDate(date) {
  * }} props 
  */
 function MealCol(props) {
-    return <Col>
+    return <Col xs={3}>
         {
             props.recipes.map(recipe => <div key={recipe.title}>{recipe.title}</div>)
         }
@@ -55,7 +55,7 @@ function MealCol(props) {
  */
 function DayRow(props) {
     return <Row>
-        <Col>
+        <Col xs={3}>
             <Row>{formatDate(props.dayMealPlan.date)}</Row>
             <Row>{getDayAbbrev(props.dayMealPlan.date.getDay())}</Row>
         </Col>
