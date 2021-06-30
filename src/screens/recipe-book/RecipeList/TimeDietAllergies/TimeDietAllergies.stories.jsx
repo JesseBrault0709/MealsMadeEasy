@@ -10,7 +10,7 @@ const Template = args => <TimeDietAllergies {...args} />
 export const Primary = Template.bind({})
 Primary.args = {
     onFilterClick: () => console.log('hello world!'),
-    cookingTime: '30 minutes',
+    cookingTime: '30 mins',
     diet: 'Vegan',
     intolerances: []
 }

@@ -1,0 +1,63 @@
+.chip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-width: 100px;
+    width: max-content;
+
+    height: 30px;
+    border-radius: 15px;
+
+    padding-left: 3px;
+}
+
+.chip-label {
+    font-size: 14px;
+    line-height: 15px;
+
+    margin-left: 9px;
+    margin-right: 9px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chip.no-value {
+    background-color: #F2F2F2;
+    color: #D95D3B;
+}
+
+.chip.weak {
+    background-color: #EBEBEB;
+    color: #828282;
+}
+
+.chip.strong {
+    background-color: #C0C0C0;
+    color: #333333;
+}
+
+
+
+.avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #E5E5E5;
+}
+
+.avatar img {
+    width: 10px;
+    height: 10px;
+}
+
+
