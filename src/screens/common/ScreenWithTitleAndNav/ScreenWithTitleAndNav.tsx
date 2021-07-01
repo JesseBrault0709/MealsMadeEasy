@@ -1,3 +1,5 @@
+import './ScreenWithTitleAndNav.css'
+
 /**
  * TODO as of 6/28/21:
  *  * Figure out widths
@@ -15,9 +17,9 @@ export type ScreenWithTitleAndNavProps = {
 } & ScreenTitleProps & NavBarProps
 
 export function ScreenWithTitleAndNav(props: ScreenWithTitleAndNavProps) {
-    return <Container fluid>
-        <Row><Col><ScreenTitle title={props.title} onBackButtonClick={props.onBackButtonClick} /></Col></Row>
-        <Row><Col>{props.children}</Col></Row>
-        <Row><Col><NavBar activeButton={props.activeButton} onButtonClick={props.onButtonClick} /></Col></Row>
-    </Container>
+    return <div className="screen-with-title-and-nav">
+        <ScreenTitle title={props.title} onBackButtonClick={props.onBackButtonClick} />
+        {props.children}
+        <NavBar activeButton={props.activeButton} onButtonClick={props.onButtonClick} />
+    </div>
 }
