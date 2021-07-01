@@ -22,7 +22,11 @@ export function TimeDietAllergies({
         <img className="funnel" src={Funnel} />
         {
             cookingTime !== undefined ?
-            <Chip avatar={<img src={Check} />} label={cookingTime} type="strong" /> :
+            <Chip 
+                avatar={<img src={Check} />} 
+                label={cookingTime === "No Limit" ? cookingTime : `${cookingTime} mins`} 
+                type="strong" 
+            /> :
             <Chip avatar={<img src={X} />} label="Time" type="no-value" />
         }
 
