@@ -4,7 +4,7 @@
  */
 
 import { useState } from "react";
-import { SPDiet } from "../../client/spoonacularTypes";
+import { SPDiet, SPIntolerance } from "../../client/spoonacularTypes";
 import { RecipePreferences } from "../../types/RecipePreferences";
 
 import { OrderedScreenCollection } from "../OrderedScreenCollection";
@@ -39,14 +39,45 @@ export function Onboarding(props: OnboardingProps) {
 
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
     const [diet, setDiet] = useState<RecipePreferences['diet']>()
-    const [intolerances, setIntolerances] = useState<RecipePreferences['intolerances']>([])
+    const [intoleranceMap, setIntoleranceMap] = useState<Map<string, boolean>>(props.allIntolerances.reduce(
+        (result: Map<string, boolean>, intolerance: string) => {
+            result.set(intolerance, false)
+            return result
+        }, new Map()
+    ))
 
     const onLastNext = () => {
         if (props.onSubmit !== undefined) {
+
+            const selectedIntolerances: SPIntolerance[] = []
+
+            intoleranceMap.forEach((isSelected, intolerance) => {
+                if (isSelected) {
+                    selectedIntolerances.push(intolerance as SPIntolerance)
+                }
+            })
+
             props.onSubmit({
-                cookingTime, diet, intolerances
+                cookingTime, diet,
+                intolerances: selectedIntolerances
             })
         }
+    }
+
+    const onIntoleranceClick = (targetIntolerance: string) => {
+
+        const newIntoleranceMap = new Map<string, boolean>()
+
+        intoleranceMap.forEach((isSelected, intolerance) => {
+            if (targetIntolerance === intolerance) {
+                newIntoleranceMap.set(targetIntolerance, !isSelected) // opposite
+            } else {
+                newIntoleranceMap.set(intolerance, isSelected)
+            }
+        })
+
+        setIntoleranceMap(newIntoleranceMap)
+        
     }
 
     return <OrderedScreenCollection onLastNext={onLastNext}>
@@ -58,8 +89,7 @@ export function Onboarding(props: OnboardingProps) {
 
         <Diet diets={props.allDiets} onClick={diet => setDiet(diet as SPDiet)} />
 
-        {/* TODO: Fix the logic of this! */}
-        <Restrictions restrictions={props.allIntolerances as any} onClick={setIntolerances as any}/>
+        <Restrictions restrictions={intoleranceMap} onClick={onIntoleranceClick}/>
 
     </OrderedScreenCollection>
 }
