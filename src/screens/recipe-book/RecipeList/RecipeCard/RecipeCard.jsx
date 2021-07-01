@@ -1,8 +1,3 @@
-/**
- * TODO as of 6/28/21:
- *  * Get rid of DevRecipePicture behavior
- */
-
 import DevRecipePicture from './assets/DevRecipePicture.png'
 
 import { Card } from "react-bootstrap"
@@ -22,7 +17,7 @@ export function RecipeCard(props) {
     const rating = recipe.spoonacularScore ? Math.floor(recipe.spoonacularScore / 20) : undefined
 
     return <Card onClick={props.onClick}>
-        <Card.Img src={recipe.image ?? DevRecipePicture} />
+        <Card.Img src={recipe.image} />
         <Card.Title>{recipe.title}</Card.Title>
         {rating !== undefined ? <RecipeRating rating={rating} outOf={5} /> : ''}
     </Card>
