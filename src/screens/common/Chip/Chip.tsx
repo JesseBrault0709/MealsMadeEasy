@@ -1,9 +1,9 @@
 import './Chip.css'
 import React from 'react'
 
-export type AvatarProps = { }
+type AvatarProps = { }
 
-export function Avatar(props: React.PropsWithChildren<AvatarProps>) {
+function Avatar(props: React.PropsWithChildren<AvatarProps>) {
     return <div className="avatar">
         {props.children}
     </div>
@@ -11,19 +11,22 @@ export function Avatar(props: React.PropsWithChildren<AvatarProps>) {
 
 
 export type ChipProps = {
-    avatar: React.ReactElement<AvatarProps, typeof Avatar>,
     label: string,
+    type: "no-value" | "weak" | "strong",
 
-    onClick: () => void
-
-    type: "no-value" | "weak" | "strong"
+    onClick?: () => void,
+    avatar?: React.ReactNode
 }
 
 export function Chip(props: React.PropsWithoutRef<ChipProps>) {
     const classNames = ["chip", props.type]
 
     return <div className={classNames.join(" ")}>
-        {props.avatar}
+        {
+            props.avatar !== undefined ?
+            <Avatar>{props.avatar}</Avatar> :
+            null
+        }
         <span className="chip-label">
             {props.label}
         </span>
