@@ -7,7 +7,7 @@ import { useState } from "react";
 import { SPDiet, SPIntolerance } from "../../client/spoonacularTypes";
 import { RecipePreferences } from "../../types/RecipePreferences";
 
-import { OrderedScreenCollection } from "../OrderedScreenCollection";
+import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
 import { CookingTime } from "./CookingTime";
 import { Diet } from "./Diet";
 import { Restrictions } from "./Restrictions";
