@@ -5,6 +5,7 @@
  */
 
 import { useState } from "react";
+import { SPDiet } from "../../client/spoonacularTypes";
 import { RecipePreferences } from "../../types/RecipePreferences";
 
 import { OrderedScreenCollection } from "../OrderedScreenCollection";
@@ -13,56 +14,40 @@ import { Diet } from "./Diet";
 import { Restrictions } from "./Restrictions";
 
 export type OnboardingProps = {
+
+    /** The available cookingTimes for the user to choose from */
     allCookingTimes: ReadonlyArray<RecipePreferences['cookingTime']>,
-    allDiets: ReadonlyArray<RecipePreferences['diet']>,
+
+    /** The available diets for the user to choose from */
+    allDiets: ReadonlyArray<SPDiet>,
+
+    /** The available intolerances for the user to choose from */
     allIntolerances: RecipePreferences['intolerances'],
 
+    /** Any initially selected preferences */
     initialPreferences?: RecipePreferences,
 
-    onSubmit: (preferences: RecipePreferences) => void
+    /** A callback for when the user submits their preferences */
+    onSubmit?: (preferences: RecipePreferences) => void
+
 }
 
+/**
+ * The main Onboarding component. This component contains each of the three
+ * Onboarding pages and switches between them based on user input.
+ */
 export function Onboarding(props: OnboardingProps) {
-
-    // new cookingTime state
 
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
     const [diet, setDiet] = useState<RecipePreferences['diet']>()
     const [intolerances, setIntolerances] = useState<RecipePreferences['intolerances']>([])
 
-    // function onRestrictionClick(clickedRestriction, preClickValue) {
-    //     setRestrictions(restrictions.map(restrictionAndValue => {
-    //         const [restriction, value] = restrictionAndValue
-    //         if (restriction === clickedRestriction) {
-    //             return [clickedRestriction, !preClickValue]
-    //         } else {
-    //             return [restriction, value]
-    //         }
-    //     }))
-    // }
-
-
-
-    // function onLastNext() { // i.e., submit for the whole set
-    //     if (props.onSubmit !== undefined && props.onSubmit !== null) {
-    //         props.onSubmit(
-    //             props.allCookingTimes[currentCookingTimeIndex],
-    //             props.allDiets[dietIndex],
-    //             restrictions.reduce((resultArr, restrictionAndValue) => {
-    //                 const [restriction, value] = restrictionAndValue
-    //                 if (value) {
-    //                     resultArr.push(restriction)
-    //                 }
-    //                 return resultArr
-    //             }, [])
-    //         )
-    //     }
-    // }
-
     const onLastNext = () => {
-        props.onSubmit({
-            cookingTime, diet, intolerances
-        })
+        if (props.onSubmit !== undefined) {
+            props.onSubmit({
+                cookingTime, diet, intolerances
+            })
+        }
     }
 
     return <OrderedScreenCollection onLastNext={onLastNext}>
@@ -72,9 +57,10 @@ export function Onboarding(props: OnboardingProps) {
             onChange={setCookingTime}
         />
 
-        <Diet diets={props.allDiets} onClick={setDiet} />
+        <Diet diets={props.allDiets} onClick={diet => setDiet(diet as SPDiet)} />
 
-        <Restrictions restrictions={props.allIntolerances} onClick={setIntolerances}/>
+        {/* TODO: Fix the logic of this! */}
+        <Restrictions restrictions={props.allIntolerances as any} onClick={setIntolerances as any}/>
 
     </OrderedScreenCollection>
 }

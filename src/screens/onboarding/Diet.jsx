@@ -1,6 +1,5 @@
 /**
  * TODO as of 6/28/21:
- *  * Update documentation to include JSDoc types
  *  * nested function needs to be of form const func = lambda
  */
 
@@ -9,10 +8,12 @@ import { Button } from "react-bootstrap"
 import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
 
 /**
- * Props:
- *  * diets: string[]: an array diet strings
- *  * onClick: (diet: string) => void, optional: 
- *      a callback for when the given diet is clicked.
+ * The page for the user to select their diet.
+ * 
+ * @param {{
+ *  diets: ReadonlyArray<string>
+ *  onClick?: (diet: string) => void
+ * }} props
  */
 export function Diet(props) {
     return <OnboardingScreen

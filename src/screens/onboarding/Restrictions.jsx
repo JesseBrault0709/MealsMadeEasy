@@ -1,6 +1,5 @@
 /**
  * TODO as of 6/28/21:
- *  * Update documentation to include JSDoc types
  *  * Nested function should be of form const func = lambda
  */
 
@@ -9,12 +8,13 @@ import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons
 import { Button } from "react-bootstrap"
 
 /**
- * Props:
- *  * restrictions: [string, boolean][]: an array of tuples consisting of a 
- *      restriction-string and a boolean indicating
- *      wether the restriction is currently selected.
- *  * onClick: (restriction: string, oldValue: boolean) => void, optional: 
- *      a callback for when a restriction button is clicked.
+ * The page for the user to select any dietary restrictions
+ * (elsewhere referred to as 'intolerances' or 'allergies').
+ * 
+ * @param {{
+ *  restrictions: ReadonlyArray<[string, boolean]>,
+ *  onClick?: (restriction: string, oldValue: boolean) => void
+ * }} props
  */
 export function Restrictions(props) {
     return <OnboardingScreen

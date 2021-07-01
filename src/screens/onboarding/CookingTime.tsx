@@ -1,18 +1,23 @@
-/**
- * TODO as of 6/28/21:
- *  * Update documentation to include JSDoc types
- */
-
 import { OnboardingScreen } from "./OnboardingScreen"
 import { ClockSlider } from "../../inputs/ClockSlider/ClockSlider"
 import { RecipePreferences } from "../../types/RecipePreferences"
 
 export type CookingTimeProps = {
+
+    /** The cookingTimes that the user can choose from */
     cookingTimes: ReadonlyArray<RecipePreferences['cookingTime']>,
+
+    /** The callback for when the user changes their desired cookingTime */
     onChange: (newCookingTime: RecipePreferences['cookingTime']) => void,
+
+    /** The index of the initial cookingTime in the cookingTimes prop */
     initialCookingTimeIndex?: number
+
 }
 
+/**
+ * The page where the user selects their preferred cooking time.
+ */
 export function CookingTime(props: CookingTimeProps) {
 
     const options = props.cookingTimes.map(cookingTime => {

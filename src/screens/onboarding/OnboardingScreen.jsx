@@ -1,14 +1,12 @@
 /**
- * TODO as of 6/28/21:
- *  * Update documentation to include JSDoc types
- */
-
-/**
- * Props:
- *  * prompt: string: the prompt displayed at the top of the screen.
- *  * instruction: string: the instruction to the user what to do with the control(s)
+ * A wrapper for each Onboarding page. It displays
+ * the page title, prompt, and instruction.
  * 
- * Children: the control(s) to render beneath the prompt/instructions
+ * @param {{
+ *  prompt: string,
+ *  instruction: string,
+ *  children: React.ReactNode
+ * }} props
  */
 export function OnboardingScreen(props) {
     return <>
