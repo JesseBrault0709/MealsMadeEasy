@@ -13,6 +13,7 @@ import { Home } from './screens/home/Home';
 import { RecipePreferences } from './types/RecipePreferences';
 import { DayMealPlan } from './types/MealPlanTypes';
 
+/** There are two main screens */
 type Screen = "Onboarding" | "Home"
 
 /**
