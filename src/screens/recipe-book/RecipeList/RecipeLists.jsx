@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Container } from "react-bootstrap"
 import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeListTab } from './RecipeListTab/RecipeListTab'

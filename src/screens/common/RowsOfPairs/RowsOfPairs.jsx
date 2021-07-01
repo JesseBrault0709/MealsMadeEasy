@@ -4,7 +4,7 @@
  *      to be created in the root src dir.
  */
 
-import { Row, Col } from 'react-bootstrap'
+import './RowsOfPairs.css'
 
 function groupIntoPairs(arr) {
     const result = []
@@ -33,10 +33,10 @@ export function RowsOfPairs(props) {
         {
             groupIntoPairs(props.children).map((pair, index) => {
                 const [c1, c2] = pair
-                return <Row key={`pair_${index}`}>
-                    <Col>{c1}</Col>
-                    <Col>{c2}</Col>
-                </Row>
+                return <div key={`pair_${index}`} className="pair-row">
+                    <div className="pair-row-item">{c1}</div>
+                    <div className="pair-row-item">{c2}</div>
+                </div>
             })
         }
     </>
