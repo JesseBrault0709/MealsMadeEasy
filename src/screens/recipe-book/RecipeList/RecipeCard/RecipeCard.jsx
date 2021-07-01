@@ -24,6 +24,6 @@ export function RecipeCard(props) {
     return <Card onClick={props.onClick}>
         <Card.Img src={recipe.image ?? DevRecipePicture} />
         <Card.Title>{recipe.title}</Card.Title>
-        {rating !== undefined ? <RecipeRating rating={rating} /> : ''}
+        {rating !== undefined ? <RecipeRating rating={rating} outOf={5} /> : ''}
     </Card>
 }

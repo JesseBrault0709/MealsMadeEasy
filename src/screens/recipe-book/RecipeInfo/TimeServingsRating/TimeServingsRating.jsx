@@ -30,7 +30,7 @@ export function TimeServingsRating(props) {
             </Container>
         </Col>
         <Col>
-            <RecipeRating rating={props.rating} />
+            <RecipeRating rating={props.rating} outOf={5} />
         </Col>
     </Row>
 }
