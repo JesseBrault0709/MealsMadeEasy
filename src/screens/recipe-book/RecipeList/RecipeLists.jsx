@@ -30,7 +30,7 @@ export function RecipeList(props) {
         setActiveTab(tab)
     }
 
-    return <Container>
+    return <div className="recipe-list">
         <TimeDietAllergies cookingTime={props.cookingTime} diet={props.diet} intolerances={props.intolerances} />
         <Tabs>
             {
@@ -54,5 +54,5 @@ export function RecipeList(props) {
                 />
             )
         }
-    </Container>
+    </div>
 }

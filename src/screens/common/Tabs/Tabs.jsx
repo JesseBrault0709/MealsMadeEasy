@@ -2,6 +2,7 @@
  * TODO as of 6/28/21:
  *  [none]
  */
+import './Tabs.css'
 
 import { Row, Col } from "react-bootstrap";
 
@@ -13,14 +14,16 @@ import { Row, Col } from "react-bootstrap";
  * }} props 
  */
 export function Tab(props) {
-    return <Col
-        onClick={props.onClick}
-        style={{
-            borderBottom: props.active ? '2px solid #333333' : ''
-        }}
-    >
+
+    const classNames = ['tab']
+
+    if (props.active) {
+        classNames.push('active')
+    }
+
+    return <div className={classNames.join(" ")} onClick={props.onClick}>
         {props.children}
-    </Col>
+    </div>
 }
 
 /**
@@ -29,7 +32,7 @@ export function Tab(props) {
  * }} props 
  */
 export function Tabs(props) {
-    return <Row>
+    return <div className="tabs">
         {props.children}
-    </Row>
+    </div>
 }

@@ -37,11 +37,7 @@ export function RecipeListTab(props) {
                     recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
                 }
             </RowsOfPairs>
-            <Row>
-                <Col>
-                    <Button onClick={onLoadMoreClick}>Load More</Button>
-                </Col>
-            </Row>
+            <Button onClick={onLoadMoreClick}>Load More</Button>
         </>
     } else {
         return ''

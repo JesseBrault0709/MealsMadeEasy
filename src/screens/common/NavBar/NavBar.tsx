@@ -32,32 +32,27 @@ export function NavBar(props: NavBarProps) {
         props.onButtonClick(button)
     }
 
-    return <Container id="nav-bar-container">
-        <Row>
-            <Col>
-                <div className="nav-button" onClick={getOnClick(NavBarButton.RECIPE_BOOK)}>
-                    <img src={props.activeButton === NavBarButton.RECIPE_BOOK ? RecipesActive : RecipesInactive} alt="Recipes" />
-                    <p>Recipes</p>
-                </div>
-            </Col>
-            <Col>
-                <div className="nav-button" onClick={getOnClick(NavBarButton.PLANNER)}>
-                    <img src={props.activeButton === NavBarButton.PLANNER ? PlannerActive : PlannerInactive} alt="Planner" />
-                    <p>Planner</p>
-                </div>
-            </Col>
-            <Col>
-                <div className="nav-button">
-                    <img src={GroceriesInactive} alt="Groceries" />
-                    <p>Groceries</p>
-                </div>
-            </Col>
-            <Col>
-                <div className="nav-button">
-                    <img src={SettingsInactive} alt="Settings" />
-                    <p>Settings</p>
-                </div>
-            </Col>
-        </Row>
-    </Container>
+    return <div className="nav-bar-container">
+
+        <div className="nav-button" onClick={getOnClick(NavBarButton.RECIPE_BOOK)}>
+            <img src={props.activeButton === NavBarButton.RECIPE_BOOK ? RecipesActive : RecipesInactive} alt="Recipes" />
+            <p>Recipes</p>
+        </div>
+
+        <div className="nav-button" onClick={getOnClick(NavBarButton.PLANNER)}>
+            <img src={props.activeButton === NavBarButton.PLANNER ? PlannerActive : PlannerInactive} alt="Planner" />
+            <p>Planner</p>
+        </div>
+
+        <div className="nav-button">
+            <img src={GroceriesInactive} alt="Groceries" />
+            <p>Groceries</p>
+        </div>
+
+        <div className="nav-button">
+            <img src={SettingsInactive} alt="Settings" />
+            <p>Settings</p>
+        </div>
+
+    </div>
 }

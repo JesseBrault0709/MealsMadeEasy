@@ -55,7 +55,7 @@ export function RecipeInfo(props) {
         props.onAddToMealPlan(recipe)
     }
 
-    return <Container>
+    return <div className="recipe-info">
         <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button></Col></Row>
         
         <Row><Col><h2>{title}</h2></Col></Row>
@@ -76,5 +76,5 @@ export function RecipeInfo(props) {
                 <InstructionsTab instructions={instructions} onAddToMealPlan={onAddToMealPlan} /> :
                 ''
         }
-    </Container>
+    </div>
 }
