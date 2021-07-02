@@ -1,3 +1,5 @@
+import './RecipeListTab.css'
+
 import { RowsOfPairs } from "../../../common/RowsOfPairs/RowsOfPairs"
 import { RecipeCard } from "../RecipeCard/RecipeCard"
 import { useState, useEffect } from "react"
@@ -31,14 +33,14 @@ export function RecipeListTab(props) {
     }
 
     if (props.active) {
-        return <> 
+        return <div className="recipe-list-tab"> 
             <RowsOfPairs>
                 {
                     recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
                 }
             </RowsOfPairs>
             <Button onClick={onLoadMoreClick}>Load More</Button>
-        </>
+        </div>
     } else {
         return ''
     }

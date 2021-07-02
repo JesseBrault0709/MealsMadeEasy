@@ -1,6 +1,5 @@
-import DevRecipePicture from './assets/DevRecipePicture.png'
+import './RecipeCard.css'
 
-import { Card } from "react-bootstrap"
 import { RecipeRating } from '../../RecipeRating/RecipeRating'
 import { RecipeOverview } from '../../../../client/RecipeOverview'
 
@@ -16,9 +15,11 @@ export function RecipeCard(props) {
     // spoonacular score is 0-100; divide by 20 to get 0-5
     const rating = recipe.spoonacularScore ? Math.floor(recipe.spoonacularScore / 20) : undefined
 
-    return <Card onClick={props.onClick}>
-        <Card.Img src={recipe.image} />
-        <Card.Title>{recipe.title}</Card.Title>
-        {rating !== undefined ? <RecipeRating rating={rating} outOf={5} /> : ''}
-    </Card>
+    return <div className="recipe-card" onClick={props.onClick}>
+        <img className="recipe-img" src={recipe.image} />
+        <div className="recipe-title-rating">
+            <h3>{recipe.title}</h3>
+            {rating !== undefined ? <RecipeRating rating={rating} outOf={5} /> : ''}
+        </div>
+    </div>
 }
