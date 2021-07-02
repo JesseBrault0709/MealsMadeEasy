@@ -4,6 +4,8 @@
  *      ScreenTitle
  */
 
+import './RecipeInfo.css'
+
 import Back from './assets/back.png'
 
 import { useEffect, useState } from 'react'
@@ -56,13 +58,13 @@ export function RecipeInfo(props) {
     }
 
     return <div className="recipe-info">
-        <Row><Col><Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button></Col></Row>
+        <Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button>
         
-        <Row><Col><h2>{title}</h2></Col></Row>
+        <h2 className="recipe-title">{title}</h2>
 
         <TimeServingsRating time={readyInMinutes} servings={servings} rating={rating} />
 
-        <Row><Col><img src={image} alt="Recipe" /></Col></Row>
+        <img className="recipe-image" src={image} alt="Recipe" />
 
         <Tabs>
             <Tab active={currentTab === "Ingredients"} onClick={() => setCurrentTab("Ingredients")}>Ingredients</Tab>

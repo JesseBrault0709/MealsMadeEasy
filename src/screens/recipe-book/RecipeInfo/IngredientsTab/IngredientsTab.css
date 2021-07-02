@@ -1,0 +1,15 @@
+.ingredients-tab {
+    padding: 20px 15px 100px 20px;
+}
+
+h3.what-you-need {
+    font-size: 16px;
+    line-height: 32px;
+    text-align: left;
+}
+
+.ingredient {
+    font-size: 14px;
+    line-height: 18px;
+    text-align: left;
+}

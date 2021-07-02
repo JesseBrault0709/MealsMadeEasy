@@ -5,9 +5,11 @@
  *      not until MVP 2
  */
 
-import CheckCircle from './assets/CheckCircle.png'
+import './IngredientsTab.css'
+
+// import CheckCircle from './assets/CheckCircle.png'
 import { ExtendedIngredient } from "../../../../client/FullRecipe"
-import { Row, Col, Button } from 'react-bootstrap'
+import { JBButton } from '../../../../inputs/Button/Button'
 
 /**
  * @param {{
@@ -16,26 +18,22 @@ import { Row, Col, Button } from 'react-bootstrap'
  * }} props 
  */
 export function IngredientsTab(props) {
-    return <>
-        <Row><Col><h3>What you need</h3></Col></Row>
+    return <div className="ingredients-tab">
+        <h3 className="what-you-need">What you need</h3>
 
         {
             props.ingredients.map(ingredient => 
-                <Row key={ingredient.original}>
-                    <Col>{ingredient.amount} {ingredient.unit} {ingredient.name}</Col>
-                    <Col><img src={CheckCircle} alt="Empty Checkmark Circle"/></Col>
-                </Row>    
+                <div className="ingredient" key={ingredient.original}>
+                    {ingredient.amount} {ingredient.unit} {ingredient.name}
+                    {/* <img src={CheckCircle} alt="Empty Checkmark Circle"/> */}
+                </div>    
             )
         }
 
-        <Row>
-            <Col>
-                <Button>Add to Grocery List</Button>
-            </Col>
-            <Col>
-                <Button onClick={props.onAddToMealPlan}>Add to Meal Plan</Button>
-            </Col>
-        </Row>
+        <JBButton variant="disabled">Add to Grocery List</JBButton>
 
-    </>
+        <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+
+
+    </div>
 }

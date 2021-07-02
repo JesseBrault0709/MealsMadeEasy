@@ -1,0 +1,18 @@
+.recipe-info {
+    width: 100%;
+}
+
+h2.recipe-title {
+    padding-left: 15px;
+    padding-right: 15px;
+    
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 32px;
+
+    text-align: left;
+}
+
+.recipe-image {
+    width: 100%;
+}

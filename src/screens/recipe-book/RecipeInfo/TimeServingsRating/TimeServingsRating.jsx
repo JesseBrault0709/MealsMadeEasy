@@ -1,8 +1,9 @@
+import './TimeServingsRating.css'
+
 import Clock from './assets/Clock.png'
 import Servings from './assets/Servings.png'
 
 import { RecipeRating } from '../../RecipeRating/RecipeRating'
-import { Container, Row, Col } from 'react-bootstrap'
 
 /**
  * @param {{
@@ -12,25 +13,15 @@ import { Container, Row, Col } from 'react-bootstrap'
  * }} props
  */
 export function TimeServingsRating(props) {
-    return <Row>
-        <Col>
-            <Container>
-                <Row>
-                    <img src={Clock} alt="Time" />
-                    <span>{props.time} minutes</span>
-                </Row>
-            </Container>
-        </Col>
-        <Col>
-            <Container>
-                <Row>
-                    <img src={Servings} alt="Servings" />
-                    <span>{props.servings} servings</span>
-                </Row>
-            </Container>
-        </Col>
-        <Col>
-            <RecipeRating rating={props.rating} outOf={5} />
-        </Col>
-    </Row>
+    return <div className="time-servings-rating">
+        <div className="time">
+            <img src={Clock} alt="Time" />
+            <span>{props.time} minutes</span>
+        </div>
+        <div className="servings">
+            <img src={Servings} alt="Servings" />
+            <span>{props.servings} servings</span>
+        </div>
+        <RecipeRating rating={props.rating} outOf={5} />
+    </div>
 }

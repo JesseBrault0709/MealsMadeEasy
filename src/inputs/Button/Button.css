@@ -1,0 +1,27 @@
+.jb-button {
+    border: none;
+
+    border-radius: 20px;
+
+    height: 40px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+
+    padding: 0px 18px;
+}
+
+.primary {
+    background-color: #D95D3B;
+    color: #111111;
+}
+
+.disabled {
+    background-color: #EBEBEB;
+    color: #828282;
+}
+
+.disabled:hover {
+    cursor: default;
+}
