@@ -1,6 +1,9 @@
-import { Container, Row, Col } from 'react-bootstrap'
+import './Planner.css'
+
 import { RecipeOverview } from '../../client/RecipeOverview'
 import { DayMealPlan } from '../../types/MealPlanTypes'
+import { NavBarButton } from '../common/NavBar/NavBar'
+import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 
 /**
  * @param {number} day
@@ -41,16 +44,17 @@ function formatDate(date) {
  * }} props 
  */
 function MealCol(props) {
-    return <Col xs={3}>
+    return <div className="meal-col">
         {
-            props.recipes.map(recipe => <div key={recipe.title}>{recipe.title}</div>)
+            props.recipes.map(recipe => <div className="meal-card" key={recipe.title}>{recipe.title}</div>)
         }
-    </Col>
+    </div>
 }
 
 /**
  * @param {{
  *  dayMealPlan: DayMealPlan
+ *  variant: "light" | "dark"
  * }} props
  */
 function DayRow(props) {
@@ -58,22 +62,25 @@ function DayRow(props) {
     const sorted = [...props.dayMealPlan.meals]
     sorted.sort((a, b) => a.order - b.order)
 
-    return <Row>
-        <Col xs={3}>
-            <Row>{formatDate(props.dayMealPlan.date)}</Row>
-            <Row>{getDayAbbrev(props.dayMealPlan.date.getDay())}</Row>
-        </Col>
+    return <div className={['day-row', `day-row-${props.variant}`].join(" ")}>
+        
+        <div className="day-row-date-and-day">
+            <span className="day-row-date">{formatDate(props.dayMealPlan.date)}</span>
+            <span className="day-row-day">{getDayAbbrev(props.dayMealPlan.date.getDay())}</span>
+        </div>
 
         {
             sorted.map(meal => <MealCol recipes={meal.recipes} />)
         }
-    </Row>    
+        
+    </div>    
 }
 
 
 /**
  * @param {{
  *  dayMealPlans: ReadonlyArray<DayMealPlan>
+ *  onNavAway?: (button: NavBarButton) => void
  * }} props 
  * @returns 
  */
@@ -82,18 +89,28 @@ export function Planner(props) {
     const sorted = [...props.dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
-    return <Container>
-        <Row>
-            <Col>Date</Col>
-            <Col>Breakfast</Col>
-            <Col>Lunch</Col>
-            <Col>Dinner</Col>
-        </Row>
-
-        {
-            sorted.map(day => 
-                <DayRow key={formatDate(day.date)} dayMealPlan={day} />
-            )
+    const onNavButtonClick = button => {
+        if (props.onNavAway !== undefined) {
+            props.onNavAway(button)
         }
-    </Container>
+    }
+
+    return <ScreenWithTitleAndNav title="Planner" activeButton={NavBarButton.PLANNER} onNavButtonClick={onNavButtonClick}>
+        <div className="planner">
+
+            <div className="planner-heading">
+                <span className="heading-date">Date</span>
+                <span className="heading-meal">Breakfast</span>
+                <span className="heading-meal">Lunch</span>
+                <span className="heading-meal">Dinner</span>
+            </div>
+
+            {
+                sorted.map((day, index) => 
+                    <DayRow key={formatDate(day.date)} dayMealPlan={day} variant={index % 2 === 0 ? "dark" : "light"}/>
+                )
+            }
+
+        </div>
+    </ScreenWithTitleAndNav>
 }

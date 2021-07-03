@@ -125,7 +125,7 @@ export function Home(props: HomeProps) {
 
     } else if (currentScreen === "Planner") {
 
-        return <Planner dayMealPlans={dayMealPlans}/>
+        return <Planner dayMealPlans={dayMealPlans} onNavAway={onNavAway} />
 
     } else {
         throw new Error("Screen not implemented yet")
