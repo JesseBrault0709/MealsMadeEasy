@@ -1,8 +1,8 @@
 import { RecipeOverview } from '../client/RecipeOverview'
+import { MealName } from './MealName'
 
 export type MealPlan = {
-    name: string,
-    order: number,
+    name: MealName,
     recipes: ReadonlyArray<RecipeOverview>
 }
 

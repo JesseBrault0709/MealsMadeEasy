@@ -14,7 +14,13 @@ import { JBButton } from "../../../../inputs/Button/Button"
  *  onAddToMealPlan: () => void
  * }} props 
  */
-export function InstructionsTab(props) {
+
+export type InstructionsTabProps = {
+    instructions: string,
+    getAddToMealPlanButton: () => React.ReactNode
+}
+
+export function InstructionsTab(props: InstructionsTabProps) {
     return <div className="instructions-tab">
 
         <h3>Method</h3>
@@ -22,7 +28,7 @@ export function InstructionsTab(props) {
         <p>{props.instructions}</p>
 
         <div className="add-to-planner-button">
-            <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+            {props.getAddToMealPlanButton()}
         </div>
 
     </div>

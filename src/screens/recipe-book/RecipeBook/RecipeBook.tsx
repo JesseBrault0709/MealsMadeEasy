@@ -13,34 +13,35 @@ import { getRecipeInformation } from "../../../client/recipeInformation"
 import { RecipeList } from '../RecipeList/RecipeLists'
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
 import { NavBarButton } from "../../common/NavBar/NavBar"
+import { RecipePreferences } from "../../../types/RecipePreferences"
+import { RecipeOverview } from "../../../client/RecipeOverview"
+import { SPType } from "../../../client/spoonacularTypes"
+import { FullRecipe } from "../../../client/FullRecipe"
+import { MealName } from "../../../types/MealName"
 
-const SubScreen = Object.freeze({
-    RECIPE_LIST: "Recipe List",
-    RECIPE_INFO: "Recipe Info"
-})
+type SubScreen = "Recipe List" | "Recipe Info"
 
-/**
- * @param {{
- *  recipePreferences: RecipePreferences,
- *  onAddToMealPlan: (recipe: FullRecipe) => void
- *  onNavAway?: (button: NavBarButton) => void
- * }} props  
- */
-export function RecipeBook(props) {
+export type RecipeBookProps = {
+    recipePreferences: RecipePreferences,
+    onNavAway?: (button: NavBarButton) => void,
+    onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
+}
 
-    const [subScreen, setSubScreen] = useState(SubScreen.RECIPE_LIST)
+export function RecipeBook(props: RecipeBookProps) {
 
-    const [currentRecipeId, setCurrentRecipeId] = useState()
+    const [subScreen, setSubScreen] = useState<SubScreen>("Recipe List")
 
-    const onRecipeCardClick = recipe => {
+    const [currentRecipeId, setCurrentRecipeId] = useState<RecipeOverview['id']>()
+
+    const onRecipeCardClick = (recipe: RecipeOverview) => {
         setCurrentRecipeId(recipe.id)
-        setSubScreen(SubScreen.RECIPE_INFO)
+        setSubScreen("Recipe Info")
     }
 
-    const getRecipesGetter = type => (offset, limit) => getByComplexSearch({
+    const getRecipesGetter = (type: SPType) => (offset: number, limit: number) => getByComplexSearch({
             addRecipeInformation: true,
-            diet: props.diet,
-            intolerances: props.intolerances,
+            diet: props.recipePreferences.diet,
+            intolerances: props.recipePreferences.intolerances,
             offset,
             number: limit,
             type
@@ -62,17 +63,17 @@ export function RecipeBook(props) {
         }
     ]
 
-    const onNavButtonClick = button => {
+    const onNavButtonClick = (button: NavBarButton) => {
         if (button === NavBarButton.RECIPE_BOOK) {
-            if (subScreen === SubScreen.RECIPE_INFO) {
-                setSubScreen(SubScreen.RECIPE_LIST)
+            if (subScreen === "Recipe Info") {
+                setSubScreen("Recipe List")
             }
         } else if (props.onNavAway !== undefined) {
             props.onNavAway(button)
         }
     }
 
-    if (subScreen === SubScreen.RECIPE_LIST) {
+    if (subScreen === "Recipe List") {
         
         return <ScreenWithTitleAndNav title="Recipe Book" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
             <RecipeList 
@@ -88,18 +89,14 @@ export function RecipeBook(props) {
         </ScreenWithTitleAndNav>
 
 
-    } else if (subScreen === SubScreen.RECIPE_INFO) {
+    } else if (subScreen === "Recipe Info") {
 
         return <ScreenWithTitleAndNav title="" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
             <RecipeInfo 
-                    getRecipe={() => {
-                        return getRecipeInformation(currentRecipeId)
-                    }}
-                    onBackButtonClick={() => {
-                        console.log('hello world')
-                        setSubScreen(SubScreen.RECIPE_LIST)
-                    }}
-                    onAddToMealPlan={props.onAddToMealPlan}
+                getRecipe={() => {
+                    return getRecipeInformation(currentRecipeId as number)
+                }}
+                onAddToMealPlan={props.onAddToMealPlan}
             />
         </ScreenWithTitleAndNav>
 

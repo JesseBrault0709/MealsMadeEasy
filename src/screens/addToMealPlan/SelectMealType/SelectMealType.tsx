@@ -1,16 +1,16 @@
 import './SelectMealType.css'
 import { JBButton } from "../../../inputs/Button/Button"
+import { MealName } from '../../../types/MealName'
 
-/**
- * @param {{
- *  meals: ReadonlyArray<string>,
- *  onMealSelect: (meal: string) => void,
- *  activeMeal?: string
- * }} props 
- */
-export function SelectMealType(props) {
+export type SelectMealTypeProps = {
+    meals: ReadonlyArray<MealName>
+    onMealSelect: (meal: MealName) => void,
+    activeMeal?: MealName
+}
+
+export function SelectMealType(props: SelectMealTypeProps) {
     
-    const getOnClick = meal => () => {
+    const getOnClick = (meal: MealName) => () => {
         props.onMealSelect(meal)
     }
 

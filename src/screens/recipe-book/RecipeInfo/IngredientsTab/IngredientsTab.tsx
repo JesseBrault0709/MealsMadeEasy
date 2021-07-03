@@ -17,7 +17,13 @@ import { JBButton } from '../../../../inputs/Button/Button'
  *  onAddToMealPlan: () => void
  * }} props 
  */
-export function IngredientsTab(props) {
+
+export type IngredientsTabProps = {
+    ingredients: ReadonlyArray<ExtendedIngredient>,
+    getAddToMealPlanButton: () => React.ReactNode
+}
+
+export function IngredientsTab(props: IngredientsTabProps) {
     return <div className="ingredients-tab">
         <h3 className="what-you-need">What you need</h3>
 
@@ -33,8 +39,7 @@ export function IngredientsTab(props) {
         <div className="ingredients-tab-buttons">
 
             <JBButton variant="disabled">Add to Grocery List</JBButton>
-
-            <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+            {props.getAddToMealPlanButton()}
 
         </div>
 

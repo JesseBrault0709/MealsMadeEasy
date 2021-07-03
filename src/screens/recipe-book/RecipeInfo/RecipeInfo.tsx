@@ -1,38 +1,34 @@
-/**
- * TODO as of 6/28/21:
- *  * Remove back button in favor of button up in
- *      ScreenTitle
- */
-
 import './RecipeInfo.css'
-
-import Back from './assets/back.png'
 
 import { useEffect, useState } from 'react'
 import { FullRecipe } from '../../../client/FullRecipe'
-import { Container, Row, Col, Button } from 'react-bootstrap'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { IngredientsTab } from './IngredientsTab/IngredientsTab'
 import { InstructionsTab } from './InstructionsTab/InstructionsTab'
+import { JBButton } from '../../../inputs/Button/Button'
+import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
+import { MealName } from '../../../types/MealName'
 
-/**
- * @param {{
- *  getRecipe: () => Promise<FullRecipe>,
- *  onBackButtonClick?: () => void,
- *  onAddToMealPlan: (recipe: FullRecipe) => void
- * }} props
- */
-export function RecipeInfo(props) {
+export type RecipeInfoProps = {
+    getRecipe: () => Promise<FullRecipe>,
+    onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
+}
 
-    const [recipe, setRecipe] = useState({
-        title: '',
+export function RecipeInfo(props: RecipeInfoProps) {
+
+    const [recipe, setRecipe] = useState<FullRecipe>({
+        analyzedInstructions: [],
+        extendedIngredients: [],
+        id: 0,
+        image: "",
+        imageType: "",
+        instructions: "",
         readyInMinutes: 0,
         servings: 0,
-        image: '',
         spoonacularScore: 0,
-        extendedIngredients: [],
-        instructions: ''
+        summary: "",
+        title: ""
     })
 
     useEffect(() => {
@@ -52,10 +48,14 @@ export function RecipeInfo(props) {
     const rating = spoonacularScore !== undefined && spoonacularScore !== null ? Math.floor(spoonacularScore / 20) : 0
 
     const [currentTab, setCurrentTab] = useState("Ingredients")
+    const [showModal, setShowModal] = useState(false)
 
-    const onAddToMealPlan = () => {
-        props.onAddToMealPlan(recipe)
-    }
+    const getAddToMealPlanButton = () => <JBButton
+            variant="primary"
+            onClick={() => {
+                setShowModal(true)
+            }}
+        >Add to Meal Plan</JBButton>
 
     return <div className="recipe-info">
         {/* <Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button> */}
@@ -73,10 +73,16 @@ export function RecipeInfo(props) {
 
         {
             currentTab === "Ingredients" ? 
-            <IngredientsTab ingredients={extendedIngredients} onAddToMealPlan={onAddToMealPlan} /> : 
+            <IngredientsTab ingredients={extendedIngredients} getAddToMealPlanButton={getAddToMealPlanButton} /> : 
                 currentTab === "Instructions" ?
-                <InstructionsTab instructions={instructions} onAddToMealPlan={onAddToMealPlan} /> :
+                <InstructionsTab instructions={instructions} getAddToMealPlanButton={getAddToMealPlanButton} /> :
                 ''
         }
+
+        {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
+            if (props.onAddToMealPlan !== undefined) {
+                props.onAddToMealPlan(meal, date, recipe)
+            }
+        }}/> : ''}
     </div>
 }

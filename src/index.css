@@ -30,3 +30,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#modal-root {
+  position: absolute;
+  z-index: 10;
+}
