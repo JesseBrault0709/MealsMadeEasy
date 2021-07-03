@@ -85,7 +85,7 @@ export function Home(props: HomeProps) {
 
     const [dayMealPlans, setDayMealPlans] = useState(props.initialDayMealPlans)
 
-    const onNavButtonClick = (button: NavBarButton) => {
+    const onNavAway = (button: NavBarButton) => {
         if (button === NavBarButton.RECIPE_BOOK) {
             setCurrentScreen("Recipe Book")
         } else if (button === NavBarButton.PLANNER) {
@@ -117,7 +117,7 @@ export function Home(props: HomeProps) {
     } else if (currentScreen === "Recipe Book") {
 
         return <>
-            <RecipeBook recipePreferences={recipePreferences} onAddToMealPlan={onAddToMealPlan}/>
+            <RecipeBook recipePreferences={recipePreferences} onAddToMealPlan={onAddToMealPlan} onNavAway={onNavAway} />
             {showOverlay ? <BottomOverlay show>
                 {overlay}
             </BottomOverlay> : ''}
