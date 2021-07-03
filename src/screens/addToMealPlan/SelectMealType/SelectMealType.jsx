@@ -1,4 +1,5 @@
-import { Row, Col, Button } from 'react-bootstrap'
+import './SelectMealType.css'
+import { JBButton } from "../../../inputs/Button/Button"
 
 /**
  * @param {{
@@ -13,26 +14,21 @@ export function SelectMealType(props) {
         props.onMealSelect(meal)
     }
 
-    return <>
+    return <div className="select-meal-type">
 
-        <Row>
-            <Col>
-                <h3>Select Meal Type</h3>
-            </Col>
-        </Row>
+        <h3>Select Meal Type</h3>
 
-        <Row>
+        <div className="select-meal-type-buttons">
             {
                 props.meals.map((meal, index) => 
-                    <Col>
-                        <Button 
-                            key={`${meal}_${index}`} 
-                            onClick={getOnClick(meal)} 
-                            active={meal === props.activeMeal}
-                        >{meal}</Button>
-                    </Col>
+                    <JBButton 
+                        key={`${meal}_${index}`} 
+                        onClick={getOnClick(meal)} 
+                        active={meal === props.activeMeal}
+                        variant="outline"
+                    >{meal}</JBButton>
                 )
             }
-        </Row>
-    </> 
+        </div>
+    </div> 
 }

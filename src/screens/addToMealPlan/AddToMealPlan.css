@@ -1,0 +1,38 @@
+.add-to-meal-plan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.add-to-meal-plan h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 15px;
+    color: var(--primary-color)
+}
+
+.add-to-meal-plan h3 {
+    color: var(--primary-black);
+
+    padding: 25px 0x;
+    
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 15px;
+}
+
+.select-date {
+
+}
+
+.add-to-meal-plan-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
+}

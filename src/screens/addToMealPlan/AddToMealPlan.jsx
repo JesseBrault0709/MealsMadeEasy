@@ -1,6 +1,7 @@
 import 'react-calendar/dist/Calendar.css'
+import './AddToMealPlan.css'
 
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { JBButton } from '../../inputs/Button/Button'
 import Calendar from 'react-calendar'
 import { useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'
@@ -18,59 +19,48 @@ export function AddToMealPlan(props) {
 
     const meals = ['Breakfast', 'Lunch', 'Dinner']
 
-    return <Container>
-        <Row>
-            <Col>
-                <h2>Add to Meal Plan</h2>
-            </Col>
-        </Row>
+    return <div className="add-to-meal-plan">
+
+        <h2>Add to Meal Plan</h2>
 
         <SelectMealType meals={meals} onMealSelect={setSelectedMeal} activeMeal={selectedMeal} />
 
-        <Row>
-            <Col>
-                <h3>Select Date/Day</h3>
-            </Col>
-        </Row>
+        <div className="select-date">
+            <h3>Select Date/Day</h3>
 
-        <Row>
-            <Col>
-                <Calendar 
+            <Calendar 
 
-                    value={selectedDate}
+                value={selectedDate}
 
-                    calendarType="US"
+                calendarType="US"
 
-                    minDate={new Date(2021, 5, 29)}
-                    maxDate={new Date(2021, 6, 6)}
+                minDate={new Date(2021, 5, 29)}
+                maxDate={new Date(2021, 6, 6)}
 
-                    nextLabel={null}
-                    next2Label={null}
+                nextLabel={null}
+                next2Label={null}
 
-                    prevLabel={null}
-                    prev2Label={null}
+                prevLabel={null}
+                prev2Label={null}
 
-                    minDetail="month"
+                minDetail="month"
 
-                    onChange={value => {
-                        console.log(value)
-                        setSelectedDate(value)
-                    }}
+                onChange={value => {
+                    console.log(value)
+                    setSelectedDate(value)
+                }}
 
-                />
-            </Col>
-        </Row>
+            />
 
-        <Row>
-            <Col>
-                <Button>Cancel</Button>
-            </Col>
-            <Col>
-                <Button onClick={() => {
-                    props.onSubmit(selectedMeal, meals.findIndex(meal => meal === selectedMeal), selectedDate)
-                }}>Confirm</Button>
-            </Col>
-        </Row>
+        </div>
 
-    </Container>
+        <div className="add-to-meal-plan-buttons">
+            <JBButton variant="outline">Cancel</JBButton>
+
+            <JBButton variant="primary" onClick={() => {
+                props.onSubmit(selectedMeal, meals.findIndex(meal => meal === selectedMeal), selectedDate)
+            }}>Confirm</JBButton>
+        </div>
+
+    </div>
 }

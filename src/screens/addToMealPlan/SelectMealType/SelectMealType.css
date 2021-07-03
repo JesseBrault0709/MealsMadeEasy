@@ -1,0 +1,10 @@
+.select-meal-type {
+    width: 100%;
+}
+
+.select-meal-type-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
