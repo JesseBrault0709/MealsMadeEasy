@@ -4,6 +4,16 @@
     justify-content: space-between;
     align-items: center;
 
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0px 15px 14px 15px;
+}
+
+.time, .servings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time *, .servings * {
+    padding: 0px 2px;
 }

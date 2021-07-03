@@ -1,0 +1,25 @@
+.instructions-tab {
+    text-align: left;
+    padding: 20px 15px 100px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.instructions-tab h3 {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.instructions-tab p {
+    margin: 24px 0px 45px 0px;
+}
+
+.add-to-planner-button {
+    align-self: center;
+}
+

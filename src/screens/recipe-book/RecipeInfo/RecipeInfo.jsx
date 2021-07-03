@@ -58,7 +58,7 @@ export function RecipeInfo(props) {
     }
 
     return <div className="recipe-info">
-        <Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button>
+        {/* <Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button> */}
         
         <h2 className="recipe-title">{title}</h2>
 

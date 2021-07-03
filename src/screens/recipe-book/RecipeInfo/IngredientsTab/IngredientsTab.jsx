@@ -30,10 +30,13 @@ export function IngredientsTab(props) {
             )
         }
 
-        <JBButton variant="disabled">Add to Grocery List</JBButton>
+        <div className="ingredients-tab-buttons">
 
-        <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+            <JBButton variant="disabled">Add to Grocery List</JBButton>
 
+            <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+
+        </div>
 
     </div>
 }

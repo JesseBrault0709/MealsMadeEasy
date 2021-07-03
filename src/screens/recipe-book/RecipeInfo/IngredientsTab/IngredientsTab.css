@@ -5,6 +5,9 @@
 h3.what-you-need {
     font-size: 16px;
     line-height: 32px;
+    font-style: normal;
+    font-weight: normal;
+    
     text-align: left;
 }
 
@@ -12,4 +15,15 @@ h3.what-you-need {
     font-size: 14px;
     line-height: 18px;
     text-align: left;
+}
+
+.ingredients-tab-buttons {
+    margin-top: 40px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
 }

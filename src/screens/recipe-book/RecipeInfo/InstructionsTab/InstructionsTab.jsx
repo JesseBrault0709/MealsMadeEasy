@@ -4,8 +4,9 @@
  *      or an array of strings; in the latter case,
  *      render with bullet points.
  */
+import './InstructionsTab.css'
 
-import { Row, Col, Button } from "react-bootstrap"
+import { JBButton } from "../../../../inputs/Button/Button"
 
 /**
  * @param {{
@@ -14,22 +15,15 @@ import { Row, Col, Button } from "react-bootstrap"
  * }} props 
  */
 export function InstructionsTab(props) {
-    return <>
-        <Row>
-            <Col><h3>Method</h3></Col>
-        </Row>
-        <Row>
-            <Col>{props.instructions}</Col>
-        </Row>
+    return <div className="instructions-tab">
 
-        <Row>
-            <Col>
-                <Button>Back</Button>
-            </Col>
-            <Col>
-                <Button onClick={props.onAddToMealPlan}>Add to Meal Plan</Button>
-            </Col>
-        </Row>
+        <h3>Method</h3>
+  
+        <p>{props.instructions}</p>
 
-    </>
+        <div className="add-to-planner-button">
+            <JBButton variant="primary" onClick={props.onAddToMealPlan}>Add to Meal Plan</JBButton>
+        </div>
+
+    </div>
 }
