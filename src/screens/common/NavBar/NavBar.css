@@ -12,9 +12,9 @@
     align-items: center;
     flex-wrap: nowrap;
 
-    border-top: 1px solid black;
+    border-top: 1px solid var(--primary-black);
 
-    background-color: white;
+    background-color: var(--primary-fill);
 }
 
 .nav-button {

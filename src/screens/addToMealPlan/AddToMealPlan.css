@@ -10,12 +10,10 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 15px;
-    color: var(--primary-color)
+    color: var(--main-cta)
 }
 
 .add-to-meal-plan h3 {
-    color: var(--primary-black);
-
     padding: 25px 0x;
     
     font-style: normal;

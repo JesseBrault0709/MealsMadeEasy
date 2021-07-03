@@ -31,18 +31,17 @@
 }
 
 .chip.no-value {
-    background-color: #F2F2F2;
-    color: #D95D3B;
+    background-color: var(--zebra-dark);
+    color: var(--main-cta);
 }
 
 .chip.weak {
-    background-color: #EBEBEB;
+    background-color: var(--disabled);
     color: #828282;
 }
 
 .chip.strong {
-    background-color: #C0C0C0;
-    color: #333333;
+    background-color: var(--chip-selected);
 }
 
 

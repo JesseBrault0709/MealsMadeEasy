@@ -2,7 +2,7 @@
     width: 100%;
     height: 80px;
     text-align: center;
-    background-color: #D95D3B;
+    background-color: var(--main-cta);
 
     display: flex;
     flex-direction: column-reverse;
@@ -17,5 +17,5 @@ h1 {
     font-size: 16px;
     line-height: 32px;
 
-    color: #ffffff;
+    color: white;
 }

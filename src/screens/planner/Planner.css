@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
 
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--primary-black);
 }
 
 .heading-date,
@@ -43,11 +43,11 @@
 }
 
 .day-row-dark {
-    background-color: #F2F2F2;
+    background-color: var(--zebra-dark);
 }
 
 .day-row-light {
-    background-color: #FAF9F9;
+    background-color: var(--zebra-light);
 }
 
 .day-row-date-and-day {
@@ -73,7 +73,7 @@
     width: 100%;
     height: 60px;
 
-    background-color: white;
+    background-color: var(--primary-fill);
 
     font-style: normal;
     font-weight: normal;
