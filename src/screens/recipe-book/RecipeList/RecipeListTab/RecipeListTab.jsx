@@ -3,7 +3,7 @@ import './RecipeListTab.css'
 import { RowsOfPairs } from "../../../common/RowsOfPairs/RowsOfPairs"
 import { RecipeCard } from "../RecipeCard/RecipeCard"
 import { useState, useEffect } from "react"
-import { Row, Col, Button } from 'react-bootstrap'
+import { JBButton } from '../../../../inputs/Button/Button'
 
 /**
  * @param {{
@@ -39,7 +39,7 @@ export function RecipeListTab(props) {
                     recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
                 }
             </RowsOfPairs>
-            <Button onClick={onLoadMoreClick}>Load More</Button>
+            <JBButton variant="primary" onClick={onLoadMoreClick}>Load More</JBButton>
         </div>
     } else {
         return ''

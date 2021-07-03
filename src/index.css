@@ -4,8 +4,15 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
   font-family: 'Inter', 'Roboto', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 code {

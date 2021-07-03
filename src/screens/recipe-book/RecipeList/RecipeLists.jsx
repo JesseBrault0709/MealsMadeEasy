@@ -1,3 +1,5 @@
+import './RecipeLists.css'
+
 import { useState } from 'react'
 import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'

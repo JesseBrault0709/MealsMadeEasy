@@ -6,8 +6,8 @@
     justify-content: flex-start;
     align-items: center;
 
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 0px 6px;
+    box-sizing: border-box;
 }
 
 .recipe-img {
@@ -27,6 +27,9 @@
 .recipe-title-rating h3 {
     font-size: 14px;
     line-height: 18px;
+
+    font-weight: normal;
+    font-style: normal;
 
     width: 125px;
 
