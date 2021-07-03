@@ -14,8 +14,6 @@ import PlannerActive from './assets/Planner_active.png'
 import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
 
-import { Container, Row, Col } from 'react-bootstrap'
-
 export enum NavBarButton {
     RECIPE_BOOK = "Recipe Book",
     PLANNER = "Planner"
@@ -44,12 +42,12 @@ export function NavBar(props: NavBarProps) {
             <p>Planner</p>
         </div>
 
-        <div className="nav-button">
+        <div className="nav-button nav-button-disabled">
             <img src={GroceriesInactive} alt="Groceries" />
             <p>Groceries</p>
         </div>
 
-        <div className="nav-button">
+        <div className="nav-button nav-button-disabled">
             <img src={SettingsInactive} alt="Settings" />
             <p>Settings</p>
         </div>
