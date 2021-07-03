@@ -20,6 +20,6 @@ export function ScreenWithTitleAndNav(props: ScreenWithTitleAndNavProps) {
     return <div className="screen-with-title-and-nav">
         <ScreenTitle title={props.title} onBackButtonClick={props.onBackButtonClick} />
         {props.children}
-        <NavBar activeButton={props.activeButton} onButtonClick={props.onButtonClick} />
+        <NavBar activeButton={props.activeButton} onNavButtonClick={props.onNavButtonClick} />
     </div>
 }

@@ -21,13 +21,13 @@ export enum NavBarButton {
 
 export type NavBarProps = {
     activeButton: NavBarButton,
-    onButtonClick: (button: NavBarButton) => void
+    onNavButtonClick: (button: NavBarButton) => void
 }
 
 export function NavBar(props: NavBarProps) {
 
     const getOnClick = (button: NavBarButton) => () => {
-        props.onButtonClick(button)
+        props.onNavButtonClick(button)
     }
 
     return <div className="nav-bar-container">

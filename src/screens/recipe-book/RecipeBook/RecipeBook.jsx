@@ -11,6 +11,8 @@ import { getByComplexSearch } from "../../../client/complexSearch"
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { getRecipeInformation } from "../../../client/recipeInformation"
 import { RecipeList } from '../RecipeList/RecipeLists'
+import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
+import { NavBarButton } from "../../common/NavBar/NavBar"
 
 const SubScreen = Object.freeze({
     RECIPE_LIST: "Recipe List",
@@ -21,8 +23,8 @@ const SubScreen = Object.freeze({
  * @param {{
  *  recipePreferences: RecipePreferences,
  *  onAddToMealPlan: (recipe: FullRecipe) => void
- * }} props 
- * @returns 
+ *  onNavAway?: (button: NavBarButton) => void
+ * }} props  
  */
 export function RecipeBook(props) {
 
@@ -60,22 +62,36 @@ export function RecipeBook(props) {
         }
     ]
 
+    const onNavButtonClick = button => {
+        if (button === NavBarButton.RECIPE_BOOK) {
+            if (subScreen === SubScreen.RECIPE_INFO) {
+                setSubScreen(SubScreen.RECIPE_LIST)
+            }
+        } else if (props.onNavAway !== undefined) {
+            props.onNavAway(button)
+        }
+    }
+
     if (subScreen === SubScreen.RECIPE_LIST) {
         
-        return <RecipeList 
-            cookingTime={props.recipePreferences.cookingTime}
-            diet={props.recipePreferences.diet} 
-            intolerances={props.recipePreferences.intolerances}
+        return <ScreenWithTitleAndNav title="Recipe Book" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
+            <RecipeList 
+                cookingTime={props.recipePreferences.cookingTime}
+                diet={props.recipePreferences.diet} 
+                intolerances={props.recipePreferences.intolerances}
             
-            recipeResultSetSize={6}
-            onRecipeCardClick={onRecipeCardClick}
+                recipeResultSetSize={6}
+                onRecipeCardClick={onRecipeCardClick}
 
-            tabs={tabs}
-        />
+                tabs={tabs}
+            />
+        </ScreenWithTitleAndNav>
+
 
     } else if (subScreen === SubScreen.RECIPE_INFO) {
 
-        return <RecipeInfo 
+        return <ScreenWithTitleAndNav title="" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
+            <RecipeInfo 
                     getRecipe={() => {
                         return getRecipeInformation(currentRecipeId)
                     }}
@@ -84,7 +100,8 @@ export function RecipeBook(props) {
                         setSubScreen(SubScreen.RECIPE_LIST)
                     }}
                     onAddToMealPlan={props.onAddToMealPlan}
-        />
+            />
+        </ScreenWithTitleAndNav>
 
     } else {
         throw new Error("unknown value for listOrInfo")

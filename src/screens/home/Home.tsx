@@ -116,18 +116,16 @@ export function Home(props: HomeProps) {
 
     } else if (currentScreen === "Recipe Book") {
 
-        return <ScreenWithTitleAndNav title="Recipe Book" activeButton={NavBarButton.RECIPE_BOOK} onButtonClick={onNavButtonClick}>
+        return <>
             <RecipeBook recipePreferences={recipePreferences} onAddToMealPlan={onAddToMealPlan}/>
             {showOverlay ? <BottomOverlay show>
                 {overlay}
             </BottomOverlay> : ''}
-        </ScreenWithTitleAndNav>
+        </>
 
     } else if (currentScreen === "Planner") {
 
-        return <ScreenWithTitleAndNav title="Meal Planner" activeButton={NavBarButton.PLANNER} onButtonClick={onNavButtonClick}>
-            <Planner dayMealPlans={dayMealPlans}/>
-        </ScreenWithTitleAndNav>
+        return <Planner dayMealPlans={dayMealPlans}/>
 
     } else {
         throw new Error("Screen not implemented yet")
