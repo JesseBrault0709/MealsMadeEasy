@@ -3,11 +3,12 @@ import './AddToMealPlan.css'
 
 import { JBButton } from '../../inputs/Button/Button'
 import Calendar from 'react-calendar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'
 import { MealName } from '../../types/MealName'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
+import { getModalEffect } from '../../util'
 
 export type AddToMealPlanProps = {
     onSubmit: (meal: MealName, date: Date) => void
@@ -20,6 +21,8 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
 
     const meals: MealName[] = ['Breakfast', 'Lunch', 'Dinner']
 
+    useEffect(getModalEffect())
+    
     return ReactDOM.createPortal(
         <BottomModal>
             <div className="add-to-meal-plan">

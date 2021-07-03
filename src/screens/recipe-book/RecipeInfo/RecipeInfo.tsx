@@ -80,6 +80,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
         }
 
         {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
+            setShowModal(false)
             if (props.onAddToMealPlan !== undefined) {
                 props.onAddToMealPlan(meal, date, recipe)
             }
