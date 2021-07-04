@@ -1,15 +1,12 @@
 import './Planner.css'
 
 import { RecipeOverview } from '../../client/RecipeOverview'
-import { DayMealPlan } from '../../types/MealPlanTypes'
+import { DayMealPlan } from '../../types/DayMealPlan'
 import { NavBarButton } from '../common/NavBar/NavBar'
-import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
+import { ScreenWithTitleAndNav, ScreenWithTitleAndNavProps } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
+import { MealName } from '../../types/MealName'
 
-/**
- * @param {number} day
- * @returns {string}
- */
-function getDayAbbrev(day) {
+function getDayAbbrev(day: number) {
     switch (day) {
         case 0:
             return 'SUN'
@@ -30,37 +27,25 @@ function getDayAbbrev(day) {
     }
 }
 
-/**
- * @param {Date} date 
- * @returns {string}
- */
-function formatDate(date) {
+function formatDate(date: Date) {
     return `${date.getMonth() + 1}/${date.getDate()}`
 }
 
-/**
- * @param {{
- *  recipes: ReadonlyArray<RecipeOverview>
- * }} props 
- */
-function MealCol(props) {
+function MealCol(props: {
+    recipes?: ReadonlyArray<RecipeOverview>
+}) {
     return <div className="meal-col">
         {
-            props.recipes.map(recipe => <div className="meal-card" key={recipe.title}>{recipe.title}</div>)
+            props.recipes?.map(recipe => <div className="meal-card" key={recipe.title}>{recipe.title}</div>)
         }
     </div>
 }
 
-/**
- * @param {{
- *  dayMealPlan: DayMealPlan
- *  variant: "light" | "dark"
- * }} props
- */
-function DayRow(props) {
-
-    const sorted = [...props.dayMealPlan.meals]
-    sorted.sort((a, b) => a.order - b.order)
+function DayRow(props: {
+    dayMealPlan: DayMealPlan,
+    meals: ReadonlyArray<MealName>,
+    variant: "light" | "dark"
+}) {
 
     return <div className={['day-row', `day-row-${props.variant}`].join(" ")}>
         
@@ -70,26 +55,24 @@ function DayRow(props) {
         </div>
 
         {
-            sorted.map(meal => <MealCol recipes={meal.recipes} />)
+            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} />)
         }
         
     </div>    
 }
 
+export type PlannerProps = {
+    meals: ReadonlyArray<MealName>
+    dayMealPlans: ReadonlyArray<DayMealPlan>
+    onNavAway: (button: NavBarButton) => void
+}
 
-/**
- * @param {{
- *  dayMealPlans: ReadonlyArray<DayMealPlan>
- *  onNavAway?: (button: NavBarButton) => void
- * }} props 
- * @returns 
- */
-export function Planner(props) {
+export function Planner(props: PlannerProps) {
 
     const sorted = [...props.dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
-    const onNavButtonClick = button => {
+    const onNavButtonClick: ScreenWithTitleAndNavProps['onNavButtonClick'] = button => {
         if (props.onNavAway !== undefined) {
             props.onNavAway(button)
         }
@@ -100,14 +83,19 @@ export function Planner(props) {
 
             <div className="planner-heading">
                 <span className="heading-date">Date</span>
-                <span className="heading-meal">Breakfast</span>
-                <span className="heading-meal">Lunch</span>
-                <span className="heading-meal">Dinner</span>
+                {
+                    props.meals.map(meal => <span key={meal} className="heading-meal">{meal}</span>)
+                }
             </div>
 
             {
                 sorted.map((day, index) => 
-                    <DayRow key={formatDate(day.date)} dayMealPlan={day} variant={index % 2 === 0 ? "dark" : "light"}/>
+                    <DayRow 
+                        key={formatDate(day.date)}
+                        dayMealPlan={day}
+                        meals={props.meals}
+                        variant={index % 2 === 0 ? "dark" : "light"}
+                    />
                 )
             }
 

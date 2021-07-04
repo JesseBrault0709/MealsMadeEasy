@@ -9,9 +9,10 @@ import { useState } from 'react';
 import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
-import { Home } from './screens/home/Home';
+import { Home, HomeProps } from './screens/home/Home';
 import { RecipePreferences } from './types/RecipePreferences';
-import { DayMealPlan } from './types/MealPlanTypes';
+import { DayMealPlan, getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
+import { MealName } from './types/MealName';
 
 /** There are two main screens */
 type Screen = "Onboarding" | "Home"
@@ -35,6 +36,8 @@ const availableIntolerances: ReadonlyArray<SPIntolerance> = [
     'Wheat'
 ]
 
+const meals: ReadonlyArray<MealName> = ['Breakfast', 'Lunch', 'Dinner']
+
 function App() {
 
     const [currentScreen, setCurrentScreen] = useState<Screen>("Onboarding")
@@ -43,8 +46,6 @@ function App() {
         cookingTime: 'No Limit',
         intolerances: []
     })
-
-    const [dayMealPlans, setDayMealPlans] = useState<ReadonlyArray<DayMealPlan>>([])
 
     if (currentScreen === "Onboarding") {
 
@@ -68,7 +69,8 @@ function App() {
             <Home 
                 showLoadingScreen 
                 initialRecipePreferences={userPreferences}
-                initialDayMealPlans={dayMealPlans}
+                initialDayMealPlans={getWeekOfBlankDayMealPlans(['Breakfast', 'Lunch', 'Dinner'])}
+                meals={meals}
             />
         </div>
     }

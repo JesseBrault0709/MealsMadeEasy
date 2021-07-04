@@ -4,55 +4,8 @@ import { RecipeBook, RecipeBookProps } from '../recipe-book/RecipeBook/RecipeBoo
 import { Planner } from '../planner/Planner'
 import { NavBarButton } from '../common/NavBar/NavBar'
 import { RecipePreferences } from '../../types/RecipePreferences'
-import { DayMealPlan, MealPlan } from '../../types/MealPlanTypes'
-import { RecipeOverview } from '../../client/RecipeOverview'
+import { addToMeal, DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
 import { MealName } from '../../types/MealName'
-
-function getNewDayMealPlans(
-    recipe: RecipeOverview,
-    targetMealPlanName: MealName,
-    targetDate: Date,
-    oldDayMealPlans: ReadonlyArray<DayMealPlan>
-) {
-    const results: DayMealPlan[] = []
-
-    const targetDayMealPlan = oldDayMealPlans.find(dayMealPlan => dayMealPlan.date.valueOf() === targetDate.valueOf())
-
-    if (targetDayMealPlan === undefined) {
-        results.push({
-            date: targetDate,
-            meals: [
-                {
-                    name: targetMealPlanName,
-                    recipes: [recipe]
-                }
-            ]
-        }, ...oldDayMealPlans)
-    } else {
-        const mealResults: MealPlan[] = []
-        
-        const targetMealPlan = targetDayMealPlan.meals.find(meal => meal.name === targetMealPlanName)
-        
-        if (targetMealPlan === undefined) {
-            mealResults.push({
-                name: targetMealPlanName,
-                recipes: [recipe]
-            }, ...targetDayMealPlan.meals)
-        } else {
-            mealResults.push({
-                name: targetMealPlan.name,
-                recipes: [...targetMealPlan.recipes, recipe]
-            }, ...targetDayMealPlan.meals.filter(mealPlan => mealPlan !== targetMealPlan))
-        }
-
-        results.push({
-            date: targetDayMealPlan.date,
-            meals: mealResults
-        }, ...oldDayMealPlans.filter(dayMealPlan => dayMealPlan !== targetDayMealPlan))
-    }
-
-    return results
-}
 
 type Screen = 
     "Loading" |
@@ -62,9 +15,10 @@ type Screen =
     "Settings"
 
 export type HomeProps = {
-    showLoadingScreen: boolean
-    initialRecipePreferences?: RecipePreferences
-    initialDayMealPlans: ReadonlyArray<DayMealPlan>
+    showLoadingScreen: boolean,
+    initialRecipePreferences?: RecipePreferences,
+    initialDayMealPlans: ReadonlyArray<DayMealPlan>,
+    meals: ReadonlyArray<MealName>
 }
 
 export function Home(props: HomeProps) {
@@ -88,10 +42,18 @@ export function Home(props: HomeProps) {
 
     const onAddToMealPlan: RecipeBookProps['onAddToMealPlan'] = (meal, date, recipe) => {
         setCurrentScreen("Planner")
-        setDayMealPlans(getNewDayMealPlans(recipe, meal, date, dayMealPlans))
-    }
 
-    const modalDiv = <div className="modal-div" />
+        const newDayMealPlans = dayMealPlans.reduce((arr: DayMealPlan[], cur: DayMealPlan) => {
+            if (isPlanForDate(date)(cur)) {
+                arr.push(addToMeal(cur, meal, recipe))
+            } else {
+                arr.push(cur)
+            }
+            return arr
+        }, [])
+
+        setDayMealPlans(newDayMealPlans)
+    }
 
     if (currentScreen === "Loading") {
 
@@ -109,13 +71,12 @@ export function Home(props: HomeProps) {
                     onNavAway={onNavAway}
                 />
             </div>
-            {modalDiv}
         </div>
 
     } else if (currentScreen === "Planner") {
 
         return <div className="home">
-            <Planner dayMealPlans={dayMealPlans} onNavAway={onNavAway} />
+            <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
         </div>
 
     } else {
