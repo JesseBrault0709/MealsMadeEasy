@@ -9,7 +9,6 @@ import './ScreenWithTitleAndNav.css'
 
 import { ScreenTitle, ScreenTitleProps } from "../ScreenTitle/ScreenTitle"
 import { NavBar, NavBarProps } from "../NavBar/NavBar"
-import { Container, Row, Col } from "react-bootstrap"
 import React from "react"
 
 export type ScreenWithTitleAndNavProps = {

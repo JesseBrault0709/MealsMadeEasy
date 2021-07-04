@@ -43,8 +43,8 @@ function OrderedScreen(props) {
     const sequence = <Sequence 
         value={props.index + 1} 
         outOf={props.outOf} 
-        getCompleted={() => <img src={BulletFilled} style={{ marginLeft: "10px" , marginRight: "10px" }} />}
-        getIncomplete={() => <img src={BulletEmpty} style={{ marginLeft: "10px" , marginRight: "10px" }} />} 
+        getCompleted={() => <img src={BulletFilled} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>}
+        getIncomplete={() => <img src={BulletEmpty} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>} 
     />
 
     /**

@@ -6,7 +6,6 @@ import { NavBarButton } from '../common/NavBar/NavBar'
 import { ScreenWithTitleAndNav, ScreenWithTitleAndNavProps } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
-import RecipeBookStories from '../recipe-book/RecipeBook/RecipeBook.stories'
 
 function getDayAbbrev(day: number) {
     switch (day) {

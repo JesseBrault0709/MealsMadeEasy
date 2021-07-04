@@ -16,7 +16,7 @@ export function RecipeCard(props) {
     const rating = recipe.spoonacularScore ? Math.floor(recipe.spoonacularScore / 20) : undefined
 
     return <div className="recipe-card" onClick={props.onClick}>
-        <img className="recipe-img" src={recipe.image} />
+        <img className="recipe-img" src={recipe.image} alt=""/>
         <div className="recipe-title-rating">
             <h3>{recipe.title}</h3>
             {rating !== undefined ? <RecipeRating rating={rating} outOf={5} /> : ''}

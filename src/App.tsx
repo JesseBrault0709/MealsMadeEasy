@@ -9,9 +9,9 @@ import { useState } from 'react';
 import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
-import { Home, HomeProps } from './screens/home/Home';
+import { Home } from './screens/home/Home';
 import { RecipePreferences } from './types/RecipePreferences';
-import { DayMealPlan, getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
+import { getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
 import { MealName } from './types/MealName';
 
 /** There are two main screens */

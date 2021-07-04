@@ -4,8 +4,6 @@
  */
 import './Tabs.css'
 
-import { Row, Col } from "react-bootstrap";
-
 /**
  * @param {{
  *  onClick: () => void

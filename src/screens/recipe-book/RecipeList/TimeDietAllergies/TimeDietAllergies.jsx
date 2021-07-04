@@ -9,7 +9,6 @@ import Check from './assets/Check.png'
 import X from './assets/X.png'
 import Funnel from './assets/Funnel.png'
 
-import { Row, Col } from 'react-bootstrap'
 import { Chip } from '../../../common/Chip/Chip'
 
 export function TimeDietAllergies({ 
@@ -19,26 +18,26 @@ export function TimeDietAllergies({
     intolerances
 }) {
     return <div className="time-diet-allergies">
-        <img className="funnel" src={Funnel} />
+        <img className="funnel" src={Funnel} alt=""/>
         {
             cookingTime !== undefined ?
             <Chip 
-                avatar={<img src={Check} />} 
+                avatar={<img src={Check} alt=""/>} 
                 label={cookingTime === "No Limit" ? cookingTime : `${cookingTime} mins`} 
                 type="strong" 
             /> :
-            <Chip avatar={<img src={X} />} label="Time" type="no-value" />
+            <Chip avatar={<img src={X} alt=""/>} label="Time" type="no-value" />
         }
 
         {
             diet !== undefined ?
-            <Chip avatar={<img src={Check} />} label={diet} type="strong" /> :
-            <Chip avatar={<img src={X} />} label="Diet" type="no-value" />
+            <Chip avatar={<img src={Check} alt=""/>} label={diet} type="strong" /> :
+            <Chip avatar={<img src={X} alt=""/>} label="Diet" type="no-value" />
         }
 
         {
             intolerances === undefined || intolerances.length === 0 ?
-            <Chip avatar={<img src={X} />} label="Allergies" type="no-value" /> :
+            <Chip avatar={<img src={X} alt=""/>} label="Allergies" type="no-value" /> :
             <Chip avatar={intolerances.length} label="Allergies" type="strong" />
         }
     </div>

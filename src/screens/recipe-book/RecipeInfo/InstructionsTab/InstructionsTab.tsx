@@ -6,8 +6,6 @@
  */
 import './InstructionsTab.css'
 
-import { JBButton } from "../../../../inputs/Button/Button"
-
 /**
  * @param {{
  *  instructions: string,
