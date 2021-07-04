@@ -6,6 +6,7 @@ import { NavBarButton } from '../common/NavBar/NavBar'
 import { ScreenWithTitleAndNav, ScreenWithTitleAndNavProps } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
+import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -35,7 +36,8 @@ function formatDate(date: Date) {
 function MealCol(props: {
     recipes?: ReadonlyArray<RecipeOverview>,
     accented?: boolean,
-    onRecipeSelect: (recipe: RecipeOverview) => void
+    onRecipeSelect: (recipe: RecipeOverview) => void,
+    mealCardMenuPlacement: MealCardMenuProps['variant']
 }) {
 
     if (props.recipes !== undefined && props.recipes.length !== 0) {
@@ -47,12 +49,13 @@ function MealCol(props: {
                     onRecipeSelect={() => {
                         props.onRecipeSelect(recipe)
                     }}
+                    menuPlacement={props.mealCardMenuPlacement}
                 />)
             }
         </div>
     } else {
         return <div className="meal-col">
-            <MealCard variant="empty" />
+            <MealCard variant="empty" menuPlacement={props.mealCardMenuPlacement} />
         </div>
     }
 
@@ -78,7 +81,12 @@ function DayRow(props: {
         </div>
 
         {
-            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} accented={accented} onRecipeSelect={props.onRecipeSelect} />)
+            props.meals.map((meal, index) => <MealCol 
+                recipes={props.dayMealPlan.meals.get(meal)} 
+                accented={accented} 
+                onRecipeSelect={props.onRecipeSelect}
+                mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
+            />)
         }
         
     </div>    
