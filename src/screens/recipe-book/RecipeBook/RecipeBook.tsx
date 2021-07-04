@@ -24,7 +24,7 @@ type SubScreen = "Recipe List" | "Recipe Info"
 export type RecipeBookProps = {
     recipePreferences: RecipePreferences,
     onNavAway?: (button: NavBarButton) => void,
-    onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
+    onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void,
 }
 
 export function RecipeBook(props: RecipeBookProps) {

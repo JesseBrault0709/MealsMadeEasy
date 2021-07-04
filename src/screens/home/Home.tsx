@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Sweet } from '../transitions/Sweet'
 import { RecipeBook, RecipeBookProps } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
@@ -13,6 +13,10 @@ type Screen =
     "Planner" |
     "Grocery List" |
     "Settings"
+
+export const DayMealPlansContext = React.createContext<ReadonlyArray<DayMealPlan>>([])
+
+export const MealsContext = React.createContext<ReadonlyArray<MealName>>([])
 
 export type HomeProps = {
     showLoadingScreen: boolean,
@@ -64,19 +68,29 @@ export function Home(props: HomeProps) {
     } else if (currentScreen === "Recipe Book") {
 
         return <div className="home">
-            <div className="home-content">
-                <RecipeBook 
-                    recipePreferences={recipePreferences} 
-                    onAddToMealPlan={onAddToMealPlan} 
-                    onNavAway={onNavAway}
-                />
-            </div>
+            <DayMealPlansContext.Provider value={dayMealPlans}>
+                <MealsContext.Provider value={props.meals}>
+
+                    <RecipeBook 
+                        recipePreferences={recipePreferences} 
+                        onAddToMealPlan={onAddToMealPlan} 
+                        onNavAway={onNavAway}
+                    />
+
+                </MealsContext.Provider>
+            </DayMealPlansContext.Provider>
         </div>
 
     } else if (currentScreen === "Planner") {
 
         return <div className="home">
-            <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
+            <DayMealPlansContext.Provider value={dayMealPlans}>
+                <MealsContext.Provider value={props.meals}>
+
+                    <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
+
+                </MealsContext.Provider>
+            </DayMealPlansContext.Provider>
         </div>
 
     } else {

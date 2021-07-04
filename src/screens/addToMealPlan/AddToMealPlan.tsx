@@ -3,12 +3,13 @@ import './AddToMealPlan.css'
 
 import { JBButton } from '../../inputs/Button/Button'
 import Calendar from 'react-calendar'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'
 import { MealName } from '../../types/MealName'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
 import { getModalEffect } from '../../util'
+import { DayMealPlansContext, MealsContext } from '../home/Home'
 
 export type AddToMealPlanProps = {
     onSubmit: (meal: MealName, date: Date) => void
@@ -16,10 +17,20 @@ export type AddToMealPlanProps = {
 
 export function AddToMealPlan(props: AddToMealPlanProps) {
 
+    const meals = useContext(MealsContext)
+    
+    const dayMealPlans = useContext(DayMealPlansContext)
+    const sorted = dayMealPlans.slice().sort((a, b) => a.date.valueOf() - b.date.valueOf())
+    
+    if (sorted.length === 0) {
+        throw new Error('the dayMealPlans from the context has zero items')
+    }
+    
+    const minDate = sorted[0].date
+    const maxDate = sorted[sorted.length - 1].date
+
     const [selectedMeal, setSelectedMeal] = useState<MealName>()
     const [selectedDate, setSelectedDate] = useState(new Date())
-
-    const meals: MealName[] = ['Breakfast', 'Lunch', 'Dinner']
 
     useEffect(getModalEffect())
     
@@ -40,8 +51,8 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
 
                         calendarType="US"
 
-                        minDate={new Date(2021, 5, 29)}
-                        maxDate={new Date(2021, 6, 6)}
+                        minDate={minDate}
+                        maxDate={maxDate}
 
                         nextLabel={null}
                         next2Label={null}
