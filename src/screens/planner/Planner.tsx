@@ -5,6 +5,8 @@ import { DayMealPlan } from '../../types/DayMealPlan'
 import { NavBarButton } from '../common/NavBar/NavBar'
 import { ScreenWithTitleAndNav, ScreenWithTitleAndNavProps } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
+import { MealCard } from './MealCard/MealCard'
+import RecipeBookStories from '../recipe-book/RecipeBook/RecipeBook.stories'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -32,13 +34,22 @@ function formatDate(date: Date) {
 }
 
 function MealCol(props: {
-    recipes?: ReadonlyArray<RecipeOverview>
+    recipes?: ReadonlyArray<RecipeOverview>,
+    accented?: boolean
 }) {
-    return <div className="meal-col">
-        {
-            props.recipes?.map(recipe => <div className="meal-card" key={recipe.title}>{recipe.title}</div>)
-        }
-    </div>
+
+    if (props.recipes !== undefined && props.recipes.length !== 0) {
+        return <div className="meal-col">
+            {
+                props.recipes.map(recipe => <MealCard variant={props.accented ? "accented" : "normal"} title={recipe.title} />)
+            }
+        </div>
+    } else {
+        return <div className="meal-col">
+            <MealCard variant="empty" />
+        </div>
+    }
+
 }
 
 function DayRow(props: {
@@ -46,6 +57,11 @@ function DayRow(props: {
     meals: ReadonlyArray<MealName>,
     variant: "light" | "dark"
 }) {
+
+    const today = new Date()
+    const accented = today.getFullYear() === props.dayMealPlan.date.getFullYear() &&
+        today.getMonth() === props.dayMealPlan.date.getMonth() &&
+        today.getDate() === props.dayMealPlan.date.getDate()
 
     return <div className={['day-row', `day-row-${props.variant}`].join(" ")}>
         
@@ -55,7 +71,7 @@ function DayRow(props: {
         </div>
 
         {
-            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} />)
+            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} accented={accented} />)
         }
         
     </div>    
