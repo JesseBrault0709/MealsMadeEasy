@@ -84,13 +84,9 @@ export function Home(props: HomeProps) {
     } else if (currentScreen === "Planner") {
 
         return <div className="home">
-            <DayMealPlansContext.Provider value={dayMealPlans}>
-                <MealsContext.Provider value={props.meals}>
 
-                    <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
+            <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
 
-                </MealsContext.Provider>
-            </DayMealPlansContext.Provider>
         </div>
 
     } else {
