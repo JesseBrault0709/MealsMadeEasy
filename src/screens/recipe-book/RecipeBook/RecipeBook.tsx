@@ -19,19 +19,22 @@ import { SPType } from "../../../client/spoonacularTypes"
 import { FullRecipe } from "../../../client/FullRecipe"
 import { MealName } from "../../../types/MealName"
 
-type SubScreen = "Recipe List" | "Recipe Info"
+export type SubScreen = "Recipe List" | "Recipe Info"
 
 export type RecipeBookProps = {
     recipePreferences: RecipePreferences,
     onNavAway?: (button: NavBarButton) => void,
     onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void,
+
+    initialSubScreen?: SubScreen,
+    initialRecipeId?: RecipeOverview['id']
 }
 
 export function RecipeBook(props: RecipeBookProps) {
 
-    const [subScreen, setSubScreen] = useState<SubScreen>("Recipe List")
+    const [subScreen, setSubScreen] = useState<SubScreen>(props.initialSubScreen ?? "Recipe List")
 
-    const [currentRecipeId, setCurrentRecipeId] = useState<RecipeOverview['id']>()
+    const [currentRecipeId, setCurrentRecipeId] = useState<RecipeOverview['id']>(props.initialRecipeId ?? 0) // TODO
 
     const onRecipeCardClick = (recipe: RecipeOverview) => {
         setCurrentRecipeId(recipe.id)

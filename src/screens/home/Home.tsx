@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Sweet } from '../transitions/Sweet'
-import { RecipeBook, RecipeBookProps } from '../recipe-book/RecipeBook/RecipeBook'
+import { RecipeBook, RecipeBookProps, SubScreen } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
 import { NavBarButton } from '../common/NavBar/NavBar'
 import { RecipePreferences } from '../../types/RecipePreferences'
 import { addToMeal, DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
 import { MealName } from '../../types/MealName'
+import { RecipeOverview } from '../../client/RecipeOverview'
 
 type Screen = 
     "Loading" |
@@ -36,6 +37,9 @@ export function Home(props: HomeProps) {
 
     const [dayMealPlans, setDayMealPlans] = useState(props.initialDayMealPlans)
 
+    const [initialRecipeBookSubScreen, setInitialRecipeBookSubScreen] = useState<SubScreen>("Recipe List")
+    const [initialRecipeBookRecipeId, setInitialRecipeBookRecipeId] = useState<RecipeOverview['id']>()
+
     const onNavAway = (button: NavBarButton) => {
         if (button === NavBarButton.RECIPE_BOOK) {
             setCurrentScreen("Recipe Book")
@@ -59,6 +63,8 @@ export function Home(props: HomeProps) {
         setDayMealPlans(newDayMealPlans)
     }
 
+
+
     if (currentScreen === "Loading") {
 
         setTimeout(() => setCurrentScreen("Recipe Book"), 1000) // go to Recipe Book after one second
@@ -75,6 +81,8 @@ export function Home(props: HomeProps) {
                         recipePreferences={recipePreferences} 
                         onAddToMealPlan={onAddToMealPlan} 
                         onNavAway={onNavAway}
+                        initialRecipeId={initialRecipeBookRecipeId}
+                        initialSubScreen={initialRecipeBookSubScreen}
                     />
 
                 </MealsContext.Provider>
@@ -85,7 +93,16 @@ export function Home(props: HomeProps) {
 
         return <div className="home">
 
-            <Planner dayMealPlans={dayMealPlans} meals={props.meals} onNavAway={onNavAway} />
+            <Planner 
+                dayMealPlans={dayMealPlans}
+                meals={props.meals}
+                onNavAway={onNavAway} 
+                onRecipeSelect={recipe => {
+                    setInitialRecipeBookRecipeId(recipe.id)
+                    setInitialRecipeBookSubScreen("Recipe Info")
+                    setCurrentScreen("Recipe Book")
+                }}
+            />
 
         </div>
 

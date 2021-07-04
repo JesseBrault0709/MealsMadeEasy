@@ -34,13 +34,20 @@ function formatDate(date: Date) {
 
 function MealCol(props: {
     recipes?: ReadonlyArray<RecipeOverview>,
-    accented?: boolean
+    accented?: boolean,
+    onRecipeSelect: (recipe: RecipeOverview) => void
 }) {
 
     if (props.recipes !== undefined && props.recipes.length !== 0) {
         return <div className="meal-col">
             {
-                props.recipes.map(recipe => <MealCard variant={props.accented ? "accented" : "normal"} title={recipe.title} />)
+                props.recipes.map(recipe => <MealCard 
+                    variant={props.accented ? "accented" : "normal"} 
+                    title={recipe.title}
+                    onRecipeSelect={() => {
+                        props.onRecipeSelect(recipe)
+                    }}
+                />)
             }
         </div>
     } else {
@@ -54,7 +61,8 @@ function MealCol(props: {
 function DayRow(props: {
     dayMealPlan: DayMealPlan,
     meals: ReadonlyArray<MealName>,
-    variant: "light" | "dark"
+    variant: "light" | "dark",
+    onRecipeSelect: (recipe: RecipeOverview) => void
 }) {
 
     const today = new Date()
@@ -70,16 +78,17 @@ function DayRow(props: {
         </div>
 
         {
-            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} accented={accented} />)
+            props.meals.map(meal => <MealCol recipes={props.dayMealPlan.meals.get(meal)} accented={accented} onRecipeSelect={props.onRecipeSelect} />)
         }
         
     </div>    
 }
 
 export type PlannerProps = {
-    meals: ReadonlyArray<MealName>
-    dayMealPlans: ReadonlyArray<DayMealPlan>
-    onNavAway: (button: NavBarButton) => void
+    meals: ReadonlyArray<MealName>,
+    dayMealPlans: ReadonlyArray<DayMealPlan>,
+    onNavAway: (button: NavBarButton) => void,
+    onRecipeSelect: (recipe: RecipeOverview) => void
 }
 
 export function Planner(props: PlannerProps) {
@@ -110,6 +119,7 @@ export function Planner(props: PlannerProps) {
                         dayMealPlan={day}
                         meals={props.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
+                        onRecipeSelect={props.onRecipeSelect}
                     />
                 )
             }
