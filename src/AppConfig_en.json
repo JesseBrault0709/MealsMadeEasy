@@ -1,0 +1,19 @@
+{
+    "availableCookingTimes": [
+        "No Limit", 15, 30, 40, 60
+    ],
+    "availableDiets": [
+        "Vegan", "Vegetarian",
+        "Ketogenic", "Pescetarian",
+        "Paleo", "Whole30"
+    ],
+    "availableIntolerances": [
+        "Dairy", "Egg",
+        "Gluten", "Grain",
+        "Peanut", "Seafood",
+        "Wheat"
+    ],
+    "meals": [
+        "Breakfast", "Lunch", "Dinner"
+    ]
+}

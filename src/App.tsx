@@ -1,10 +1,8 @@
-/**
- * TODO as of 6/28/21:
- *  * Move the time/diet/intolerance choices to a JSON file which is then imported here.
- */
+import "./App.css";
+
+import AppConfig from './AppConfig_en.json'
 
 import { useState } from 'react';
-import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
 import { Home } from './screens/home/Home';
@@ -19,26 +17,16 @@ export const DEV_MODE: boolean = true
 /** There are two main screens */
 type Screen = "Onboarding" | "Home"
 
-/**
- * For now these are hard-coded but eventually we want to move these elsewhere,
- * if possible.
- */
-const availableCookingTimes: ReadonlyArray<RecipePreferences['cookingTime']> = ['No Limit', 15, 30, 45, 60]
+const availableCookingTimes = 
+    AppConfig.availableCookingTimes as 
+        ReadonlyArray<RecipePreferences['cookingTime']>
 
-const availableDiets: ReadonlyArray<SPDiet> = [
-    'Vegan', 'Vegetarian',
-    'Ketogenic', 'Pescetarian',
-    'Paleo', 'Whole30'
-]
+const availableDiets = AppConfig.availableDiets as ReadonlyArray<SPDiet>
 
-const availableIntolerances: ReadonlyArray<SPIntolerance> = [
-    'Dairy', 'Egg',
-    'Gluten', 'Grain',
-    'Peanut', 'Seafood',
-    'Wheat'
-]
+const availableIntolerances = 
+    AppConfig.availableIntolerances as ReadonlyArray<SPIntolerance>
 
-const meals: ReadonlyArray<MealName> = ['Breakfast', 'Lunch', 'Dinner']
+const meals = AppConfig.meals as ReadonlyArray<MealName>
 
 function App() {
 
