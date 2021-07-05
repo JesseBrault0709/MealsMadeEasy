@@ -1,4 +1,4 @@
-import { JBButton, ButtonProps } from "./Button";
+import { JBButton, ButtonProps } from "./JBButton";
 import { Story } from '@storybook/react'
 import { Children } from "react";
 

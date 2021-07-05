@@ -1,7 +1,7 @@
 import 'react-calendar/dist/Calendar.css'
 import './AddToMealPlan.css'
 
-import { JBButton } from '../../inputs/Button/Button'
+import { JBButton } from '../../inputs/Button/JBButton'
 import Calendar from 'react-calendar'
 import { useContext, useEffect, useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'

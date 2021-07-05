@@ -3,7 +3,7 @@ import './RecipeListTab.css'
 import { RowsOfPairs } from "../../../common/RowsOfPairs/RowsOfPairs"
 import { RecipeCard } from "../RecipeCard/RecipeCard"
 import { useState, useEffect } from "react"
-import { JBButton } from '../../../../inputs/Button/Button'
+import { JBButton } from '../../../../inputs/Button/JBButton'
 
 /**
  * @param {{

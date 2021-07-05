@@ -6,7 +6,7 @@ import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { IngredientsTab } from './IngredientsTab/IngredientsTab'
 import { InstructionsTab } from './InstructionsTab/InstructionsTab'
-import { JBButton } from '../../../inputs/Button/Button'
+import { JBButton } from '../../../inputs/Button/JBButton'
 import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
 import { MealName } from '../../../types/MealName'
 

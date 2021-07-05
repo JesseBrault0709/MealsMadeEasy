@@ -9,7 +9,7 @@ import './IngredientsTab.css'
 
 // import CheckCircle from './assets/CheckCircle.png'
 import { ExtendedIngredient } from "../../../../client/FullRecipe"
-import { JBButton } from '../../../../inputs/Button/Button'
+import { JBButton } from '../../../../inputs/Button/JBButton'
 
 /**
  * @param {{
