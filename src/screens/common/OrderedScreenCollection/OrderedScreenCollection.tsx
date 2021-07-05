@@ -24,14 +24,18 @@ function OrderedScreen(props: OrderedScreenProps) {
             {props.children}
         </div>
         <div className="ordered-screen-buttons">
-            {props.onPrevious !== undefined ? <img src={ArrowLeft} onClick={props.onPrevious} alt="previous" /> : ''}
+            <div className="arrow-container">
+                {props.onPrevious !== undefined ? <img src={ArrowLeft} onClick={props.onPrevious} alt="previous" /> : ''}
+            </div>
             <Sequence 
                 value={props.index + 1} 
                 outOf={props.outOf} 
                 getCompleted={() => <img src={BulletFilled} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>}
                 getIncomplete={() => <img src={BulletEmpty} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>} 
             />
-            {props.onNext !== undefined ? <img src={ArrowRight} onClick={props.onNext} alt="next" /> : ''}
+            <div className="arrow-container">
+                {props.onNext !== undefined ? <img src={ArrowRight} onClick={props.onNext} alt="next" /> : ''}
+            </div>
         </div>
     </div>
 }
