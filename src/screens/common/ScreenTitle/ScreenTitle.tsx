@@ -26,6 +26,6 @@ export function ScreenTitle(props: ScreenTitleProps) {
                 </Button>
                 : ''
         }
-        <h1>{props.title}</h1>
+        <h1 className="screen-title-title">{props.title}</h1>
     </div>
 }

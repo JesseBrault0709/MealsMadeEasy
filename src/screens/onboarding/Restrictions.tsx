@@ -1,4 +1,4 @@
-import { OnboardingScreen } from "./OnboardingScreen"
+import { OnboardingScreen } from "./OnboardingScreen/OnboardingScreen"
 import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
 import { Button } from "react-bootstrap"
 

@@ -1,14 +1,9 @@
-/**
- * TODO as of 6/28/21: 
- *  * Update documentation to include JSDoc types
- */
-
 import { useState } from "react";
 import { SPDiet, SPIntolerance } from "../../client/spoonacularTypes";
 import { RecipePreferences } from "../../types/RecipePreferences";
 
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
-import { CookingTime } from "./CookingTime";
+import { CookingTime } from "./CookingTime/CookingTime";
 import { Diet } from "./Diet";
 import { Restrictions } from "./Restrictions";
 

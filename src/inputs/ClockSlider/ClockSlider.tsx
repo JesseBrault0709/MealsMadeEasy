@@ -225,38 +225,36 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
     }
 
 
-    return <>
-        <div 
-            className="clock-slider"
+    return <div 
+        className="clock-slider"
 
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onTouchCancel={onTouchCancel}
-            
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-        >
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchCancel}
+        
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+    >
 
-            <div ref={leftHiddenRef} className="clock-hour" style={leftHiddenStyle}>
-                {currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}
-            </div>
-            <div ref={leftRef} className="clock-hour" style={leftStyle}>
-                {currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}
-            </div>
-            <div ref={centerRef} className="clock-hour" style={centerStyle}>
-                {options[currentCenter]}
-            </div>
-            <div ref={rightRef} className="clock-hour" style={rightStyle}>
-                {currentCenter + 1 < options.length ? options[currentCenter + 1] : ''}
-            </div>
-            <div ref={rightHiddenRef} className="clock-hour" style={rightHiddenStyle}>
-                {currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}
-            </div>
-
+        <div ref={leftHiddenRef} className="clock-hour" style={leftHiddenStyle}>
+            {currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}
         </div>
-    </>
+        <div ref={leftRef} className="clock-hour" style={leftStyle}>
+            {currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}
+        </div>
+        <div ref={centerRef} className="clock-hour" style={centerStyle}>
+            {options[currentCenter]}
+        </div>
+        <div ref={rightRef} className="clock-hour" style={rightStyle}>
+            {currentCenter + 1 < options.length ? options[currentCenter + 1] : ''}
+        </div>
+        <div ref={rightHiddenRef} className="clock-hour" style={rightHiddenStyle}>
+            {currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}
+        </div>
+
+    </div>
 
 
 }

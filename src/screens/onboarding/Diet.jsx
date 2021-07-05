@@ -3,7 +3,7 @@
  *  * nested function needs to be of form const func = lambda
  */
 
-import { OnboardingScreen } from "./OnboardingScreen"
+import { OnboardingScreen } from "./OnboardingScreen/OnboardingScreen"
 import { Button } from "react-bootstrap"
 import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
 

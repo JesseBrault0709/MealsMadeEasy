@@ -1,6 +1,6 @@
-import { OnboardingScreen } from "./OnboardingScreen"
-import { ClockSlider } from "../../inputs/ClockSlider/ClockSlider"
-import { RecipePreferences } from "../../types/RecipePreferences"
+import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
+import { ClockSlider } from "../../../inputs/ClockSlider/ClockSlider"
+import { RecipePreferences } from "../../../types/RecipePreferences"
 
 export type CookingTimeProps = {
 
