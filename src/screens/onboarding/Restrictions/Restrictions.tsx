@@ -1,6 +1,6 @@
-import { OnboardingScreen } from "./OnboardingScreen/OnboardingScreen"
-import { TwoColumnButtons } from "../../inputs/TwoColumnButtons/TwoColumnButtons"
-import { Button } from "react-bootstrap"
+import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
+import { JBButton } from "../../../inputs/Button/JBButton"
+import { RowsOfPairs } from "../../common/RowsOfPairs/RowsOfPairs"
 
 export type RestrictionsProps = {
 
@@ -30,9 +30,9 @@ export function Restrictions(props: RestrictionsProps) {
             }
         }
 
-        buttons.push(<Button active={isSelected} onClick={onClick} key={restriction}>
+        buttons.push(<JBButton variant="circle-large" active={isSelected} onClick={onClick} key={restriction}>
             {restriction}
-        </Button>)
+        </JBButton>)
 
     })
 
@@ -40,8 +40,8 @@ export function Restrictions(props: RestrictionsProps) {
         prompt="Do you have any dietary restrictions?"
         instruction="Tap on any restrictions you may have."
     >
-        <TwoColumnButtons>
+        <RowsOfPairs>
             {buttons}
-        </TwoColumnButtons>
+        </RowsOfPairs>
     </OnboardingScreen>
 }

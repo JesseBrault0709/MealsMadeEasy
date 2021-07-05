@@ -5,7 +5,7 @@ import { RecipePreferences } from "../../types/RecipePreferences";
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
 import { CookingTime } from "./CookingTime/CookingTime";
 import { Diet } from "./Diet/Diet";
-import { Restrictions } from "./Restrictions";
+import { Restrictions } from "./Restrictions/Restrictions";
 
 export type OnboardingProps = {
 
