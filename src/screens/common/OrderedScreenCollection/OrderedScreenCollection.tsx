@@ -1,5 +1,7 @@
 import BulletFilled from './assets/BulletFilled.png'
 import BulletEmpty from './assets/BulletEmpty.png'
+import ArrowLeft from './assets/ArrowLeft.png'
+import ArrowRight from './assets/ArrowRight.png'
 
 import './OrderedScreenCollection.css'
 
@@ -22,14 +24,14 @@ function OrderedScreen(props: OrderedScreenProps) {
             {props.children}
         </div>
         <div className="ordered-screen-buttons">
-            {props.onPrevious !== undefined ? <span onClick={props.onPrevious}>prev</span> : ''}
+            {props.onPrevious !== undefined ? <img src={ArrowLeft} onClick={props.onPrevious} alt="previous" /> : ''}
             <Sequence 
                 value={props.index + 1} 
                 outOf={props.outOf} 
                 getCompleted={() => <img src={BulletFilled} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>}
                 getIncomplete={() => <img src={BulletEmpty} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>} 
             />
-            {props.onNext !== undefined ? <span onClick={props.onNext}>next</span> : ''}
+            {props.onNext !== undefined ? <img src={ArrowRight} onClick={props.onNext} alt="next" /> : ''}
         </div>
     </div>
 }
