@@ -4,7 +4,7 @@ import { RecipePreferences } from "../../types/RecipePreferences";
 
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
 import { CookingTime } from "./CookingTime/CookingTime";
-import { Diet } from "./Diet";
+import { Diet } from "./Diet/Diet";
 import { Restrictions } from "./Restrictions";
 
 export type OnboardingProps = {
@@ -82,7 +82,7 @@ export function Onboarding(props: OnboardingProps) {
             onChange={setCookingTime}
         />
 
-        <Diet diets={props.allDiets} onClick={diet => setDiet(diet as SPDiet)} />
+        <Diet diets={props.allDiets} onDietSelect={diet => setDiet(diet)} />
 
         <Restrictions restrictions={intoleranceMap} onClick={onIntoleranceClick}/>
 
