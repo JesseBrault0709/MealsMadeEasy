@@ -3,9 +3,7 @@
  *  * Move the time/diet/intolerance choices to a JSON file which is then imported here.
  */
 
-// import 'bootstrap/dist/css/bootstrap.css'
 import { useState } from 'react';
-
 import "./App.css";
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
@@ -13,6 +11,10 @@ import { Home } from './screens/home/Home';
 import { RecipePreferences } from './types/RecipePreferences';
 import { getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
 import { MealName } from './types/MealName';
+
+/** Set to true for dev mode. */
+export const DEV_MODE = false
+
 
 /** There are two main screens */
 type Screen = "Onboarding" | "Home"
@@ -47,33 +49,35 @@ function App() {
         intolerances: []
     })
 
-    if (currentScreen === "Onboarding") {
+    const getScreen = () => {
+        if (currentScreen === "Onboarding") {
 
-        const onOnboardingSubmit = (preferences: RecipePreferences) => {
-            setUserPreferences(preferences)
-            setCurrentScreen("Home")
-        }
-
-        return <div className="App">
-            <Onboarding
+            const onOnboardingSubmit = (preferences: RecipePreferences) => {
+                setUserPreferences(preferences)
+                setCurrentScreen("Home")
+            }
+    
+            return <Onboarding
                 allCookingTimes={availableCookingTimes}
                 allDiets={availableDiets}
                 allIntolerances={availableIntolerances}
                 onSubmit={onOnboardingSubmit}
             />
-        </div>
-
-    } else if (currentScreen === "Home") {
-
-        return <div className="App">
-            <Home 
+    
+        } else if (currentScreen === "Home") {
+    
+            return <Home 
                 showLoadingScreen 
                 initialRecipePreferences={userPreferences}
                 initialDayMealPlans={getWeekOfBlankDayMealPlans(['Breakfast', 'Lunch', 'Dinner'])}
                 meals={meals}
             />
-        </div>
+        }
     }
+
+    return <div className="App">
+        {getScreen()}
+    </div>
 
 }
 
