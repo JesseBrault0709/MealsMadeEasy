@@ -10,36 +10,27 @@ const leftRightOpacity = '60%'
 const hiddenOpacity = '0%'
 
 const leftHiddenStyle = {
-    marginLeft: 'calc(50% - 100px - 25px)',
-    marginTop: '125px',
-    transform: 'rotate(-90deg)',
-    opacity: hiddenOpacity
+    transform: 'translateX(60px) translateY(90px) rotate(-90deg)',
+    opacity: hiddenOpacity,
 }
 
 const leftStyle = {
-    marginLeft: 'calc(50% - 71px - 25px)',
-    marginTop: '49px',
-    transform: 'rotate(-45deg)',
-    opacity: leftRightOpacity
+    transform: 'translateX(85px) translateY(25px) rotate(-45deg)',
+    opacity: leftRightOpacity,
 }
 
 const centerStyle = {
-    marginLeft: 'calc(50% - 25px)',
-    marginTop: '25px',
-    transform: 'rotate(0deg)'
+    transform: 'translateX(150px) rotate(0deg)'
 }
 
 const rightStyle = {
-    marginLeft: 'calc(50% + 71px - 25px)',
-    marginTop: '49px',
-    transform: 'rotate(45deg)',
-    opacity: '70%'
+    transform: 'translateX(215px) translateY(25px) rotate(45deg)',
+    opacity: '70%',
+
 }
 
 const rightHiddenStyle = {
-    marginLeft: 'calc(50% + 100px - 25px)',
-    marginTop: '125px',
-    transform: 'rotate(90deg)',
+    transform: 'translateX(240px) translateY(90px) rotate(90deg)',
     opacity: hiddenOpacity
 }
 
@@ -238,20 +229,20 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
         onMouseUp={onMouseUp}
     >
 
-        <div ref={leftHiddenRef} className="clock-hour" style={leftHiddenStyle}>
-            {currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}
+        <div ref={leftHiddenRef} className="clock-hour clock-hour-left-hidden" style={leftHiddenStyle}>
+            <span>{currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}</span>
         </div>
-        <div ref={leftRef} className="clock-hour" style={leftStyle}>
-            {currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}
+        <div ref={leftRef} className="clock-hour clock-hour-left" style={leftStyle}>
+            <span>{currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}</span>
         </div>
-        <div ref={centerRef} className="clock-hour" style={centerStyle}>
-            {options[currentCenter]}
+        <div ref={centerRef} className="clock-hour clock-hour-center" style={centerStyle}>
+            <span>{options[currentCenter]}</span>
         </div>
-        <div ref={rightRef} className="clock-hour" style={rightStyle}>
-            {currentCenter + 1 < options.length ? options[currentCenter + 1] : ''}
+        <div ref={rightRef} className="clock-hour clock-hour-right" style={rightStyle}>
+            <span>{currentCenter + 1 < options.length ? options[currentCenter + 1] : ''}</span>
         </div>
-        <div ref={rightHiddenRef} className="clock-hour" style={rightHiddenStyle}>
-            {currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}
+        <div ref={rightHiddenRef} className="clock-hour clock-hour-right-hidden" style={rightHiddenStyle}>
+            <span>{currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}</span>
         </div>
 
     </div>
