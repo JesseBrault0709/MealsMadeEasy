@@ -51,6 +51,10 @@
 .circle-large,
 .circle-medium {
     background-color: #E5E5E5;
+    
+    padding: 0px; /* override from .jb-button */
+
+    overflow: hidden;
 }
 
 .circle-large-active,
