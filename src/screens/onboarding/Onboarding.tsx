@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SPDiet, SPIntolerance } from "../../client/spoonacularTypes";
 import { RecipePreferences } from "../../types/RecipePreferences";
+import { devLog } from "../../util";
 
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
 import { CookingTime } from "./CookingTime/CookingTime";
@@ -43,7 +44,7 @@ export function Onboarding(props: OnboardingProps) {
 
     const onLastNext = () => {
 
-        console.log({
+        devLog({
             cookingTime, diet, intoleranceMap
         })
 

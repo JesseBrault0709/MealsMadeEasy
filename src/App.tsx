@@ -13,7 +13,7 @@ import { getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
 import { MealName } from './types/MealName';
 
 /** Set to true for dev mode. */
-export const DEV_MODE = false
+export const DEV_MODE: boolean = true
 
 
 /** There are two main screens */
