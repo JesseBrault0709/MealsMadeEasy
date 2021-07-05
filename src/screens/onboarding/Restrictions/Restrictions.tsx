@@ -20,8 +20,6 @@ export type RestrictionsProps = {
  */
 export function Restrictions(props: RestrictionsProps) {
 
-    console.log(props.restrictions)
-
     const buttons: React.ReactNode[] = []
 
     props.restrictions.forEach((isSelected, restriction) => {

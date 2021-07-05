@@ -42,6 +42,11 @@ export function Onboarding(props: OnboardingProps) {
     ))
 
     const onLastNext = () => {
+
+        console.log({
+            cookingTime, diet, intoleranceMap
+        })
+
         if (props.onSubmit !== undefined) {
 
             const selectedIntolerances: SPIntolerance[] = []

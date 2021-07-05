@@ -43,6 +43,7 @@ export function RecipeBook(props: RecipeBookProps) {
 
     const getRecipesGetter = (type: SPType) => (offset: number, limit: number) => getByComplexSearch({
             addRecipeInformation: true,
+            maxReadyTime: props.recipePreferences.cookingTime === "No Limit" ? undefined : props.recipePreferences.cookingTime,
             diet: props.recipePreferences.diet,
             intolerances: props.recipePreferences.intolerances,
             offset,
