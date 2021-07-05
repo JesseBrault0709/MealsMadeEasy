@@ -1,9 +1,9 @@
-import './Button.css'
+import './JBButton.css'
 
 import React from 'react'
 
 export type ButtonProps = {
-    variant: "primary" | "outline" | "disabled"
+    variant: "primary" | "outline" | "disabled" | "circle-large" | "circle-medium"
     children?: React.ReactNode
     style?: React.CSSProperties
     onClick?: React.MouseEventHandler<HTMLButtonElement>

@@ -26,3 +26,16 @@ Outline.args = {
     variant: 'outline',
     children: 'Outline button!'
 }
+
+export const CircleLarge: Story<ButtonProps> = Template.bind({})
+CircleLarge.args = {
+    variant: "circle-large",
+    children: 'large circle'
+}
+
+export const CircleLargeActive: Story<ButtonProps> = Template.bind({})
+CircleLargeActive.args = {
+    variant: 'circle-large',
+    children: 'Gluten Free',
+    active: true
+}
