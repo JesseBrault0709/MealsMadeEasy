@@ -1,22 +1,6 @@
-/**
- * TODO as of 6/28/21:
- *  * Move groupIntoPairs function into a util.js file
- *      to be created in the root src dir.
- */
-
 import './RowsOfPairs.css'
 
-function groupIntoPairs(arr) {
-    const result = []
-    for (let i = 0; i < arr.length; i++) {
-        if (i % 2 === 0) {
-            const e1 = arr[i]
-            const e2 = arr[i + 1]
-            result.push([e1, e2])
-        }
-    }
-    return result
-}
+import { groupIntoPairs } from '../../../util'
 
 /**
  * @param {{

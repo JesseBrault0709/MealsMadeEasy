@@ -1,8 +1,10 @@
+import './Diet.css'
+
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
 import { SPDiet } from "../../../client/spoonacularTypes"
 import { useState } from "react"
-import { RowsOfPairs } from "../../common/RowsOfPairs/RowsOfPairs"
+import { groupIntoPairs } from "../../../util"
 
 export type DietProps = {
     diets: ReadonlyArray<SPDiet>,
@@ -16,39 +18,45 @@ export function Diet(props: DietProps) {
 
     const [selectedDiet, setSelectedDiet] = useState<SPDiet>()
     
+    const getOnClick = (diet: SPDiet) => () => {
+        if (diet === selectedDiet) {
+            setSelectedDiet(undefined)
+        } else {
+            setSelectedDiet(diet)
+        }
+
+        if (props.onDietSelect !== undefined) {
+            props.onDietSelect(diet)
+        }
+    }
+
+    const getButton = (diet: SPDiet) => <JBButton
+        key={diet}
+        variant="circle-large"
+        active={diet === selectedDiet}
+        onClick={getOnClick(diet)}
+        style={{
+            margin: '10px'
+        }}
+    >
+        {diet}
+    </JBButton>
+
     return <OnboardingScreen
         prompt="What diet do you follow?"
         instruction="Tap on your preference."
     >
-
-        <RowsOfPairs>
+        <div className="diet-buttons">
             {
-                props.diets.map(diet => {
+                groupIntoPairs(props.diets).map(pair => {
+                    const [d1, d2] = pair
 
-                    const onClick = () => {
-
-                        if (diet === selectedDiet) {
-                            setSelectedDiet(undefined)
-                        } else {
-                            setSelectedDiet(diet)
-                        }
-
-                        if (props.onDietSelect !== undefined) {
-                            props.onDietSelect(diet)
-                        }
-
-                    }
-
-                    return <JBButton 
-                        variant="circle-large" 
-                        onClick={onClick} 
-                        active={selectedDiet === diet}
-                        key={diet}
-                    >{diet}</JBButton>
+                    return <div className="diet-button-pair">
+                        {getButton(d1)}
+                        {getButton(d2)}
+                    </div>
                 })
             }
-
-        </RowsOfPairs>
-
+        </div>
     </OnboardingScreen>
 }

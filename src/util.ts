@@ -36,3 +36,15 @@ export const getModalEffect = () => () => {
     }
 
 }
+
+export const groupIntoPairs = <T>(arr: ReadonlyArray<T>): [T, T][] => {
+    const result: [T, T][] = []
+    for (let i = 0; i < arr.length; i++) {
+        if (i % 2 === 0) {
+            const e1 = arr[i]
+            const e2 = arr[i + 1]
+            result.push([e1, e2])
+        }
+    }
+    return result
+}
