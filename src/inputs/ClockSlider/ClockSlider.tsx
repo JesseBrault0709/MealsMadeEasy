@@ -53,7 +53,7 @@ const leftToLeftHidden = [leftStyle, leftHiddenStyle]
 // Duration
 
 const timingOptions = {
-    duration: 400,
+    duration: 300,
     iterations: 1,
     easing: 'ease-in-out'
 }
