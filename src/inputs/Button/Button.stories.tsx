@@ -1,5 +1,6 @@
 import { JBButton, ButtonProps } from "./Button";
 import { Story } from '@storybook/react'
+import { Children } from "react";
 
 export default {
     title: 'inputs/Button',
@@ -18,4 +19,10 @@ export const Disabled: Story<ButtonProps> = Template.bind({})
 Disabled.args = {
     variant: 'disabled',
     children: "Disabled button!"
+}
+
+export const Outline: Story<ButtonProps> = Template.bind({})
+Outline.args = {
+    variant: 'outline',
+    children: 'Outline button!'
 }

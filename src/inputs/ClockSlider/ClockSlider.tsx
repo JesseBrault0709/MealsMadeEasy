@@ -1,14 +1,6 @@
-/**
- * TODO as of 6/28/21:
- *  * Remove clockwise/counter-clockwise buttons.
- *  * Write code for touch/swipe
- *  * Write code for click-and-drag 
- */
-
 import './ClockSlider.css'
 
 import React, { useRef, useState } from 'react'
-import { Button } from 'react-bootstrap'
 
 /**
  * Styles for each position on the clock slider. 
@@ -160,8 +152,93 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
         }
     )
 
+    /* Touch logic */
+
+    let touchStartX: number | null = null
+    let touchCurrentX: number | null = null
+
+    const resetTouch = () => {
+        touchStartX = null
+        touchCurrentX = null
+    }
+
+    const onTouchStart: React.TouchEventHandler<HTMLDivElement> = event => {
+        if (event.targetTouches.length === 1) {
+            const touch = event.targetTouches.item(0)
+            touchStartX = touch.clientX
+        }
+    }
+
+    const onTouchMove: React.TouchEventHandler<HTMLDivElement> = event => {
+        if (event.targetTouches.length === 1) {
+            const touch = event.targetTouches.item(0)
+            touchCurrentX = touch.clientX
+        }
+    }
+
+    const onTouchEnd: React.TouchEventHandler<HTMLDivElement> = event => {
+        if (touchStartX !== null && touchCurrentX !== null) {
+            const delta = touchStartX - touchCurrentX
+            if (delta > 0) {
+                counterClockwise()
+            } else {
+                clockwise()
+            }
+        }
+        resetTouch()
+    }
+
+    const onTouchCancel: React.TouchEventHandler<HTMLDivElement> = event => {
+        resetTouch()
+    }
+
+    /* Mouse-drag logic */
+
+    let mouseStartX: number | null = null
+    let mouseCurrentX: number | null = null
+
+    const resetMouse = () => {
+        mouseStartX = null
+        mouseCurrentX = null
+    }
+
+    const onMouseDown: React.MouseEventHandler<HTMLDivElement> = event => {
+        mouseStartX = event.clientX
+    }
+
+    const onMouseMove: React.MouseEventHandler<HTMLDivElement> = event => {
+        if (mouseStartX !== null) {
+            mouseCurrentX = event.clientX
+        }
+    }
+
+    const onMouseUp: React.MouseEventHandler<HTMLDivElement> = event => {
+        if (mouseStartX !== null && mouseCurrentX !== null) {
+            const delta = mouseStartX - mouseCurrentX
+            if (delta > 0) {
+                counterClockwise()
+            } else {
+                clockwise()
+            }
+        }
+        resetMouse()
+    }
+
+
     return <>
-        <div className="clock-slider">
+        <div 
+            className="clock-slider"
+
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchCancel}
+            
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+        >
+
             <div ref={leftHiddenRef} className="clock-hour" style={leftHiddenStyle}>
                 {currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}
             </div>
@@ -177,10 +254,7 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
             <div ref={rightHiddenRef} className="clock-hour" style={rightHiddenStyle}>
                 {currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}
             </div>
-        </div>
-        <div>
-            <Button onClick={counterClockwise}>counter-clockwise</Button>
-            <Button onClick={clockwise}>clockwise</Button>
+
         </div>
     </>
 
