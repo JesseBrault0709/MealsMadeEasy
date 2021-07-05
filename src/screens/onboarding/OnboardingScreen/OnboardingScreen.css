@@ -24,18 +24,21 @@
     line-height: 32px;
     color: var(--main-cta);
 
-    margin: 0px;
+    margin: 15px;
 }
 
 .onboarding-header h2 {
     font-size: 16px;
     line-height: 32px;
+    margin: 8px;
 }
 
 .onboarding-header span {
     font-weight: 300;
     font-size: 14px;
     line-height: 18px;
+
+    margin: 8px
 }
 
 .onboarding-children {

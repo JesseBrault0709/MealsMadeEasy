@@ -48,10 +48,10 @@ export function Diet(props: DietProps) {
     >
         <div className="diet-buttons">
             {
-                groupIntoPairs(props.diets).map(pair => {
+                groupIntoPairs(props.diets).map((pair, index) => {
                     const [d1, d2] = pair
 
-                    return <div className="diet-button-pair">
+                    return <div className="diet-button-pair" key={index}>
                         {getButton(d1)}
                         {getButton(d2)}
                     </div>

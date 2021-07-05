@@ -1,6 +1,8 @@
+import './Restrictions.css'
+
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
-import { RowsOfPairs } from "../../common/RowsOfPairs/RowsOfPairs"
+import { groupIntoPairs } from "../../../util"
 
 export type RestrictionsProps = {
 
@@ -30,9 +32,19 @@ export function Restrictions(props: RestrictionsProps) {
             }
         }
 
-        buttons.push(<JBButton variant="circle-large" active={isSelected} onClick={onClick} key={restriction}>
-            {restriction}
-        </JBButton>)
+        buttons.push(
+            <JBButton
+                variant="circle-large" 
+                active={isSelected} 
+                onClick={onClick} 
+                key={restriction}
+                style={{
+                    margin: '10px'
+                }}
+            >
+                {restriction}
+            </JBButton>
+        )
 
     })
 
@@ -40,8 +52,14 @@ export function Restrictions(props: RestrictionsProps) {
         prompt="Do you have any dietary restrictions?"
         instruction="Tap on any restrictions you may have."
     >
-        <RowsOfPairs>
-            {buttons}
-        </RowsOfPairs>
+        <div className="restrictions-buttons">
+            {
+                groupIntoPairs(buttons).map((pair, index) => {
+                    return <div key={index} className="restriction-button-pair">
+                        {pair}
+                    </div>
+                })
+            }
+        </div>
     </OnboardingScreen>
 }

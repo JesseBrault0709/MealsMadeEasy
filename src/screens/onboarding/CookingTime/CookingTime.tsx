@@ -1,3 +1,5 @@
+import './CookingTime.css'
+
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { ClockSlider } from "../../../inputs/ClockSlider/ClockSlider"
 import { RecipePreferences } from "../../../types/RecipePreferences"
@@ -42,6 +44,8 @@ export function CookingTime(props: CookingTimeProps) {
         prompt="How much time do you have?"
         instruction="Drag to let us know your ideal cooking time."
     >
-        <ClockSlider options={options} onChange={onChange} initialOption={props.initialCookingTimeIndex} />
+        <div className="cooking-time-container">
+            <ClockSlider options={options} onChange={onChange} initialOption={props.initialCookingTimeIndex} />
+        </div>
     </OnboardingScreen>
 }
