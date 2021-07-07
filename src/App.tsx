@@ -1,43 +1,21 @@
 import "./App.css";
 
-import AppConfig from './AppConfig_en.json'
-
 import { Dispatch, Reducer, useReducer, useState } from 'react';
 import { Onboarding } from './screens/onboarding/Onboarding'
-import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
 import { Home } from './screens/home/Home';
 import { RecipePreferences } from './types/RecipePreferences';
 import { getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
-import { MealName } from './types/MealName';
 import { Sweet } from "./screens/Sweet/Sweet";
-import { RecipeListConfig } from "./types/RecipeListTabConfig";
 import { useEffect } from "react";
 import { RecipeOverview } from "./client/RecipeOverview";
 import { getByComplexSearch } from "./client/complexSearch";
 import { copyMapAndSet, copyMapWithMapper, mapToArray } from "./util";
 import { RecipeListSpec } from "./screens/recipe-book/RecipeLists/RecipeLists";
 import { Splash } from "./screens/Splash/Splash";
-
+import { appConfig } from "./appConfig";
 
 /** Set to true for dev mode. */
 export const DEV_MODE: boolean = true
-
-/** Configurations from config file */
-
-const availableCookingTimes = 
-    AppConfig.availableCookingTimes as 
-        ReadonlyArray<RecipePreferences['cookingTime']>
-
-const availableDiets = AppConfig.availableDiets as ReadonlyArray<SPDiet>
-
-const availableIntolerances = 
-    AppConfig.availableIntolerances as ReadonlyArray<SPIntolerance>
-
-const meals = AppConfig.meals as ReadonlyArray<MealName>
-
-const recipeListConfigs = AppConfig.recipeListTabs as ReadonlyArray<RecipeListConfig>
-
-const recipeListLimit: number = AppConfig.recipeListLimit
 
 /** Reducers */
 
@@ -54,7 +32,7 @@ const recipeListOffsetReducer: Reducer<ReadonlyMap<string, number>, RecipeListOf
             state,
             (listName, offset) => {
                 if (listName === action.payload.listName) {
-                    return [listName, offset + recipeListLimit]
+                    return [listName, offset + appConfig.recipeListLimit]
                 } else {
                     return [listName, offset]
                 }
@@ -108,16 +86,16 @@ const recipeListRecipesReducer:
 
 const initRecipeListOffsets = () => {
     const offsets = new Map<string, number>()
-    recipeListConfigs.forEach(config => {
-        offsets.set(config.name, 0)
+    appConfig.recipeLists.forEach(list => {
+        offsets.set(list.name, 0)
     })
     return offsets
 }
 
 const initRecipeListRecipes = (): ReadonlyMap<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>> => {
     const recipes = new Map<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>>()
-    recipeListConfigs.forEach(config => {
-        recipes.set(config.name, new Map())
+    appConfig.recipeLists.forEach(list => {
+        recipes.set(list.name, new Map())
     })
     return recipes
 }
@@ -147,9 +125,9 @@ const getAddRecipesForOffset = (
             diet: userPreferences.diet,
             intolerances: userPreferences.intolerances,
             maxReadyTime: userPreferences.cookingTime === "No Limit" ? undefined : userPreferences.cookingTime,
-            number: recipeListLimit,
+            number: appConfig.recipeListLimit,
             offset,
-            type: recipeListConfigs.find(config => config.name === listName)?.type
+            type: appConfig.recipeLists.find(list => list.name === listName)?.type
         }).then(recipes => {
             dispatchRecipeListRecipes({
                 type: "recipeListRecipes/add",
@@ -212,14 +190,14 @@ function App() {
         }
     }, [currentScreen, userPreferences]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    const [activeRecipeListTab, setActiveRecipeListTab] = useState<string>(recipeListConfigs[0].name)
+    const [activeRecipeListTab, setActiveRecipeListTab] = useState<string>(appConfig.recipeLists[0].name)
 
-    const listSpecs: ReadonlyArray<RecipeListSpec> = recipeListConfigs.map(config => {
+    const listSpecs: ReadonlyArray<RecipeListSpec> = appConfig.recipeLists.map(list => {
         const allRecipes: RecipeOverview[] = []
 
-        const offsetRecipesMap = recipeListRecipes.get(config.name)
+        const offsetRecipesMap = recipeListRecipes.get(list.name)
         if (offsetRecipesMap === undefined) {
-            throw new Error(`tabName ${config.name} has no offsetRecipesMap`)
+            throw new Error(`tabName ${list.name} has no offsetRecipesMap`)
         }
 
         offsetRecipesMap.forEach((recipes) => {
@@ -230,16 +208,16 @@ function App() {
             dispatchRecipeListOffsets({
                 type: "recipeListOffset/increment",
                 payload: {
-                    listName: config.name
+                    listName: list.name
                 }
             })
         }
         
         return {
-            name: config.name,
-            active: activeRecipeListTab === config.name,
+            name: list.name,
+            active: activeRecipeListTab === list.name,
             onTabClick: () => {
-                setActiveRecipeListTab(config.name)
+                setActiveRecipeListTab(list.name)
             },
             recipes: allRecipes,
             onLoadMore
@@ -267,9 +245,9 @@ function App() {
             }
     
             return <Onboarding
-                allCookingTimes={availableCookingTimes}
-                allDiets={availableDiets}
-                allIntolerances={availableIntolerances}
+                allCookingTimes={appConfig.availableCookingTimes}
+                allDiets={appConfig.availableDiets}
+                allIntolerances={appConfig.availableIntolerances}
                 onSubmit={onOnboardingSubmit}
             />
     
@@ -281,8 +259,8 @@ function App() {
     
             return <Home
                 initialRecipePreferences={userPreferences}
-                initialDayMealPlans={getWeekOfBlankDayMealPlans(meals)}
-                meals={meals}
+                initialDayMealPlans={getWeekOfBlankDayMealPlans(appConfig.meals)}
+                meals={appConfig.meals}
                 listSpecs={listSpecs}
             />
         }
