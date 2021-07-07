@@ -27,11 +27,11 @@ export function MealCardMenu(props: MealCardMenuProps) {
             </div>
             <div className="menu-item menu-item-disabled">
                 <span>Move</span>
-                <img src={Move} />
+                <img src={Move} alt="" />
             </div>
             <div className="menu-item menu-item-disabled">
                 <span>Share</span>
-                <img src={Share} />
+                <img src={Share} alt="" />
             </div>
         </div>
     } else {

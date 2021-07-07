@@ -30,7 +30,7 @@ export function Home(props: HomeProps) {
     
     const [currentScreen, setCurrentScreen] = useState<Screen>("Recipe Book")
 
-    const [recipePreferences, setRecipePreferences] = useState<RecipePreferences>(props.initialRecipePreferences ?? {
+    const [recipePreferences] = useState<RecipePreferences>(props.initialRecipePreferences ?? {
         cookingTime: "No Limit",
         intolerances: []
     })

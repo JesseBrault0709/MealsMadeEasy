@@ -1,7 +1,6 @@
 import './RecipeCard.css'
 
 import { RecipeRating } from '../../RecipeRating/RecipeRating'
-import { RecipeOverview } from '../../../../client/RecipeOverview'
 
 /**
  * @param {{

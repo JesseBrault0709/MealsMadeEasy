@@ -198,7 +198,7 @@ function App() {
                 console.error(err)
             })
         }
-    }, [recipeListOffsets, userPreferences])
+    }, [currentScreen, recipeListOffsets, userPreferences]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (currentScreen === "Sweet") {
@@ -210,7 +210,7 @@ function App() {
                 console.error(err)
             })
         }
-    }, [currentScreen, userPreferences])
+    }, [currentScreen, userPreferences]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const [activeRecipeListTab, setActiveRecipeListTab] = useState<string>(recipeListConfigs[0].name)
 

@@ -32,7 +32,9 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
     const [selectedMeal, setSelectedMeal] = useState<MealName>()
     const [selectedDate, setSelectedDate] = useState(new Date())
 
-    useEffect(getModalEffect())
+    const modalEffect = getModalEffect()
+    
+    useEffect(() => modalEffect(), [modalEffect])
     
     return ReactDOM.createPortal(
         <BottomModal>
