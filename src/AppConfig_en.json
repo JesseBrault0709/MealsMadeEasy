@@ -1,6 +1,6 @@
 {
     "availableCookingTimes": [
-        "No Limit", 15, 30, 40, 60
+        "No Limit", 15, 30, 45, 60
     ],
     "availableDiets": [
         "Vegan", "Vegetarian",
@@ -15,5 +15,20 @@
     ],
     "meals": [
         "Breakfast", "Lunch", "Dinner"
-    ]
+    ],
+    "recipeListTabs": [
+        {
+            "name": "Breakfast",
+            "type": "breakfast"
+        }, 
+        {
+            "name": "Main Course",
+            "type": "main course"
+        },
+        {
+            "name": "Sides",
+            "type": "side dish"
+        }
+    ],
+    "recipeListLimit": 6
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Sweet } from '../transitions/Sweet'
 import { RecipeBook, RecipeBookProps, SubScreen } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
 import { NavBarButton } from '../common/NavBar/NavBar'
@@ -7,9 +6,9 @@ import { RecipePreferences } from '../../types/RecipePreferences'
 import { addToMeal, DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
 import { MealName } from '../../types/MealName'
 import { RecipeOverview } from '../../client/RecipeOverview'
+import { RecipeListsProps } from '../recipe-book/RecipeLists/RecipeLists'
 
 type Screen = 
-    "Loading" |
     "Recipe Book" |
     "Planner" |
     "Grocery List" |
@@ -20,15 +19,16 @@ export const DayMealPlansContext = React.createContext<ReadonlyArray<DayMealPlan
 export const MealsContext = React.createContext<ReadonlyArray<MealName>>([])
 
 export type HomeProps = {
-    showLoadingScreen: boolean,
     initialRecipePreferences?: RecipePreferences,
     initialDayMealPlans: ReadonlyArray<DayMealPlan>,
-    meals: ReadonlyArray<MealName>
+    meals: ReadonlyArray<MealName>,
+    
+    tabSpecs: RecipeListsProps['tabs']
 }
 
 export function Home(props: HomeProps) {
     
-    const [currentScreen, setCurrentScreen] = useState<Screen>(props.showLoadingScreen ? "Loading" : "Recipe Book")
+    const [currentScreen, setCurrentScreen] = useState<Screen>("Recipe Book")
 
     const [recipePreferences, setRecipePreferences] = useState<RecipePreferences>(props.initialRecipePreferences ?? {
         cookingTime: "No Limit",
@@ -63,15 +63,7 @@ export function Home(props: HomeProps) {
         setDayMealPlans(newDayMealPlans)
     }
 
-
-
-    if (currentScreen === "Loading") {
-
-        setTimeout(() => setCurrentScreen("Recipe Book"), 1000) // go to Recipe Book after one second
-
-        return <Sweet />
-
-    } else if (currentScreen === "Recipe Book") {
+    if (currentScreen === "Recipe Book") {
 
         return <div className="home">
             <DayMealPlansContext.Provider value={dayMealPlans}>
@@ -79,10 +71,14 @@ export function Home(props: HomeProps) {
 
                     <RecipeBook 
                         recipePreferences={recipePreferences} 
+
                         onAddToMealPlan={onAddToMealPlan} 
                         onNavAway={onNavAway}
+
                         initialRecipeId={initialRecipeBookRecipeId}
                         initialSubScreen={initialRecipeBookSubScreen}
+                        
+                        tabSpecs={props.tabSpecs}
                     />
 
                 </MealsContext.Provider>

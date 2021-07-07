@@ -15,7 +15,7 @@ export function MealCardMenu(props: MealCardMenuProps) {
     if (props.show) {
         return <div className={`meal-card-menu meal-card-menu-${props.variant}`}>
             <div className="menu-item" onClick={props.onViewRecipe}>
-                View recipe
+                View
             </div>
             <div className="menu-item">
                 <span>Replace</span>

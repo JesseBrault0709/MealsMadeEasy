@@ -56,3 +56,46 @@ export const devLog = (msg: any) => {
         console.log(msg)
     }
 }
+
+export const copyMap = <K, V>(m: ReadonlyMap<K, V>): Map<K, V> => {
+    const newM = new Map<K, V>()
+    m.forEach((v, k) => {
+        newM.set(k, v)
+    })
+    return newM
+}
+
+export const copyMapAndSet = <K, V>(
+    m: ReadonlyMap<K, V>, 
+    k: K, 
+    v: V
+): ReadonlyMap<K, V> => {
+    const copy = copyMap(m)
+    copy.set(k, v)
+    return copy
+}
+
+// export const copyMapAndSetLazy = <K, V>(
+//     m: ReadonlyMap<K, V>,
+//     kvGetter: () => ([K, V] | undefined)
+// ): ReadonlyMap<K, V> => {
+//     const result = kvGetter()
+//     if (result !== undefined) {
+//         const [k, v] = result
+//         return copyMapAndSet(m, k, v)
+//     } else {
+//         return m
+//     }
+// }
+
+export const copyMapWithMapper = <K, V>(
+    m: ReadonlyMap<K, V>,
+    mutator: (k: K, v: V) => [K, V]
+): ReadonlyMap<K, V> => {
+    const result = new Map<K, V>()
+    m.forEach((oldV, oldK) => {
+        const [k, v] = mutator(oldK, oldV)
+        result.set(k, v)
+    })
+    return result
+}

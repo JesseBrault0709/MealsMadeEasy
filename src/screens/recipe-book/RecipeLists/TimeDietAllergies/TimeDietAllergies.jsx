@@ -12,7 +12,6 @@ import Funnel from './assets/Funnel.png'
 import { Chip } from '../../../common/Chip/Chip'
 
 export function TimeDietAllergies({ 
-    onFilterClick,
     cookingTime,
     diet,
     intolerances

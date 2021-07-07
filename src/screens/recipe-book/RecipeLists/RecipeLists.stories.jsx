@@ -1,11 +1,11 @@
-import { RecipeList } from "./RecipeLists";
+import { RecipeLists } from "./RecipeLists";
 
 export default {
     title: 'RecipeBook/RecipeList',
-    component: RecipeList
+    component: RecipeLists
 }
 
-const Template = args => <RecipeList {...args} />
+const Template = args => <RecipeLists {...args} />
 
 export const Primary = Template.bind({})
 

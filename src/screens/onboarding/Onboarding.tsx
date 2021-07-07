@@ -49,9 +49,8 @@ export function Onboarding(props: OnboardingProps) {
         })
 
         if (props.onSubmit !== undefined) {
-
             const selectedIntolerances: SPIntolerance[] = []
-
+    
             intoleranceMap.forEach((isSelected, intolerance) => {
                 if (isSelected) {
                     selectedIntolerances.push(intolerance as SPIntolerance)
@@ -93,4 +92,5 @@ export function Onboarding(props: OnboardingProps) {
         <Restrictions restrictions={intoleranceMap} onClick={onIntoleranceClick}/>
 
     </OrderedScreenCollection>
+
 }

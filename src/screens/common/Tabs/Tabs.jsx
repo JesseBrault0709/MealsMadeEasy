@@ -1,7 +1,3 @@
-/**
- * TODO as of 6/28/21:
- *  [none]
- */
 import './Tabs.css'
 
 /**
