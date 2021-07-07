@@ -99,3 +99,14 @@ export const copyMapWithMapper = <K, V>(
     })
     return result
 }
+
+export const mapToArray = <K, V, T>(
+    m: ReadonlyMap<K, V>,
+    mapper: (k: K, v: V) => T
+): T[] => {
+    const results: T[] = []
+    m.forEach((v, k) => {
+        results.push(mapper(k, v))
+    })
+    return results
+}

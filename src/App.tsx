@@ -2,7 +2,7 @@ import "./App.css";
 
 import AppConfig from './AppConfig_en.json'
 
-import { Reducer, useReducer, useState } from 'react';
+import { Dispatch, Reducer, useReducer, useState } from 'react';
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { SPDiet, SPIntolerance } from './client/spoonacularTypes';
 import { Home } from './screens/home/Home';
@@ -10,11 +10,12 @@ import { RecipePreferences } from './types/RecipePreferences';
 import { getWeekOfBlankDayMealPlans } from './types/DayMealPlan';
 import { MealName } from './types/MealName';
 import { Sweet } from "./screens/Sweet/Sweet";
-import { RecipeListTabConfig } from "./types/RecipeListTabConfig";
+import { RecipeListConfig } from "./types/RecipeListTabConfig";
 import { useEffect } from "react";
 import { RecipeOverview } from "./client/RecipeOverview";
 import { getByComplexSearch } from "./client/complexSearch";
-import { copyMapAndSet, copyMapWithMapper } from "./util";
+import { copyMapAndSet, copyMapWithMapper, mapToArray } from "./util";
+import { RecipeListSpec } from "./screens/recipe-book/RecipeLists/RecipeLists";
 
 
 /** Set to true for dev mode. */
@@ -33,28 +34,28 @@ const availableIntolerances =
 
 const meals = AppConfig.meals as ReadonlyArray<MealName>
 
-const recipeListTabConfigs = AppConfig.recipeListTabs as ReadonlyArray<RecipeListTabConfig>
+const recipeListConfigs = AppConfig.recipeListTabs as ReadonlyArray<RecipeListConfig>
 
-const recipeListTabLimit: number = AppConfig.recipeListLimit
+const recipeListLimit: number = AppConfig.recipeListLimit
 
 /** Reducers */
 
-type TabOffsetReducerAction = {
-    type: "tabOffset/increment",
+type RecipeListOffsetReducerAction = {
+    type: "recipeListOffset/increment",
     payload: {
-        tabName: string
+        listName: string
     }
 }
 
-const tabOffsetReducer: Reducer<ReadonlyMap<string, number>, TabOffsetReducerAction> = (state, action) => {
-    if (action.type === "tabOffset/increment") {
+const recipeListOffsetReducer: Reducer<ReadonlyMap<string, number>, RecipeListOffsetReducerAction> = (state, action) => {
+    if (action.type === "recipeListOffset/increment") {
         return copyMapWithMapper(
             state,
-            (tabName, offset) => {
-                if (tabName === action.payload.tabName) {
-                    return [tabName, offset + recipeListTabLimit]
+            (listName, offset) => {
+                if (listName === action.payload.listName) {
+                    return [listName, offset + recipeListLimit]
                 } else {
-                    return [tabName, offset]
+                    return [listName, offset]
                 }
             }
         )
@@ -63,36 +64,36 @@ const tabOffsetReducer: Reducer<ReadonlyMap<string, number>, TabOffsetReducerAct
     }
 }
 
-type TabRecipesReducerAction = {
-    type: "tabRecipes/add",
+type RecipeListRecipesReducerAction = {
+    type: "recipeListRecipes/add",
     payload: {
-        tabName: string,
+        listName: string,
         offset: number,
         recipes: ReadonlyArray<RecipeOverview>
     }
 }
 
-const tabRecipesReducer: 
+const recipeListRecipesReducer: 
     Reducer<
         ReadonlyMap<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>>, 
-        TabRecipesReducerAction> = 
+        RecipeListRecipesReducerAction> = 
 (state, action) => {
 
-    if (action.type === "tabRecipes/add") {
+    if (action.type === "recipeListRecipes/add") {
         return copyMapWithMapper(
             state,
-            (tabName, offsetRecipeMap) => {
-                if (tabName === action.payload.tabName) {
+            (listName, offsetRecipesMap) => {
+                if (listName === action.payload.listName) {
                     return [
-                        tabName, 
+                        listName, 
                         copyMapAndSet(
-                            offsetRecipeMap, 
+                            offsetRecipesMap, 
                             action.payload.offset, 
                             action.payload.recipes
                         )
                     ]
                 } else {
-                    return [tabName, offsetRecipeMap]
+                    return [listName, offsetRecipesMap]
                 }
             }
         )
@@ -104,20 +105,64 @@ const tabRecipesReducer:
 
 /** Initializers */
 
-const initTabOffsets = () => {
+const initRecipeListOffsets = () => {
     const offsets = new Map<string, number>()
-    recipeListTabConfigs.forEach(config => {
+    recipeListConfigs.forEach(config => {
         offsets.set(config.name, 0)
     })
     return offsets
 }
 
-const initTabRecipes = (): ReadonlyMap<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>> => {
+const initRecipeListRecipes = (): ReadonlyMap<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>> => {
     const recipes = new Map<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>>()
-    recipeListTabConfigs.forEach(config => {
+    recipeListConfigs.forEach(config => {
         recipes.set(config.name, new Map())
     })
     return recipes
+}
+
+/** functions */
+
+const getAddRecipesForOffset = (
+    recipeListRecipes: ReadonlyMap<string, ReadonlyMap<number, ReadonlyArray<RecipeOverview>>>,
+    userPreferences: RecipePreferences,
+    dispatchRecipeListRecipes: Dispatch<RecipeListRecipesReducerAction>
+) => (
+    listName: string,
+    offset: number
+): Promise<void> => {
+    const offsetRecipesMap = recipeListRecipes.get(listName)
+
+    if (offsetRecipesMap === undefined) {
+        throw new Error(`listName ${listName} has no entry in recipeListRecipes`)
+    }
+
+    const recipesForOffset = offsetRecipesMap.get(offset)
+
+    if (recipesForOffset === undefined) {
+        // it's undefined so we fetch the recipes
+        return getByComplexSearch({
+            addRecipeInformation: true,
+            diet: userPreferences.diet,
+            intolerances: userPreferences.intolerances,
+            maxReadyTime: userPreferences.cookingTime === "No Limit" ? undefined : userPreferences.cookingTime,
+            number: recipeListLimit,
+            offset,
+            type: recipeListConfigs.find(config => config.name === listName)?.type
+        }).then(recipes => {
+            dispatchRecipeListRecipes({
+                type: "recipeListRecipes/add",
+                payload: {
+                    listName,
+                    offset,
+                    recipes
+                }
+            })
+            return Promise.resolve()
+        })
+    } else {
+        return Promise.resolve()
+    }
 }
 
 /** The possible screens */
@@ -132,48 +177,18 @@ function App() {
         intolerances: []
     })
 
-    const [tabOffsets, dispatchTabOffsets] = useReducer(tabOffsetReducer, initTabOffsets())
+    const [recipeListOffsets, dispatchRecipeListOffsets] = useReducer(recipeListOffsetReducer, initRecipeListOffsets())
 
-    const [tabRecipes, dispatchTabRecipes] = useReducer(tabRecipesReducer, initTabRecipes())
+    const [recipeListRecipes, dispatchRecipeListRecipes] = useReducer(recipeListRecipesReducer, initRecipeListRecipes())
 
     const fetchRecipesForOffsets = (): Promise<void[]> => {
-        const promises: Promise<void>[] = []
-
-        tabOffsets.forEach((offset, tabName) => {
-            const offsetRecipesMap = tabRecipes.get(tabName)
-            if (offsetRecipesMap === undefined) {
-                throw new Error(`tabName ${tabName} has no entry in tabRecipes`)
-            }
-            const recipesForOffset = offsetRecipesMap.get(offset)
-            if (recipesForOffset === undefined) {
-                const promise = getByComplexSearch({
-                    addRecipeInformation: true,
-                    diet: userPreferences.diet,
-                    intolerances: userPreferences.intolerances,
-                    maxReadyTime: userPreferences.cookingTime === "No Limit" ? undefined : userPreferences.cookingTime,
-                    number: recipeListTabLimit,
-                    offset,
-                    type: recipeListTabConfigs.find(config => config.name === tabName)?.type
-                }).then(recipes => {
-                    dispatchTabRecipes({
-                        type: "tabRecipes/add",
-                        payload: {
-                            tabName,
-                            offset,
-                            recipes
-                        }
-                    })
-                    return Promise.resolve()
-                }).catch(err => {
-                    return Promise.reject(err)
-                })
-                promises.push(promise)
-            }
-        })
-
+        const promises = mapToArray(recipeListOffsets, getAddRecipesForOffset(
+            recipeListRecipes,
+            userPreferences,
+            dispatchRecipeListRecipes
+        ))
         return Promise.all(promises)
     }
-
 
     useEffect(() => {
         if (currentScreen === "Home") {
@@ -182,7 +197,7 @@ function App() {
                 console.error(err)
             })
         }
-    }, [tabOffsets, userPreferences])
+    }, [recipeListOffsets, userPreferences])
 
     useEffect(() => {
         if (currentScreen === "Sweet") {
@@ -196,10 +211,12 @@ function App() {
         }
     }, [currentScreen, userPreferences])
 
-    const tabSpecs = recipeListTabConfigs.map(config => {
+    const [activeRecipeListTab, setActiveRecipeListTab] = useState<string>(recipeListConfigs[0].name)
+
+    const listSpecs: ReadonlyArray<RecipeListSpec> = recipeListConfigs.map(config => {
         const allRecipes: RecipeOverview[] = []
 
-        const offsetRecipesMap = tabRecipes.get(config.name)
+        const offsetRecipesMap = recipeListRecipes.get(config.name)
         if (offsetRecipesMap === undefined) {
             throw new Error(`tabName ${config.name} has no offsetRecipesMap`)
         }
@@ -209,16 +226,20 @@ function App() {
         })
 
         const onLoadMore = () => {
-            dispatchTabOffsets({
-                type: "tabOffset/increment",
+            dispatchRecipeListOffsets({
+                type: "recipeListOffset/increment",
                 payload: {
-                    tabName: config.name
+                    listName: config.name
                 }
             })
         }
         
         return {
             name: config.name,
+            active: activeRecipeListTab === config.name,
+            onTabClick: () => {
+                setActiveRecipeListTab(config.name)
+            },
             recipes: allRecipes,
             onLoadMore
         }
@@ -249,7 +270,7 @@ function App() {
                 initialRecipePreferences={userPreferences}
                 initialDayMealPlans={getWeekOfBlankDayMealPlans(meals)}
                 meals={meals}
-                tabSpecs={tabSpecs}
+                listSpecs={listSpecs}
             />
         }
     }

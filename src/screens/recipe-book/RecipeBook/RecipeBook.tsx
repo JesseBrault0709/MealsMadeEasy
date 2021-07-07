@@ -27,7 +27,7 @@ export type RecipeBookProps = {
     initialSubScreen?: SubScreen,
     initialRecipeId?: RecipeOverview['id']
 
-    tabSpecs: RecipeListsProps['tabs']
+    listSpecs: RecipeListsProps['lists']
 }
 
 export function RecipeBook(props: RecipeBookProps) {
@@ -57,7 +57,7 @@ export function RecipeBook(props: RecipeBookProps) {
             <RecipeLists
                 recipePreferences={props.recipePreferences}
                 onRecipeCardClick={onRecipeCardClick}
-                tabs={props.tabSpecs}
+                lists={props.listSpecs}
             />
         </ScreenWithTitleAndNav>
 

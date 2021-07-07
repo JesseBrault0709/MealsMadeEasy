@@ -4,7 +4,6 @@ import { RowsOfPairs } from "../../../common/RowsOfPairs/RowsOfPairs"
 import { RecipeCard } from "../RecipeCard/RecipeCard"
 import { JBButton } from '../../../../inputs/Button/JBButton'
 import { RecipeOverview } from '../../../../client/RecipeOverview'
-import { useEffect, useState } from 'react'
 
 export type RecipeListProps = {
     onRecipeCardClick: (recipe: RecipeOverview) => void,

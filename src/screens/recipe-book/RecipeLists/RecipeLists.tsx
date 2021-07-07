@@ -1,16 +1,15 @@
 import './RecipeLists.css'
 
-import { useState } from 'react'
 import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
-import { SPDiet, SPIntolerance } from '../../../client/spoonacularTypes'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList, RecipeListProps } from './RecipeList/RecipeList'
 import { RecipePreferences } from '../../../types/RecipePreferences'
 
-export type RecipeListTabSpec = {
+export type RecipeListSpec = {
     name: string,
-
+    active: boolean,
+    onTabClick: () => void,
     recipes: RecipeListProps['recipes'],
     onLoadMore: RecipeListProps['onLoadMoreClick']
 }
@@ -20,15 +19,15 @@ export type RecipeListsProps = {
 
     onRecipeCardClick: (recipe: RecipeOverview) => void,
 
-    tabs: ReadonlyArray<RecipeListTabSpec>
+    lists: ReadonlyArray<RecipeListSpec>
 }
 
 export function RecipeLists(props: RecipeListsProps) {
 
-    const [activeTab, setActiveTab] = useState<RecipeListTabSpec>(props.tabs[0])
+    const activeList = props.lists.find(spec => spec.active)
 
-    const getOnTabClick = (tab: RecipeListTabSpec) => () => {
-        setActiveTab(tab)
+    if (activeList === undefined) {
+        throw new Error('there is no active list')
     }
 
     return <div className="recipe-lists">
@@ -39,18 +38,18 @@ export function RecipeLists(props: RecipeListsProps) {
         />
         <Tabs>
             {
-                props.tabs.map((tab, index) => 
+                props.lists.map((spec, index) => 
                     <Tab
-                        key={`${index}_${tab.name}`}
-                        onClick={getOnTabClick(tab)}
-                        active={activeTab === tab}
-                    >{tab.name}</Tab>
+                        key={`${index}_${spec.name}`}
+                        onClick={spec.onTabClick}
+                        active={spec.active}
+                    >{spec.name}</Tab>
                 )
             }
         </Tabs>
         <RecipeList
-            recipes={activeTab.recipes}
-            onLoadMoreClick={activeTab.onLoadMore}
+            recipes={activeList.recipes}
+            onLoadMoreClick={activeList.onLoadMore}
             onRecipeCardClick={props.onRecipeCardClick}
         />
     </div>

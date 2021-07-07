@@ -23,7 +23,7 @@ export type HomeProps = {
     initialDayMealPlans: ReadonlyArray<DayMealPlan>,
     meals: ReadonlyArray<MealName>,
     
-    tabSpecs: RecipeListsProps['tabs']
+    listSpecs: RecipeListsProps['lists']
 }
 
 export function Home(props: HomeProps) {
@@ -78,7 +78,7 @@ export function Home(props: HomeProps) {
                         initialRecipeId={initialRecipeBookRecipeId}
                         initialSubScreen={initialRecipeBookSubScreen}
                         
-                        tabSpecs={props.tabSpecs}
+                        listSpecs={props.listSpecs}
                     />
 
                 </MealsContext.Provider>
