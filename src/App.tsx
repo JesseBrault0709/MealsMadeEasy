@@ -16,6 +16,7 @@ import { RecipeOverview } from "./client/RecipeOverview";
 import { getByComplexSearch } from "./client/complexSearch";
 import { copyMapAndSet, copyMapWithMapper, mapToArray } from "./util";
 import { RecipeListSpec } from "./screens/recipe-book/RecipeLists/RecipeLists";
+import { Splash } from "./screens/Splash/Splash";
 
 
 /** Set to true for dev mode. */
@@ -166,11 +167,11 @@ const getAddRecipesForOffset = (
 }
 
 /** The possible screens */
-type Screen = "Onboarding" | "Sweet" | "Home"
+type Screen = "Splash" | "Onboarding" | "Sweet" | "Home"
 
 function App() {
 
-    const [currentScreen, setCurrentScreen] = useState<Screen>("Onboarding")
+    const [currentScreen, setCurrentScreen] = useState<Screen>("Splash")
 
     const [userPreferences, setUserPreferences] = useState<RecipePreferences>({
         cookingTime: 'No Limit',
@@ -245,8 +246,20 @@ function App() {
         }
     })
 
+    useEffect(() => {
+        if (currentScreen === "Splash") {
+            setTimeout(() => {
+                setCurrentScreen("Onboarding")
+            }, 2000)
+        }   
+    })
+
     const getScreen = () => {
-        if (currentScreen === "Onboarding") {
+        if (currentScreen === "Splash") {
+            
+            return <Splash />
+
+        } else if (currentScreen === "Onboarding") {
 
             const onOnboardingSubmit = (preferences: RecipePreferences) => {
                 setUserPreferences(preferences)
