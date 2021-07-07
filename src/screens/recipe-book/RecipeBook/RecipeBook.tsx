@@ -19,15 +19,11 @@ import { MealName } from "../../../types/MealName"
 export type SubScreen = "Recipe List" | "Recipe Info"
 
 export type RecipeBookProps = {
-    recipePreferences: RecipePreferences,
-
     onNavAway?: (button: NavBarButton) => void,
     onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void,
 
     initialSubScreen?: SubScreen,
     initialRecipeId?: RecipeOverview['id']
-
-    listSpecs: RecipeListsProps['lists']
 }
 
 export function RecipeBook(props: RecipeBookProps) {
@@ -55,9 +51,7 @@ export function RecipeBook(props: RecipeBookProps) {
         
         return <ScreenWithTitleAndNav title="Recipe Book" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
             <RecipeLists
-                recipePreferences={props.recipePreferences}
                 onRecipeCardClick={onRecipeCardClick}
-                lists={props.listSpecs}
             />
         </ScreenWithTitleAndNav>
 

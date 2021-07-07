@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { RecipeBook, RecipeBookProps, SubScreen } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
 import { NavBarButton } from '../common/NavBar/NavBar'
-import { RecipePreferences } from '../../types/RecipePreferences'
 import { addToMeal, DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
 import { MealName } from '../../types/MealName'
 import { RecipeOverview } from '../../client/RecipeOverview'
-import { RecipeListsProps } from '../recipe-book/RecipeLists/RecipeLists'
 
 type Screen = 
     "Recipe Book" |
@@ -19,21 +17,13 @@ export const DayMealPlansContext = React.createContext<ReadonlyArray<DayMealPlan
 export const MealsContext = React.createContext<ReadonlyArray<MealName>>([])
 
 export type HomeProps = {
-    initialRecipePreferences?: RecipePreferences,
     initialDayMealPlans: ReadonlyArray<DayMealPlan>,
-    meals: ReadonlyArray<MealName>,
-    
-    listSpecs: RecipeListsProps['lists']
+    meals: ReadonlyArray<MealName>
 }
 
 export function Home(props: HomeProps) {
     
     const [currentScreen, setCurrentScreen] = useState<Screen>("Recipe Book")
-
-    const [recipePreferences] = useState<RecipePreferences>(props.initialRecipePreferences ?? {
-        cookingTime: "No Limit",
-        intolerances: []
-    })
 
     const [dayMealPlans, setDayMealPlans] = useState(props.initialDayMealPlans)
 
@@ -70,15 +60,11 @@ export function Home(props: HomeProps) {
                 <MealsContext.Provider value={props.meals}>
 
                     <RecipeBook 
-                        recipePreferences={recipePreferences} 
-
                         onAddToMealPlan={onAddToMealPlan} 
                         onNavAway={onNavAway}
 
                         initialRecipeId={initialRecipeBookRecipeId}
                         initialSubScreen={initialRecipeBookSubScreen}
-                        
-                        listSpecs={props.listSpecs}
                     />
 
                 </MealsContext.Provider>

@@ -14,6 +14,19 @@ export const recipePreferencesSlice = createSlice({
     initialState,
     reducers: {
 
+        setPreferences: (
+            state,
+            action: PayloadAction<{ preferences: RecipePreferences }>
+        ) => {
+            const { cookingTime, diet, intolerances } = action.payload.preferences
+
+            state.preferences = {
+                cookingTime,
+                diet,
+                intolerances: intolerances === undefined ? [] : [...intolerances]
+            }
+        },
+
         setCookingTime: (
             state, 
             action: PayloadAction<{ cookingTime: RecipePreferences['cookingTime'] }>
@@ -33,12 +46,12 @@ export const recipePreferencesSlice = createSlice({
             action: PayloadAction<{ intolerances: RecipePreferences['intolerances'] }>
         ) => {
             action.payload.intolerances === undefined ?
-                state.preferences.intolerances = undefined :
+                state.preferences.intolerances = [] :
                 state.preferences.intolerances = [...action.payload.intolerances]
         }
 
     }
 })
 
-export const { setCookingTime, setDiet, setIntolerances } = recipePreferencesSlice.actions
+export const { setPreferences, setCookingTime, setDiet, setIntolerances } = recipePreferencesSlice.actions
 

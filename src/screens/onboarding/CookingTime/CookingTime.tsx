@@ -45,7 +45,7 @@ export function CookingTime(props: CookingTimeProps) {
         instruction="Drag to let us know your ideal cooking time."
     >
         <div className="cooking-time-container">
-            <ClockSlider options={options} onChange={onChange} initialOption={props.initialCookingTimeIndex} />
+            <ClockSlider options={options as string[]} onChange={onChange} initialOption={props.initialCookingTimeIndex} />
         </div>
     </OnboardingScreen>
 }

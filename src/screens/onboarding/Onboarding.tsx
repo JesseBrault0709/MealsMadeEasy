@@ -17,7 +17,7 @@ export type OnboardingProps = {
     allDiets: ReadonlyArray<SPDiet>,
 
     /** The available intolerances for the user to choose from */
-    allIntolerances: RecipePreferences['intolerances'],
+    allIntolerances: ReadonlyArray<SPIntolerance>,
 
     /** Any initially selected preferences */
     initialPreferences?: RecipePreferences,
