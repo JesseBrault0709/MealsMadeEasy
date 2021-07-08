@@ -9,29 +9,45 @@ import React, { useRef, useState } from 'react'
 const leftRightOpacity = '60%'
 const hiddenOpacity = '0%'
 
+const nonCenterStyle = {
+    width: '50px',
+    height: '50px',
+    backgroundColor: 'var(--primary-fill)',
+}
+
 const leftHiddenStyle = {
-    transform: 'translateX(60px) translateY(90px) rotate(-90deg)',
+    transform: 'translateX(50px) translateY(90px) rotate(-90deg)',
     opacity: hiddenOpacity,
+    ...nonCenterStyle
 }
 
 const leftStyle = {
-    transform: 'translateX(85px) translateY(25px) rotate(-45deg)',
+    transform: 'translateX(75px) translateY(50px) rotate(-45deg)',
     opacity: leftRightOpacity,
+    ...nonCenterStyle
 }
 
 const centerStyle = {
-    transform: 'translateX(150px) rotate(0deg)'
+    transform: 'translateX(130px) rotate(0deg)',
+    width: '90px',
+    height: '90px',
+    borderRadius: '45px',
+    padding: '20px',
+    opacity: '100%',
+    backgroundColor: 'var(--main-cta)'
 }
 
 const rightStyle = {
-    transform: 'translateX(215px) translateY(25px) rotate(45deg)',
+    transform: 'translateX(225px) translateY(50px) rotate(45deg)',
     opacity: '70%',
+    ...nonCenterStyle
 
 }
 
 const rightHiddenStyle = {
-    transform: 'translateX(240px) translateY(90px) rotate(90deg)',
-    opacity: hiddenOpacity
+    transform: 'translateX(250px) translateY(90px) rotate(90deg)',
+    opacity: hiddenOpacity,
+    ...nonCenterStyle
 }
 
 
