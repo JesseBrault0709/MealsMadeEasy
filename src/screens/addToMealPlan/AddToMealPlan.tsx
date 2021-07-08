@@ -1,4 +1,4 @@
-import 'react-calendar/dist/Calendar.css'
+import './Calendar.css'
 import './AddToMealPlan.css'
 
 import { JBButton } from '../../inputs/Button/JBButton'
