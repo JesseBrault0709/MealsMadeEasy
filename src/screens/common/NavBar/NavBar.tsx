@@ -13,32 +13,31 @@ import PlannerActive from './assets/Planner_active.png'
 
 import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { setHomeScreen } from '../../../slices/homeScreens'
 
-export enum NavBarButton {
-    RECIPE_BOOK = "Recipe Book",
-    PLANNER = "Planner"
-}
+export function NavBar() {
 
-export type NavBarProps = {
-    activeButton: NavBarButton,
-    onNavButtonClick: (button: NavBarButton) => void
-}
+    const dispatch = useAppDispatch()
+    const currentHomeScreen = useAppSelector(state => state.homeScreens.current)
 
-export function NavBar(props: NavBarProps) {
+    const onRecipeBookClick = () => {
+        dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+    }
 
-    const getOnClick = (button: NavBarButton) => () => {
-        props.onNavButtonClick(button)
+    const onPlannerClick = () => {
+        dispatch(setHomeScreen({ screen: 'Planner' }))
     }
 
     return <div className="nav-bar-container">
 
-        <div className="nav-button" onClick={getOnClick(NavBarButton.RECIPE_BOOK)}>
-            <img src={props.activeButton === NavBarButton.RECIPE_BOOK ? RecipesActive : RecipesInactive} alt="Recipes" />
+        <div className="nav-button" onClick={onRecipeBookClick}>
+            <img src={currentHomeScreen === 'Recipe Book' ? RecipesActive : RecipesInactive} alt="Recipes" />
             <p>Recipes</p>
         </div>
 
-        <div className="nav-button" onClick={getOnClick(NavBarButton.PLANNER)}>
-            <img src={props.activeButton === NavBarButton.PLANNER ? PlannerActive : PlannerInactive} alt="Planner" />
+        <div className="nav-button" onClick={onPlannerClick}>
+            <img src={currentHomeScreen === 'Planner' ? PlannerActive : PlannerInactive} alt="Planner" />
             <p>Planner</p>
         </div>
 

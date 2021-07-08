@@ -5,9 +5,11 @@ import { appScreensSlice } from "./slices/appScreens";
 import { homeScreensSlice } from "./slices/homeScreens";
 import { recipeBookSlice } from "./slices/recipeBook";
 import { recipeInfoSlice } from "./slices/recipeInfo";
+import { dayMealPlansSlice } from "./slices/dayMealPlans";
 
 export const store = configureStore({
     reducer: {
+        dayMealPlans: dayMealPlansSlice.reducer,
         homeScreens: homeScreensSlice.reducer,
         recipeBook: recipeBookSlice.reducer,
         recipeInfo: recipeInfoSlice.reducer,

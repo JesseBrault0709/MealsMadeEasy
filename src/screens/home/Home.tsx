@@ -16,8 +16,7 @@ export const DayMealPlansContext = React.createContext<ReadonlyArray<DayMealPlan
 export const MealsContext = React.createContext<ReadonlyArray<MealName>>([])
 
 export type HomeProps = {
-    initialDayMealPlans: ReadonlyArray<DayMealPlan>,
-    meals: ReadonlyArray<MealName>
+
 }
 
 export function Home(props: HomeProps) {
@@ -26,24 +25,17 @@ export function Home(props: HomeProps) {
     
     const currentScreen: HomeScreen = useAppSelector(state => state.homeScreens.current)
 
-    const [dayMealPlans, setDayMealPlans] = useState(props.initialDayMealPlans)
 
     if (currentScreen === "Recipe Book") {
 
         return <div className="home">
-            <DayMealPlansContext.Provider value={dayMealPlans}>
-                <MealsContext.Provider value={props.meals}>
-
-                    <RecipeBook />
-
-                </MealsContext.Provider>
-            </DayMealPlansContext.Provider>
+            <RecipeBook />
         </div>
 
     } else if (currentScreen === "Planner") {
 
         return <div className="home">
-
+            <Planner />
         </div>
 
     } else {

@@ -2,11 +2,12 @@ import './Planner.css'
 
 import { RecipeOverview } from '../../client/RecipeOverview'
 import { DayMealPlan } from '../../types/DayMealPlan'
-import { NavBarButton } from '../common/NavBar/NavBar'
-import { ScreenWithTitleAndNav, ScreenWithTitleAndNavProps } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
+import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
+import { useAppSelector } from '../../hooks'
+import { appConfig } from '../../appConfig'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -82,7 +83,7 @@ function DayRow(props: {
 
         {
             props.meals.map((meal, index) => <MealCol 
-                recipes={props.dayMealPlan.meals.get(meal)} 
+                recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
                 accented={accented} 
                 onRecipeSelect={props.onRecipeSelect}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
@@ -93,30 +94,23 @@ function DayRow(props: {
 }
 
 export type PlannerProps = {
-    meals: ReadonlyArray<MealName>,
-    dayMealPlans: ReadonlyArray<DayMealPlan>,
-    onNavAway: (button: NavBarButton) => void,
-    onRecipeSelect: (recipe: RecipeOverview) => void
+    
 }
 
 export function Planner(props: PlannerProps) {
 
-    const sorted = [...props.dayMealPlans]
+    const dayMealPlans = useAppSelector(state => state.dayMealPlans.plans)
+
+    const sorted = [...dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
-    const onNavButtonClick: ScreenWithTitleAndNavProps['onNavButtonClick'] = button => {
-        if (props.onNavAway !== undefined) {
-            props.onNavAway(button)
-        }
-    }
-
-    return <ScreenWithTitleAndNav title="Planner" activeButton={NavBarButton.PLANNER} onNavButtonClick={onNavButtonClick}>
+    return <ScreenWithTitleAndNav title="Planner">
         <div className="planner">
 
             <div className="planner-heading">
                 <span className="heading-date">Date</span>
                 {
-                    props.meals.map(meal => <span key={meal} className="heading-meal">{meal}</span>)
+                    appConfig.meals.map(meal => <span key={meal} className="heading-meal">{meal}</span>)
                 }
             </div>
 
@@ -125,9 +119,9 @@ export function Planner(props: PlannerProps) {
                     <DayRow 
                         key={formatDate(day.date)}
                         dayMealPlan={day}
-                        meals={props.meals}
+                        meals={appConfig.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
-                        onRecipeSelect={props.onRecipeSelect}
+                        onRecipeSelect={() => { }}
                     />
                 )
             }

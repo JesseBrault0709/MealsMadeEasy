@@ -66,10 +66,7 @@ function App() {
 
         } else if (currentScreen === "Home") {
 
-            return <Home 
-                meals={appConfig.meals}
-                initialDayMealPlans={[]}
-            />
+            return <Home />
         }
     }
 

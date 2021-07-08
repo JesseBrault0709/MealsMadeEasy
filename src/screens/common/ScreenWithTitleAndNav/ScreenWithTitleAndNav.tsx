@@ -8,17 +8,17 @@ import './ScreenWithTitleAndNav.css'
  */
 
 import { ScreenTitle, ScreenTitleProps } from "../ScreenTitle/ScreenTitle"
-import { NavBar, NavBarProps } from "../NavBar/NavBar"
+import { NavBar } from "../NavBar/NavBar"
 import React from "react"
 
 export type ScreenWithTitleAndNavProps = {
     children?: React.ReactNode,
-} & ScreenTitleProps & NavBarProps
+} & ScreenTitleProps
 
 export function ScreenWithTitleAndNav(props: ScreenWithTitleAndNavProps) {
     return <div className="screen-with-title-and-nav">
         <ScreenTitle title={props.title} onBackButtonClick={props.onBackButtonClick} />
         {props.children}
-        <NavBar activeButton={props.activeButton} onNavButtonClick={props.onNavButtonClick} />
+        <NavBar />
     </div>
 }

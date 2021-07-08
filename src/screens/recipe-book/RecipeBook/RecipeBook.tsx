@@ -8,7 +8,6 @@
 import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { RecipeLists } from '../RecipeLists/RecipeLists'
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
-import { NavBarButton } from "../../common/NavBar/NavBar"
 import { RecipeOverview } from "../../../client/RecipeOverview"
 import { useAppDispatch, useAppSelector } from "../../../hooks"
 import { setRecipeBookScreen } from "../../../slices/recipeBook"
@@ -16,11 +15,7 @@ import { fetchFullRecipe } from "../../../slices/recipeInfo"
 
 export type RecipeBookScreen = "Recipe List" | "Recipe Info"
 
-export type RecipeBookProps = {
-
-}
-
-export function RecipeBook(props: RecipeBookProps) {
+export function RecipeBook() {
 
     const dispatch = useAppDispatch()
 
@@ -30,11 +25,9 @@ export function RecipeBook(props: RecipeBookProps) {
         dispatch(setRecipeBookScreen({ screen: "Recipe Info" }))
     }
 
-    const onNavButtonClick = () => { }
-
     if (currentScreen === "Recipe List") {
         
-        return <ScreenWithTitleAndNav title="Recipe Book" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
+        return <ScreenWithTitleAndNav title="Recipe Book">
             <RecipeLists
                 onRecipeCardClick={onRecipeCardClick}
             />
@@ -43,7 +36,7 @@ export function RecipeBook(props: RecipeBookProps) {
 
     } else if (currentScreen === "Recipe Info") {
 
-        return <ScreenWithTitleAndNav title="" activeButton={NavBarButton.RECIPE_BOOK} onNavButtonClick={onNavButtonClick}>
+        return <ScreenWithTitleAndNav title="">
             <RecipeInfo 
                 onAddToMealPlan={() => { }}
             />
