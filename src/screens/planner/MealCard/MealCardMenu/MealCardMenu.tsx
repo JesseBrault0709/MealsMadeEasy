@@ -8,7 +8,8 @@ import Share from './assets/Share.png'
 export type MealCardMenuProps = {
     show?: boolean
     variant: "left" | "right",
-    onViewRecipe: () => void
+    onViewRecipe: () => void,
+    onRemoveRecipe: () => void
 }
 
 export function MealCardMenu(props: MealCardMenuProps) {
@@ -17,11 +18,11 @@ export function MealCardMenu(props: MealCardMenuProps) {
             <div className="menu-item" onClick={props.onViewRecipe}>
                 View
             </div>
-            <div className="menu-item">
+            <div className="menu-item menu-item-disabled">
                 <span>Replace</span>
                 <img src={Replace} alt="" />
             </div>
-            <div className="menu-item">
+            <div className="menu-item" onClick={props.onRemoveRecipe}>
                 <span>Remove</span>
                 <img src={Remove} alt="" />
             </div>

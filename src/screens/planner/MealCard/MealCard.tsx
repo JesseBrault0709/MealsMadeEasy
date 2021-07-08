@@ -7,7 +7,8 @@ export type MealCardProps = {
     variant: "accented" | "normal" | "empty",
     menuPlacement: MealCardMenuProps['variant'],
     title?: string,
-    onRecipeSelect?: () => void
+    onRecipeSelect?: () => void,
+    onRemoveRecipe?: () => void,
 }
 
 export function MealCard(props: MealCardProps) {
@@ -29,6 +30,12 @@ export function MealCard(props: MealCardProps) {
             onViewRecipe={() => {
                 if (props.onRecipeSelect !== undefined) {
                     props.onRecipeSelect()
+                }
+            }}
+            onRemoveRecipe={() => {
+                if (props.onRemoveRecipe !== undefined) {
+                    props.onRemoveRecipe()
+                    setShowMenu(false)
                 }
             }}
         />

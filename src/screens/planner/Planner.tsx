@@ -11,6 +11,7 @@ import { appConfig } from '../../appConfig'
 import { fetchFullRecipe } from '../../slices/recipeInfo'
 import { setRecipeBookScreen } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
+import { removeRecipeFromMealPlan } from '../../slices/dayMealPlans'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -40,7 +41,8 @@ function formatDate(date: Date) {
 function MealCol(props: {
     recipes?: ReadonlyArray<RecipeOverview>,
     accented?: boolean,
-    mealCardMenuPlacement: MealCardMenuProps['variant']
+    mealCardMenuPlacement: MealCardMenuProps['variant'],
+    onRemoveRecipe?: (recipe: RecipeOverview) => void
 }) {
 
     const dispatch = useAppDispatch()
@@ -55,6 +57,11 @@ function MealCol(props: {
                         dispatch(fetchFullRecipe(recipe))
                         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
                         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+                    }}
+                    onRemoveRecipe={() => {
+                        if (props.onRemoveRecipe !== undefined) {
+                            props.onRemoveRecipe(recipe)
+                        }
                     }}
                     menuPlacement={props.mealCardMenuPlacement}
                 />)
@@ -74,6 +81,8 @@ function DayRow(props: {
     variant: "light" | "dark",
 }) {
 
+    const dispatch = useAppDispatch()
+
     const today = new Date()
     const accented = today.getFullYear() === props.dayMealPlan.date.getFullYear() &&
         today.getMonth() === props.dayMealPlan.date.getMonth() &&
@@ -91,6 +100,13 @@ function DayRow(props: {
                 recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
                 accented={accented}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
+                onRemoveRecipe={(recipe: RecipeOverview) => {
+                    dispatch(removeRecipeFromMealPlan({
+                        date: props.dayMealPlan.date,
+                        mealName: meal,
+                        recipe
+                    }))
+                }}
             />)
         }
         
