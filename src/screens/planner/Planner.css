@@ -65,7 +65,9 @@
 .day-row-date,
 .day-row-day {
     color: #111111;
-    size: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 .meal-col {

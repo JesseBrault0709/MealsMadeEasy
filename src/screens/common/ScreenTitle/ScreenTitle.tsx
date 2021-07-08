@@ -14,6 +14,7 @@ import { Button } from "react-bootstrap"
 
 export type ScreenTitleProps = {
     title: string,
+    subtitle?: string,
     onBackButtonClick?: () => void
 }
 
@@ -27,5 +28,6 @@ export function ScreenTitle(props: ScreenTitleProps) {
                 : ''
         }
         <h1 className="screen-title-title">{props.title}</h1>
+        <h3 className="screen-title-subtitle">{props.subtitle}</h3>
     </div>
 }

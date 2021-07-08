@@ -17,7 +17,7 @@ export type ScreenWithTitleAndNavProps = {
 
 export function ScreenWithTitleAndNav(props: ScreenWithTitleAndNavProps) {
     return <div className="screen-with-title-and-nav">
-        <ScreenTitle title={props.title} onBackButtonClick={props.onBackButtonClick} />
+        <ScreenTitle title={props.title} subtitle={props.subtitle} onBackButtonClick={props.onBackButtonClick} />
         {props.children}
         <NavBar />
     </div>

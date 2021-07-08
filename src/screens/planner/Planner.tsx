@@ -120,7 +120,7 @@ export function Planner() {
     const sorted = [...dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
-    return <ScreenWithTitleAndNav title="Planner">
+    return <ScreenWithTitleAndNav title="Planner" subtitle="(Click on the card to view options)">
         <div className="planner">
 
             <div className="planner-heading">
