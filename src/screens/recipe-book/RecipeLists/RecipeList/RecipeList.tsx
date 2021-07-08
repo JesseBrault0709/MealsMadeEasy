@@ -6,6 +6,7 @@ import { JBButton } from '../../../../inputs/Button/JBButton'
 import { RecipeOverview } from '../../../../client/RecipeOverview'
 import { fetchRecipes, incrementOffset } from '../../../../slices/recipeLists'
 import { useAppDispatch, useAppSelector } from '../../../../hooks'
+import { LoadingCircle } from '../../../common/LoadingCircle/LoadingCircle'
 
 export type RecipeListProps = {
     name: string,
@@ -16,13 +17,8 @@ export function RecipeList(props: RecipeListProps) {
 
     const dispatch = useAppDispatch()
 
-    const state = useAppSelector(state => {
-        const listState = state.recipeLists.lists.find(list => list.name === props.name)
-        if (listState === undefined) {
-            throw new Error(`there is no list state for ${props.name}`)
-        }
-        return listState
-    })
+    const status = useAppSelector(state => state.recipeLists.activeListStatus)
+    const error = useAppSelector(state => state.recipeLists.activeListError)
 
     const recipes = useAppSelector(state => {
         const listState = state.recipeLists.lists.find(list => list.name === props.name)
@@ -40,13 +36,39 @@ export function RecipeList(props: RecipeListProps) {
         dispatch(fetchRecipes(props.name))
     }
 
+    const rowsInPairs = <RowsOfPairs>
+        {
+            recipes.map(recipe => 
+                <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />
+            )
+        }
+    </RowsOfPairs>
+
+    const loadMore = <JBButton variant="primary" onClick={onReduxClick}>Load more</JBButton>
+
+    const getContent = () => {
+        if (status === 'idle') {
+            return <>
+                {rowsInPairs}
+                {loadMore}
+            </>
+        } else if (status === 'fetching') {
+            return <>
+                {rowsInPairs}
+                <LoadingCircle style={{ marginTop: '10px', marginBottom: '10px' }}/>
+                {loadMore}
+            </>
+        } else if (status === 'error') {
+            return <>
+                {rowsInPairs}
+                Error: {error?.message}
+                {loadMore}
+            </>
+        }
+    }
+
     return <div className="recipe-list"> 
-        <RowsOfPairs>
-            {
-                recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
-            }
-        </RowsOfPairs>
-        <JBButton variant="primary" onClick={onReduxClick}>Load more</JBButton>
+        {getContent()}
     </div>
 
 }

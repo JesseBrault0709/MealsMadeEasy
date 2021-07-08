@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { appConfig } from "../appConfig";
 import { getByComplexSearch } from "../client/complexSearch";
 import { RecipeOverview } from "../client/RecipeOverview";
@@ -15,6 +15,8 @@ type RecipeListsState = {
         }>
     }>
     activeList?: string
+    activeListStatus: 'idle' | 'fetching' | 'error'
+    activeListError?: SerializedError
 }
 
 const initialState: RecipeListsState = {
@@ -22,7 +24,8 @@ const initialState: RecipeListsState = {
         name: listConfig.name,
         currentOffset: 0,
         recipesByOffset: []
-    }))
+    })),
+    activeListStatus: 'idle'
 }
 
 /** Middleware thunk to retrieve recipes */
@@ -95,12 +98,27 @@ export const recipeListsSlice = createSlice({
                 throw new Error(`there is no list named ${action.payload.listName}`)
             }
             list.currentOffset += appConfig.recipeListLimit
+        },
+
+        setActiveListStatus: (state, action: PayloadAction<{ status: RecipeListsState['activeListStatus'] }>) => {
+            state.activeListStatus = action.payload.status
+        },
+
+        setActiveListError: (state, action: PayloadAction<{ error: SerializedError }>) => {
+            state.activeListError = action.payload.error
         }
 
     },
     extraReducers: builder => {
 
+        builder.addCase(fetchRecipes.pending, state => {
+            state.activeListStatus = 'fetching'
+        })
+
         builder.addCase(fetchRecipes.fulfilled, (state, action) => {
+
+            state.activeListStatus = 'idle'
+
             if (action.payload !== undefined) {
                 const targetList = state.lists.find(list => list.name === action.payload!.listName) // because we checked in the if
                 if (targetList === undefined) {
@@ -113,7 +131,14 @@ export const recipeListsSlice = createSlice({
             }
         })
 
+        builder.addCase(fetchRecipes.rejected, (state, action) => {
+
+            state.activeListStatus = 'error'
+            state.activeListError = action.error
+
+        })
+
     }
 })
 
-export const { incrementOffset, setActiveList } = recipeListsSlice.actions
+export const { incrementOffset, setActiveList, setActiveListStatus, setActiveListError } = recipeListsSlice.actions

@@ -33,7 +33,9 @@ export function RecipeInfo(props: RecipeInfoProps) {
         if (status === 'empty') {
             return null
         } else if (status === 'fetching') {
-            return <LoadingCircle />
+            return <div className="recipe-info-loading-circle">
+                <LoadingCircle />
+            </div>
         } else if (status === 'success') {
 
             if (recipe === undefined) {

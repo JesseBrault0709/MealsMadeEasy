@@ -2,6 +2,14 @@
     width: 100%;
 }
 
+.recipe-info-loading-circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
 h2.recipe-title {
     padding-left: 15px;
     padding-right: 15px;
