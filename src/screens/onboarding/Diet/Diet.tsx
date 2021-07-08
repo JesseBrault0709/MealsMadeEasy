@@ -44,7 +44,7 @@ export function Diet(props: DietProps) {
 
     return <OnboardingScreen
         prompt="What diet do you follow?"
-        instruction="Tap on your preference."
+        instruction="Select your preference."
     >
         <div className="diet-buttons">
             {

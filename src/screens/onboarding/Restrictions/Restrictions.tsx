@@ -47,8 +47,8 @@ export function Restrictions(props: RestrictionsProps) {
     })
 
     return <OnboardingScreen
-        prompt="Do you have any dietary restrictions?"
-        instruction="Tap on any restrictions you may have."
+        prompt="Do you have any allergies?"
+        instruction="Select any allergies you may have."
     >
         <div className="restrictions-buttons">
             {
