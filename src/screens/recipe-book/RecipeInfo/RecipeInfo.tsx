@@ -68,7 +68,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
                     currentTab === "Ingredients" ? 
                     <IngredientsTab ingredients={recipe.extendedIngredients} getAddToMealPlanButton={getAddToMealPlanButton} /> : 
                         currentTab === "Instructions" ?
-                        <InstructionsTab instructions={recipe.instructions} getAddToMealPlanButton={getAddToMealPlanButton} /> :
+                        <InstructionsTab recipe={recipe} getAddToMealPlanButton={getAddToMealPlanButton} /> :
                         ''
                 }
 

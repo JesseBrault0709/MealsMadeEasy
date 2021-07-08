@@ -15,7 +15,16 @@ h3.what-you-need {
     font-size: 14px;
     line-height: 18px;
     text-align: left;
+
+    margin: 10px 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
+
+
 
 .ingredients-tab-buttons {
     margin-top: 40px;
@@ -23,7 +32,11 @@ h3.what-you-need {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     width: 100%;
+}
+
+.ingredients-tab-buttons * {
+    margin: 0px 10px;
 }

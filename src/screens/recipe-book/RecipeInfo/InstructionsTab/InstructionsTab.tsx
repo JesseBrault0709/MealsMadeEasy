@@ -4,17 +4,11 @@
  *      or an array of strings; in the latter case,
  *      render with bullet points.
  */
+import { FullRecipe } from '../../../../client/FullRecipe'
 import './InstructionsTab.css'
 
-/**
- * @param {{
- *  instructions: string,
- *  onAddToMealPlan: () => void
- * }} props 
- */
-
 export type InstructionsTabProps = {
-    instructions: string,
+    recipe: FullRecipe,
     getAddToMealPlanButton: () => React.ReactNode
 }
 
@@ -23,7 +17,11 @@ export function InstructionsTab(props: InstructionsTabProps) {
 
         <h3>Method</h3>
   
-        <p>{props.instructions}</p>
+        <div className="instructions-steps">
+            {
+                props.recipe.analyzedInstructions[0].steps.map((step, index) => <p key={index} className="instructions-step">{step.step}</p>)
+            }
+        </div>
 
         <div className="add-to-planner-button">
             {props.getAddToMealPlanButton()}

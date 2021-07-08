@@ -20,8 +20,18 @@ export type ExtendedIngredient = {
     unit: string
 }
 
+export type AnalyzedInstructions = ReadonlyArray<{
+    name: string,
+    steps: ReadonlyArray<{
+        number: string,
+        step: string,
+        ingredients: unknown,
+        equipment: unknown
+    }>
+}>
+
 export type FullRecipe = Required<Omit<RecipeOverview, "preparationMinutes" | "cookingMinutes">> & {
-    analyzedInstructions: ReadonlyArray<string>,
+    analyzedInstructions: AnalyzedInstructions,
     instructions: string,
     extendedIngredients: ReadonlyArray<ExtendedIngredient>
 }

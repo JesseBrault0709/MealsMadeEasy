@@ -15,8 +15,12 @@
     line-height: 32px;
 }
 
-.instructions-tab p {
+.instructions-steps {
     margin: 24px 0px 45px 0px;
+}
+
+.instructions-step {
+    margin: 20px 0;
 }
 
 .add-to-planner-button {
