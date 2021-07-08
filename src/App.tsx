@@ -31,7 +31,7 @@ function App() {
                 dispatch(setAppScreen({ screen: "Onboarding" }))
             }, 2000)
         }
-    }, [currentScreen])
+    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (currentScreen === "Sweet") {
@@ -39,7 +39,7 @@ function App() {
             dispatch(setActiveList({ listName: firstListName }))
             dispatch(fetchRecipes(firstListName))
         }
-    }, [currentScreen])
+    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const getScreen = () => {
         if (currentScreen === "Splash") {
