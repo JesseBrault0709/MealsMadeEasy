@@ -11,15 +11,7 @@ export type HomeScreen =
     "Grocery List" |
     "Settings"
 
-export const DayMealPlansContext = React.createContext<ReadonlyArray<DayMealPlan>>([])
-
-export const MealsContext = React.createContext<ReadonlyArray<MealName>>([])
-
-export type HomeProps = {
-
-}
-
-export function Home(props: HomeProps) {
+export function Home() {
     
     const dispatch = useAppDispatch()
     

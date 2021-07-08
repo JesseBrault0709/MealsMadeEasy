@@ -3,13 +3,14 @@ import './AddToMealPlan.css'
 
 import { JBButton } from '../../inputs/Button/JBButton'
 import Calendar from 'react-calendar'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SelectMealType } from './SelectMealType/SelectMealType'
 import { MealName } from '../../types/MealName'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
 import { getModalEffect } from '../../util'
-import { DayMealPlansContext, MealsContext } from '../home/Home'
+import { appConfig } from '../../appConfig'
+import { useAppSelector } from '../../hooks'
 
 export type AddToMealPlanProps = {
     onSubmit: (meal: MealName, date: Date) => void
@@ -17,9 +18,9 @@ export type AddToMealPlanProps = {
 
 export function AddToMealPlan(props: AddToMealPlanProps) {
 
-    const meals = useContext(MealsContext)
-    
-    const dayMealPlans = useContext(DayMealPlansContext)
+    const meals = appConfig.meals
+
+    const dayMealPlans = useAppSelector(state => state.dayMealPlans.plans)
     const sorted = dayMealPlans.slice().sort((a, b) => a.date.valueOf() - b.date.valueOf())
     
     if (sorted.length === 0) {

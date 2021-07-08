@@ -15,6 +15,7 @@ import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { setHomeScreen } from '../../../slices/homeScreens'
+import { setRecipeBookScreen } from '../../../slices/recipeBook'
 
 export function NavBar() {
 
@@ -22,6 +23,7 @@ export function NavBar() {
     const currentHomeScreen = useAppSelector(state => state.homeScreens.current)
 
     const onRecipeBookClick = () => {
+        dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
     }
 

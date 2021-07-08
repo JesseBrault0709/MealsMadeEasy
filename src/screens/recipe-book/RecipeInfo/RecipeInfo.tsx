@@ -9,14 +9,18 @@ import { InstructionsTab } from './InstructionsTab/InstructionsTab'
 import { JBButton } from '../../../inputs/Button/JBButton'
 import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
 import { MealName } from '../../../types/MealName'
-import { useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { LoadingCircle } from '../../common/LoadingCircle/LoadingCircle'
+import { addRecipeToMealPlan } from '../../../slices/dayMealPlans'
+import { setHomeScreen } from '../../../slices/homeScreens'
 
 export type RecipeInfoProps = {
     onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
 }
 
 export function RecipeInfo(props: RecipeInfoProps) {
+
+    const dispatch = useAppDispatch()
 
     const status = useAppSelector(state => state.recipeInfo.status)
     const recipe = useAppSelector(state => state.recipeInfo.recipe)
@@ -68,9 +72,12 @@ export function RecipeInfo(props: RecipeInfoProps) {
 
                 {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
                     setShowModal(false)
-                    if (props.onAddToMealPlan !== undefined) {
-                        props.onAddToMealPlan(meal, date, recipe)
-                    }
+                    dispatch(addRecipeToMealPlan({
+                        date,
+                        mealName: meal,
+                        recipe
+                    }))
+                    dispatch(setHomeScreen({ screen: 'Planner' }))
                 }}/> : ''}
 
             </>
