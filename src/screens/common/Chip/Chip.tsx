@@ -21,7 +21,7 @@ export type ChipProps = {
 export function Chip(props: React.PropsWithoutRef<ChipProps>) {
     const classNames = ["chip", props.type]
 
-    return <div className={classNames.join(" ")}>
+    return <div className={classNames.join(" ")} onClick={props.onClick}>
         {
             props.avatar !== undefined ?
             <Avatar>{props.avatar}</Avatar> :
