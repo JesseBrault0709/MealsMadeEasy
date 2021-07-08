@@ -1,9 +1,14 @@
-.sweet {
+.loading-circle {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @keyframes loadingCircle {
@@ -11,6 +16,6 @@
     to { transform: rotate(360deg); }
 }
 
-.sweet img {
+.loading-circle img {
     animation: loadingCircle 1s linear 0s infinite;
 }
