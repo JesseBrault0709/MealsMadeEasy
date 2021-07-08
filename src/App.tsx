@@ -29,7 +29,7 @@ function App() {
         if (currentScreen === "Splash") {
             setTimeout(() => {
                 dispatch(setAppScreen({ screen: "Onboarding" }))
-            }, 2250)
+            }, 2000)
         }
     }, [currentScreen])
 

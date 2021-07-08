@@ -5,7 +5,7 @@ import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { setActiveList } from '../../../slices/recipeLists'
+import { fetchRecipes, setActiveList } from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {
     onRecipeCardClick: (recipe: RecipeOverview) => void,
@@ -34,7 +34,10 @@ export function RecipeLists(props: RecipeListsProps) {
                 lists.map(list => 
                     <Tab
                         key={list.name}
-                        onClick={() => dispatch(setActiveList({ listName: list.name }))}
+                        onClick={() => {
+                            dispatch(fetchRecipes(list.name))
+                            dispatch(setActiveList({ listName: list.name }))
+                        }}
                         active={list.name === activeList}
                     >{list.name}</Tab>
                 )

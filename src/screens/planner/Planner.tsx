@@ -6,8 +6,11 @@ import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWit
 import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
-import { useAppSelector } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { appConfig } from '../../appConfig'
+import { fetchFullRecipe } from '../../slices/recipeInfo'
+import { setRecipeBookScreen } from '../../slices/recipeBook'
+import { setHomeScreen } from '../../slices/homeScreens'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -37,9 +40,10 @@ function formatDate(date: Date) {
 function MealCol(props: {
     recipes?: ReadonlyArray<RecipeOverview>,
     accented?: boolean,
-    onRecipeSelect: (recipe: RecipeOverview) => void,
     mealCardMenuPlacement: MealCardMenuProps['variant']
 }) {
+
+    const dispatch = useAppDispatch()
 
     if (props.recipes !== undefined && props.recipes.length !== 0) {
         return <div className="meal-col">
@@ -48,7 +52,9 @@ function MealCol(props: {
                     variant={props.accented ? "accented" : "normal"} 
                     title={recipe.title}
                     onRecipeSelect={() => {
-                        props.onRecipeSelect(recipe)
+                        dispatch(fetchFullRecipe(recipe))
+                        dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
+                        dispatch(setHomeScreen({ screen: 'Recipe Book' }))
                     }}
                     menuPlacement={props.mealCardMenuPlacement}
                 />)
@@ -66,7 +72,6 @@ function DayRow(props: {
     dayMealPlan: DayMealPlan,
     meals: ReadonlyArray<MealName>,
     variant: "light" | "dark",
-    onRecipeSelect: (recipe: RecipeOverview) => void
 }) {
 
     const today = new Date()
@@ -84,8 +89,7 @@ function DayRow(props: {
         {
             props.meals.map((meal, index) => <MealCol 
                 recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
-                accented={accented} 
-                onRecipeSelect={props.onRecipeSelect}
+                accented={accented}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
             />)
         }
@@ -93,11 +97,7 @@ function DayRow(props: {
     </div>    
 }
 
-export type PlannerProps = {
-    
-}
-
-export function Planner(props: PlannerProps) {
+export function Planner() {
 
     const dayMealPlans = useAppSelector(state => state.dayMealPlans.plans)
 
@@ -121,7 +121,6 @@ export function Planner(props: PlannerProps) {
                         dayMealPlan={day}
                         meals={appConfig.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
-                        onRecipeSelect={() => { }}
                     />
                 )
             }

@@ -2,14 +2,17 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { appConfig } from "../appConfig";
 import { getByComplexSearch } from "../client/complexSearch";
 import { RecipeOverview } from "../client/RecipeOverview";
-import { AppState, store } from "../store";
+import { AppState } from "../store";
 import { setAppScreen } from "./appScreens";
 
 type RecipeListsState = {
     lists: ReadonlyArray<{
         name: string,
-        offset: number,
-        recipes: ReadonlyArray<RecipeOverview>
+        currentOffset: number,
+        recipesByOffset: ReadonlyArray<{
+            offset: number,
+            recipes: ReadonlyArray<RecipeOverview>
+        }>
     }>
     activeList?: string
 }
@@ -17,31 +20,39 @@ type RecipeListsState = {
 const initialState: RecipeListsState = {
     lists: appConfig.recipeLists.map(listConfig => ({
         name: listConfig.name,
-        offset: 0,
-        recipes: []
+        currentOffset: 0,
+        recipesByOffset: []
     }))
 }
 
 /** Middleware thunk to retrieve recipes */
-
 export const fetchRecipes = createAsyncThunk<
     {
         listName: string,
+        offset: number,
         recipes: ReadonlyArray<RecipeOverview>
-    },
+    } | undefined,
     string,
     {
         state: AppState
     }
 >('recipeLists/fetchRecipes', async (listName: string, thunkApi) => {
     const state = thunkApi.getState()
-    const { cookingTime, diet, intolerances } = state.recipePreferences.preferences
-    
+
     const targetList = state.recipeLists.lists.find(list => list.name === listName)
     if (targetList === undefined) {
         throw new Error(`there is no targetList named ${listName}`)
     }
-    const { offset } = targetList
+    const { currentOffset } = targetList
+
+    const recipesForOffset = targetList.recipesByOffset.find(({ offset }) => offset === currentOffset)
+
+    if (recipesForOffset !== undefined) {
+        return undefined
+    }
+
+    const { cookingTime, diet, intolerances } = state.recipePreferences.preferences
+
 
     const targetListConfig = appConfig.recipeLists.find(config => config.name === listName)
     if (targetListConfig === undefined) {
@@ -55,14 +66,14 @@ export const fetchRecipes = createAsyncThunk<
         diet,
         intolerances,
         number: appConfig.recipeListLimit,
-        offset,
+        offset: currentOffset,
         type
     })
     
     thunkApi.dispatch(setAppScreen({ screen: "Home" }))
 
     return {
-        listName, recipes
+        listName, offset: currentOffset, recipes
     }
 
 })
@@ -83,18 +94,23 @@ export const recipeListsSlice = createSlice({
             if (list === undefined) {
                 throw new Error(`there is no list named ${action.payload.listName}`)
             }
-            list.offset += appConfig.recipeListLimit
+            list.currentOffset += appConfig.recipeListLimit
         }
 
     },
     extraReducers: builder => {
 
         builder.addCase(fetchRecipes.fulfilled, (state, action) => {
-            const targetList = state.lists.find(list => list.name === action.payload.listName)
-            if (targetList === undefined) {
-                throw new Error(`there is no targetList named ${action.payload.listName}`)
+            if (action.payload !== undefined) {
+                const targetList = state.lists.find(list => list.name === action.payload!.listName) // because we checked in the if
+                if (targetList === undefined) {
+                    throw new Error(`there is no targetList named ${action.payload.listName}`)
+                }
+                targetList.recipesByOffset.push({
+                    offset: action.payload.offset,
+                    recipes: action.payload.recipes as RecipeOverview[]
+                })
             }
-            targetList.recipes = [...targetList.recipes, ...action.payload.recipes]
         })
 
     }

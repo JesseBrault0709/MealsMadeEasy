@@ -15,12 +15,22 @@ export type RecipeListProps = {
 export function RecipeList(props: RecipeListProps) {
 
     const dispatch = useAppDispatch()
+
     const state = useAppSelector(state => {
         const listState = state.recipeLists.lists.find(list => list.name === props.name)
         if (listState === undefined) {
             throw new Error(`there is no list state for ${props.name}`)
         }
         return listState
+    })
+
+    const recipes = useAppSelector(state => {
+        const listState = state.recipeLists.lists.find(list => list.name === props.name)
+        if (listState === undefined) {
+            throw new Error(`there is no listState for ${props.name}`)
+        }
+        const sortedByOffset = listState.recipesByOffset.slice().sort((a, b) => a.offset - b.offset)
+        return sortedByOffset.flatMap(recipesByOffset => recipesByOffset.recipes)
     })
 
     const getOnRecipeCardClick = (recipe: RecipeOverview) => () => props.onRecipeCardClick(recipe)
@@ -33,7 +43,7 @@ export function RecipeList(props: RecipeListProps) {
     return <div className="recipe-list"> 
         <RowsOfPairs>
             {
-                state.recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
+                recipes.map(recipe => <RecipeCard key={recipe.title} recipe={recipe} onClick={getOnRecipeCardClick(recipe)} />)
             }
         </RowsOfPairs>
         <JBButton variant="primary" onClick={onReduxClick}>Load more</JBButton>
