@@ -6,6 +6,11 @@ export function Sweet() {
         title="Sweeeeet!"
         instruction="We're personalizing your recipe book."
     >
-        <LoadingCircle />
+        <LoadingCircle style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}/>
     </OnboardingScreen>
 }
