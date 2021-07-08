@@ -1,4 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+/**
+ * TODO 7/8/21
+ *  * Fix the model of the DayMealPlan so that the date is a number (timestamp)
+ *      instead of a Date instance; this way it is fully serializable
+ */
+
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { recipePreferencesSlice } from "./slices/recipePreferences";
 import { recipeListsSlice } from "./slices/recipeLists";
 import { appScreensSlice } from "./slices/appScreens";
@@ -16,7 +22,10 @@ export const store = configureStore({
         recipeLists: recipeListsSlice.reducer,
         recipePreferences: recipePreferencesSlice.reducer,
         screens: appScreensSlice.reducer
-    }
+    },
+    middleware: getDefaultMiddleware({
+        serializableCheck: false
+    })
 })
 
 export type AppState = ReturnType<typeof store.getState>
