@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { RecipeBook, RecipeBookProps, SubScreen } from '../recipe-book/RecipeBook/RecipeBook'
+import { RecipeBook } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
-import { NavBarButton } from '../common/NavBar/NavBar'
-import { addToMeal, DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
+import { DayMealPlan, isPlanForDate } from '../../types/DayMealPlan'
 import { MealName } from '../../types/MealName'
-import { RecipeOverview } from '../../client/RecipeOverview'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 
-type Screen = 
+export type HomeScreen = 
     "Recipe Book" |
     "Planner" |
     "Grocery List" |
@@ -23,35 +22,11 @@ export type HomeProps = {
 
 export function Home(props: HomeProps) {
     
-    const [currentScreen, setCurrentScreen] = useState<Screen>("Recipe Book")
+    const dispatch = useAppDispatch()
+    
+    const currentScreen: HomeScreen = useAppSelector(state => state.homeScreens.current)
 
     const [dayMealPlans, setDayMealPlans] = useState(props.initialDayMealPlans)
-
-    const [initialRecipeBookSubScreen, setInitialRecipeBookSubScreen] = useState<SubScreen>("Recipe List")
-    const [initialRecipeBookRecipeId, setInitialRecipeBookRecipeId] = useState<RecipeOverview['id']>()
-
-    const onNavAway = (button: NavBarButton) => {
-        if (button === NavBarButton.RECIPE_BOOK) {
-            setCurrentScreen("Recipe Book")
-        } else if (button === NavBarButton.PLANNER) {
-            setCurrentScreen("Planner")
-        }
-    }
-
-    const onAddToMealPlan: RecipeBookProps['onAddToMealPlan'] = (meal, date, recipe) => {
-        setCurrentScreen("Planner")
-
-        const newDayMealPlans = dayMealPlans.reduce((arr: DayMealPlan[], cur: DayMealPlan) => {
-            if (isPlanForDate(date)(cur)) {
-                arr.push(addToMeal(cur, meal, recipe))
-            } else {
-                arr.push(cur)
-            }
-            return arr
-        }, [])
-
-        setDayMealPlans(newDayMealPlans)
-    }
 
     if (currentScreen === "Recipe Book") {
 
@@ -59,13 +34,7 @@ export function Home(props: HomeProps) {
             <DayMealPlansContext.Provider value={dayMealPlans}>
                 <MealsContext.Provider value={props.meals}>
 
-                    <RecipeBook 
-                        onAddToMealPlan={onAddToMealPlan} 
-                        onNavAway={onNavAway}
-
-                        initialRecipeId={initialRecipeBookRecipeId}
-                        initialSubScreen={initialRecipeBookSubScreen}
-                    />
+                    <RecipeBook />
 
                 </MealsContext.Provider>
             </DayMealPlansContext.Provider>
@@ -74,17 +43,6 @@ export function Home(props: HomeProps) {
     } else if (currentScreen === "Planner") {
 
         return <div className="home">
-
-            <Planner 
-                dayMealPlans={dayMealPlans}
-                meals={props.meals}
-                onNavAway={onNavAway} 
-                onRecipeSelect={recipe => {
-                    setInitialRecipeBookRecipeId(recipe.id)
-                    setInitialRecipeBookSubScreen("Recipe Info")
-                    setCurrentScreen("Recipe Book")
-                }}
-            />
 
         </div>
 

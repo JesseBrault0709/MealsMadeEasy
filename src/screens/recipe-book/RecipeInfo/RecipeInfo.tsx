@@ -1,6 +1,6 @@
 import './RecipeInfo.css'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FullRecipe } from '../../../client/FullRecipe'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
@@ -9,81 +9,78 @@ import { InstructionsTab } from './InstructionsTab/InstructionsTab'
 import { JBButton } from '../../../inputs/Button/JBButton'
 import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
 import { MealName } from '../../../types/MealName'
+import { useAppSelector } from '../../../hooks'
+import { LoadingCircle } from '../../common/LoadingCircle/LoadingCircle'
 
 export type RecipeInfoProps = {
-    getRecipe: () => Promise<FullRecipe>,
     onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
 }
 
 export function RecipeInfo(props: RecipeInfoProps) {
 
-    const [recipe, setRecipe] = useState<FullRecipe>({
-        analyzedInstructions: [],
-        extendedIngredients: [],
-        id: 0,
-        image: "",
-        imageType: "",
-        instructions: "",
-        readyInMinutes: 0,
-        servings: 0,
-        spoonacularScore: 0,
-        summary: "",
-        title: ""
-    })
+    const status = useAppSelector(state => state.recipeInfo.status)
+    const recipe = useAppSelector(state => state.recipeInfo.recipe)
+    const error = useAppSelector(state => state.recipeInfo.error)
 
-    useEffect(() => {
-        props.getRecipe().then(setRecipe)
-    }, [props])
+    const [currentTab, setCurrentTab] = useState<'Ingredients' | 'Instructions'>('Ingredients')
+    const [showModal, setShowModal] = useState<boolean>(false)
 
-    const {
-        title,
-        readyInMinutes,
-        servings,
-        image,
-        spoonacularScore,
-        extendedIngredients,
-        instructions
-    } = recipe
+    const getScreen = () => {
+        if (status === 'empty') {
+            return null
+        } else if (status === 'fetching') {
+            return <LoadingCircle />
+        } else if (status === 'success') {
 
-    const rating = spoonacularScore !== undefined && spoonacularScore !== null ? Math.floor(spoonacularScore / 20) : 0
+            if (recipe === undefined) {
+                throw new Error(`status is 'success' but recipe is undefined`)
+            }
 
-    const [currentTab, setCurrentTab] = useState("Ingredients")
-    const [showModal, setShowModal] = useState(false)
+            const rating = recipe.spoonacularScore !== undefined && recipe.spoonacularScore !== null ? 
+                Math.floor(recipe.spoonacularScore / 20) : 0
 
-    const getAddToMealPlanButton = () => <JBButton
-            variant="primary"
-            onClick={() => {
-                setShowModal(true)
-            }}
-        >Add to Meal Plan</JBButton>
+            const getAddToMealPlanButton = () => <JBButton
+                variant="primary"
+                onClick={() => {
+                    setShowModal(true)
+                }}
+            >Add to Meal Plan</JBButton>
 
-    return <div className="recipe-info">
-        {/* <Button onClick={props.onBackButtonClick}><img src={Back} alt="Back Button" /></Button> */}
-        
-        <h2 className="recipe-title">{title}</h2>
+            return <>
+                <h2 className="recipe-title">{recipe.title}</h2>
 
-        <TimeServingsRating time={readyInMinutes} servings={servings} rating={rating} />
+                <TimeServingsRating time={recipe.readyInMinutes} servings={recipe.servings} rating={rating} />
 
-        <img className="recipe-image" src={image} alt="Recipe" />
+                <img className="recipe-image" src={recipe.image} alt="Recipe" />
 
-        <Tabs>
-            <Tab active={currentTab === "Ingredients"} onClick={() => setCurrentTab("Ingredients")}>Ingredients</Tab>
-            <Tab active={currentTab === "Instructions"} onClick={() => setCurrentTab("Instructions")}>Instructions</Tab>
-        </Tabs>
+                <Tabs>
+                    <Tab active={currentTab === "Ingredients"} onClick={() => setCurrentTab("Ingredients")}>Ingredients</Tab>
+                    <Tab active={currentTab === "Instructions"} onClick={() => setCurrentTab("Instructions")}>Instructions</Tab>
+                </Tabs>
 
-        {
-            currentTab === "Ingredients" ? 
-            <IngredientsTab ingredients={extendedIngredients} getAddToMealPlanButton={getAddToMealPlanButton} /> : 
-                currentTab === "Instructions" ?
-                <InstructionsTab instructions={instructions} getAddToMealPlanButton={getAddToMealPlanButton} /> :
-                ''
+                {
+                    currentTab === "Ingredients" ? 
+                    <IngredientsTab ingredients={recipe.extendedIngredients} getAddToMealPlanButton={getAddToMealPlanButton} /> : 
+                        currentTab === "Instructions" ?
+                        <InstructionsTab instructions={recipe.instructions} getAddToMealPlanButton={getAddToMealPlanButton} /> :
+                        ''
+                }
+
+                {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
+                    setShowModal(false)
+                    if (props.onAddToMealPlan !== undefined) {
+                        props.onAddToMealPlan(meal, date, recipe)
+                    }
+                }}/> : ''}
+
+            </>
+        } else if (status === 'error') {
+            return `error: ${error?.message}`
         }
 
-        {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
-            setShowModal(false)
-            if (props.onAddToMealPlan !== undefined) {
-                props.onAddToMealPlan(meal, date, recipe)
-            }
-        }}/> : ''}
+    }
+
+    return <div className="recipe-info">
+        {getScreen()}
     </div>
 }
