@@ -12,6 +12,9 @@ export type AppConfig = {
     availableCookingTimes: ReadonlyArray<"No Limit" | number>,
     availableDiets: ReadonlyArray<SPDiet>,
     availableIntolerances: ReadonlyArray<SPIntolerance>,
+
+    initialCookingTimeIndex: number,
+
     meals: ReadonlyArray<MealName>,
     recipeLists: ReadonlyArray<RecipeListConfig>,
     recipeListLimit: number
@@ -21,6 +24,9 @@ export const appConfig: AppConfig = {
     availableCookingTimes: AppConfig_en.availableCookingTimes,
     availableDiets: AppConfig_en.availableDiets,
     availableIntolerances: AppConfig_en.availableIntolerances,
+
+    initialCookingTimeIndex: AppConfig_en.initialCookingTimeIndex,
+    
     meals: AppConfig_en.meals,
     recipeListLimit: AppConfig_en.recipeListLimit,
     recipeLists: AppConfig_en.recipeListTabs

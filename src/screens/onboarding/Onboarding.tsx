@@ -19,6 +19,8 @@ export type OnboardingProps = {
     /** The available intolerances for the user to choose from */
     allIntolerances: ReadonlyArray<SPIntolerance>,
 
+    initialCookingTimeIndex: number,
+
     /** Any initially selected preferences */
     initialPreferences?: RecipePreferences,
 
@@ -85,6 +87,7 @@ export function Onboarding(props: OnboardingProps) {
         <CookingTime
             cookingTimes={props.allCookingTimes}
             onChange={setCookingTime}
+            initialCookingTimeIndex={props.initialCookingTimeIndex}
         />
 
         <Diet diets={props.allDiets} onDietSelect={diet => setDiet(diet)} />

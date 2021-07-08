@@ -13,6 +13,7 @@
         "Peanut", "Seafood",
         "Wheat"
     ],
+    "initialCookingTimeIndex": 1,
     "meals": [
         "Breakfast", "Lunch", "Dinner"
     ],
