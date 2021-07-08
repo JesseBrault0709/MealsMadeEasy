@@ -75,9 +75,9 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
                 </div>
 
                 <div className="add-to-meal-plan-buttons">
-                    <JBButton variant="outline">Cancel</JBButton>
+                    <JBButton variant="outline" style={{ width: '40%' }}>Cancel</JBButton>
 
-                    <JBButton variant="primary" onClick={() => {
+                    <JBButton variant="primary" style={{ width: '40%' }} onClick={() => {
                         if (selectedMeal !== undefined) {
                             props.onSubmit(selectedMeal, selectedDate) 
                         } else {

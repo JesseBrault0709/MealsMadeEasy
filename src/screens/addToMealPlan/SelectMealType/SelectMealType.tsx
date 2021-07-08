@@ -26,6 +26,7 @@ export function SelectMealType(props: SelectMealTypeProps) {
                         onClick={getOnClick(meal)} 
                         active={meal === props.activeMeal}
                         variant="outline"
+                        style={{ width: '30%' }}
                     >{meal}</JBButton>
                 )
             }

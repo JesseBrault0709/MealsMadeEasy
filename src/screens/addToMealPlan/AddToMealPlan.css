@@ -1,8 +1,12 @@
 .add-to-meal-plan {
+
+    height: 670px;
+    max-height: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-around;
 }
 
 .add-to-meal-plan h2 {
@@ -20,6 +24,13 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 15px;
+}
+
+.select-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .add-to-meal-plan-buttons {
