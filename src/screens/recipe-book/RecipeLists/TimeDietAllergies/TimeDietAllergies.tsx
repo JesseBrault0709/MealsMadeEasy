@@ -8,20 +8,17 @@ import { Chip } from '../../../common/Chip/Chip'
 import { RecipePreferences } from '../../../../types/RecipePreferences'
 import { useState } from 'react'
 import { ChangeCookingTime } from './ChangeCookingTime/ChangeCookingTime'
-import { useAppDispatch } from '../../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../../hooks'
 import { setCookingTime, setDiet, setIntolerances } from '../../../../slices/recipePreferences'
 import { ChangeDiet } from './ChangeDiet/ChangeDiet'
 import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
-export type TimeDietAllergiesProps = {
-    cookingTime: RecipePreferences['cookingTime']
-    diet: RecipePreferences['diet']
-    intolerances: RecipePreferences['intolerances']
-}
 
-export function TimeDietAllergies(props: TimeDietAllergiesProps) {
+export function TimeDietAllergies() {
 
     const dispatch = useAppDispatch()
+
+    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences)
     
     const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(false)
 
@@ -59,54 +56,48 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     }
 
 
+    const renderEmptyChip = (label: string, onClick: () => void) => 
+        <Chip
+            avatar={<img src={X} alt="" />}
+            label={label}
+            type="no-value"
+            onClick={onClick}
+        />
+
+        
     return <div className="time-diet-allergies">
         <img className="funnel" src={Funnel} alt=""/>
         {
-            props.cookingTime !== undefined ?
+            cookingTime !== undefined ?
                 <Chip 
                     avatar={<img src={Check} alt=""/>} 
-                    label={props.cookingTime === "No Limit" ? props.cookingTime : `${props.cookingTime} mins`} 
+                    label={cookingTime === "No Limit" ? cookingTime : `${cookingTime} mins`} 
                     type="strong"
                     onClick={() => setShowChangeCookingTime(true)}
                 /> :
-                <Chip 
-                    avatar={<img src={X} alt=""/>} 
-                    label="Time"
-                    type="no-value"
-                    onClick={() => setShowChangeCookingTime(true)}
-                />
+                renderEmptyChip("Time", () => setShowChangeCookingTime(true))
         }
 
         {
-            props.diet !== undefined ?
+            diet !== undefined ?
                 <Chip 
                     avatar={<img src={Check} alt=""/>} 
-                    label={props.diet} 
+                    label={diet}
                     type="strong"
                     onClick={() => setShowChangeDiet(true)}
                 /> :
+                renderEmptyChip("Diet", () => setShowChangeDiet(true))
+        }
+
+        {
+            intolerances === undefined || intolerances.length === 0 ?
+                renderEmptyChip("Allergies", () => setShowChangeIntolerances(true)):
                 <Chip
-                    avatar={<img src={X} alt=""/>}
-                    label="Diet"
-                    type="no-value"
-                    onClick={() => setShowChangeDiet(true)}
+                    avatar={intolerances.length}
+                    label="Allergies"
+                    type="strong"
+                    onClick={() => setShowChangeIntolerances(true)}
                 />
-        }
-
-        {
-            props.intolerances === undefined || props.intolerances.length === 0 ?
-            <Chip
-                avatar={<img src={X} alt=""/>}
-                label="Allergies"
-                type="no-value"
-                onClick={() => setShowChangeIntolerances(true)}
-            /> :
-            <Chip
-                avatar={props.intolerances.length}
-                label="Allergies"
-                type="strong"
-                onClick={() => setShowChangeIntolerances(true)}
-            />
         }
 
         {

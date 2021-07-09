@@ -15,7 +15,6 @@ export function RecipeLists(props: RecipeListsProps) {
 
     const dispatch = useAppDispatch()
 
-    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences)
     const lists = useAppSelector(state => state.recipeLists.lists)
     const activeList = useAppSelector(state => state.recipeLists.activeList)
 
@@ -24,11 +23,7 @@ export function RecipeLists(props: RecipeListsProps) {
     }
 
     return <div className="recipe-lists">
-        <TimeDietAllergies 
-            cookingTime={cookingTime}
-            diet={diet} 
-            intolerances={intolerances} 
-        />
+        <TimeDietAllergies />
         <Tabs>
             {
                 lists.map(list => 
