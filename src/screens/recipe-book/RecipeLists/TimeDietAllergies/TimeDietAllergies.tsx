@@ -13,8 +13,11 @@ import { setCookingTime, setDiet, setIntolerances } from '../../../../slices/rec
 import { ChangeDiet } from './ChangeDiet/ChangeDiet'
 import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
+export type TimeDietAllergiesProps = {
+    onChange: () => void
+}
 
-export function TimeDietAllergies() {
+export function TimeDietAllergies(props: TimeDietAllergiesProps) {
 
     const dispatch = useAppDispatch()
 
@@ -25,6 +28,7 @@ export function TimeDietAllergies() {
     const onChangeCookingTimeSubmit = (newCookingTime: RecipePreferences['cookingTime']) => {
         dispatch(setCookingTime({ cookingTime: newCookingTime }))
         setShowChangeCookingTime(false)
+        props.onChange()
     }
 
     const onChangeCookingTimeCancel = () => {
@@ -37,6 +41,7 @@ export function TimeDietAllergies() {
     const onChangeDietSubmit = (newDiet: RecipePreferences['diet']) => {
         dispatch(setDiet({ diet: newDiet }))
         setShowChangeDiet(false)
+        props.onChange()
     }
 
     const onChangeDietCancel = () => {
@@ -49,6 +54,7 @@ export function TimeDietAllergies() {
     const onChangeIntolerancesSubmit = (newIntolerances: RecipePreferences['intolerances']) => {
         dispatch(setIntolerances({ intolerances: newIntolerances }))
         setShowChangeIntolerances(false)
+        props.onChange()
     }
 
     const onChangeIntolerancesCancel = () => {

@@ -5,7 +5,7 @@ import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { fetchRecipes, setActiveList } from '../../../slices/recipeLists'
+import { fetchRecipes, resetAllRecipes, setActiveList } from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {
     onRecipeCardClick: (recipe: RecipeOverview) => void,
@@ -23,7 +23,12 @@ export function RecipeLists(props: RecipeListsProps) {
     }
 
     return <div className="recipe-lists">
-        <TimeDietAllergies />
+        <TimeDietAllergies 
+            onChange={() => {
+                dispatch(resetAllRecipes())
+                dispatch(fetchRecipes(activeList))
+            }}
+        />
         <Tabs>
             {
                 lists.map(list => 

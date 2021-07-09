@@ -106,6 +106,13 @@ export const recipeListsSlice = createSlice({
 
         setActiveListError: (state, action: PayloadAction<{ error: SerializedError }>) => {
             state.activeListError = action.payload.error
+        },
+
+        resetAllRecipes: state => {
+            state.lists.forEach(list => {
+                list.currentOffset = 0
+                list.recipesByOffset = []
+            })
         }
 
     },
@@ -141,4 +148,10 @@ export const recipeListsSlice = createSlice({
     }
 })
 
-export const { incrementOffset, setActiveList, setActiveListStatus, setActiveListError } = recipeListsSlice.actions
+export const { 
+    incrementOffset, 
+    setActiveList, 
+    setActiveListStatus, 
+    setActiveListError, 
+    resetAllRecipes 
+} = recipeListsSlice.actions
