@@ -6,7 +6,7 @@ import { devLog } from "../../util";
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
 import { CookingTime } from "./CookingTime/CookingTime";
 import { Diet } from "./Diet/Diet";
-import { Restrictions } from "./Restrictions/Restrictions";
+import { Restrictions } from "./Intolerances/Intolerances";
 
 export type OnboardingProps = {
 

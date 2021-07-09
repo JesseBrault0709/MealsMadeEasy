@@ -1,7 +1,7 @@
 import { Reducer, useReducer } from "react"
 import { SPIntolerance } from "../../../../../client/spoonacularTypes"
 import { JBButton } from "../../../../../inputs/Button/JBButton"
-import { IntolerancesInput } from "../../../../onboarding/Restrictions/Restrictions"
+import { IntolerancesInput } from "../../../../onboarding/Intolerances/Intolerances"
 import { ChangeModal } from "../ChangeModal/ChangeModal"
 
 export type ChangeIntolerancesProps = {
