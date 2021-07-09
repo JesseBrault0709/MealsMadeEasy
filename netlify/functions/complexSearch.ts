@@ -4,8 +4,16 @@ import axios from 'axios'
 
 const rapidAPIHost = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 
-export function calcUrl(endPoint: string): string {
+function calcUrl(endPoint: string): string {
     return `https://${rapidAPIHost}${endPoint}`
+}
+
+function logRemainingHeaders(headers: any) {
+    const { 
+        "x-ratelimit-requests-remaining": requestsRemaining,
+        "x-ratelimit-results-remaining": resultsRemaining
+    } = headers
+    console.log({ requestsRemaining, resultsRemaining})
 }
 
 const handler: Handler = async (event) => {
@@ -28,8 +36,10 @@ const handler: Handler = async (event) => {
     )
 
     console.log({
-        status, statusText, headers, data
+        status, statusText
     })
+
+    logRemainingHeaders(headers)
 
     return {
         statusCode: 200,
