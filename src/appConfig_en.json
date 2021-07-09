@@ -5,16 +5,17 @@
     "initialCookingTime": 15,
 
     "availableDiets": [
+        "Gluten Free", "Ketogenic",
         "Vegan", "Vegetarian",
-        "Ketogenic", "Pescetarian",
-        "Paleo", "Whole30"
+        "Pescetarian", "Paleo", 
+        "Whole30"
     ],
 
     "availableIntolerances": [
-        "Dairy", "Egg",
-        "Gluten", "Grain",
-        "Peanut", "Seafood",
-        "Wheat"
+        "Dairy", "Egg", "Gluten", 
+        "Grain", "Peanut", "Seafood",
+        "Sesame", "Shellfish", "Soy",
+        "Sulfite", "Tree Nut", "Wheat"
     ],
 
     "meals": [

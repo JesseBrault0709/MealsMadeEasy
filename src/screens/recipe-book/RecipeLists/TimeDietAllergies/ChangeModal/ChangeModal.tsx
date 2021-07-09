@@ -11,6 +11,7 @@ export type ChangeModalProps = {
     onDone: () => void
     onCancel: () => void
     children: React.ReactNode
+    style?: React.CSSProperties
 }
 
 export function ChangeModal(props: ChangeModalProps) {
@@ -18,7 +19,7 @@ export function ChangeModal(props: ChangeModalProps) {
     useEffect(getModalEffect()) // eslint-disable-line react-hooks/exhaustive-deps
     
     return ReactDOM.createPortal(<BottomModal>
-        <div className="change-modal">
+        <div className="change-modal" style={props.style}>
         
             <h3>{props.title}</h3>
             

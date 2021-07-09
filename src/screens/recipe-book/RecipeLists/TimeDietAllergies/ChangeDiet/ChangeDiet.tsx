@@ -38,6 +38,16 @@ export function ChangeDiet(props: ChangeDietProps) {
                     {diet}
                 </JBButton>
             }
+            renderNoPreference={() =>
+                <JBButton
+                    variant="outline"
+                    active={selectedDiet === undefined}
+                    onClick={() => setSelectedDiet(undefined)}
+                    style={{ margin: '10px', width: '108px' }}
+                >
+                    No Preference
+                </JBButton>
+            }
         />
     </ChangeModal>
 }

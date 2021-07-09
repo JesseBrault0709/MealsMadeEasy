@@ -27,6 +27,7 @@ export function ChangeIntolerances(props: ChangeIntolerancesProps) {
         title="Which allergies do you have?"
         onDone={onDoneClick}
         onCancel={onCancelClick}
+        style={{ height: '450px' }}
     >
         <IntolerancesInput 
             renderButton={intolerance => 
@@ -40,10 +41,21 @@ export function ChangeIntolerances(props: ChangeIntolerancesProps) {
                             dispatch({ type: 'add', intolerance })
                         }
                     }}
-                    style={{ width: '80px', margin: '10px' }}
+                    style={{ width: '100px', margin: '10px' }}
                     key={intolerance}
                 >
                     {intolerance}
+                </JBButton>
+            }
+            renderNoPreference={() =>
+                <JBButton
+                    variant="outline"
+                    active={activeIntolerances.length === 0}
+                    onClick={() => dispatch({ type: 'clear' })}
+                    style={{ width: '100px', margin: '10px'}}
+                    key="No Preference"
+                >
+                    None
                 </JBButton>
             }
         />

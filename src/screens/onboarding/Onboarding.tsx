@@ -63,6 +63,17 @@ export function Onboarding(props: OnboardingProps) {
                         {dietOption}
                     </JBButton>
                 }
+                renderNoPreference={() => 
+                    <JBButton
+                        variant="circle-large"
+                        active={diet === undefined}
+                        onClick={() => setDiet(undefined)}
+                        style={{ margin: '10px' }}
+                        key="No Preference"
+                    >
+                        No Preference
+                    </JBButton>
+                }
             />
         </OnboardingScreen>
 
@@ -74,7 +85,7 @@ export function Onboarding(props: OnboardingProps) {
             <IntolerancesInput 
                 renderButton={intolerance => 
                     <JBButton
-                        variant="circle-large"
+                        variant="circle-medium"
                         active={intolerances.includes(intolerance)}
                         style={{ margin: '10px' }}
                         onClick={() => {
@@ -93,6 +104,17 @@ export function Onboarding(props: OnboardingProps) {
                         key={intolerance}
                     >
                         {intolerance}
+                    </JBButton>
+                }
+                renderNoPreference={() =>
+                    <JBButton
+                        variant="circle-medium"
+                        active={intolerances.length === 0}
+                        style={{ margin: '10px' }}
+                        onClick={() => dispatchIntolerances({ type: 'clear' })}
+                        key="No Preference"
+                    >
+                        None
                     </JBButton>
                 }
             />
