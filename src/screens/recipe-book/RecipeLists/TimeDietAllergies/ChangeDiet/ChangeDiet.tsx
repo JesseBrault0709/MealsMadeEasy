@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SPDiet } from "../../../../../client/spoonacularTypes";
 import { JBButton } from "../../../../../inputs/Button/JBButton";
 import { RecipePreferences } from "../../../../../types/RecipePreferences";
 import { DietInput } from "../../../../onboarding/Diet/Diet";
@@ -13,15 +12,6 @@ export type ChangeDietProps = {
 export function ChangeDiet(props: ChangeDietProps) {
 
     const [selectedDiet, setSelectedDiet] = useState<RecipePreferences['diet']>()
-
-    const getDietButton = (diet: SPDiet) => <JBButton
-        variant="outline"
-        active={selectedDiet === diet}
-        onClick={() => setSelectedDiet(diet)}
-        style={{ margin: '10px', width: '108px' }}
-    >
-        {diet}
-    </JBButton>
     
     const onCancelClick = () => {
         props.onCancel()
@@ -37,7 +27,16 @@ export function ChangeDiet(props: ChangeDietProps) {
         onDone={onDoneClick}
     >
         <DietInput
-            renderButton={getDietButton}
+            renderButton={diet => 
+                <JBButton
+                    variant="outline"
+                    active={selectedDiet === diet}
+                    onClick={() => setSelectedDiet(diet)}
+                    style={{ margin: '10px', width: '108px' }}
+                >
+                    {diet}
+                </JBButton>
+            }
         />
     </ChangeModal>
 }

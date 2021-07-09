@@ -10,7 +10,5 @@ const Template: Story<OnboardingProps> = args => <Onboarding {...args} />
 
 export const Primary: Story<OnboardingProps> = Template.bind({})
 Primary.args = {
-    allCookingTimes: ["No Limit", 15, 30, 45, 60],
-    allDiets: ['Gluten Free', 'Ketogenic', 'Lacto-Vegetarian', 'Ovo-Vegeterian', 'Paleo', 'Pescetarian'],
-    allIntolerances: ['Dairy', 'Egg', 'Gluten', 'Grain'],
+    
 }

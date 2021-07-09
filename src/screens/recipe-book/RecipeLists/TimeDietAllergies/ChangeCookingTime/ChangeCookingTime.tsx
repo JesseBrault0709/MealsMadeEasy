@@ -1,10 +1,7 @@
-import './ChangeCookingTime.css'
-
-import { useContext, useState } from "react";
-import { ClockSlider } from "../../../../../inputs/ClockSlider/ClockSlider";
+import { useState } from "react";
 import { RecipePreferences } from "../../../../../types/RecipePreferences";
 import { ChangeModal } from '../ChangeModal/ChangeModal';
-import { AppConfigContext } from '../../../../../App';
+import { CookingTimeInput } from '../../../../onboarding/CookingTime/CookingTime';
 
 export type ChangeCookingTimeProps = {
     onSubmit: (newCookingTime: RecipePreferences['cookingTime']) => void
@@ -13,27 +10,7 @@ export type ChangeCookingTimeProps = {
 
 export function ChangeCookingTime(props: ChangeCookingTimeProps) {
 
-    const appConfig = useContext(AppConfigContext)
-
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
-
-    const options = appConfig.availableCookingTimes.map(cookingTime => {
-        if (typeof(cookingTime) === 'number') {
-            return `${cookingTime} mins`
-        } else {
-            return cookingTime
-        }
-    })
-
-    const onChange = (newValue: string) => {
-        if (newValue === "No Limit") {
-            setCookingTime(newValue)
-        } else {
-            const numberString: string = newValue.slice(0, -5)
-            const newNumberValue: number = parseInt(numberString)
-            setCookingTime(newNumberValue)
-        }
-    }
 
     const onCancelClick = () => {
         props.onCancel()
@@ -48,9 +25,9 @@ export function ChangeCookingTime(props: ChangeCookingTimeProps) {
         onDone={onDoneClick}
         onCancel={onCancelClick}
     >
-        <ClockSlider 
-            options={options}
-            onChange={onChange}
+        <CookingTimeInput
+            value={cookingTime}
+            onChange={newCookingTime => setCookingTime(newCookingTime)}
         />
     </ChangeModal>
 }

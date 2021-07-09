@@ -1,6 +1,6 @@
 import './ClockSlider.css'
 
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 
 /**
  * Styles for each position on the clock slider. 
@@ -101,9 +101,9 @@ function getRotation(
 }
 
 export type ClockSliderProps = {
-    options: string[]
-    initialOption?: number
-    onChange?: (newValue: string) => void
+    options: ReadonlyArray<string>,
+    valueIndex: number,
+    onChange: (newValue: string) => void
 }
 
 export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
@@ -115,37 +115,29 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
         throw new Error('props.options must contain at least one element')
     }
 
-    const [currentCenter, setCurrentCenter] = useState(props.initialOption ?? 0)
-
     const leftHiddenRef = useRef<HTMLDivElement>(null)
     const leftRef = useRef<HTMLDivElement>(null)
     const centerRef = useRef<HTMLDivElement>(null)
     const rightRef = useRef<HTMLDivElement>(null)
     const rightHiddenRef = useRef<HTMLDivElement>(null)
 
-    const runOnChangeCallback = (nextCenter: number) => {
-        if (props.onChange !== undefined) {
-            props.onChange(options[nextCenter])
-        }
-    }
+    const runOnChangeCallback = (nextCenter: number) => 
+        props.onChange(options[nextCenter])
+
 
     const clockwise = getRotation(
-        () => currentCenter > 0,
+        () => props.valueIndex > 0,
         () => [
             leftHiddenRef.current?.animate(leftHiddenToLeft, timingOptions),
             leftRef.current?.animate(leftToCenter, timingOptions),
             centerRef.current?.animate(centerToRight, timingOptions),
             rightRef.current?.animate(rightToRightHidden, timingOptions)
         ],
-        () => {
-            const nextCenter = currentCenter - 1 // guaranteed to be greater than or equal to zero
-            setCurrentCenter(nextCenter)
-            runOnChangeCallback(nextCenter)
-        }
+        () => runOnChangeCallback(props.valueIndex - 1)
     )
 
     const counterClockwise = getRotation(
-        () => currentCenter < options.length - 1,
+        () => props.valueIndex < options.length - 1,
         () => [
             rightHiddenRef.current?.animate(rightHiddenToRight, timingOptions),
             rightRef.current?.animate(rightToCenter, timingOptions),
@@ -153,9 +145,7 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
             leftRef.current?.animate(leftToLeftHidden, timingOptions)
         ],
         () => {
-            const nextCenter = currentCenter + 1 // guaranteed to be less than or equal to index of last element
-            setCurrentCenter(nextCenter)
-            runOnChangeCallback(nextCenter)
+            runOnChangeCallback(props.valueIndex + 1)
         }
     )
 
@@ -231,6 +221,7 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
         resetMouse()
     }
 
+    const currentCenter = props.valueIndex
 
     return <div 
         className="clock-slider"

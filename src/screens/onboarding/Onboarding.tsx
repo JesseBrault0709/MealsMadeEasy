@@ -1,32 +1,15 @@
-import { useState } from "react";
-import { SPDiet, SPIntolerance } from "../../client/spoonacularTypes";
+import { useReducer, useState } from "react";
+import { JBButton } from "../../inputs/Button/JBButton";
 import { RecipePreferences } from "../../types/RecipePreferences";
-import { devLog } from "../../util";
-
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
-import { CookingTime } from "./CookingTime/CookingTime";
-import { Diet } from "./Diet/Diet";
-import { Restrictions } from "./Intolerances/Intolerances";
+import { CookingTimeInput } from "./CookingTime/CookingTime";
+import { DietInput } from "./Diet/Diet";
+import { IntolerancesInput, intolerancesReducer } from "./Intolerances/Intolerances";
+import { OnboardingScreen } from "./OnboardingScreen/OnboardingScreen";
 
 export type OnboardingProps = {
-
-    /** The available cookingTimes for the user to choose from */
-    allCookingTimes: ReadonlyArray<RecipePreferences['cookingTime']>,
-
-    /** The available diets for the user to choose from */
-    allDiets: ReadonlyArray<SPDiet>,
-
-    /** The available intolerances for the user to choose from */
-    allIntolerances: ReadonlyArray<SPIntolerance>,
-
-    initialCookingTimeIndex: number,
-
-    /** Any initially selected preferences */
-    initialPreferences?: RecipePreferences,
-
     /** A callback for when the user submits their preferences */
     onSubmit?: (preferences: RecipePreferences) => void
-
 }
 
 /**
@@ -35,64 +18,84 @@ export type OnboardingProps = {
  */
 export function Onboarding(props: OnboardingProps) {
 
-    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
+    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>(15)
     const [diet, setDiet] = useState<RecipePreferences['diet']>()
-    const [intoleranceMap, setIntoleranceMap] = useState<Map<string, boolean>>(props.allIntolerances.reduce(
-        (result: Map<string, boolean>, intolerance: string) => {
-            result.set(intolerance, false)
-            return result
-        }, new Map()
-    ))
+    const [intolerances, dispatchIntolerances] = useReducer(intolerancesReducer, [])
+
 
     const onLastNext = () => {
-
-        devLog({
-            cookingTime, diet, intoleranceMap
-        })
-
         if (props.onSubmit !== undefined) {
-            const selectedIntolerances: SPIntolerance[] = []
-    
-            intoleranceMap.forEach((isSelected, intolerance) => {
-                if (isSelected) {
-                    selectedIntolerances.push(intolerance as SPIntolerance)
-                }
-            })
-
             props.onSubmit({
-                cookingTime, diet,
-                intolerances: selectedIntolerances
+                cookingTime, diet, intolerances
             })
         }
     }
 
-    const onIntoleranceClick = (targetIntolerance: string) => {
-
-        const newIntoleranceMap = new Map<string, boolean>()
-
-        intoleranceMap.forEach((isSelected, intolerance) => {
-            if (targetIntolerance === intolerance) {
-                newIntoleranceMap.set(targetIntolerance, !isSelected) // opposite
-            } else {
-                newIntoleranceMap.set(intolerance, isSelected)
-            }
-        })
-
-        setIntoleranceMap(newIntoleranceMap)
-        
-    }
-
     return <OrderedScreenCollection onLastNext={onLastNext}>
 
-        <CookingTime
-            cookingTimes={props.allCookingTimes}
-            onChange={setCookingTime}
-            initialCookingTimeIndex={props.initialCookingTimeIndex}
-        />
+        <OnboardingScreen
+            prompt="How much time do you have?"
+            instruction="Drag to let us know your ideal cooking time."
+        >
 
-        <Diet diets={props.allDiets} onDietSelect={diet => setDiet(diet)} />
+            <CookingTimeInput 
+                onChange={setCookingTime}
+                value={cookingTime}
+            />
 
-        <Restrictions restrictions={intoleranceMap} onClick={onIntoleranceClick}/>
+        </OnboardingScreen>
+
+        <OnboardingScreen
+            prompt="What diet do you follow?"
+            instruction="Select your preference."
+        >
+            <DietInput
+                renderButton={dietOption => 
+                    <JBButton
+                        variant="circle-large"
+                        active={dietOption === diet}
+                        onClick={() => setDiet(dietOption)}
+                        style={{ margin: '10px' }}
+                        key={dietOption}
+                    >
+                        {dietOption}
+                    </JBButton>
+                }
+            />
+        </OnboardingScreen>
+
+        <OnboardingScreen
+            prompt="Do you have any allergies?"
+            instruction="Select any allergies you may have."
+        >
+
+            <IntolerancesInput 
+                renderButton={intolerance => 
+                    <JBButton
+                        variant="circle-large"
+                        active={intolerances.includes(intolerance)}
+                        style={{ margin: '10px' }}
+                        onClick={() => {
+                            if (intolerances.includes(intolerance)) {
+                                dispatchIntolerances({
+                                    type: 'remove',
+                                    intolerance
+                                })
+                            } else {
+                                dispatchIntolerances({
+                                    type: 'add',
+                                    intolerance
+                                })
+                            }
+                        }}
+                        key={intolerance}
+                    >
+                        {intolerance}
+                    </JBButton>
+                }
+            />
+
+        </OnboardingScreen>
 
     </OrderedScreenCollection>
 

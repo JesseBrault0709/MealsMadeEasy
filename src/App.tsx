@@ -56,10 +56,6 @@ function App() {
             }
     
             return <Onboarding
-                allCookingTimes={appConfig.availableCookingTimes}
-                allDiets={appConfig.availableDiets}
-                allIntolerances={appConfig.availableIntolerances}
-                initialCookingTimeIndex={appConfig.initialCookingTimeIndex}
                 onSubmit={onOnboardingSubmit}
             />
     

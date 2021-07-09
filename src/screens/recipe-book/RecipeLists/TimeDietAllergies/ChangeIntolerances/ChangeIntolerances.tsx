@@ -1,7 +1,7 @@
-import { Reducer, useReducer } from "react"
+import { useReducer } from "react"
 import { SPIntolerance } from "../../../../../client/spoonacularTypes"
 import { JBButton } from "../../../../../inputs/Button/JBButton"
-import { IntolerancesInput } from "../../../../onboarding/Intolerances/Intolerances"
+import { IntolerancesInput, intolerancesReducer } from "../../../../onboarding/Intolerances/Intolerances"
 import { ChangeModal } from "../ChangeModal/ChangeModal"
 
 export type ChangeIntolerancesProps = {
@@ -11,40 +11,7 @@ export type ChangeIntolerancesProps = {
 
 export function ChangeIntolerances(props: ChangeIntolerancesProps) {
 
-    const intolerancesReducer: Reducer<
-        ReadonlyArray<SPIntolerance>,
-        {
-            type: 'add' | 'remove'
-            intolerance: SPIntolerance
-        }
-    > = (state, action) => {
-        switch (action.type) {
-            case 'add':
-                return [...state, action.intolerance]
-            case 'remove':
-                return state.filter(intolerance => intolerance !== action.intolerance)
-            default:
-                throw new Error('unknown action type')
-        }
-    }
-
     const [activeIntolerances, dispatch] = useReducer(intolerancesReducer, [])
-
-    const renderButton = (intolerance: SPIntolerance) => 
-        <JBButton
-            variant="outline"
-            active={activeIntolerances.includes(intolerance)}
-            onClick={() => {
-                if (activeIntolerances.includes(intolerance)) {
-                    dispatch({ type: 'remove', intolerance })
-                } else {
-                    dispatch({ type: 'add', intolerance })
-                }
-            }}
-            style={{ width: '80px', margin: '10px' }}
-        >
-            {intolerance}
-        </JBButton>
     
     const onDoneClick = () => {
         props.onSubmit(activeIntolerances)
@@ -60,7 +27,22 @@ export function ChangeIntolerances(props: ChangeIntolerancesProps) {
         onCancel={onCancelClick}
     >
         <IntolerancesInput 
-            renderButton={renderButton}
+            renderButton={intolerance => 
+                <JBButton
+                    variant="outline"
+                    active={activeIntolerances.includes(intolerance)}
+                    onClick={() => {
+                        if (activeIntolerances.includes(intolerance)) {
+                            dispatch({ type: 'remove', intolerance })
+                        } else {
+                            dispatch({ type: 'add', intolerance })
+                        }
+                    }}
+                    style={{ width: '80px', margin: '10px' }}
+                >
+                    {intolerance}
+                </JBButton>
+            }
         />
     </ChangeModal>
 }

@@ -1,51 +1,62 @@
 import './CookingTime.css'
 
-import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { ClockSlider } from "../../../inputs/ClockSlider/ClockSlider"
 import { RecipePreferences } from "../../../types/RecipePreferences"
+import { useContext } from 'react'
+import { AppConfigContext } from '../../../App'
 
-export type CookingTimeProps = {
-
-    /** The cookingTimes that the user can choose from */
-    cookingTimes: ReadonlyArray<RecipePreferences['cookingTime']>,
-
-    /** The callback for when the user changes their desired cookingTime */
-    onChange: (newCookingTime: RecipePreferences['cookingTime']) => void,
-
-    /** The index of the initial cookingTime in the cookingTimes prop */
-    initialCookingTimeIndex?: number
-
+export type CookingTimeInputProps = {
+    value: RecipePreferences['cookingTime']
+    onChange: (cookingTime: RecipePreferences['cookingTime']) => void
 }
 
-/**
- * The page where the user selects their preferred cooking time.
- */
-export function CookingTime(props: CookingTimeProps) {
+const convertValueToOption = (value: RecipePreferences['cookingTime']): string => {
+    if (value === "No Limit") {
+        return value
+    } else if (value !== undefined) {
+        return `${value.toString()} mins`
+    } else {
+        throw new Error('cannot convert an undefined value to an option for ClockSlider')
+    }
+}
 
-    const options = props.cookingTimes.map(cookingTime => {
-        if (typeof(cookingTime) === 'number') {
-            return `${cookingTime} mins`
-        } else {
-            return cookingTime
+const convertOptionToValue = (option: string): RecipePreferences['cookingTime'] => {
+    if (option === "No Limit") {
+        return option
+    } else {
+        const asNumber = parseInt(option.slice(0, -5))
+        if (asNumber === undefined) {
+            throw new Error(`cannot convert option '${option}' to a value`)
         }
+        return asNumber
+    }
+}
+
+export function CookingTimeInput(props: CookingTimeInputProps) {
+
+    const appConfig = useContext(AppConfigContext)
+
+    const options: ReadonlyArray<string> = appConfig.availableCookingTimes.map(convertValueToOption)
+    
+    const valueIndex = options.findIndex(option => {
+        const asValue = convertOptionToValue(option)
+        return asValue === props.value
     })
 
-    const onChange = (newValue: string) => {
-        if (newValue === "No Limit") {
-            props.onChange(newValue)
-        } else {
-            const numberString: string = newValue.slice(0, -5)
-            const newNumberValue: number = parseInt(numberString)
-            props.onChange(newNumberValue)
-        }
+    if (valueIndex === -1) {
+        throw new Error(`no such value in options '${props.value}'`)
     }
 
-    return <OnboardingScreen
-        prompt="How much time do you have?"
-        instruction="Drag to let us know your ideal cooking time."
-    >
-        <div className="cooking-time-container">
-            <ClockSlider options={options as string[]} onChange={onChange} initialOption={props.initialCookingTimeIndex} />
-        </div>
-    </OnboardingScreen>
+    const onChange = (option: string) => {
+        const asValue = convertOptionToValue(option)
+        props.onChange(asValue)
+    }
+
+    return <div className="cooking-time-container">
+        <ClockSlider
+            options={options}
+            onChange={onChange}
+            valueIndex={valueIndex}
+        />
+    </div>
 }
