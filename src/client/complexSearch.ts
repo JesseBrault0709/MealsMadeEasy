@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { devLog } from '../util';
 import { rapidAPIRequestHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders';
 import type { RecipeOverview } from "./RecipeOverview";
 import type { SPDiet, SPIntolerance, SPType } from './spoonacularTypes'
@@ -24,6 +25,11 @@ type Result = {
 export async function getByComplexSearch(
     params: ComplexSearchParams
 ): Promise<ReadonlyArray<RecipeOverview>> {
+
+    devLog({
+        requestParams: params
+    })
+    
     return await axios.get<Result>(
         calcUrl('/recipes/complexSearch'),
         { params, headers: { ...rapidAPIRequestHeaders } }
