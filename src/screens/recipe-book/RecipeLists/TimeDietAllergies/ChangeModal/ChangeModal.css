@@ -1,0 +1,23 @@
+.change-modal {
+    width: 100%;
+    height: 370px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.change-modal h3 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.change-modal-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

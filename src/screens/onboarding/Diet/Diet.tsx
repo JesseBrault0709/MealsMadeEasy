@@ -3,8 +3,28 @@ import './Diet.css'
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
 import { SPDiet } from "../../../client/spoonacularTypes"
-import { useState } from "react"
+import React, { useState } from "react"
 import { groupIntoPairs } from "../../../util"
+import { appConfig } from '../../../appConfig'
+
+export type DietInputProps = {
+    renderButton: (diet: SPDiet) => React.ReactNode
+}
+
+export function DietInput(props: DietInputProps) {
+    return <div className="diet-buttons">
+        {
+            groupIntoPairs(appConfig.availableDiets).map((pair, index) => {
+                const [d1, d2] = pair
+
+                return <div className="diet-button-pair" key={index}>
+                    {props.renderButton(d1)}
+                    {props.renderButton(d2)}
+                </div>
+            })
+        }
+    </div>
+}
 
 export type DietProps = {
     diets: ReadonlyArray<SPDiet>,
@@ -46,17 +66,8 @@ export function Diet(props: DietProps) {
         prompt="What diet do you follow?"
         instruction="Select your preference."
     >
-        <div className="diet-buttons">
-            {
-                groupIntoPairs(props.diets).map((pair, index) => {
-                    const [d1, d2] = pair
-
-                    return <div className="diet-button-pair" key={index}>
-                        {getButton(d1)}
-                        {getButton(d2)}
-                    </div>
-                })
-            }
-        </div>
+        <DietInput
+            renderButton={getButton}
+        />
     </OnboardingScreen>
 }

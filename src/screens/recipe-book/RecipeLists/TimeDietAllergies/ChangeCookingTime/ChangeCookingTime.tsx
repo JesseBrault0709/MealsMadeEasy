@@ -1,13 +1,10 @@
 import './ChangeCookingTime.css'
 
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import { appConfig } from "../../../../../appConfig";
-import { JBButton } from "../../../../../inputs/Button/JBButton";
 import { ClockSlider } from "../../../../../inputs/ClockSlider/ClockSlider";
 import { RecipePreferences } from "../../../../../types/RecipePreferences";
-import { getModalEffect } from "../../../../../util";
-import { BottomModal } from "../../../../common/BottomModal/BottomModal";
+import { ChangeModal } from '../ChangeModal/ChangeModal';
 
 export type ChangeCookingTimeProps = {
     onSubmit: (newCookingTime: RecipePreferences['cookingTime']) => void
@@ -15,8 +12,6 @@ export type ChangeCookingTimeProps = {
 }
 
 export function ChangeCookingTime(props: ChangeCookingTimeProps) {
-
-    useEffect(getModalEffect()) // eslint-disable-line react-hooks/exhaustive-deps
 
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>()
 
@@ -46,21 +41,14 @@ export function ChangeCookingTime(props: ChangeCookingTimeProps) {
         props.onSubmit(cookingTime)
     }
 
-    return ReactDOM.createPortal(<BottomModal>
-        <div className="change-cooking-time">
-            <h3>How much time do you have?</h3>
-            <ClockSlider 
-                options={options}
-                onChange={onChange}
-            />
-            <div className="change-cooking-time-buttons">
-                <JBButton variant="outline" style={{ width: '25%', margin: '20px 5px' }} onClick={onCancelClick}>
-                    Cancel
-                </JBButton>
-                <JBButton variant="primary" style={{ width: '25%', margin: '20px 5px' }} onClick={onDoneClick}>
-                    Done
-                </JBButton>
-            </div>
-        </div>
-    </BottomModal>, document.getElementById('modal-root') as Element)
+    return <ChangeModal 
+        title="How much time do you have?"
+        onDone={onDoneClick}
+        onCancel={onCancelClick}
+    >
+        <ClockSlider 
+            options={options}
+            onChange={onChange}
+        />
+    </ChangeModal>
 }

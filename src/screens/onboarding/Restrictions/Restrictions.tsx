@@ -3,6 +3,29 @@ import './Restrictions.css'
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
 import { groupIntoPairs } from "../../../util"
+import React from 'react'
+import { SPIntolerance } from '../../../client/spoonacularTypes'
+import { appConfig } from '../../../appConfig'
+
+export type IntolerancesInputProps = {
+    renderButton: (intolerance: SPIntolerance) => React.ReactNode
+}
+
+export function IntolerancesInput(props: IntolerancesInputProps) {
+
+    const buttons = appConfig.availableIntolerances.map(props.renderButton)
+
+    return <div className="restrictions-buttons">
+        {
+            groupIntoPairs(buttons).map((pair, index) => {
+                return <div key={index} className="restriction-button-pair">
+                    {pair}
+                </div>
+            })
+        }
+    </div>
+
+}
 
 export type RestrictionsProps = {
 

@@ -2,7 +2,7 @@ import './JBButton.css'
 
 import React from 'react'
 
-export type ButtonProps = {
+export type JBButtonProps = {
     variant: "primary" | "outline" | "disabled" | "circle-large" | "circle-medium"
     children?: React.ReactNode
     style?: React.CSSProperties
@@ -10,7 +10,7 @@ export type ButtonProps = {
     active?: boolean
 }
 
-export function JBButton(props: ButtonProps) {
+export function JBButton(props: JBButtonProps) {
 
     const classNames = ['jb-button', props.variant]
 

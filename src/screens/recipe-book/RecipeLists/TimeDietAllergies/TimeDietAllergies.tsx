@@ -1,8 +1,3 @@
-/**
- * TODO as of 6/28/21:
- *  * Do styling, esp of the filter button.
- */
-
 import './TimeDietAllergies.css'
 
 import Check from './assets/Check.png'
@@ -14,7 +9,9 @@ import { RecipePreferences } from '../../../../types/RecipePreferences'
 import { useState } from 'react'
 import { ChangeCookingTime } from './ChangeCookingTime/ChangeCookingTime'
 import { useAppDispatch } from '../../../../hooks'
-import { setCookingTime } from '../../../../slices/recipePreferences'
+import { setCookingTime, setDiet, setIntolerances } from '../../../../slices/recipePreferences'
+import { ChangeDiet } from './ChangeDiet/ChangeDiet'
+import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
 export type TimeDietAllergiesProps = {
     cookingTime: RecipePreferences['cookingTime']
@@ -37,32 +34,79 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
         setShowChangeCookingTime(false)
     }
 
+
+    const [showChangeDiet, setShowChangeDiet] = useState(false)
+
+    const onChangeDietSubmit = (newDiet: RecipePreferences['diet']) => {
+        dispatch(setDiet({ diet: newDiet }))
+        setShowChangeDiet(false)
+    }
+
+    const onChangeDietCancel = () => {
+        setShowChangeDiet(false)
+    }
+
+    
+    const [showChangeIntolerances, setShowChangeIntolerances] = useState(false)
+
+    const onChangeIntolerancesSubmit = (newIntolerances: RecipePreferences['intolerances']) => {
+        dispatch(setIntolerances({ intolerances: newIntolerances }))
+        setShowChangeIntolerances(false)
+    }
+
+    const onChangeIntolerancesCancel = () => {
+        setShowChangeIntolerances(false)
+    }
+
+
     return <div className="time-diet-allergies">
         <img className="funnel" src={Funnel} alt=""/>
         {
             props.cookingTime !== undefined ?
-            <Chip 
-                avatar={<img src={Check} alt=""/>} 
-                label={props.cookingTime === "No Limit" ? props.cookingTime : `${props.cookingTime} mins`} 
-                type="strong"
-                onClick={() => {
-                    setShowChangeCookingTime(true)
-                    console.log('hello')
-                }}
-            /> :
-            <Chip avatar={<img src={X} alt=""/>} label="Time" type="no-value" />
+                <Chip 
+                    avatar={<img src={Check} alt=""/>} 
+                    label={props.cookingTime === "No Limit" ? props.cookingTime : `${props.cookingTime} mins`} 
+                    type="strong"
+                    onClick={() => setShowChangeCookingTime(true)}
+                /> :
+                <Chip 
+                    avatar={<img src={X} alt=""/>} 
+                    label="Time"
+                    type="no-value"
+                    onClick={() => setShowChangeCookingTime(true)}
+                />
         }
 
         {
             props.diet !== undefined ?
-            <Chip avatar={<img src={Check} alt=""/>} label={props.diet} type="strong" /> :
-            <Chip avatar={<img src={X} alt=""/>} label="Diet" type="no-value" />
+                <Chip 
+                    avatar={<img src={Check} alt=""/>} 
+                    label={props.diet} 
+                    type="strong"
+                    onClick={() => setShowChangeDiet(true)}
+                /> :
+                <Chip
+                    avatar={<img src={X} alt=""/>}
+                    label="Diet"
+                    type="no-value"
+                    onClick={() => setShowChangeDiet(true)}
+                />
         }
 
         {
             props.intolerances === undefined || props.intolerances.length === 0 ?
-            <Chip avatar={<img src={X} alt=""/>} label="Allergies" type="no-value" /> :
-            <Chip avatar={props.intolerances.length} label="Allergies" type="strong" />
+            <Chip
+                avatar={<img src={X} alt=""/>}
+                label="Allergies"
+                type="no-value"
+                onClick={() => setShowChangeIntolerances(true)}
+            /> :
+            <Chip
+                avatar={props.intolerances.length}
+                label="Allergies"
+                type="strong"
+                onClick={() => setShowChangeIntolerances(true)}
+            />
         }
 
         {
@@ -70,6 +114,22 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
                 <ChangeCookingTime 
                     onSubmit={onChangeCookingTimeSubmit}
                     onCancel={onChangeCookingTimeCancel}
+                /> : ''
+        }
+
+        {
+            showChangeDiet ?
+                <ChangeDiet 
+                    onCancel={onChangeDietCancel}
+                    onSubmit={onChangeDietSubmit}
+                /> : ''
+        }
+
+        {
+            showChangeIntolerances ?
+                <ChangeIntolerances 
+                    onCancel={onChangeIntolerancesCancel}
+                    onSubmit={onChangeIntolerancesSubmit}
                 /> : ''
         }
     </div>
