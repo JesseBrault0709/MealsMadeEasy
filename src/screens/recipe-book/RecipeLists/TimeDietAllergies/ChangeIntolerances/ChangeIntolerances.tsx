@@ -41,6 +41,7 @@ export function ChangeIntolerances(props: ChangeIntolerancesProps) {
                         }
                     }}
                     style={{ width: '80px', margin: '10px' }}
+                    key={intolerance}
                 >
                     {intolerance}
                 </JBButton>
