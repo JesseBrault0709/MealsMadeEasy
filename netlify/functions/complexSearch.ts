@@ -8,27 +8,32 @@ export function calcUrl(endPoint: string): string {
     return `https://${rapidAPIHost}${endPoint}`
 }
 
-const handler: Handler = async (event, context) => {
+const handler: Handler = async (event) => {
+
+    console.log({
+        queryStringParameters: event.queryStringParameters
+    })
 
     const apiKey = process.env.SPOONACULAR_KEY
 
-    const response = await axios.get(
+    const { status, statusText, headers, data }= await axios.get(
         calcUrl('/recipes/complexSearch'),
         {
             headers: {
                 'x-rapidapi-key': apiKey,
                 'x-rapidapi-host': rapidAPIHost
-            }
+            },
+            params: event.queryStringParameters
         }
     )
 
     console.log({
-        response
+        status, statusText, headers, data
     })
 
     return {
         statusCode: 200,
-        body: JSON.stringify({ results: response.data.results })
+        body: JSON.stringify({ results: data.results })
     }
 }
 
