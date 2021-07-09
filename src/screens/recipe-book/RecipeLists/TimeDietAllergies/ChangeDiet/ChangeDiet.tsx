@@ -44,6 +44,7 @@ export function ChangeDiet(props: ChangeDietProps) {
                     active={selectedDiet === undefined}
                     onClick={() => setSelectedDiet(undefined)}
                     style={{ margin: '10px', width: '108px' }}
+                    key="No Preference"
                 >
                     No Preference
                 </JBButton>
