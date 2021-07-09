@@ -64,7 +64,7 @@ export function TimeDietAllergies() {
             onClick={onClick}
         />
 
-        
+
     return <div className="time-diet-allergies">
         <img className="funnel" src={Funnel} alt=""/>
         {
@@ -102,7 +102,8 @@ export function TimeDietAllergies() {
 
         {
             showChangeCookingTime ?
-                <ChangeCookingTime 
+                <ChangeCookingTime
+                    initialCookingTime={cookingTime}
                     onSubmit={onChangeCookingTimeSubmit}
                     onCancel={onChangeCookingTimeCancel}
                 /> : ''
@@ -110,7 +111,8 @@ export function TimeDietAllergies() {
 
         {
             showChangeDiet ?
-                <ChangeDiet 
+                <ChangeDiet
+                    initialDiet={diet}
                     onCancel={onChangeDietCancel}
                     onSubmit={onChangeDietSubmit}
                 /> : ''
@@ -118,7 +120,8 @@ export function TimeDietAllergies() {
 
         {
             showChangeIntolerances ?
-                <ChangeIntolerances 
+                <ChangeIntolerances
+                    initialIntolerances={intolerances}
                     onCancel={onChangeIntolerancesCancel}
                     onSubmit={onChangeIntolerancesSubmit}
                 /> : ''

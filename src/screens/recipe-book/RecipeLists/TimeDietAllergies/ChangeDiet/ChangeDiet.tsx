@@ -5,13 +5,14 @@ import { DietInput } from "../../../../onboarding/Diet/Diet";
 import { ChangeModal } from "../ChangeModal/ChangeModal";
 
 export type ChangeDietProps = {
+    initialDiet: RecipePreferences['diet']
     onSubmit: (newDiet: RecipePreferences['diet']) => void,
     onCancel: () => void
 }
 
 export function ChangeDiet(props: ChangeDietProps) {
 
-    const [selectedDiet, setSelectedDiet] = useState<RecipePreferences['diet']>()
+    const [selectedDiet, setSelectedDiet] = useState<RecipePreferences['diet']>(props.initialDiet)
     
     const onCancelClick = () => {
         props.onCancel()
