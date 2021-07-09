@@ -22,6 +22,11 @@ export function ChangeDiet(props: ChangeDietProps) {
         props.onSubmit(selectedDiet)
     }
 
+    const buttonStyle: React.CSSProperties = {
+        margin: '10px',
+        width: '133px'
+    }
+
     return <ChangeModal
         title="Which diet do you follow?"
         onCancel={onCancelClick}
@@ -33,7 +38,7 @@ export function ChangeDiet(props: ChangeDietProps) {
                     variant="outline"
                     active={selectedDiet === diet}
                     onClick={() => setSelectedDiet(diet)}
-                    style={{ margin: '10px', width: '108px' }}
+                    style={buttonStyle}
                 >
                     {diet}
                 </JBButton>
@@ -43,7 +48,7 @@ export function ChangeDiet(props: ChangeDietProps) {
                     variant="outline"
                     active={selectedDiet === undefined}
                     onClick={() => setSelectedDiet(undefined)}
-                    style={{ margin: '10px', width: '108px' }}
+                    style={buttonStyle}
                     key="No Preference"
                 >
                     No Preference

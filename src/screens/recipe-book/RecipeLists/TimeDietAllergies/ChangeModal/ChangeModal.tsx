@@ -18,6 +18,11 @@ export function ChangeModal(props: ChangeModalProps) {
     
     useEffect(getModalEffect()) // eslint-disable-line react-hooks/exhaustive-deps
     
+    const buttonStyle: React.CSSProperties = {
+        width: '22%',
+        margin: '20px 5px'
+    }
+
     return ReactDOM.createPortal(<BottomModal>
         <div className="change-modal" style={props.style}>
         
@@ -26,10 +31,10 @@ export function ChangeModal(props: ChangeModalProps) {
             {props.children}
 
             <div className="change-modal-buttons">
-                <JBButton variant="outline" style={{ width: '25%', margin: '20px 5px' }} onClick={props.onCancel}>
+                <JBButton variant="outline" style={buttonStyle} onClick={props.onCancel}>
                     Cancel
                 </JBButton>
-                <JBButton variant="primary" style={{ width: '25%', margin: '20px 5px' }} onClick={props.onDone}>
+                <JBButton variant="primary" style={buttonStyle} onClick={props.onDone}>
                     Done
                 </JBButton>
             </div>
