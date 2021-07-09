@@ -13,7 +13,7 @@ export type ChangeCookingTimeProps = {
 
 export function ChangeCookingTime(props: ChangeCookingTimeProps) {
 
-    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>()
+    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
 
     const options = appConfig.availableCookingTimes.map(cookingTime => {
         if (typeof(cookingTime) === 'number') {
