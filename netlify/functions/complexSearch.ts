@@ -22,6 +22,10 @@ const handler: Handler = async (event, context) => {
         }
     )
 
+    console.log({
+        results
+    })
+
     return {
         statusCode: 200,
         body: JSON.stringify({ results })
