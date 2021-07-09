@@ -1,4 +1,5 @@
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
+import { AppConfigContext } from "../../App";
 import { JBButton } from "../../inputs/Button/JBButton";
 import { RecipePreferences } from "../../types/RecipePreferences";
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";
@@ -18,10 +19,11 @@ export type OnboardingProps = {
  */
 export function Onboarding(props: OnboardingProps) {
 
-    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>(15)
+    const appConfig = useContext(AppConfigContext)
+
+    const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>(appConfig.initialCookingTime)
     const [diet, setDiet] = useState<RecipePreferences['diet']>()
     const [intolerances, dispatchIntolerances] = useReducer(intolerancesReducer, [])
-
 
     const onLastNext = () => {
         if (props.onSubmit !== undefined) {

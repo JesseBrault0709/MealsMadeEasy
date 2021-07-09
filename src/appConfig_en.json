@@ -2,21 +2,25 @@
     "availableCookingTimes": [
         "No Limit", 15, 30, 45, 60
     ],
+    "initialCookingTime": 15,
+
     "availableDiets": [
         "Vegan", "Vegetarian",
         "Ketogenic", "Pescetarian",
         "Paleo", "Whole30"
     ],
+
     "availableIntolerances": [
         "Dairy", "Egg",
         "Gluten", "Grain",
         "Peanut", "Seafood",
         "Wheat"
     ],
-    "initialCookingTimeIndex": 1,
+
     "meals": [
         "Breakfast", "Lunch", "Dinner"
     ],
+
     "recipeListTabs": [
         {
             "name": "Main Course",
@@ -31,5 +35,6 @@
             "type": "breakfast"
         }
     ],
+    
     "recipeListLimit": 6
 }
