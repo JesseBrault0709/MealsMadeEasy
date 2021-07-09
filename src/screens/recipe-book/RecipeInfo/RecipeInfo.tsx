@@ -72,15 +72,21 @@ export function RecipeInfo(props: RecipeInfoProps) {
                         ''
                 }
 
-                {showModal ? <AddToMealPlan onSubmit={(meal, date) => {
-                    setShowModal(false)
-                    dispatch(addRecipeToMealPlan({
-                        date,
-                        mealName: meal,
-                        recipe
-                    }))
-                    dispatch(setHomeScreen({ screen: 'Planner' }))
-                }}/> : ''}
+                {
+                    showModal ? 
+                        <AddToMealPlan 
+                            onSubmit={(meal, date) => {
+                                setShowModal(false)
+                                dispatch(addRecipeToMealPlan({
+                                    date,
+                                    mealName: meal,
+                                    recipe
+                                }))
+                                dispatch(setHomeScreen({ screen: 'Planner' }))
+                            }}
+                            onCancel={() => setShowModal(false)}
+                        /> : ''
+                }
 
             </>
         } else if (status === 'error') {

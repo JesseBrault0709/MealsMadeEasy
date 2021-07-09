@@ -14,6 +14,7 @@ import { AppConfigContext } from '../../App'
 
 export type AddToMealPlanProps = {
     onSubmit: (meal: MealName, date: Date) => void
+    onCancel: () => void
 }
 
 export function AddToMealPlan(props: AddToMealPlanProps) {
@@ -77,7 +78,13 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
                 </div>
 
                 <div className="add-to-meal-plan-buttons">
-                    <JBButton variant="outline" style={{ width: '40%' }}>Cancel</JBButton>
+                    <JBButton 
+                        variant="outline" 
+                        style={{ width: '40%' }}
+                        onClick={props.onCancel}
+                    >
+                        Cancel
+                    </JBButton>
 
                     <JBButton variant="primary" style={{ width: '40%' }} onClick={() => {
                         if (selectedMeal !== undefined) {
