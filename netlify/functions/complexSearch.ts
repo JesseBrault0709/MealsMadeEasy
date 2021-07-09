@@ -12,7 +12,7 @@ const handler: Handler = async (event, context) => {
 
     const apiKey = process.env.SPOONACULAR_KEY
 
-    const results = await axios.get(
+    const response = await axios.get(
         calcUrl('/recipes/complexSearch'),
         {
             headers: {
@@ -23,12 +23,12 @@ const handler: Handler = async (event, context) => {
     )
 
     console.log({
-        results
+        response
     })
 
     return {
         statusCode: 200,
-        body: JSON.stringify({ results })
+        body: JSON.stringify({ results: response.data.results })
     }
 }
 
