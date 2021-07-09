@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { RecipePreferences } from './types/RecipePreferences';
 import { Sweet } from "./screens/Sweet/Sweet";
@@ -19,6 +19,8 @@ export const DEV_MODE: boolean = true
 
 /** The possible screens */
 export type AppScreen = "Splash" | "Onboarding" | "Sweet" | "Home"
+
+export const AppConfigContext = React.createContext(appConfig)
 
 function App() {
 
@@ -73,7 +75,9 @@ function App() {
 
     return <div className="App">
         <Provider store={store}>
-            {getScreen()}
+            <AppConfigContext.Provider value={appConfig}>
+                {getScreen()}
+            </AppConfigContext.Provider>
         </Provider>
     </div>
 

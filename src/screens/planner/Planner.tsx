@@ -7,11 +7,12 @@ import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { appConfig } from '../../appConfig'
 import { fetchFullRecipe } from '../../slices/recipeInfo'
 import { setRecipeBookScreen } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
 import { removeRecipeFromMealPlan } from '../../slices/dayMealPlans'
+import { useContext } from 'react'
+import { AppConfigContext } from '../../App'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -115,6 +116,8 @@ function DayRow(props: {
 
 export function Planner() {
 
+    const appConfig = useContext(AppConfigContext)
+    
     const dayMealPlans = useAppSelector(state => state.dayMealPlans.plans)
 
     const sorted = [...dayMealPlans]

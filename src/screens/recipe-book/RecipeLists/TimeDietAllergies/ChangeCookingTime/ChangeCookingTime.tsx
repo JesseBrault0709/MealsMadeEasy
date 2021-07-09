@@ -1,10 +1,10 @@
 import './ChangeCookingTime.css'
 
-import { useState } from "react";
-import { appConfig } from "../../../../../appConfig";
+import { useContext, useState } from "react";
 import { ClockSlider } from "../../../../../inputs/ClockSlider/ClockSlider";
 import { RecipePreferences } from "../../../../../types/RecipePreferences";
 import { ChangeModal } from '../ChangeModal/ChangeModal';
+import { AppConfigContext } from '../../../../../App';
 
 export type ChangeCookingTimeProps = {
     onSubmit: (newCookingTime: RecipePreferences['cookingTime']) => void
@@ -12,6 +12,8 @@ export type ChangeCookingTimeProps = {
 }
 
 export function ChangeCookingTime(props: ChangeCookingTimeProps) {
+
+    const appConfig = useContext(AppConfigContext)
 
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>("No Limit")
 

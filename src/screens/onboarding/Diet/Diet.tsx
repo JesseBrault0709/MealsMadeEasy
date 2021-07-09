@@ -3,15 +3,18 @@ import './Diet.css'
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
 import { SPDiet } from "../../../client/spoonacularTypes"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { groupIntoPairs } from "../../../util"
-import { appConfig } from '../../../appConfig'
+import { AppConfigContext } from '../../../App'
 
 export type DietInputProps = {
     renderButton: (diet: SPDiet) => React.ReactNode
 }
 
 export function DietInput(props: DietInputProps) {
+
+    const appConfig = useContext(AppConfigContext)
+    
     return <div className="diet-buttons">
         {
             groupIntoPairs(appConfig.availableDiets).map((pair, index) => {

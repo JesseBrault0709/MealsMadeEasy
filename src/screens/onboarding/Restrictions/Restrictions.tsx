@@ -3,9 +3,9 @@ import './Restrictions.css'
 import { OnboardingScreen } from "../OnboardingScreen/OnboardingScreen"
 import { JBButton } from "../../../inputs/Button/JBButton"
 import { groupIntoPairs } from "../../../util"
-import React from 'react'
+import React, { useContext } from 'react'
 import { SPIntolerance } from '../../../client/spoonacularTypes'
-import { appConfig } from '../../../appConfig'
+import { AppConfigContext } from '../../../App'
 
 export type IntolerancesInputProps = {
     renderButton: (intolerance: SPIntolerance) => React.ReactNode
@@ -13,6 +13,8 @@ export type IntolerancesInputProps = {
 
 export function IntolerancesInput(props: IntolerancesInputProps) {
 
+    const appConfig = useContext(AppConfigContext)
+    
     const buttons = appConfig.availableIntolerances.map(props.renderButton)
 
     return <div className="restrictions-buttons">
