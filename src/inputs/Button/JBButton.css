@@ -12,6 +12,10 @@
     padding: 0px 18px;
 }
 
+.jb-button:focus {
+    outline: none;
+}
+
 .primary {
     background-color: #D95D3B;
     color: #111111;
