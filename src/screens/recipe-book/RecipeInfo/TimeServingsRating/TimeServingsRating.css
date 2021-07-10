@@ -14,6 +14,6 @@
     align-items: center;
 }
 
-.time *, .servings * {
-    padding: 0px 2px;
+.time span, .servings span {
+    margin-left: 2px;
 }

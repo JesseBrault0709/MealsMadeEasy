@@ -36,10 +36,15 @@ export function RecipeBook() {
 
     } else if (currentScreen === "Recipe Info") {
 
-        return <ScreenWithTitleAndNav title="">
-            <RecipeInfo 
-                onAddToMealPlan={() => { }}
-            />
+        return <ScreenWithTitleAndNav 
+                title=""
+                onBackButtonClick={() => {
+                    dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+                }}
+            >
+                <RecipeInfo 
+                    onAddToMealPlan={() => { }}
+                />
         </ScreenWithTitleAndNav>
 
     } else {
