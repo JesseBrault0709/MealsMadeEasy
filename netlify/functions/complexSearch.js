@@ -41,6 +41,9 @@ const doRequest = async (endPoint, event) => {
 
     return {
         statusCode: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         body: JSON.stringify(data)
     }
 }
