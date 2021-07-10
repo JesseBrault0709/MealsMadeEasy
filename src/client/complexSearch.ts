@@ -1,9 +1,8 @@
 import axios from 'axios'
 import { devLog } from '../util';
-import { rapidAPIRequestHeaders, RapidAPIResponseHeaders } from './rapidAPIHeaders';
 import type { RecipeOverview } from "./RecipeOverview";
 import type { SPDiet, SPIntolerance, SPType } from './spoonacularTypes'
-import { calcUrl, logRemainingHeaders } from './util';
+import { calcUrl } from './util';
 
 export type ComplexSearchParams = {
     maxReadyTime?: number,
@@ -31,10 +30,9 @@ export async function getByComplexSearch(
     })
     
     return await axios.get<Result>(
-        calcUrl('/recipes/complexSearch'),
-        { params, headers: { ...rapidAPIRequestHeaders } }
+        calcUrl('/complexSearch'),
+        { params }
     ).then(response => {
-        logRemainingHeaders(response.headers as RapidAPIResponseHeaders)
         return response.data.results
     })
 }

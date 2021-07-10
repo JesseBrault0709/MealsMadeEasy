@@ -1,13 +1,5 @@
-import { rapidAPIHost, RapidAPIResponseHeaders } from "./rapidAPIHeaders"
+const host = "sharp-beaver-8b4795.netlify.app/.netlify/functions"
 
 export function calcUrl(endPoint: string): string {
-    return `https://${rapidAPIHost}${endPoint}`
-}
-
-export function logRemainingHeaders(headers: RapidAPIResponseHeaders) {
-    const { 
-        "x-ratelimit-requests-remaining": requestsRemaining,
-        "x-ratelimit-results-remaining": resultsRemaining
-    } = headers
-    console.log({ requestsRemaining, resultsRemaining})
+    return `https://${host}${endPoint}`
 }
