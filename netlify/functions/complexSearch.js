@@ -1,20 +1,12 @@
-const axios = require('axios').default
+const axios = require('axios')
 
 const rapidAPIHost = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 
-export function calcUrl(endPoint) {
+function calcUrl(endPoint) {
     return `https://${rapidAPIHost}${endPoint}`
 }
 
-export function logRemainingHeaders(headers) {
-    const { 
-        "x-ratelimit-requests-remaining": requestsRemaining,
-        "x-ratelimit-results-remaining": resultsRemaining
-    } = headers
-    console.log({ requestsRemaining, resultsRemaining})
-}
-
-export const doRequest = async (endPoint, event) => {
+const doRequest = async (endPoint, event) => {
 
     const { queryStringParameters } = event
 
@@ -48,13 +40,11 @@ export const doRequest = async (endPoint, event) => {
     })
 
     return {
-        statusCode,
+        statusCode: 200,
         body: JSON.stringify(data)
     }
 }
 
-const handler = async event => {
+exports.handler = async event => {
     return doRequest('/recipes/complexSearch', event)
 }
-
-export { handler }
