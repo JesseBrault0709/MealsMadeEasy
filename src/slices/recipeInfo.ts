@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, SerializedError } from "@reduxjs/toolkit";
 import { FullRecipe } from "../client/FullRecipe";
 import { getRecipeInformation } from "../client/recipeInformation";
-import { RecipeOverview } from "../client/RecipeOverview";
 
 export type RecipeInfoState = {
     status: 'empty' | 'fetching' | 'success' | 'error',
@@ -11,7 +10,7 @@ export type RecipeInfoState = {
 
 export const fetchFullRecipe = createAsyncThunk(
     'recipeBookScreens/fetchCurrentRecipe', 
-    (recipe: RecipeOverview) => getRecipeInformation(recipe.id)
+    (recipeId: number) => getRecipeInformation(recipeId)
 )
 
 const initialState: RecipeInfoState = {

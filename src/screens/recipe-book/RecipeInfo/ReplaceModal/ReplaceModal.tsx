@@ -1,17 +1,19 @@
 import './ReplaceModal.css'
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getModalEffect } from "../../../../util"
 import { CenterModal } from "../../../common/CenterModal/CenterModal"
 import ReactDOM from 'react-dom'
 import { JBButton } from '../../../../inputs/Button/JBButton'
 import { MealName } from '../../../../types/MealName'
+import { RecipeOverview } from '../../../../client/RecipeOverview'
+import { getRecipeInformation } from '../../../../client/recipeInformation'
 
 export type ReplaceRecipeModalProps = {
     targetDate: Date,
     targetMeal: MealName,
 
-    oldRecipeTitle: string
+    oldRecipeId: number
     newRecipeTitle: string
 
     onSubmit: () => void,
@@ -19,6 +21,13 @@ export type ReplaceRecipeModalProps = {
 }
 
 export function ReplaceRecipeModal(props: ReplaceRecipeModalProps) {
+
+    const [oldRecipe, setOldRecipe] = useState<RecipeOverview>()
+
+    useEffect(() => {
+        getRecipeInformation(props.oldRecipeId)
+            .then(setOldRecipe)
+    }, [props.oldRecipeId])
 
     const modalEffect = getModalEffect()
 
@@ -36,7 +45,7 @@ export function ReplaceRecipeModal(props: ReplaceRecipeModalProps) {
                 <h3>Replace</h3>
 
                 <p>
-                    Do you wish to replace '{props.oldRecipeTitle}' on{' '}
+                    Do you wish to replace '{oldRecipe?.title}' on{' '}
                     {props.targetDate.getMonth()}/{props.targetDate.getDate()}{' '}
                     — {props.targetMeal} with '{props.newRecipeTitle}'?
                 </p>

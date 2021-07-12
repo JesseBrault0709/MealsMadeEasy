@@ -21,7 +21,7 @@ export function RecipeBook() {
 
     const currentScreen = useAppSelector(state => state.recipeBook.currentScreen)
     const onRecipeCardClick = (recipe: RecipeOverview) => {
-        dispatch(fetchFullRecipe(recipe))
+        dispatch(fetchFullRecipe(recipe.id))
         dispatch(setRecipeBookScreen({ screen: "Recipe Info" }))
     }
 

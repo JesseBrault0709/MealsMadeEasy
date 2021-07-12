@@ -1,9 +1,14 @@
-import { RecipeOverview } from '../client/RecipeOverview'
 import { MealName } from './MealName'
+
+export type RecipeSelection = {
+    selectionId: string,
+    dateAdded: Date,
+    recipeId: number
+}
 
 export type MealPlan = {
     name: MealName,
-    recipes: ReadonlyArray<RecipeOverview>
+    recipeSelections: ReadonlyArray<RecipeSelection>
 }
 
 export type DayMealPlan = {

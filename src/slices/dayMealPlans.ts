@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { appConfig } from "../appConfig";
 import { RecipeOverview } from "../client/RecipeOverview";
-import { DayMealPlan, isPlanForDate, MealPlan } from "../types/DayMealPlan";
+import { DayMealPlan, isPlanForDate, MealPlan, RecipeSelection } from "../types/DayMealPlan";
 import { MealName } from "../types/MealName";
+import { v1 as uuid } from 'uuid'
 
 export type DayMealPlansState = {
     plans: ReadonlyArray<DayMealPlan>
@@ -16,7 +17,7 @@ const initialState: DayMealPlansState = {
             date,
             meals: appConfig.meals.map(mealName => ({
                 name: mealName,
-                recipes: []
+                recipeSelections: []
             }))
         }
     })
@@ -49,48 +50,60 @@ export const dayMealPlansSlice = createSlice({
 
         addRecipeToMealPlan: (
             state, 
-            action: PayloadAction<{ date: Date, mealName: MealName, recipe: RecipeOverview }>
+            action: PayloadAction<{ 
+                targetDate: Date, 
+                targetMeal: MealName,
+                recipe: RecipeOverview
+            }>
         ) => {
-            const dayMealPlan = state.plans.find(isPlanForDate(action.payload.date))
+            const dayMealPlan = state.plans.find(isPlanForDate(action.payload.targetDate))
             
             if (dayMealPlan === undefined) {
-                throw new Error(`there is no dayMealPlan for date ${action.payload.date}`)
+                throw new Error(`there is no dayMealPlan for date ${action.payload.targetDate}`)
             }
 
-            const meal = dayMealPlan.meals.find(mealPlan => mealPlan.name === action.payload.mealName)
+            const meal = dayMealPlan.meals.find(mealPlan => mealPlan.name === action.payload.targetMeal)
         
             if (meal === undefined) {
-                throw new Error(`there is no meal named ${action.payload.mealName} in dayMealPlan for date ${action.payload.date}`)
+                throw new Error(`there is no meal named ${action.payload.targetMeal} in dayMealPlan for date ${action.payload.targetDate}`)
             }
 
-            meal.recipes.push(action.payload.recipe)
+            meal.recipeSelections.push({
+                selectionId: uuid(),
+                dateAdded: new Date(),
+                recipeId: action.payload.recipe.id
+            })
         },
 
-        removeRecipeFromMealPlan: (
+        removeSelectionFromMealPlan: (
             state,
             action: PayloadAction<{
                 date: Date,
                 mealName: MealName,
-                recipe: RecipeOverview
+                selection: RecipeSelection
             }>
         ) => {
             const mealPlan = getMealPlan(state, action.payload.date, action.payload.mealName)
-            mealPlan.recipes = mealPlan.recipes.filter(recipe => recipe.id !== action.payload.recipe.id)
+            mealPlan.recipeSelections = mealPlan.recipeSelections.filter(selection => selection.selectionId !== action.payload.selection.selectionId)
         },
 
-        replaceRecipeInMealPlan: (
+        replaceSelectionInMealPlan: (
             state,
             action: PayloadAction<{
-                forDate: Date,
-                forMealName: MealName,
-                oldRecipe: RecipeOverview,
+                targetDate: Date,
+                targetMealName: MealName,
+                targetSelection: RecipeSelection,
                 newRecipe: RecipeOverview
             }>
         ) => {
-            const mealPlan = getMealPlan(state, action.payload.forDate, action.payload.forMealName)
+            const mealPlan = getMealPlan(state, action.payload.targetDate, action.payload.targetMealName)
 
-            mealPlan.recipes = mealPlan.recipes.map(recipe =>
-                recipe.id === action.payload.oldRecipe.id ? action.payload.newRecipe : recipe
+            mealPlan.recipeSelections = mealPlan.recipeSelections.map(selection =>
+                selection.selectionId === action.payload.targetSelection.selectionId ? {
+                    selectionId: uuid(),
+                    dateAdded: new Date(),
+                    recipeId: action.payload.newRecipe.id
+                } : selection
             )
 
         }
@@ -100,6 +113,6 @@ export const dayMealPlansSlice = createSlice({
 
 export const { 
     addRecipeToMealPlan,
-    removeRecipeFromMealPlan,
-    replaceRecipeInMealPlan
+    removeSelectionFromMealPlan,
+    replaceSelectionInMealPlan
 } = dayMealPlansSlice.actions

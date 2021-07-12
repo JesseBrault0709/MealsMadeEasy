@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RecipeOverview } from "../client/RecipeOverview"
+import { RecipeSelection } from "../types/DayMealPlan"
 import { MealName } from "../types/MealName"
 
 type SelectionModeState = {
@@ -7,7 +7,7 @@ type SelectionModeState = {
     target?: {
         date: Date,
         meal: MealName,
-        recipe: RecipeOverview
+        selection: RecipeSelection
     }
 }
 
@@ -19,30 +19,32 @@ export const selectionModeSlice = createSlice({
     name: 'selectionMode',
     initialState,
     reducers: {
+
         setToAddMode: (
             state,
             action: PayloadAction<{ mode: 'add' }>
         ) => {
             state.mode = action.payload.mode
         },
+        
         setToReplaceMode: (
             state,
             action: PayloadAction<{
                 mode: 'replace',
                 targetDate: Date,
                 targetMeal: MealName,
-                targetRecipe: RecipeOverview
+                targetSelection: RecipeSelection
             }>
         ) => {
             const {
-                mode, targetDate, targetMeal, targetRecipe
+                mode, targetDate, targetMeal, targetSelection
             } = action.payload
 
             state.mode = mode
             state.target = {
                 date: targetDate,
                 meal: targetMeal,
-                recipe: targetRecipe
+                selection: targetSelection
             }
         }
     }

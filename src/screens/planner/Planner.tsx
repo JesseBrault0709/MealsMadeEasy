@@ -1,7 +1,6 @@
 import './Planner.css'
 
-import { RecipeOverview } from '../../client/RecipeOverview'
-import { DayMealPlan } from '../../types/DayMealPlan'
+import { DayMealPlan, RecipeSelection } from '../../types/DayMealPlan'
 import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
@@ -10,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 import { fetchFullRecipe } from '../../slices/recipeInfo'
 import { setRecipeBookScreen } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
-import { removeRecipeFromMealPlan } from '../../slices/dayMealPlans'
+import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext } from 'react'
 import { AppConfigContext } from '../../App'
 import { setToReplaceMode } from '../../slices/selectionMode'
@@ -41,36 +40,37 @@ function formatDate(date: Date) {
 }
 
 function MealCol(props: {
-    recipes?: ReadonlyArray<RecipeOverview>,
+    selections?: ReadonlyArray<RecipeSelection>,
     accented?: boolean,
     mealCardMenuPlacement: MealCardMenuProps['variant'],
-    onRemoveRecipe?: (recipe: RecipeOverview) => void,
-    onReplaceRecipe?: (recipe: RecipeOverview) => void
+    onRemoveRecipe?: (selection: RecipeSelection) => void,
+    onReplaceRecipe?: (selection: RecipeSelection) => void
 }) {
 
     const dispatch = useAppDispatch()
 
-    if (props.recipes !== undefined && props.recipes.length !== 0) {
+    if (props.selections !== undefined && props.selections.length !== 0) {
         return <div className="meal-col">
             {
-                props.recipes.map(recipe => <MealCard 
+                props.selections.map(selection => <MealCard 
                     variant={props.accented ? "accented" : "normal"} 
-                    title={recipe.title}
+                    
                     menuPlacement={props.mealCardMenuPlacement}
+                    recipeId={selection.recipeId}
 
                     onViewRecipe={() => {
-                        dispatch(fetchFullRecipe(recipe))
+                        dispatch(fetchFullRecipe(selection.recipeId))
                         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
                         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
                     }}
                     onReplaceRecipe={() => {
                         if (props.onReplaceRecipe !== undefined) {
-                            props.onReplaceRecipe(recipe)
+                            props.onReplaceRecipe(selection)
                         }
                     }}
                     onRemoveRecipe={() => {
                         if (props.onRemoveRecipe !== undefined) {
-                            props.onRemoveRecipe(recipe)
+                            props.onRemoveRecipe(selection)
                         }
                     }}
                 />)
@@ -107,24 +107,24 @@ function DayRow(props: {
         {
             props.meals.map((meal, index) => <MealCol 
                 
-                recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
+                selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
                 
-                onRemoveRecipe={(recipe: RecipeOverview) => {
-                    dispatch(removeRecipeFromMealPlan({
+                onRemoveRecipe={(selection: RecipeSelection) => {
+                    dispatch(removeSelectionFromMealPlan({
                         date: props.dayMealPlan.date,
                         mealName: meal,
-                        recipe
+                        selection
                     }))
                 }}
 
-                onReplaceRecipe={recipe => {
+                onReplaceRecipe={selection => {
                     dispatch(setToReplaceMode({
                         mode: 'replace',
                         targetDate: props.dayMealPlan.date,
                         targetMeal: meal,
-                        targetRecipe: recipe
+                        targetSelection: selection
                     }))
                     dispatch(setRecipeBookScreen({
                         screen: 'Recipe List'

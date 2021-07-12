@@ -9,7 +9,7 @@ import { JBButton } from '../../../inputs/Button/JBButton'
 import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { LoadingCircle } from '../../common/LoadingCircle/LoadingCircle'
-import { addRecipeToMealPlan, replaceRecipeInMealPlan } from '../../../slices/dayMealPlans'
+import { addRecipeToMealPlan, replaceSelectionInMealPlan } from '../../../slices/dayMealPlans'
 import { setToAddMode } from '../../../slices/selectionMode'
 import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
@@ -92,8 +92,8 @@ export function RecipeInfo() {
                             onSubmit={(meal, date) => {
                                 setShowAddModal(false)
                                 dispatch(addRecipeToMealPlan({
-                                    date,
-                                    mealName: meal,
+                                    targetDate: date,
+                                    targetMeal: meal,
                                     recipe
                                 }))
                                 // dispatch(setHomeScreen({ screen: 'Planner' }))
@@ -109,16 +109,16 @@ export function RecipeInfo() {
                             targetDate={selectionTarget!.date}
                             targetMeal={selectionTarget!.meal}
 
-                            oldRecipeTitle={selectionTarget!.recipe.title}
+                            oldRecipeId={selectionTarget!.selection.recipeId}
                             newRecipeTitle={recipe.title}
 
                             onCancel={() => setShowReplaceModal(false)}
                             onSubmit={() => {
                                 if (selectionTarget !== undefined) {
-                                    dispatch(replaceRecipeInMealPlan({
-                                        forDate: selectionTarget.date,
-                                        forMealName: selectionTarget.meal,
-                                        oldRecipe: selectionTarget.recipe,
+                                    dispatch(replaceSelectionInMealPlan({
+                                        targetDate: selectionTarget.date,
+                                        targetMealName: selectionTarget.meal,
+                                        targetSelection: selectionTarget.selection,
                                         newRecipe: recipe
                                     }))
                                     dispatch(setToAddMode({ mode: 'add' }))
