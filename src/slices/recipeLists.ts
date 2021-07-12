@@ -15,8 +15,9 @@ type RecipeListsState = {
         }>
     }>
     activeList?: string
-    activeListStatus: 'idle' | 'fetching' | 'error'
-    activeListError?: SerializedError
+
+    fetchStatus: 'idle' | 'fetching' | 'error'
+    fetchError?: SerializedError
 }
 
 const initialState: RecipeListsState = {
@@ -25,7 +26,7 @@ const initialState: RecipeListsState = {
         currentOffset: 0,
         recipesByOffset: []
     })),
-    activeListStatus: 'idle'
+    fetchStatus: 'idle'
 }
 
 /** Middleware thunk to retrieve recipes */
@@ -100,12 +101,12 @@ export const recipeListsSlice = createSlice({
             list.currentOffset += appConfig.recipeListLimit
         },
 
-        setActiveListStatus: (state, action: PayloadAction<{ status: RecipeListsState['activeListStatus'] }>) => {
-            state.activeListStatus = action.payload.status
+        setActiveListStatus: (state, action: PayloadAction<{ status: RecipeListsState['fetchStatus'] }>) => {
+            state.fetchStatus = action.payload.status
         },
 
         setActiveListError: (state, action: PayloadAction<{ error: SerializedError }>) => {
-            state.activeListError = action.payload.error
+            state.fetchError = action.payload.error
         },
 
         resetAllRecipes: state => {
@@ -119,12 +120,12 @@ export const recipeListsSlice = createSlice({
     extraReducers: builder => {
 
         builder.addCase(fetchRecipes.pending, state => {
-            state.activeListStatus = 'fetching'
+            state.fetchStatus = 'fetching'
         })
 
         builder.addCase(fetchRecipes.fulfilled, (state, action) => {
 
-            state.activeListStatus = 'idle'
+            state.fetchStatus = 'idle'
 
             if (action.payload !== undefined) {
                 const targetList = state.lists.find(list => list.name === action.payload!.listName) // because we checked in the if
@@ -140,8 +141,8 @@ export const recipeListsSlice = createSlice({
 
         builder.addCase(fetchRecipes.rejected, (state, action) => {
 
-            state.activeListStatus = 'error'
-            state.activeListError = action.error
+            state.fetchStatus = 'error'
+            state.fetchError = action.error
 
         })
 

@@ -17,8 +17,8 @@ export function RecipeList(props: RecipeListProps) {
 
     const dispatch = useAppDispatch()
 
-    const status = useAppSelector(state => state.recipeLists.activeListStatus)
-    const error = useAppSelector(state => state.recipeLists.activeListError)
+    const status = useAppSelector(state => state.recipeLists.fetchStatus)
+    const error = useAppSelector(state => state.recipeLists.fetchError)
 
     const recipes = useAppSelector(state => {
         const listState = state.recipeLists.lists.find(list => list.name === props.name)
