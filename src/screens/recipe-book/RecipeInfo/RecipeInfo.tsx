@@ -12,6 +12,7 @@ import { LoadingCircle } from '../../common/LoadingCircle/LoadingCircle'
 import { addRecipeToMealPlan, replaceRecipeInMealPlan } from '../../../slices/dayMealPlans'
 import { setHomeScreen } from '../../../slices/homeScreens'
 import { setToAddMode } from '../../../slices/selectionMode'
+import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 
 export function RecipeInfo() {
 
@@ -25,7 +26,8 @@ export function RecipeInfo() {
     const error = useAppSelector(state => state.recipeInfo.error)
 
     const [currentTab, setCurrentTab] = useState<'Ingredients' | 'Instructions'>('Ingredients')
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [showAddModal, setShowAddModal] = useState(false)
+    const [showReplaceModal, setShowReplaceModal] = useState(false)
 
     const getScreen = () => {
         if (status === 'empty') {
@@ -47,19 +49,9 @@ export function RecipeInfo() {
                 variant="primary"
                 onClick={() => {
                     if (selectionMode === 'add') {
-                        setShowModal(true)
+                        setShowAddModal(true)
                     } else {
-                        if (selectionTarget !== undefined) {
-                            dispatch(replaceRecipeInMealPlan({
-                                forDate: selectionTarget.date,
-                                forMealName: selectionTarget.meal,
-                                oldRecipe: selectionTarget.recipe,
-                                newRecipe: recipe
-                            }))
-                            dispatch(setToAddMode({ mode: 'add' }))
-                        } else {
-                            throw new Error(`we are in replace mode but selectionTarget is undefined`)
-                        }
+                        setShowReplaceModal(true)
                     }
                 }}
             >Add to Meal Plan</JBButton>
@@ -85,10 +77,10 @@ export function RecipeInfo() {
                 }
 
                 {
-                    showModal ? 
+                    showAddModal ? 
                         <AddToMealPlan 
                             onSubmit={(meal, date) => {
-                                setShowModal(false)
+                                setShowAddModal(false)
                                 dispatch(addRecipeToMealPlan({
                                     date,
                                     mealName: meal,
@@ -96,7 +88,34 @@ export function RecipeInfo() {
                                 }))
                                 dispatch(setHomeScreen({ screen: 'Planner' }))
                             }}
-                            onCancel={() => setShowModal(false)}
+                            onCancel={() => setShowAddModal(false)}
+                        /> : ''
+                }
+
+                {
+                    showReplaceModal ?
+                        <ReplaceRecipeModal
+                            targetDate={selectionTarget!.date}
+                            targetMeal={selectionTarget!.meal}
+
+                            oldRecipeTitle={selectionTarget!.recipe.title}
+                            newRecipeTitle={recipe.title}
+
+                            onCancel={() => setShowReplaceModal(false)}
+                            onSubmit={() => {
+                                if (selectionTarget !== undefined) {
+                                    dispatch(replaceRecipeInMealPlan({
+                                        forDate: selectionTarget.date,
+                                        forMealName: selectionTarget.meal,
+                                        oldRecipe: selectionTarget.recipe,
+                                        newRecipe: recipe
+                                    }))
+                                    dispatch(setToAddMode({ mode: 'add' }))
+                                    setShowReplaceModal(false)
+                                } else {
+                                    throw new Error(`we are in replace mode but selectionTarget is undefined`)
+                                }
+                            }}
                         /> : ''
                 }
 
