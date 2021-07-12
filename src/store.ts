@@ -12,6 +12,7 @@ import { homeScreensSlice } from "./slices/homeScreens";
 import { recipeBookSlice } from "./slices/recipeBook";
 import { recipeInfoSlice } from "./slices/recipeInfo";
 import { dayMealPlansSlice } from "./slices/dayMealPlans";
+import { selectionModeSlice } from "./slices/selectionMode";
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
         recipeInfo: recipeInfoSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         recipePreferences: recipePreferencesSlice.reducer,
-        screens: appScreensSlice.reducer
+        screens: appScreensSlice.reducer,
+        selectionMode: selectionModeSlice.reducer
     },
     middleware: getDefaultMiddleware({
         serializableCheck: false

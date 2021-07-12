@@ -76,9 +76,30 @@ export const dayMealPlansSlice = createSlice({
         ) => {
             const mealPlan = getMealPlan(state, action.payload.date, action.payload.mealName)
             mealPlan.recipes = mealPlan.recipes.filter(recipe => recipe.id !== action.payload.recipe.id)
+        },
+
+        replaceRecipeInMealPlan: (
+            state,
+            action: PayloadAction<{
+                forDate: Date,
+                forMealName: MealName,
+                oldRecipe: RecipeOverview,
+                newRecipe: RecipeOverview
+            }>
+        ) => {
+            const mealPlan = getMealPlan(state, action.payload.forDate, action.payload.forMealName)
+
+            mealPlan.recipes = mealPlan.recipes.map(recipe =>
+                recipe.id === action.payload.oldRecipe.id ? action.payload.newRecipe : recipe
+            )
+
         }
 
     }
 })
 
-export const { addRecipeToMealPlan, removeRecipeFromMealPlan } = dayMealPlansSlice.actions
+export const { 
+    addRecipeToMealPlan,
+    removeRecipeFromMealPlan,
+    replaceRecipeInMealPlan
+} = dayMealPlansSlice.actions

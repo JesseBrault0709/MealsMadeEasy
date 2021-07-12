@@ -42,9 +42,7 @@ export function RecipeBook() {
                     dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
                 }}
             >
-                <RecipeInfo 
-                    onAddToMealPlan={() => { }}
-                />
+                <RecipeInfo />
         </ScreenWithTitleAndNav>
 
     } else {

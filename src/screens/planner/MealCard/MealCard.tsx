@@ -7,8 +7,9 @@ export type MealCardProps = {
     variant: "accented" | "normal" | "empty",
     menuPlacement: MealCardMenuProps['variant'],
     title?: string,
-    onRecipeSelect?: () => void,
-    onRemoveRecipe?: () => void,
+    onViewRecipe?: MealCardMenuProps['onViewRecipe'],
+    onReplaceRecipe?: MealCardMenuProps['onReplaceRecipe'],
+    onRemoveRecipe?: MealCardMenuProps['onRemoveRecipe'],
 }
 
 export function MealCard(props: MealCardProps) {
@@ -27,17 +28,10 @@ export function MealCard(props: MealCardProps) {
         <MealCardMenu 
             show={showMenu}
             variant={props.menuPlacement}
-            onViewRecipe={() => {
-                if (props.onRecipeSelect !== undefined) {
-                    props.onRecipeSelect()
-                }
-            }}
-            onRemoveRecipe={() => {
-                if (props.onRemoveRecipe !== undefined) {
-                    props.onRemoveRecipe()
-                    setShowMenu(false)
-                }
-            }}
+
+            onViewRecipe={props.onViewRecipe}
+            onReplaceRecipe={props.onReplaceRecipe}
+            onRemoveRecipe={props.onRemoveRecipe}
         />
     </div>
 }

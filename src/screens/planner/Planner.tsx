@@ -13,6 +13,7 @@ import { setHomeScreen } from '../../slices/homeScreens'
 import { removeRecipeFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext } from 'react'
 import { AppConfigContext } from '../../App'
+import { setToReplaceMode } from '../../slices/selectionMode'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -43,7 +44,8 @@ function MealCol(props: {
     recipes?: ReadonlyArray<RecipeOverview>,
     accented?: boolean,
     mealCardMenuPlacement: MealCardMenuProps['variant'],
-    onRemoveRecipe?: (recipe: RecipeOverview) => void
+    onRemoveRecipe?: (recipe: RecipeOverview) => void,
+    onReplaceRecipe?: (recipe: RecipeOverview) => void
 }) {
 
     const dispatch = useAppDispatch()
@@ -54,17 +56,23 @@ function MealCol(props: {
                 props.recipes.map(recipe => <MealCard 
                     variant={props.accented ? "accented" : "normal"} 
                     title={recipe.title}
-                    onRecipeSelect={() => {
+                    menuPlacement={props.mealCardMenuPlacement}
+
+                    onViewRecipe={() => {
                         dispatch(fetchFullRecipe(recipe))
                         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
                         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+                    }}
+                    onReplaceRecipe={() => {
+                        if (props.onReplaceRecipe !== undefined) {
+                            props.onReplaceRecipe(recipe)
+                        }
                     }}
                     onRemoveRecipe={() => {
                         if (props.onRemoveRecipe !== undefined) {
                             props.onRemoveRecipe(recipe)
                         }
                     }}
-                    menuPlacement={props.mealCardMenuPlacement}
                 />)
             }
         </div>
@@ -98,9 +106,11 @@ function DayRow(props: {
 
         {
             props.meals.map((meal, index) => <MealCol 
+                
                 recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
                 accented={accented}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
+                
                 onRemoveRecipe={(recipe: RecipeOverview) => {
                     dispatch(removeRecipeFromMealPlan({
                         date: props.dayMealPlan.date,
@@ -108,6 +118,22 @@ function DayRow(props: {
                         recipe
                     }))
                 }}
+
+                onReplaceRecipe={recipe => {
+                    dispatch(setToReplaceMode({
+                        mode: 'replace',
+                        targetDate: props.dayMealPlan.date,
+                        targetMeal: meal,
+                        targetRecipe: recipe
+                    }))
+                    dispatch(setRecipeBookScreen({
+                        screen: 'Recipe List'
+                    }))
+                    dispatch(setHomeScreen({
+                        screen: 'Recipe Book'
+                    }))
+                }}
+
             />)
         }
         

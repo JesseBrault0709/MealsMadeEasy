@@ -1,26 +1,24 @@
 import './RecipeInfo.css'
 
 import { useState } from 'react'
-import { FullRecipe } from '../../../client/FullRecipe'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { IngredientsTab } from './IngredientsTab/IngredientsTab'
 import { InstructionsTab } from './InstructionsTab/InstructionsTab'
 import { JBButton } from '../../../inputs/Button/JBButton'
 import { AddToMealPlan } from '../../addToMealPlan/AddToMealPlan'
-import { MealName } from '../../../types/MealName'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import { LoadingCircle } from '../../common/LoadingCircle/LoadingCircle'
-import { addRecipeToMealPlan } from '../../../slices/dayMealPlans'
+import { addRecipeToMealPlan, replaceRecipeInMealPlan } from '../../../slices/dayMealPlans'
 import { setHomeScreen } from '../../../slices/homeScreens'
+import { setToAddMode } from '../../../slices/selectionMode'
 
-export type RecipeInfoProps = {
-    onAddToMealPlan?: (meal: MealName, date: Date, recipe: FullRecipe) => void
-}
-
-export function RecipeInfo(props: RecipeInfoProps) {
+export function RecipeInfo() {
 
     const dispatch = useAppDispatch()
+
+    const selectionMode = useAppSelector(state => state.selectionMode.mode)
+    const selectionTarget = useAppSelector(state => state.selectionMode.target)
 
     const status = useAppSelector(state => state.recipeInfo.status)
     const recipe = useAppSelector(state => state.recipeInfo.recipe)
@@ -48,7 +46,21 @@ export function RecipeInfo(props: RecipeInfoProps) {
             const getAddToMealPlanButton = () => <JBButton
                 variant="primary"
                 onClick={() => {
-                    setShowModal(true)
+                    if (selectionMode === 'add') {
+                        setShowModal(true)
+                    } else {
+                        if (selectionTarget !== undefined) {
+                            dispatch(replaceRecipeInMealPlan({
+                                forDate: selectionTarget.date,
+                                forMealName: selectionTarget.meal,
+                                oldRecipe: selectionTarget.recipe,
+                                newRecipe: recipe
+                            }))
+                            dispatch(setToAddMode({ mode: 'add' }))
+                        } else {
+                            throw new Error(`we are in replace mode but selectionTarget is undefined`)
+                        }
+                    }
                 }}
             >Add to Meal Plan</JBButton>
 
