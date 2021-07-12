@@ -1,6 +1,6 @@
 import './RecipeInfo.css'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { IngredientsTab } from './IngredientsTab/IngredientsTab'
@@ -13,6 +13,7 @@ import { addRecipeToMealPlan, replaceRecipeInMealPlan } from '../../../slices/da
 import { setHomeScreen } from '../../../slices/homeScreens'
 import { setToAddMode } from '../../../slices/selectionMode'
 import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
+import { AddedModal } from './AddedModal/AddedModal'
 
 export function RecipeInfo() {
 
@@ -26,8 +27,18 @@ export function RecipeInfo() {
     const error = useAppSelector(state => state.recipeInfo.error)
 
     const [currentTab, setCurrentTab] = useState<'Ingredients' | 'Instructions'>('Ingredients')
+    
     const [showAddModal, setShowAddModal] = useState(false)
     const [showReplaceModal, setShowReplaceModal] = useState(false)
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+
+    useEffect(() => {
+        if (showSuccessModal) {
+            setTimeout(() => {
+                setShowSuccessModal(false)
+            }, 1500)
+        }
+    }, [showSuccessModal])
 
     const getScreen = () => {
         if (status === 'empty') {
@@ -86,7 +97,8 @@ export function RecipeInfo() {
                                     mealName: meal,
                                     recipe
                                 }))
-                                dispatch(setHomeScreen({ screen: 'Planner' }))
+                                // dispatch(setHomeScreen({ screen: 'Planner' }))
+                                setShowSuccessModal(true)
                             }}
                             onCancel={() => setShowAddModal(false)}
                         /> : ''
@@ -117,6 +129,10 @@ export function RecipeInfo() {
                                 }
                             }}
                         /> : ''
+                }
+
+                {
+                    showSuccessModal ? <AddedModal /> : ''
                 }
 
             </>
