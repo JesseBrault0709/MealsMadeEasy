@@ -6,7 +6,6 @@ import { CenterModal } from "../../../common/CenterModal/CenterModal"
 import ReactDOM from 'react-dom'
 import { JBButton } from '../../../../inputs/Button/JBButton'
 import { MealName } from '../../../../types/MealName'
-import { RecipeOverview } from '../../../../client/RecipeOverview'
 
 export type ReplaceRecipeModalProps = {
     targetDate: Date,
