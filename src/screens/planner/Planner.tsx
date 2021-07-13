@@ -3,7 +3,7 @@ import './Planner.css'
 import { DayMealPlan, RecipeSelection } from '../../types/DayMealPlan'
 import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
-import { MealCard } from './MealCard/MealCard'
+import { EmptyMealCard, MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
@@ -79,7 +79,7 @@ function MealCol(props: {
         </div>
     } else {
         return <div className="meal-col">
-            <MealCard variant="empty" menuPlacement={props.mealCardMenuPlacement} />
+            <EmptyMealCard />
         </div>
     }
 
