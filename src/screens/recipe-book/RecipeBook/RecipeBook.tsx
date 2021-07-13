@@ -10,8 +10,7 @@ import { RecipeLists } from '../RecipeLists/RecipeLists'
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
 import { RecipeOverview } from "../../../client/RecipeOverview"
 import { useAppDispatch, useAppSelector } from "../../../hooks"
-import { setRecipeBookScreen } from "../../../slices/recipeBook"
-import { fetchFullRecipe } from "../../../slices/recipeInfo"
+import { setRecipeBookScreen, setRecipeInfoId } from "../../../slices/recipeBook"
 
 export type RecipeBookScreen = "Recipe List" | "Recipe Info"
 
@@ -20,8 +19,10 @@ export function RecipeBook() {
     const dispatch = useAppDispatch()
 
     const currentScreen = useAppSelector(state => state.recipeBook.currentScreen)
+    const recipeInfoId = useAppSelector(state => state.recipeBook.recipeInfoId)
+    
     const onRecipeCardClick = (recipe: RecipeOverview) => {
-        dispatch(fetchFullRecipe(recipe.id))
+        dispatch(setRecipeInfoId({ id: recipe.id }))
         dispatch(setRecipeBookScreen({ screen: "Recipe Info" }))
     }
 
@@ -36,13 +37,17 @@ export function RecipeBook() {
 
     } else if (currentScreen === "Recipe Info") {
 
+        if (recipeInfoId === undefined) {
+            throw new Error(`current screen is 'Recipe Info' but recipeInfoId is undefined`)
+        }
+
         return <ScreenWithTitleAndNav 
                 title=""
                 onBackButtonClick={() => {
                     dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
                 }}
             >
-                <RecipeInfo />
+                <RecipeInfo recipeId={recipeInfoId} />
         </ScreenWithTitleAndNav>
 
     } else {

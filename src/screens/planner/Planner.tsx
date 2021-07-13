@@ -6,8 +6,7 @@ import { MealName } from '../../types/MealName'
 import { MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { fetchFullRecipe } from '../../slices/recipeInfo'
-import { setRecipeBookScreen } from '../../slices/recipeBook'
+import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext } from 'react'
@@ -59,9 +58,11 @@ function MealCol(props: {
                     recipeId={selection.recipeId}
 
                     onViewRecipe={() => {
-                        dispatch(fetchFullRecipe(selection.recipeId))
+
+                        dispatch(setRecipeInfoId({ id: selection.recipeId }))
                         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
                         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+
                     }}
                     onReplaceRecipe={() => {
                         if (props.onReplaceRecipe !== undefined) {
