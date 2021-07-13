@@ -28,7 +28,7 @@ export function MealCard(props: MealCardProps) {
                 setRecipe(recipe)
             })
         }
-    })
+    }, [props.recipeId])
 
     const onClick = () => {
         if (props.variant !== "empty") {
