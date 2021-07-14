@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { useFullRecipe } from '../../../slices/fullRecipes'
 import './MealCard.css'
@@ -20,13 +19,15 @@ export type MealCardProps = {
     onViewRecipe: MealCardMenuProps['onViewRecipe'],
     onReplaceRecipe: MealCardMenuProps['onReplaceRecipe'],
     onRemoveRecipe: MealCardMenuProps['onRemoveRecipe'],
+
+    showMenu: boolean
+
+    onClick: () => void
 }
 
 export function MealCard(props: MealCardProps) {
 
     const { recipe, fetchStatus, fetchError } = useFullRecipe(props.recipeId)
-
-    const [showMenu, setShowMenu] = useState(false)
 
     // calc classname
 
@@ -45,12 +46,12 @@ export function MealCard(props: MealCardProps) {
         }
 
         return <>
-            <div className={className} onClick={() => setShowMenu(!showMenu)}>
+            <div className={className} onClick={() => props.onClick()}>
                 {recipe.title}
             </div>
     
             <MealCardMenu
-                show={showMenu}
+                show={props.showMenu}
                 variant={props.menuPlacement}
     
                 onViewRecipe={props.onViewRecipe}

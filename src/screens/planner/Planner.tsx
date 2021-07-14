@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks'
 import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { AppConfigContext } from '../../App'
 import { setToReplaceMode } from '../../slices/selectionMode'
 
@@ -43,7 +43,10 @@ function MealCol(props: {
     accented?: boolean,
     mealCardMenuPlacement: MealCardMenuProps['variant'],
     onRemoveRecipe?: (selection: RecipeSelection) => void,
-    onReplaceRecipe?: (selection: RecipeSelection) => void
+    onReplaceRecipe?: (selection: RecipeSelection) => void,
+
+    menuOwner: RecipeSelection['selectionId'] | undefined,
+    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
 
     const dispatch = useAppDispatch()
@@ -54,7 +57,17 @@ function MealCol(props: {
                 props.selections.map(selection => <MealCard
 
                     key={selection.selectionId}
-                    
+
+                    onClick={() => {
+                        if (props.menuOwner === selection.selectionId) {
+                            props.setMenuOwner(undefined)
+                        } else {
+                            props.setMenuOwner(selection.selectionId)
+                        }
+                    }}
+
+                    showMenu={props.menuOwner === selection.selectionId}
+
                     variant={props.accented ? "accented" : "normal"} 
                     
                     menuPlacement={props.mealCardMenuPlacement}
@@ -92,6 +105,8 @@ function DayRow(props: {
     dayMealPlan: DayMealPlan,
     meals: ReadonlyArray<MealName>,
     variant: "light" | "dark",
+    menuOwner: RecipeSelection['selectionId'] | undefined
+    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
 
     const dispatch = useAppDispatch()
@@ -113,6 +128,9 @@ function DayRow(props: {
             props.meals.map((meal, index) => <MealCol 
                 
                 key={meal}
+
+                menuOwner={props.menuOwner}
+                setMenuOwner={props.setMenuOwner}
 
                 selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
@@ -156,6 +174,8 @@ export function Planner() {
     const sorted = [...dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
+    const [menuOwner, setMenuOwner] = useState<RecipeSelection['selectionId']>()
+
     return <ScreenWithTitleAndNav title="Planner" subtitle="(Click on the card to view options)">
         <div className="planner">
 
@@ -173,6 +193,8 @@ export function Planner() {
                         dayMealPlan={dayMealPlan}
                         meals={appConfig.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
+                        menuOwner={menuOwner}
+                        setMenuOwner={setMenuOwner}
                     />
                 )
             }
