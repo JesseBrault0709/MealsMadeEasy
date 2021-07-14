@@ -17,11 +17,11 @@
     justify-content: space-between;
 }
 
-.meal-card-menu-left {
+.meal-card-menu-lower-left {
     margin-left: -25px;
 }
 
-.meal-card-menu-right {
+.meal-card-menu-lower-right {
     margin-left: 25px;
 }
 

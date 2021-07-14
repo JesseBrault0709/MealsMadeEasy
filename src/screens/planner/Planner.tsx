@@ -134,7 +134,7 @@ function DayRow(props: {
 
                 selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
-                mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
+                mealCardMenuPlacement={index === props.meals.length - 1 ? "lower-left" : "lower-right"}
                 
                 onRemoveRecipe={(selection: RecipeSelection) => {
                     dispatch(removeSelectionFromMealPlan({
