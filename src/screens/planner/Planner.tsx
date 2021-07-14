@@ -51,7 +51,10 @@ function MealCol(props: {
     if (props.selections !== undefined && props.selections.length !== 0) {
         return <div className="meal-col">
             {
-                props.selections.map(selection => <MealCard 
+                props.selections.map(selection => <MealCard
+
+                    key={selection.selectionId}
+                    
                     variant={props.accented ? "accented" : "normal"} 
                     
                     menuPlacement={props.mealCardMenuPlacement}
@@ -109,6 +112,8 @@ function DayRow(props: {
         {
             props.meals.map((meal, index) => <MealCol 
                 
+                key={meal}
+
                 selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
                 mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
