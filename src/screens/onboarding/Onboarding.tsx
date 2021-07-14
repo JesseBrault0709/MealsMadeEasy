@@ -1,5 +1,5 @@
 import { useContext, useReducer, useState } from "react";
-import { AppConfigContext } from "../../App";
+import { AppConfigContext } from '../../index'
 import { JBButton } from "../../inputs/Button/JBButton";
 import { RecipePreferences } from "../../types/RecipePreferences";
 import { OrderedScreenCollection } from "../common/OrderedScreenCollection/OrderedScreenCollection";

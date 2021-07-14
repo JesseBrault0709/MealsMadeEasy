@@ -3,7 +3,7 @@ import './Diet.css'
 import { SPDiet } from "../../../client/spoonacularTypes"
 import React, { useContext } from "react"
 import { groupIntoPairs } from "../../../util"
-import { AppConfigContext } from '../../../App'
+import { AppConfigContext } from '../../../index'
 
 export type DietInputProps = {
     renderButton: (diet: SPDiet) => React.ReactNode,

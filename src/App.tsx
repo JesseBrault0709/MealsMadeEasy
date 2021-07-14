@@ -6,13 +6,13 @@ import { RecipePreferences } from './types/RecipePreferences';
 import { Sweet } from "./screens/Sweet/Sweet";
 import { Splash } from "./screens/Splash/Splash";
 import { appConfig } from "./appConfig";
-import { Provider } from "react-redux";
-import { store } from "./store";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { setPreferences } from "./slices/recipePreferences";
 import { fetchRecipes, setActiveList } from "./slices/recipeLists";
 import { setAppScreen } from "./slices/appScreens";
 import { Home } from "./screens/home/Home";
+import { mergeDayMealPlans } from "./slices/dayMealPlans";
+import { DayMealPlan } from "./types/DayMealPlan";
 
 /** Set to true for dev mode. */
 export const DEV_MODE: boolean = true
@@ -20,11 +20,22 @@ export const DEV_MODE: boolean = true
 /** The possible screens */
 export type AppScreen = "Splash" | "Onboarding" | "Sweet" | "Home"
 
-export const AppConfigContext = React.createContext(appConfig)
-
 function App() {
 
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        const oldDayMealPlansJSON = localStorage.getItem('dayMealPlans')
+        if (oldDayMealPlansJSON !== null) {
+            try {
+                const oldDayMealPlans: ReadonlyArray<DayMealPlan> = JSON.parse(oldDayMealPlansJSON)
+                dispatch(mergeDayMealPlans({ plans: oldDayMealPlans }))
+            } catch (err) {
+                console.error(err)
+            }
+        }
+    })
+
     const currentScreen = useAppSelector(state => state.screens.current)
 
     useEffect(() => {
@@ -70,11 +81,7 @@ function App() {
     }
 
     return <div className="App">
-        <Provider store={store}>
-            <AppConfigContext.Provider value={appConfig}>
-                {getScreen()}
-            </AppConfigContext.Provider>
-        </Provider>
+        {getScreen()}
     </div>
 
 }

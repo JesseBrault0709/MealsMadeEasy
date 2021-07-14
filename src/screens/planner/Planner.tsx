@@ -10,7 +10,7 @@ import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext, useState } from 'react'
-import { AppConfigContext } from '../../App'
+import { AppConfigContext } from '../../index'
 import { setToReplaceMode } from '../../slices/selectionMode'
 
 function getDayAbbrev(day: number) {

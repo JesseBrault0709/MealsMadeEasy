@@ -3,7 +3,7 @@ import './Intolerances.css'
 import { groupIntoThrees } from "../../../util"
 import React, { Reducer, useContext } from 'react'
 import { SPIntolerance } from '../../../client/spoonacularTypes'
-import { AppConfigContext } from '../../../App'
+import { AppConfigContext } from '../../../index'
 
 export const intolerancesReducer: Reducer<
     ReadonlyArray<SPIntolerance>,

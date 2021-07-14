@@ -3,7 +3,7 @@ import './CookingTime.css'
 import { ClockSlider } from "../../../inputs/ClockSlider/ClockSlider"
 import { RecipePreferences } from "../../../types/RecipePreferences"
 import { useContext } from 'react'
-import { AppConfigContext } from '../../../App'
+import { AppConfigContext } from '../../../index'
 
 export type CookingTimeInputProps = {
     value: RecipePreferences['cookingTime']

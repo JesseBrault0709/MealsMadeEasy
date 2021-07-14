@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
 import { getModalEffect } from '../../util'
 import { useAppSelector } from '../../hooks'
-import { AppConfigContext } from '../../App'
+import { AppConfigContext } from '../../index'
 
 export type AddToMealPlanProps = {
     onSubmit: (meal: MealName, date: Date) => void
