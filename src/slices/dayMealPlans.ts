@@ -93,6 +93,49 @@ export const dayMealPlansSlice = createSlice({
                     selection
             )
 
+        },
+
+        mergeDayMealPlans: (
+            state,
+            action: PayloadAction<{
+                plans: ReadonlyArray<DayMealPlan>
+            }>
+        ) => {
+            action.payload.plans.forEach(sourceDayPlan => {
+                const targetDayPlan = state.plans.find(isPlanForDate(new Date(sourceDayPlan.date)))
+                if (targetDayPlan === undefined) {
+
+                    state.plans = [
+                        ...state.plans, 
+                        {
+                            date: sourceDayPlan.date,
+                            meals: sourceDayPlan.meals.map(mealPlan => ({
+                                name: mealPlan.name,
+                                recipeSelections: [...mealPlan.recipeSelections]
+                            }))
+                        }
+                    ]
+
+                } else {
+
+                    const newMeals: MealPlan[] = [...targetDayPlan.meals]
+
+                    sourceDayPlan.meals.forEach(sourceMealPlan => {
+                        const targetMealPlan = newMeals.find(mealPlan => mealPlan.name === sourceMealPlan.name)
+                        if (targetMealPlan === undefined) {
+                            newMeals.push(sourceMealPlan)
+                        } else {
+                            targetMealPlan.recipeSelections = [...targetMealPlan.recipeSelections, ...sourceMealPlan.recipeSelections]
+                        }
+                    })
+
+                    targetDayPlan.meals = newMeals.map(mealPlan => ({
+                        name: mealPlan.name,
+                        recipeSelections: [...mealPlan.recipeSelections]
+                    }))
+
+                }
+            })
         }
 
     }
@@ -101,5 +144,6 @@ export const dayMealPlansSlice = createSlice({
 export const { 
     addRecipeToMealPlan,
     removeSelectionFromMealPlan,
-    replaceSelectionInMealPlan
+    replaceSelectionInMealPlan,
+    mergeDayMealPlans
 } = dayMealPlansSlice.actions

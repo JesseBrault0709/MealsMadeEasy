@@ -1,12 +1,12 @@
 import "./App.css";
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { RecipePreferences } from './types/RecipePreferences';
 import { Sweet } from "./screens/Sweet/Sweet";
 import { Splash } from "./screens/Splash/Splash";
 import { appConfig } from "./appConfig";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector, useAppStore } from "./hooks";
 import { setPreferences } from "./slices/recipePreferences";
 import { fetchRecipes, setActiveList } from "./slices/recipeLists";
 import { setAppScreen } from "./slices/appScreens";
@@ -24,6 +24,8 @@ function App() {
 
     const dispatch = useAppDispatch()
 
+    const store = useAppStore()
+
     useEffect(() => {
         const oldDayMealPlansJSON = localStorage.getItem('dayMealPlans')
         if (oldDayMealPlansJSON !== null) {
@@ -34,7 +36,12 @@ function App() {
                 console.error(err)
             }
         }
-    })
+
+        store.subscribe(() => {
+            const state = store.getState()
+            localStorage.setItem('dayMealPlans', JSON.stringify(state.dayMealPlans.plans))
+        })
+    }, [dispatch, store])
 
     const currentScreen = useAppSelector(state => state.screens.current)
 

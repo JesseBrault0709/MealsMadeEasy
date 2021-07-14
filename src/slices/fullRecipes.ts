@@ -59,7 +59,7 @@ export const useFullRecipe = (id: number): {
         if (recipe === undefined) {
             dispatch(fetchFullRecipe(id))
         }
-    })
+    }, [id, recipe, dispatch])
 
     const fetchStatus = useAppSelector(state => state.fullRecipes.fetchStatus)
     const fetchError = useAppSelector(state => state.fullRecipes.fetchError)
