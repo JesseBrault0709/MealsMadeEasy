@@ -16,12 +16,12 @@ const initialState: FullRecipesState = {
 }
 
 export const fetchFullRecipe = createAsyncThunk(
-    'recipes/fetchRecipeOverview', 
+    'fullRecipes/fetchRecipeOverview', 
     async (id: number) => await getRecipeInformation(id)
 )
 
 export const fullRecipesSlice = createSlice({
-    name: 'recipes',
+    name: 'fullRecipes',
     initialState,
     reducers: { },
     extraReducers: builder => {
