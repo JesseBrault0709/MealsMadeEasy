@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, SerializedError } from "@reduxjs/toolkit
 import { useEffect } from "react";
 import { FullRecipe } from "../client/FullRecipe";
 import { getRecipeInformation } from "../client/recipeInformation";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../index"
 
 export type FullRecipesState = {
     recipes: ReadonlyArray<FullRecipe>

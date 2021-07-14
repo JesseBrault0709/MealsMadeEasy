@@ -4,7 +4,7 @@ import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../index'
 import { fetchRecipes, resetAllRecipes, setActiveList } from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {

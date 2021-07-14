@@ -5,7 +5,7 @@ import { Onboarding } from './screens/onboarding/Onboarding'
 import { RecipePreferences } from './types/RecipePreferences';
 import { Sweet } from "./screens/Sweet/Sweet";
 import { Splash } from "./screens/Splash/Splash";
-import { useAppDispatch, useAppSelector, useAppStore } from "./hooks";
+import { useAppDispatch, useAppSelector, useAppStore } from "./index"
 import { setPreferences } from "./slices/recipePreferences";
 import { fetchRecipes, setActiveList } from "./slices/recipeLists";
 import { setAppScreen } from "./slices/appScreens";

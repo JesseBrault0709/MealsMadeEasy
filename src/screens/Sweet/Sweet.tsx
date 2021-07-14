@@ -1,6 +1,6 @@
 import { OnboardingScreen } from "../onboarding/OnboardingScreen/OnboardingScreen"
 import { LoadingCircle } from '../common/LoadingCircle/LoadingCircle'
-import { useAppSelector } from "../../hooks"
+import { useAppSelector } from "../../index"
 import { TechnicalError } from "../errors/TechnicalError/TechnicalError"
 
 export function Sweet() {

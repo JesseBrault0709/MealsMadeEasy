@@ -9,7 +9,7 @@ import { RecipeInfo } from "../RecipeInfo/RecipeInfo"
 import { RecipeLists } from '../RecipeLists/RecipeLists'
 import { ScreenWithTitleAndNav } from "../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav"
 import { RecipeOverview } from "../../../client/RecipeOverview"
-import { useAppDispatch, useAppSelector } from "../../../hooks"
+import { useAppDispatch, useAppSelector } from "../../../index"
 import { setRecipeBookScreen, setRecipeInfoId } from "../../../slices/recipeBook"
 
 export type RecipeBookScreen = "Recipe List" | "Recipe Info"

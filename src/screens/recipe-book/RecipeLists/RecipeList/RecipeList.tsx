@@ -5,7 +5,7 @@ import { RecipeCard } from "../RecipeCard/RecipeCard"
 import { JBButton } from '../../../../inputs/Button/JBButton'
 import { RecipeOverview } from '../../../../client/RecipeOverview'
 import { fetchRecipes, incrementOffset } from '../../../../slices/recipeLists'
-import { useAppDispatch, useAppSelector } from '../../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../../index'
 import { LoadingCircle } from '../../../common/LoadingCircle/LoadingCircle'
 
 export type RecipeListProps = {

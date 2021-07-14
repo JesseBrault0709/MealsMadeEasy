@@ -5,7 +5,7 @@ import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWit
 import { MealName } from '../../types/MealName'
 import { EmptyMealCard, MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
-import { useAppDispatch, useAppSelector } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../index'
 import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'

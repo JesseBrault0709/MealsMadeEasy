@@ -13,7 +13,7 @@ import PlannerActive from './assets/Planner_active.png'
 
 import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../index'
 import { setHomeScreen } from '../../../slices/homeScreens'
 import { setRecipeBookScreen } from '../../../slices/recipeBook'
 

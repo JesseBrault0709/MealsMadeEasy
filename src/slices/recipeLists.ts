@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@
 import { appConfig } from "../appConfig";
 import { getByComplexSearch } from "../client/complexSearch";
 import { RecipeOverview } from "../client/RecipeOverview";
-import { AppState } from "../store";
+import { AppState } from "../index";
 import { setAppScreen } from "./appScreens";
 
 type RecipeListsState = {

@@ -9,7 +9,7 @@ import { MealName } from '../../types/MealName'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
 import { getModalEffect } from '../../util'
-import { useAppSelector } from '../../hooks'
+import { useAppSelector } from '../../index'
 import { AppConfigContext } from '../../index'
 
 export type AddToMealPlanProps = {
