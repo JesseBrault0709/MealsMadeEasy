@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, SerializedError } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 import { FullRecipe } from "../client/FullRecipe";
 import { getRecipeInformation } from "../client/recipeInformation";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 export type FullRecipesState = {
     recipes: ReadonlyArray<FullRecipe>
-    fetchStatus: 'idle' | 'fetching' | 'success' | 'error'
+    fetchStatus: 'idle' | 'fetching' | 'error'
     fetchError?: SerializedError
 }
 
@@ -30,7 +31,7 @@ export const fullRecipesSlice = createSlice({
         })
 
         builder.addCase(fetchFullRecipe.fulfilled, (state, action) => {
-            state.fetchStatus = 'success'
+            state.fetchStatus = 'idle'
             state.recipes.push(action.payload as any) // ts complains about readonly AnalyzedInstructions
         })
 
@@ -54,9 +55,11 @@ export const useFullRecipe = (id: number): {
         recipe => recipe.id === id
     ))
 
-    if (recipe === undefined) {
-        dispatch(fetchFullRecipe(id))
-    }
+    useEffect(() => {
+        if (recipe === undefined) {
+            dispatch(fetchFullRecipe(id))
+        }
+    })
 
     const fetchStatus = useAppSelector(state => state.fullRecipes.fetchStatus)
     const fetchError = useAppSelector(state => state.fullRecipes.fetchError)

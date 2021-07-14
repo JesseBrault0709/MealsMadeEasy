@@ -13,7 +13,7 @@ import { addRecipeToMealPlan, replaceSelectionInMealPlan } from '../../../slices
 import { setToAddMode } from '../../../slices/selectionMode'
 import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
-import { useFullRecipe } from '../../../slices/fullRecipes'
+import { fetchFullRecipe, useFullRecipe } from '../../../slices/fullRecipes'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -44,7 +44,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
                 setShowSuccessModal(false)
             }, 1500)
         }
-    }, [showSuccessModal])
+    }, [showSuccessModal, setShowSuccessModal])
 
 
 
@@ -111,15 +111,10 @@ export function RecipeInfo(props: RecipeInfoProps) {
 
     // Screens
 
-    const getFetchingScreen = () => {
-        return <div className="recipe-info-loading-circle">
-            <LoadingCircle />
-        </div>
-    }
-
-    const getSuccessScreen = () => {
+    const getIdleScreen = () => {
+        
         if (recipe === undefined) {
-            throw new Error(`status is 'success' but recipe is undefined`)
+            return null
         }
 
         const rating = recipe.spoonacularScore !== undefined && recipe.spoonacularScore !== null ? 
@@ -162,6 +157,12 @@ export function RecipeInfo(props: RecipeInfoProps) {
 
         </>
     }
+    
+    const getFetchingScreen = () => {
+        return <div className="recipe-info-loading-circle">
+            <LoadingCircle />
+        </div>
+    }
 
     const getErrorScreen = () => {
 
@@ -178,9 +179,8 @@ export function RecipeInfo(props: RecipeInfoProps) {
     const getScreen = () => {
         
         switch (fetchStatus) {
-            case 'idle': return null
+            case 'idle': return getIdleScreen()
             case 'fetching': return getFetchingScreen()
-            case 'success': return getSuccessScreen()
             case 'error': return getErrorScreen()
         }
 

@@ -33,10 +33,10 @@ export function ReplaceRecipeModal(props: ReplaceRecipeModalProps) {
 
     const getFetching = () => <LoadingCircle />
 
-    const getSuccess = () => {
+    const getIdle = () => {
 
         if (oldRecipe === undefined) {
-            throw new Error('trying to getSuccess but oldRecipe is undefined')
+            return null
         }
 
         const buttonStyle: React.CSSProperties = {
@@ -85,9 +85,8 @@ export function ReplaceRecipeModal(props: ReplaceRecipeModalProps) {
 
     const getModalContent = () => {
         switch (fetchStatus) {
-            case 'idle': return null
+            case 'idle': return getIdle()
             case 'fetching': return getFetching()
-            case 'success': return getSuccess()
             case 'error': return getError()
         }
     }

@@ -38,10 +38,10 @@ export function MealCard(props: MealCardProps) {
         Loading...
     </div>
 
-    const getSuccess = () => {
+    const getIdle = () => {
 
         if (recipe === undefined) {
-            throw new Error(`trying to getSuccess but recipe is undefined`)
+            return null
         }
 
         return <>
@@ -66,9 +66,8 @@ export function MealCard(props: MealCardProps) {
 
     const getCard = () => {
         switch (fetchStatus) {
-            case 'idle': return null
+            case 'idle': return getIdle()
             case 'fetching': return getFetching()
-            case 'success': return getSuccess()
             case 'error': return getError()
         }
     }
