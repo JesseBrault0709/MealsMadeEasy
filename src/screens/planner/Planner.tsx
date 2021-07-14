@@ -1,6 +1,6 @@
 import './Planner.css'
 
-import { DayMealPlan, RecipeSelection } from '../../types/DayMealPlan'
+import { DayMealPlan, extractDateFromDayMealPlan, RecipeSelection } from '../../types/DayMealPlan'
 import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
 import { EmptyMealCard, MealCard } from './MealCard/MealCard'
@@ -94,15 +94,16 @@ function DayRow(props: {
     const dispatch = useAppDispatch()
 
     const today = new Date()
-    const accented = today.getFullYear() === props.dayMealPlan.date.getFullYear() &&
-        today.getMonth() === props.dayMealPlan.date.getMonth() &&
-        today.getDate() === props.dayMealPlan.date.getDate()
+    const planDate = extractDateFromDayMealPlan(props.dayMealPlan)
+    const accented = today.getFullYear() === planDate.getFullYear() &&
+        today.getMonth() === planDate.getMonth() &&
+        today.getDate() === planDate.getDate()
 
     return <div className={['day-row', `day-row-${props.variant}`].join(" ")}>
         
         <div className="day-row-date-and-day">
-            <span className="day-row-date">{formatDate(props.dayMealPlan.date)}</span>
-            <span className="day-row-day">{getDayAbbrev(props.dayMealPlan.date.getDay())}</span>
+            <span className="day-row-date">{formatDate(planDate)}</span>
+            <span className="day-row-day">{getDayAbbrev(planDate.getDay())}</span>
         </div>
 
         {
@@ -114,7 +115,7 @@ function DayRow(props: {
                 
                 onRemoveRecipe={(selection: RecipeSelection) => {
                     dispatch(removeSelectionFromMealPlan({
-                        date: props.dayMealPlan.date,
+                        date: planDate,
                         mealName: meal,
                         selection
                     }))
@@ -123,7 +124,7 @@ function DayRow(props: {
                 onReplaceRecipe={selection => {
                     dispatch(setToReplaceMode({
                         mode: 'replace',
-                        targetDate: props.dayMealPlan.date,
+                        targetDate: planDate,
                         targetMeal: meal,
                         targetSelection: selection
                     }))
@@ -161,10 +162,10 @@ export function Planner() {
             </div>
 
             {
-                sorted.map((day, index) => 
+                sorted.map((dayMealPlan, index) => 
                     <DayRow 
-                        key={formatDate(day.date)}
-                        dayMealPlan={day}
+                        key={formatDate(extractDateFromDayMealPlan(dayMealPlan))}
+                        dayMealPlan={dayMealPlan}
                         meals={appConfig.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
                     />

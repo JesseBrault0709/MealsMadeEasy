@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { appConfig } from "../appConfig";
 import { RecipeOverview } from "../client/RecipeOverview";
-import { DayMealPlan, isPlanForDate, MealPlan, RecipeSelection } from "../types/DayMealPlan";
+import { DayMealPlan, getBlankDayMealPlan, getRecipeSelection, isPlanForDate, MealPlan, RecipeSelection } from "../types/DayMealPlan";
 import { MealName } from "../types/MealName";
-import { v1 as uuid } from 'uuid'
 
 export type DayMealPlansState = {
     plans: ReadonlyArray<DayMealPlan>
@@ -13,13 +12,7 @@ const initialState: DayMealPlansState = {
     plans: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(dayIndex => {
         const date = new Date()
         date.setDate(date.getDate() + dayIndex)
-        return {
-            date,
-            meals: appConfig.meals.map(mealName => ({
-                name: mealName,
-                recipeSelections: []
-            }))
-        }
+        return getBlankDayMealPlan(date, appConfig.meals)
     })
 }
 
@@ -68,11 +61,7 @@ export const dayMealPlansSlice = createSlice({
                 throw new Error(`there is no meal named ${action.payload.targetMeal} in dayMealPlan for date ${action.payload.targetDate}`)
             }
 
-            meal.recipeSelections.push({
-                selectionId: uuid(),
-                dateAdded: new Date(),
-                recipeId: action.payload.recipe.id
-            })
+            meal.recipeSelections.push(getRecipeSelection(new Date(), action.payload.recipe.id))
         },
 
         removeSelectionFromMealPlan: (
@@ -99,11 +88,9 @@ export const dayMealPlansSlice = createSlice({
             const mealPlan = getMealPlan(state, action.payload.targetDate, action.payload.targetMealName)
 
             mealPlan.recipeSelections = mealPlan.recipeSelections.map(selection =>
-                selection.selectionId === action.payload.targetSelection.selectionId ? {
-                    selectionId: uuid(),
-                    dateAdded: new Date(),
-                    recipeId: action.payload.newRecipe.id
-                } : selection
+                selection.selectionId === action.payload.targetSelection.selectionId ?
+                    getRecipeSelection(new Date(), action.payload.newRecipe.id) :
+                    selection
             )
 
         }
