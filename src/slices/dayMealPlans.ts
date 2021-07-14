@@ -16,12 +16,12 @@ const initialState: DayMealPlansState = {
     })
 }
 
-const getMealPlan = (
+const findMealPlan = (
     state: DayMealPlansState,
-    date: Date,
+    date: number,
     mealName: MealName
 ): MealPlan => {
-    const dayMealPlan = state.plans.find(isPlanForDate(date))
+    const dayMealPlan = state.plans.find(isPlanForDate(new Date(date)))
             
     if (dayMealPlan === undefined) {
         throw new Error(`there is no dayMealPlan for date ${date}`)
@@ -44,12 +44,12 @@ export const dayMealPlansSlice = createSlice({
         addRecipeToMealPlan: (
             state, 
             action: PayloadAction<{ 
-                targetDate: Date, 
+                targetDate: number, 
                 targetMeal: MealName,
                 recipe: RecipeOverview
             }>
         ) => {
-            const dayMealPlan = state.plans.find(isPlanForDate(action.payload.targetDate))
+            const dayMealPlan = state.plans.find(isPlanForDate(new Date(action.payload.targetDate)))
             
             if (dayMealPlan === undefined) {
                 throw new Error(`there is no dayMealPlan for date ${action.payload.targetDate}`)
@@ -67,25 +67,25 @@ export const dayMealPlansSlice = createSlice({
         removeSelectionFromMealPlan: (
             state,
             action: PayloadAction<{
-                date: Date,
+                date: number,
                 mealName: MealName,
                 selection: RecipeSelection
             }>
         ) => {
-            const mealPlan = getMealPlan(state, action.payload.date, action.payload.mealName)
+            const mealPlan = findMealPlan(state, action.payload.date, action.payload.mealName)
             mealPlan.recipeSelections = mealPlan.recipeSelections.filter(selection => selection.selectionId !== action.payload.selection.selectionId)
         },
 
         replaceSelectionInMealPlan: (
             state,
             action: PayloadAction<{
-                targetDate: Date,
+                targetDate: number,
                 targetMealName: MealName,
                 targetSelection: RecipeSelection,
                 newRecipe: RecipeOverview
             }>
         ) => {
-            const mealPlan = getMealPlan(state, action.payload.targetDate, action.payload.targetMealName)
+            const mealPlan = findMealPlan(state, action.payload.targetDate, action.payload.targetMealName)
 
             mealPlan.recipeSelections = mealPlan.recipeSelections.map(selection =>
                 selection.selectionId === action.payload.targetSelection.selectionId ?

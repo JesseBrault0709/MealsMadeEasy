@@ -13,7 +13,7 @@ import { addRecipeToMealPlan, replaceSelectionInMealPlan } from '../../../slices
 import { setToAddMode } from '../../../slices/selectionMode'
 import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
-import { fetchFullRecipe, useFullRecipe } from '../../../slices/fullRecipes'
+import { useFullRecipe } from '../../../slices/fullRecipes'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -61,7 +61,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
                 onSubmit={(meal, date) => {
                     setShowAddModal(false)
                     dispatch(addRecipeToMealPlan({
-                        targetDate: date,
+                        targetDate: date.valueOf(),
                         targetMeal: meal,
                         recipe
                     }))
@@ -90,7 +90,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
                 onSubmit={() => {
                     if (selectionTarget !== undefined) {
                         dispatch(replaceSelectionInMealPlan({
-                            targetDate: selectionTarget.date,
+                            targetDate: selectionTarget.date.valueOf(),
                             targetMealName: selectionTarget.meal,
                             targetSelection: selectionTarget.selection,
                             newRecipe: recipe

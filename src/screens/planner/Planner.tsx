@@ -115,7 +115,7 @@ function DayRow(props: {
                 
                 onRemoveRecipe={(selection: RecipeSelection) => {
                     dispatch(removeSelectionFromMealPlan({
-                        date: planDate,
+                        date: props.dayMealPlan.date,
                         mealName: meal,
                         selection
                     }))
