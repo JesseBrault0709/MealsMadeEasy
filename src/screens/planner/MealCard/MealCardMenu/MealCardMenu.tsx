@@ -7,7 +7,7 @@ import Share from './assets/Share.png'
 
 export type MealCardMenuProps = {
     show?: boolean
-    variant: "lower-left" | "lower-right",
+    variant: "lower-left" | "lower-right" | "upper-left" | "upper-right",
     onViewRecipe?: () => void,
     onReplaceRecipe?: () => void,
     onRemoveRecipe?: () => void

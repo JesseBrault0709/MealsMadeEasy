@@ -41,6 +41,7 @@ function formatDate(date: Date) {
 function MealCol(props: {
     selections?: ReadonlyArray<RecipeSelection>,
     accented?: boolean,
+
     mealCardMenuPlacement: MealCardMenuProps['variant'],
     onRemoveRecipe?: (selection: RecipeSelection) => void,
     onReplaceRecipe?: (selection: RecipeSelection) => void,
@@ -105,8 +106,11 @@ function DayRow(props: {
     dayMealPlan: DayMealPlan,
     meals: ReadonlyArray<MealName>,
     variant: "light" | "dark",
-    menuOwner: RecipeSelection['selectionId'] | undefined
-    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
+
+    menuOwner: RecipeSelection['selectionId'] | undefined,
+    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void,
+
+    menuPosition: 'upper' | 'lower'
 }) {
 
     const dispatch = useAppDispatch()
@@ -134,7 +138,7 @@ function DayRow(props: {
 
                 selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
-                mealCardMenuPlacement={index === props.meals.length - 1 ? "lower-left" : "lower-right"}
+                mealCardMenuPlacement={index === props.meals.length - 1 ? `${props.menuPosition}-left` : `${props.menuPosition}-right`}
                 
                 onRemoveRecipe={(selection: RecipeSelection) => {
                     dispatch(removeSelectionFromMealPlan({
@@ -195,6 +199,7 @@ export function Planner() {
                         variant={index % 2 === 0 ? "dark" : "light"}
                         menuOwner={menuOwner}
                         setMenuOwner={setMenuOwner}
+                        menuPosition={index >= sorted.length - 3 ? 'upper' : 'lower'} // last two rows have upper
                     />
                 )
             }

@@ -17,12 +17,19 @@
     justify-content: space-between;
 }
 
-.meal-card-menu-lower-left {
+.meal-card-menu-lower-left,
+.meal-card-menu-upper-left {
     margin-left: -25px;
 }
 
-.meal-card-menu-lower-right {
+.meal-card-menu-lower-right,
+.meal-card-menu-upper-right {
     margin-left: 25px;
+}
+
+.meal-card-menu-upper-left,
+.meal-card-menu-upper-right {
+    transform: translateY(-300px);
 }
 
 .menu-item {
