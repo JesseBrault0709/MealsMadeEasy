@@ -1,17 +1,15 @@
 import './Planner.css'
 
-import { RecipeOverview } from '../../client/RecipeOverview'
-import { DayMealPlan } from '../../types/DayMealPlan'
+import { DayMealPlan, extractDateFromDayMealPlan, RecipeSelection } from '../../types/DayMealPlan'
 import { ScreenWithTitleAndNav } from '../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { MealName } from '../../types/MealName'
-import { MealCard } from './MealCard/MealCard'
+import { EmptyMealCard, MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../hooks'
-import { fetchFullRecipe } from '../../slices/recipeInfo'
-import { setRecipeBookScreen } from '../../slices/recipeBook'
+import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
 import { setHomeScreen } from '../../slices/homeScreens'
-import { removeRecipeFromMealPlan } from '../../slices/dayMealPlans'
-import { useContext } from 'react'
+import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
+import { useContext, useState } from 'react'
 import { AppConfigContext } from '../../App'
 import { setToReplaceMode } from '../../slices/selectionMode'
 
@@ -41,36 +39,56 @@ function formatDate(date: Date) {
 }
 
 function MealCol(props: {
-    recipes?: ReadonlyArray<RecipeOverview>,
+    selections?: ReadonlyArray<RecipeSelection>,
     accented?: boolean,
+
     mealCardMenuPlacement: MealCardMenuProps['variant'],
-    onRemoveRecipe?: (recipe: RecipeOverview) => void,
-    onReplaceRecipe?: (recipe: RecipeOverview) => void
+    onRemoveRecipe?: (selection: RecipeSelection) => void,
+    onReplaceRecipe?: (selection: RecipeSelection) => void,
+
+    menuOwner: RecipeSelection['selectionId'] | undefined,
+    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
 
     const dispatch = useAppDispatch()
 
-    if (props.recipes !== undefined && props.recipes.length !== 0) {
+    if (props.selections !== undefined && props.selections.length !== 0) {
         return <div className="meal-col">
             {
-                props.recipes.map(recipe => <MealCard 
+                props.selections.map(selection => <MealCard
+
+                    key={selection.selectionId}
+
+                    onClick={() => {
+                        if (props.menuOwner === selection.selectionId) {
+                            props.setMenuOwner(undefined)
+                        } else {
+                            props.setMenuOwner(selection.selectionId)
+                        }
+                    }}
+
+                    showMenu={props.menuOwner === selection.selectionId}
+
                     variant={props.accented ? "accented" : "normal"} 
-                    title={recipe.title}
+                    
                     menuPlacement={props.mealCardMenuPlacement}
+                    recipeId={selection.recipeId}
 
                     onViewRecipe={() => {
-                        dispatch(fetchFullRecipe(recipe))
+
+                        dispatch(setRecipeInfoId({ id: selection.recipeId }))
                         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
                         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+
                     }}
                     onReplaceRecipe={() => {
                         if (props.onReplaceRecipe !== undefined) {
-                            props.onReplaceRecipe(recipe)
+                            props.onReplaceRecipe(selection)
                         }
                     }}
                     onRemoveRecipe={() => {
                         if (props.onRemoveRecipe !== undefined) {
-                            props.onRemoveRecipe(recipe)
+                            props.onRemoveRecipe(selection)
                         }
                     }}
                 />)
@@ -78,7 +96,7 @@ function MealCol(props: {
         </div>
     } else {
         return <div className="meal-col">
-            <MealCard variant="empty" menuPlacement={props.mealCardMenuPlacement} />
+            <EmptyMealCard />
         </div>
     }
 
@@ -88,43 +106,54 @@ function DayRow(props: {
     dayMealPlan: DayMealPlan,
     meals: ReadonlyArray<MealName>,
     variant: "light" | "dark",
+
+    menuOwner: RecipeSelection['selectionId'] | undefined,
+    setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void,
+
+    menuPosition: 'upper' | 'lower'
 }) {
 
     const dispatch = useAppDispatch()
 
     const today = new Date()
-    const accented = today.getFullYear() === props.dayMealPlan.date.getFullYear() &&
-        today.getMonth() === props.dayMealPlan.date.getMonth() &&
-        today.getDate() === props.dayMealPlan.date.getDate()
+    const planDate = extractDateFromDayMealPlan(props.dayMealPlan)
+    const accented = today.getFullYear() === planDate.getFullYear() &&
+        today.getMonth() === planDate.getMonth() &&
+        today.getDate() === planDate.getDate()
 
     return <div className={['day-row', `day-row-${props.variant}`].join(" ")}>
         
         <div className="day-row-date-and-day">
-            <span className="day-row-date">{formatDate(props.dayMealPlan.date)}</span>
-            <span className="day-row-day">{getDayAbbrev(props.dayMealPlan.date.getDay())}</span>
+            <span className="day-row-date">{formatDate(planDate)}</span>
+            <span className="day-row-day">{getDayAbbrev(planDate.getDay())}</span>
         </div>
 
         {
             props.meals.map((meal, index) => <MealCol 
                 
-                recipes={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipes} 
+                key={meal}
+
+                menuOwner={props.menuOwner}
+                setMenuOwner={props.setMenuOwner}
+
+                selections={props.dayMealPlan.meals.find(mealPlan => mealPlan.name === meal)?.recipeSelections} 
                 accented={accented}
-                mealCardMenuPlacement={index === props.meals.length - 1 ? "left" : "right"}
+                mealCardMenuPlacement={index === props.meals.length - 1 ? `${props.menuPosition}-left` : `${props.menuPosition}-right`}
                 
-                onRemoveRecipe={(recipe: RecipeOverview) => {
-                    dispatch(removeRecipeFromMealPlan({
+                onRemoveRecipe={(selection: RecipeSelection) => {
+                    dispatch(removeSelectionFromMealPlan({
                         date: props.dayMealPlan.date,
                         mealName: meal,
-                        recipe
+                        selection
                     }))
                 }}
 
-                onReplaceRecipe={recipe => {
+                onReplaceRecipe={selection => {
                     dispatch(setToReplaceMode({
                         mode: 'replace',
-                        targetDate: props.dayMealPlan.date,
+                        targetDate: planDate,
                         targetMeal: meal,
-                        targetRecipe: recipe
+                        targetSelection: selection
                     }))
                     dispatch(setRecipeBookScreen({
                         screen: 'Recipe List'
@@ -149,6 +178,8 @@ export function Planner() {
     const sorted = [...dayMealPlans]
     sorted.sort((a, b) => a.date.valueOf() - b.date.valueOf())
 
+    const [menuOwner, setMenuOwner] = useState<RecipeSelection['selectionId']>()
+
     return <ScreenWithTitleAndNav title="Planner" subtitle="(Click on the card to view options)">
         <div className="planner">
 
@@ -160,12 +191,15 @@ export function Planner() {
             </div>
 
             {
-                sorted.map((day, index) => 
+                sorted.map((dayMealPlan, index) => 
                     <DayRow 
-                        key={formatDate(day.date)}
-                        dayMealPlan={day}
+                        key={formatDate(extractDateFromDayMealPlan(dayMealPlan))}
+                        dayMealPlan={dayMealPlan}
                         meals={appConfig.meals}
                         variant={index % 2 === 0 ? "dark" : "light"}
+                        menuOwner={menuOwner}
+                        setMenuOwner={setMenuOwner}
+                        menuPosition={index >= sorted.length - 3 ? 'upper' : 'lower'} // last two rows have upper
                     />
                 )
             }

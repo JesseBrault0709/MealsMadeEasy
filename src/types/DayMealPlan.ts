@@ -1,58 +1,56 @@
-import { RecipeOverview } from '../client/RecipeOverview'
 import { MealName } from './MealName'
+import { v1 as uuid } from 'uuid'
+
+/** Model types */
+
+export type RecipeSelection = {
+    selectionId: string,
+    dateAdded: number,
+    recipeId: number
+}
 
 export type MealPlan = {
     name: MealName,
-    recipes: ReadonlyArray<RecipeOverview>
+    recipeSelections: ReadonlyArray<RecipeSelection>
 }
 
 export type DayMealPlan = {
-    date: Date
+    date: number
     meals: ReadonlyArray<MealPlan>
 }
 
-// export const getBlankDayMealPlan = (date: Date, meals: ReadonlyArray<MealName>): DayMealPlan => {
-//     const mealMap = new Map<MealName, ReadonlyArray<RecipeOverview>>()
-//     meals.forEach(meal => mealMap.set(meal, []))
-//     return {
-//         date,
-//         meals: mealMap
-//     }
-// }
 
-// /**
-//  * @returns An array of eight (8) days worth of blank DayMealPlans
-//  */
-// export const getWeekOfBlankDayMealPlans = (meals: ReadonlyArray<MealName>): ReadonlyArray<DayMealPlan> => {
-//     return [0, 1, 2, 3, 4, 5, 6, 7].map(dayIndex => {
-//         const date = new Date()
-//         date.setDate(date.getDate() + dayIndex)
-//         return getBlankDayMealPlan(date, meals)
-//     })
-// }
+/** Model creation functions */
+
+export const getRecipeSelection = (dateAdded: Date, recipeId: number): RecipeSelection => ({
+    selectionId: uuid(),
+    dateAdded: dateAdded.valueOf(),
+    recipeId
+})
+
+export const getBlankMealPlan = (mealName: MealName): MealPlan => ({
+    name: mealName,
+    recipeSelections: []
+})
+
+export const getBlankDayMealPlan = (date: Date, meals: ReadonlyArray<MealName>): DayMealPlan => ({
+    date: date.valueOf(),
+    meals: meals.map(mealName => ({
+        name: mealName,
+        recipeSelections: []
+    }))
+})
+
+
+/** util functions for models */
+
+export const extractDateFromDayMealPlan = (dayMealPlan: DayMealPlan): Date => new Date(dayMealPlan.date)
 
 export const isPlanForDate = (date: Date) => (plan: DayMealPlan) => {
-    return plan.date.getFullYear() === date.getFullYear() &&
-        plan.date.getMonth() === date.getMonth() &&
-        plan.date.getDate() === date.getDate()
+
+    const planDate = extractDateFromDayMealPlan(plan)
+
+    return planDate.getFullYear() === date.getFullYear() &&
+        planDate.getMonth() === date.getMonth() &&
+        planDate.getDate() === date.getDate()
 }
-
-// /**
-//  * @returns A new object containing an updated meals.
-//  */
-// export const addToMeal = (plan: DayMealPlan, targetMeal: MealName, recipe: RecipeOverview): DayMealPlan => {
-//     const newMeals = new Map<MealName, ReadonlyArray<RecipeOverview>>()
-
-//     plan.meals.forEach((recipes, meal) => {
-//         if (meal === targetMeal) {
-//             newMeals.set(meal, [...recipes, recipe])
-//         } else {
-//             newMeals.set(meal, recipes)
-//         }
-//     })
-
-//     return {
-//         date: plan.date,
-//         meals: newMeals
-//     }
-// }

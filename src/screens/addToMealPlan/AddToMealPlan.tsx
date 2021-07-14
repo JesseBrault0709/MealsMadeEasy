@@ -24,14 +24,14 @@ export function AddToMealPlan(props: AddToMealPlanProps) {
     const meals = appConfig.meals
 
     const dayMealPlans = useAppSelector(state => state.dayMealPlans.plans)
-    const sorted = dayMealPlans.slice().sort((a, b) => a.date.valueOf() - b.date.valueOf())
+    const sorted = dayMealPlans.slice().sort((a, b) => a.date - b.date)
     
     if (sorted.length === 0) {
         throw new Error('the dayMealPlans from the context has zero items')
     }
     
-    const minDate = sorted[0].date
-    const maxDate = sorted[sorted.length - 1].date
+    const minDate = new Date(sorted[0].date)
+    const maxDate = new Date(sorted[sorted.length - 1].date)
 
     const [selectedMeal, setSelectedMeal] = useState<MealName>()
     const [selectedDate, setSelectedDate] = useState(new Date())
