@@ -1,19 +1,22 @@
+import "./index.css";
+
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider, TypedUseSelectorHook, useDispatch, useSelector, useStore } from "react-redux";
 import { appConfig } from "./appConfig";
 import { configureStore } from "@reduxjs/toolkit";
 import { appScreensSlice } from "./slices/appScreens";
-import { dayMealPlansSlice } from "./slices/dayMealPlans";
+import { dayMealPlansSlice, mergeDayMealPlans } from "./slices/dayMealPlans";
 import { fullRecipesSlice } from "./slices/fullRecipes";
 import { homeScreensSlice } from "./slices/homeScreens";
 import { recipeBookSlice } from "./slices/recipeBook";
 import { recipeListsSlice } from "./slices/recipeLists";
-import { recipePreferencesSlice } from "./slices/recipePreferences";
+import { recipePreferencesSlice, setPreferences } from "./slices/recipePreferences";
 import { selectionModeSlice } from "./slices/selectionMode";
+import { DayMealPlan } from "./types/DayMealPlan";
+import { RecipePreferences } from "./types/RecipePreferences";
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -45,6 +48,80 @@ export const useAppStore = () => useStore<AppState>()
 
 /** Execution starts here */
 
+/** Hydrate dayMealPlans with values from localStorage */
+
+const LS_DAY_MEAL_PLANS = 'dayMealPlans'
+
+const hydrateDayMealPlans = () => {
+    console.log('loading oldDayMealPlans from localStorage')
+    const oldDayMealPlansJSON = localStorage.getItem(LS_DAY_MEAL_PLANS)
+    if (oldDayMealPlansJSON !== null) {
+        try {
+            console.log('parsing oldDayMealPlans and dispatching to store')
+            const oldDayMealPlans: ReadonlyArray<DayMealPlan> = JSON.parse(oldDayMealPlansJSON)
+            store.dispatch(mergeDayMealPlans({ plans: oldDayMealPlans }))
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+        console.log('no dayMealPlans in storage')
+    }
+}
+
+hydrateDayMealPlans()
+
+/** When state.dayMealPlans.plans is different, update local storage */
+
+const getWriteDayMealPlans = () => {
+    let oldDayMealPlans: AppState['dayMealPlans']['plans'] = []
+    return () => {
+        const state = store.getState()
+        if (oldDayMealPlans !== state.dayMealPlans.plans) {
+            console.log('writing dayMealPlans to localStorage')
+            localStorage.setItem(LS_DAY_MEAL_PLANS, JSON.stringify(state.dayMealPlans.plans))
+            oldDayMealPlans = state.dayMealPlans.plans
+        }
+    }
+}
+
+store.subscribe(getWriteDayMealPlans())
+
+/** Hydrate recipePreferences from localStorage */
+
+const LS_RECIPE_PREFERENCES = 'recipePreferences'
+
+const hydrateRecipePreferences = () => {
+    console.log('loading recipePreferences from localStorage')
+    const oldPreferencesJSON = localStorage.getItem(LS_RECIPE_PREFERENCES)
+    if (oldPreferencesJSON !== null) {
+        try {
+            const oldPreferences: RecipePreferences = JSON.parse(oldPreferencesJSON)
+            store.dispatch(setPreferences({ preferences: oldPreferences }))
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+        console.log('no recipePreferences in localStorage')
+    }
+}
+
+hydrateRecipePreferences()
+
+/** When recipePreferences changes, write to localStorage */
+
+const getWriteRecipePreferences = () => {
+    let oldPreferences: AppState['recipePreferences']['preferences'] = undefined
+    return () => {
+        const state = store.getState()
+        if (state.recipePreferences.preferences !== oldPreferences) {
+            console.log('writing recipePreferences to localStorage')
+            localStorage.setItem(LS_RECIPE_PREFERENCES, JSON.stringify(state.recipePreferences.preferences))
+            oldPreferences = state.recipePreferences.preferences
+        }
+    }
+}
+
+store.subscribe(getWriteRecipePreferences())
 
 /** Render the App */
 

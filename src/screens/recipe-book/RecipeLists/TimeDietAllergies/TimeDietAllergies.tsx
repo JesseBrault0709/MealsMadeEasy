@@ -21,7 +21,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
 
     const dispatch = useAppDispatch()
 
-    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences)
+    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences ?? { })
     
     const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(false)
 

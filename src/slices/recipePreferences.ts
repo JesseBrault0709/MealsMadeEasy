@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecipePreferences } from "../types/RecipePreferences";
 
 type RecipePreferencesState = {
-    preferences: RecipePreferences
+    preferences?: RecipePreferences
 }
 
-const initialState: RecipePreferencesState = {
-    preferences: { }
-}
+const initialState: RecipePreferencesState = {}
 
 export const recipePreferencesSlice = createSlice({
     name: 'recipePreferences',
@@ -31,14 +29,20 @@ export const recipePreferencesSlice = createSlice({
             state, 
             action: PayloadAction<{ cookingTime: RecipePreferences['cookingTime'] }>
         ) => {
-            state.preferences.cookingTime = action.payload.cookingTime
+            state.preferences = {
+                ...state.preferences,
+                cookingTime: action.payload.cookingTime
+            }
         },
 
         setDiet: (
             state,
             action: PayloadAction<{ diet: RecipePreferences['diet'] }>
         ) => {
-            state.preferences.diet = action.payload.diet
+            state.preferences = {
+                ...state.preferences,
+                diet: action.payload.diet
+            }
         },
 
         setIntolerances: (
@@ -46,8 +50,14 @@ export const recipePreferencesSlice = createSlice({
             action: PayloadAction<{ intolerances: RecipePreferences['intolerances'] }>
         ) => {
             action.payload.intolerances === undefined ?
-                state.preferences.intolerances = [] :
-                state.preferences.intolerances = [...action.payload.intolerances]
+                state.preferences = {
+                    ...state.preferences,
+                    intolerances: []
+                } :
+                state.preferences = {
+                    ...state.preferences,
+                    intolerances: [...action.payload.intolerances]
+                }
         }
 
     }
