@@ -38,25 +38,40 @@ export function CookingTimeInput(props: CookingTimeInputProps) {
 
     const options: ReadonlyArray<string> = appConfig.availableCookingTimes.map(convertValueToOption)
     
-    const valueIndex = options.findIndex(option => {
-        const asValue = convertOptionToValue(option)
-        return asValue === props.value
-    })
-
-    if (valueIndex === -1) {
-        throw new Error(`no such value in options '${props.value}'`)
-    }
-
     const onChange = (option: string) => {
         const asValue = convertOptionToValue(option)
         props.onChange(asValue)
     }
 
-    return <div className="cooking-time-container">
-        <ClockSlider
-            options={options}
-            onChange={onChange}
-            valueIndex={valueIndex}
-        />
-    </div>
+    if (props.value !== undefined) {
+
+        const valueIndex = options.findIndex(option => {
+            const asValue = convertOptionToValue(option)
+            return asValue === props.value
+        })
+    
+        return <div className="cooking-time-container">
+            <ClockSlider
+                options={options}
+                onChange={onChange}
+                valueIndex={valueIndex}
+            />
+        </div>
+
+    } else {
+
+        const valueIndex = options.findIndex(option => {
+            const initialOption = convertValueToOption(appConfig.initialCookingTime)
+            return initialOption === option
+        })
+
+        return <div className="cooking-time-container">
+            <ClockSlider 
+                options={options}
+                onChange={onChange}
+                valueIndex={valueIndex}
+            />
+        </div>
+        
+    }
 }
