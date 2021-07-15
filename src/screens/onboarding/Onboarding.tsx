@@ -66,7 +66,7 @@ export function Onboarding(props: OnboardingProps) {
                 renderNoPreference={() => 
                     <JBButton
                         variant="circle-large"
-                        active={diet === undefined}
+                        active={diet === null}
                         onClick={() => setDiet(null)}
                         style={{ margin: '10px' }}
                         key="No Preference"
