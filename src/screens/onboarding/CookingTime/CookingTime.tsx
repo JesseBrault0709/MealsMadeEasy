@@ -13,7 +13,7 @@ export type CookingTimeInputProps = {
 const convertValueToOption = (value: RecipePreferences['cookingTime']): string => {
     if (value === "No Limit") {
         return value
-    } else if (value !== undefined) {
+    } else if (value !== null) {
         return `${value.toString()} mins`
     } else {
         throw new Error('cannot convert an undefined value to an option for ClockSlider')
@@ -43,7 +43,7 @@ export function CookingTimeInput(props: CookingTimeInputProps) {
         props.onChange(asValue)
     }
 
-    if (props.value !== undefined) {
+    if (props.value !== null) {
 
         const valueIndex = options.findIndex(option => {
             const asValue = convertOptionToValue(option)

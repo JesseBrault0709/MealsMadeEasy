@@ -110,7 +110,7 @@ hydrateRecipePreferences()
 /** When recipePreferences changes, write to localStorage */
 
 const getWriteRecipePreferences = () => {
-    let oldPreferences: AppState['recipePreferences']['preferences'] = undefined
+    let oldPreferences: AppState['recipePreferences']['preferences'] = store.getState().recipePreferences.preferences
     return () => {
         const state = store.getState()
         if (state.recipePreferences.preferences !== oldPreferences) {

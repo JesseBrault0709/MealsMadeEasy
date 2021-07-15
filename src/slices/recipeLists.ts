@@ -66,9 +66,9 @@ export const fetchRecipes = createAsyncThunk<
 
     const recipes = await getByComplexSearch({
         addRecipeInformation: true,
-        maxReadyTime: cookingTime === "No Limit" ? undefined : cookingTime,
-        diet,
-        intolerances,
+        maxReadyTime: cookingTime === "No Limit" || cookingTime === null ? undefined : cookingTime,
+        diet: diet ?? undefined,
+        intolerances: intolerances ?? undefined,
         number: appConfig.recipeListLimit,
         offset: currentOffset,
         type

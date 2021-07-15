@@ -21,7 +21,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
 
     const dispatch = useAppDispatch()
 
-    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences ?? { })
+    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences)
     
     const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(false)
 
@@ -74,7 +74,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     return <div className="time-diet-allergies">
         <img className="funnel" src={Funnel} alt=""/>
         {
-            cookingTime !== undefined ?
+            cookingTime !== null ?
                 <Chip 
                     avatar={<img src={Check} alt=""/>} 
                     label={cookingTime === "No Limit" ? cookingTime : `${cookingTime} mins`} 
@@ -85,7 +85,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
         }
 
         {
-            diet !== undefined ?
+            diet !== null ?
                 <Chip 
                     avatar={<img src={Check} alt=""/>} 
                     label={diet}
@@ -96,7 +96,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
         }
 
         {
-            intolerances === undefined || intolerances.length === 0 ?
+            intolerances === null || intolerances.length === 0 ?
                 renderEmptyChip("Allergies", () => setShowChangeIntolerances(true)):
                 <Chip
                     avatar={intolerances.length}

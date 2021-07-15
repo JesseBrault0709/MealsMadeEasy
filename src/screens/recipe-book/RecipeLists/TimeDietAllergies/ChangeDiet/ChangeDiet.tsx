@@ -46,8 +46,8 @@ export function ChangeDiet(props: ChangeDietProps) {
             renderNoPreference={() =>
                 <JBButton
                     variant="outline"
-                    active={selectedDiet === undefined}
-                    onClick={() => setSelectedDiet(undefined)}
+                    active={selectedDiet === null}
+                    onClick={() => setSelectedDiet(null)}
                     style={buttonStyle}
                     key="No Preference"
                 >

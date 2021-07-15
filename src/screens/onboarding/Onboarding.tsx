@@ -22,7 +22,7 @@ export function Onboarding(props: OnboardingProps) {
     const appConfig = useContext(AppConfigContext)
 
     const [cookingTime, setCookingTime] = useState<RecipePreferences['cookingTime']>(appConfig.initialCookingTime)
-    const [diet, setDiet] = useState<RecipePreferences['diet']>()
+    const [diet, setDiet] = useState<RecipePreferences['diet']>(null)
     const [intolerances, dispatchIntolerances] = useReducer(intolerancesReducer, [])
 
     const onLastNext = () => {
@@ -67,7 +67,7 @@ export function Onboarding(props: OnboardingProps) {
                     <JBButton
                         variant="circle-large"
                         active={diet === undefined}
-                        onClick={() => setDiet(undefined)}
+                        onClick={() => setDiet(null)}
                         style={{ margin: '10px' }}
                         key="No Preference"
                     >
