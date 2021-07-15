@@ -39,6 +39,7 @@ export function ChangeDiet(props: ChangeDietProps) {
                     active={selectedDiet === diet}
                     onClick={() => setSelectedDiet(diet)}
                     style={buttonStyle}
+                    key={diet}
                 >
                     {diet}
                 </JBButton>
