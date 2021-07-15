@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecipePreferences } from "../types/RecipePreferences";
 
 type RecipePreferencesState = {
-    preferences: RecipePreferences
+    preferences: RecipePreferences,
+    completedOnboarding: boolean
 }
 
 const initialState: RecipePreferencesState = {
@@ -10,7 +11,8 @@ const initialState: RecipePreferencesState = {
         cookingTime: null,
         diet: null,
         intolerances: null
-    }
+    },
+    completedOnboarding: false
 }
 
 export const recipePreferencesSlice = createSlice({
@@ -64,10 +66,17 @@ export const recipePreferencesSlice = createSlice({
                     ...state.preferences,
                     intolerances: [...(action.payload.intolerances ?? [])]
                 }
+        },
+
+        setCompletedOnboarding: (
+            state,
+            action: PayloadAction<{ completedOnboarding: boolean }>
+        ) => {
+            state.completedOnboarding = action.payload.completedOnboarding
         }
 
     }
 })
 
-export const { setPreferences, setCookingTime, setDiet, setIntolerances } = recipePreferencesSlice.actions
+export const { setPreferences, setCookingTime, setDiet, setIntolerances, setCompletedOnboarding } = recipePreferencesSlice.actions
 

@@ -6,7 +6,7 @@ import { RecipePreferences } from './types/RecipePreferences';
 import { Sweet } from "./screens/Sweet/Sweet";
 import { Splash } from "./screens/Splash/Splash";
 import { useAppDispatch, useAppSelector } from "./index"
-import { setPreferences } from "./slices/recipePreferences";
+import { setCompletedOnboarding, setPreferences } from "./slices/recipePreferences";
 import { fetchRecipes, setActiveList } from "./slices/recipeLists";
 import { setAppScreen } from "./slices/appScreens";
 import { Home } from "./screens/home/Home";
@@ -28,12 +28,12 @@ function App() {
 
     const currentScreen = useAppSelector(state => state.screens.current)
 
-    const recipePreferences = useAppSelector(state => state.recipePreferences.preferences)
+    const completedOnboarding = useAppSelector(state => state.recipePreferences.completedOnboarding)
 
     useEffect(() => {
         if (currentScreen === "Splash") {
             setTimeout(() => {
-                if (recipePreferences === undefined) {
+                if (!completedOnboarding) {
                     dispatch(setAppScreen({ screen: "Onboarding" }))
                 } else {
                     const firstListName = config.recipeLists[0].name
@@ -65,6 +65,7 @@ function App() {
 
             const onOnboardingSubmit = (preferences: RecipePreferences) => {
                 dispatch(setPreferences({ preferences }))
+                dispatch(setCompletedOnboarding({ completedOnboarding: true }))
                 dispatch(setAppScreen({ screen: "Sweet" }))
             }
     

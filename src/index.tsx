@@ -13,7 +13,7 @@ import { fullRecipesSlice } from "./slices/fullRecipes";
 import { homeScreensSlice } from "./slices/homeScreens";
 import { recipeBookSlice } from "./slices/recipeBook";
 import { recipeListsSlice } from "./slices/recipeLists";
-import { recipePreferencesSlice, setPreferences } from "./slices/recipePreferences";
+import { recipePreferencesSlice, setCompletedOnboarding, setPreferences } from "./slices/recipePreferences";
 import { selectionModeSlice } from "./slices/selectionMode";
 import { DayMealPlan } from "./types/DayMealPlan";
 import { RecipePreferences } from "./types/RecipePreferences";
@@ -122,6 +122,37 @@ const getWriteRecipePreferences = () => {
 }
 
 store.subscribe(getWriteRecipePreferences())
+
+/** Hydrate completedOnboarding from storage */
+
+const LS_COMPLETED_ONBOARDING = 'completedOnboarding';
+
+(() => {
+    console.log('hydrating completedOnboarding from localStorage')
+    const completedOnboardingString = localStorage.getItem(LS_COMPLETED_ONBOARDING)
+    if (completedOnboardingString !== null) {
+        store.dispatch(setCompletedOnboarding({ completedOnboarding: completedOnboardingString === 'true' ? true : false }))
+    } else {
+        console.log('no completedOnboarding in localStorage')
+    }
+})();
+
+/** When completedOnboarding changes, write to localStorage */
+
+const getWriteCompletedOnboarding = () => {
+    let oldCompletedOnboarding: AppState['recipePreferences']['completedOnboarding'] = store.getState().recipePreferences.completedOnboarding
+    return () => {
+        const state = store.getState()
+        if (state.recipePreferences.completedOnboarding !== oldCompletedOnboarding) {
+            console.log('writing completedOnboarding to localStorage')
+            localStorage.setItem(LS_COMPLETED_ONBOARDING, state.recipePreferences.completedOnboarding ? 'true' : 'false')
+            oldCompletedOnboarding = state.recipePreferences.completedOnboarding
+        }
+    }
+}
+
+store.subscribe(getWriteCompletedOnboarding())
+
 
 /** Render the App */
 
