@@ -1,4 +1,4 @@
-import { Planner } from "./Planner";
+import { Planner } from './Planner'
 
 export default {
     title: 'Planner/Planner',
@@ -11,7 +11,7 @@ export const Primary = Template.bind({})
 Primary.args = {
     dayMealPlans: [
         {
-            date: new Date("June 29, 2021"),
+            date: new Date('June 29, 2021'),
             meals: [
                 {
                     title: 'Breakfast',

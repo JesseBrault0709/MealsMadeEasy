@@ -3,7 +3,7 @@
  *  * Fix spacing
  */
 
-import { TimeServingsRating } from "./TimeServingsRating";
+import { TimeServingsRating } from './TimeServingsRating'
 
 export default {
     title: 'RecipeBook/TimeServingsRating',

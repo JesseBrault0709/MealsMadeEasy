@@ -1,4 +1,4 @@
-import { RecipeBook } from "./RecipeBook";
+import { RecipeBook } from './RecipeBook'
 
 export default {
     title: 'RecipeBook/RecipeBook',

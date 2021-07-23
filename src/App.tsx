@@ -1,25 +1,25 @@
-import "./App.css";
-
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
-import { RecipePreferences } from './types/RecipePreferences';
-import { Sweet } from "./screens/Sweet/Sweet";
-import { Splash } from "./screens/Splash/Splash";
-import { useAppDispatch, useAppSelector } from "./index"
-import { setCompletedOnboarding, setPreferences } from "./slices/recipePreferences";
-import { fetchRecipes, setActiveList } from "./slices/recipeLists";
-import { setAppScreen } from "./slices/appScreens";
-import { Home } from "./screens/home/Home";
-import { AppConfigContext } from ".";
+import { RecipePreferences } from './types/RecipePreferences'
+import { Sweet } from './screens/Sweet/Sweet'
+import { Splash } from './screens/Splash/Splash'
+import { useAppDispatch, useAppSelector } from './index'
+import {
+    setCompletedOnboarding,
+    setPreferences
+} from './slices/recipePreferences'
+import { fetchRecipes, setActiveList } from './slices/recipeLists'
+import { setAppScreen } from './slices/appScreens'
+import { Home } from './screens/home/Home'
+import { AppConfigContext } from '.'
 
 /** Set to true for dev mode. */
 export const DEV_MODE: boolean = true
 
 /** The possible screens */
-export type AppScreen = "Splash" | "Onboarding" | "Sweet" | "Home"
+export type AppScreen = 'Splash' | 'Onboarding' | 'Sweet' | 'Home'
 
 function App() {
-
     const config = useContext(AppConfigContext)
 
     const dispatch = useAppDispatch()
@@ -28,13 +28,15 @@ function App() {
 
     const currentScreen = useAppSelector(state => state.screens.current)
 
-    const completedOnboarding = useAppSelector(state => state.recipePreferences.completedOnboarding)
+    const completedOnboarding = useAppSelector(
+        state => state.recipePreferences.completedOnboarding
+    )
 
     useEffect(() => {
-        if (currentScreen === "Splash") {
+        if (currentScreen === 'Splash') {
             setTimeout(() => {
                 if (!completedOnboarding) {
-                    dispatch(setAppScreen({ screen: "Onboarding" }))
+                    dispatch(setAppScreen({ screen: 'Onboarding' }))
                 } else {
                     const firstListName = config.recipeLists[0].name
                     dispatch(setActiveList({ listName: firstListName }))
@@ -46,48 +48,34 @@ function App() {
     }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (currentScreen === "Sweet") {
+        if (currentScreen === 'Sweet') {
             const firstListName = config.recipeLists[0].name
             dispatch(setActiveList({ listName: firstListName }))
             dispatch(fetchRecipes(firstListName))
         }
     }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
-
     /** Main getScreen function */
 
     const getScreen = () => {
-        if (currentScreen === "Splash") {
-            
+        if (currentScreen === 'Splash') {
             return <Splash />
-
-        } else if (currentScreen === "Onboarding") {
-
+        } else if (currentScreen === 'Onboarding') {
             const onOnboardingSubmit = (preferences: RecipePreferences) => {
                 dispatch(setPreferences({ preferences }))
                 dispatch(setCompletedOnboarding({ completedOnboarding: true }))
-                dispatch(setAppScreen({ screen: "Sweet" }))
+                dispatch(setAppScreen({ screen: 'Sweet' }))
             }
-    
-            return <Onboarding
-                onSubmit={onOnboardingSubmit}
-            />
-    
-        } else if (currentScreen === "Sweet") { 
 
+            return <Onboarding onSubmit={onOnboardingSubmit} />
+        } else if (currentScreen === 'Sweet') {
             return <Sweet />
-
-        } else if (currentScreen === "Home") {
-
+        } else if (currentScreen === 'Home') {
             return <Home />
         }
     }
 
-    return <div className="App">
-        {getScreen()}
-    </div>
-
+    return <div className="app">{getScreen()}</div>
 }
 
-export default App;
-
+export default App

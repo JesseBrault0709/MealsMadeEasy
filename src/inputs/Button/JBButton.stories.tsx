@@ -1,6 +1,6 @@
-import { JBButton, JBButtonProps } from "./JBButton";
+import { JBButton, JBButtonProps } from './JBButton'
 import { Story } from '@storybook/react'
-import { Children } from "react";
+import { Children } from 'react'
 
 export default {
     title: 'inputs/Button',
@@ -11,14 +11,14 @@ const Template: Story<JBButtonProps> = args => <JBButton {...args} />
 
 export const Primary: Story<JBButtonProps> = Template.bind({})
 Primary.args = {
-    variant: "primary",
-    children: "Hello, button!"
+    variant: 'primary',
+    children: 'Hello, button!'
 }
 
 export const Disabled: Story<JBButtonProps> = Template.bind({})
 Disabled.args = {
     variant: 'disabled',
-    children: "Disabled button!"
+    children: 'Disabled button!'
 }
 
 export const Outline: Story<JBButtonProps> = Template.bind({})
@@ -29,7 +29,7 @@ Outline.args = {
 
 export const CircleLarge: Story<JBButtonProps> = Template.bind({})
 CircleLarge.args = {
-    variant: "circle-large",
+    variant: 'circle-large',
     children: 'large circle'
 }
 

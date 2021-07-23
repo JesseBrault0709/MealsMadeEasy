@@ -4,7 +4,7 @@ import BulletFilled from './assets/BulletFilled.png'
 import BulletEmpty from './assets/BulletEmpty.png'
 
 import { Story } from '@storybook/react'
-import { Sequence, SequenceProps } from "./Sequence";
+import { Sequence, SequenceProps } from './Sequence'
 
 export default {
     title: 'Common/Sequence',
@@ -18,17 +18,23 @@ Stars.args = {
     value: 0,
     outOf: 5,
     getCompleted: () => <img src={Star} />,
-    getIncomplete: () => <img src={DarkStar} /> 
+    getIncomplete: () => <img src={DarkStar} />
 }
 
 export const Bullets: Story<SequenceProps> = Template.bind({})
 Bullets.args = {
     value: 0,
     outOf: 3,
-    getCompleted: () => <img 
-        src={BulletFilled} style={{ marginLeft: "10px", marginRight: "10px"}} 
-    />,
-    getIncomplete: () => <img
-        src={BulletEmpty} style={{ marginLeft: "10px", marginRight: "10px" }}
-    />
+    getCompleted: () => (
+        <img
+            src={BulletFilled}
+            style={{ marginLeft: '10px', marginRight: '10px' }}
+        />
+    ),
+    getIncomplete: () => (
+        <img
+            src={BulletEmpty}
+            style={{ marginLeft: '10px', marginRight: '10px' }}
+        />
+    )
 }

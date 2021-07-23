@@ -1,5 +1,5 @@
-import { Story } from "@storybook/react"
-import { ClockSlider, ClockSliderProps } from "./ClockSlider"
+import { Story } from '@storybook/react'
+import { ClockSlider, ClockSliderProps } from './ClockSlider'
 
 export default {
     title: 'Inputs/ClockSlider',

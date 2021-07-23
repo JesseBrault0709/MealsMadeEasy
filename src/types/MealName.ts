@@ -1,1 +1,1 @@
-export type MealName = "Breakfast" | "Lunch" | "Dinner"
+export type MealName = 'Breakfast' | 'Lunch' | 'Dinner'

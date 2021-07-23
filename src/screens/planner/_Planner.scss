@@ -1,0 +1,74 @@
+.planner {
+    width: 100%;
+    padding-bottom: 100px;
+}
+
+.planner-heading {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border-bottom: 1px solid var(--primary-black);
+}
+
+.heading-date,
+.heading-meal {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 32px;
+    text-align: center;
+    color: var(--primary-black);
+}
+
+.heading-date {
+    width: 15%;
+}
+
+.heading-meal {
+    width: 25%;
+}
+
+.day-row {
+    border-bottom: 1px solid white;
+
+    padding: 15px 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.day-row-dark {
+    background-color: var(--zebra-dark);
+}
+
+.day-row-light {
+    background-color: var(--zebra-light);
+}
+
+.day-row-date-and-day {
+    width: 15%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.day-row-date,
+.day-row-day {
+    color: #111111;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.meal-col {
+    width: 25%;
+}

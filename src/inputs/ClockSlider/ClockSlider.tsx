@@ -1,9 +1,7 @@
-import './ClockSlider.css'
-
 import React, { useRef } from 'react'
 
 /**
- * Styles for each position on the clock slider. 
+ * Styles for each position on the clock slider.
  */
 
 const leftRightOpacity = '60%'
@@ -12,7 +10,7 @@ const hiddenOpacity = '0%'
 const nonCenterStyle = {
     width: '50px',
     height: '50px',
-    backgroundColor: 'var(--primary-fill)',
+    backgroundColor: 'var(--primary-fill)'
 }
 
 const leftHiddenStyle = {
@@ -41,7 +39,6 @@ const rightStyle = {
     transform: 'translateX(225px) translateY(50px) rotate(45deg)',
     opacity: '70%',
     ...nonCenterStyle
-
 }
 
 const rightHiddenStyle = {
@@ -49,8 +46,6 @@ const rightHiddenStyle = {
     opacity: hiddenOpacity,
     ...nonCenterStyle
 }
-
-
 
 // Keyframes for animations
 
@@ -79,35 +74,30 @@ const timingOptions = {
  *  1. Checks if the checkPredicate returns true, and if so:
  *  2. Runs the specified animations, and
  *  3. Runs the given onFinished callback when all animations are finished.
- * 
+ *
  * If the checkPredicate returns false, it is a no-op.
  */
 function getRotation(
-    checkPredicate: () => boolean, 
-    getAnimations: () => ReadonlyArray<Animation | undefined>, 
+    checkPredicate: () => boolean,
+    getAnimations: () => ReadonlyArray<Animation | undefined>,
     onFinished: () => void
 ) {
-
     return () => {
         if (checkPredicate()) {
-            Promise.all(
-                getAnimations().map(animation => animation?.finished)
-            )
+            Promise.all(getAnimations().map(animation => animation?.finished))
                 .then(onFinished)
                 .catch(console.log)
-        }   
+        }
     }
-
 }
 
 export type ClockSliderProps = {
-    options: ReadonlyArray<string>,
-    valueIndex: number,
+    options: ReadonlyArray<string>
+    valueIndex: number
     onChange: (newValue: string) => void
 }
 
 export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
-
     const { options } = props
 
     // TODO: write test(s) for this
@@ -121,9 +111,8 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
     const rightRef = useRef<HTMLDivElement>(null)
     const rightHiddenRef = useRef<HTMLDivElement>(null)
 
-    const runOnChangeCallback = (nextCenter: number) => 
+    const runOnChangeCallback = (nextCenter: number) =>
         props.onChange(options[nextCenter])
-
 
     const clockwise = getRotation(
         () => props.valueIndex > 0,
@@ -223,36 +212,64 @@ export function ClockSlider(props: React.PropsWithoutRef<ClockSliderProps>) {
 
     const currentCenter = props.valueIndex
 
-    return <div 
-        className="clock-slider"
-
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-        onTouchCancel={onTouchCancel}
-        
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-    >
-
-        <div ref={leftHiddenRef} className="clock-hour clock-hour-left-hidden" style={leftHiddenStyle}>
-            <span>{currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}</span>
+    return (
+        <div
+            className="clock-slider"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchCancel}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+        >
+            <div
+                ref={leftHiddenRef}
+                className="clock-hour clock-hour-left-hidden"
+                style={leftHiddenStyle}
+            >
+                <span>
+                    {currentCenter - 2 >= 0 ? options[currentCenter - 2] : ''}
+                </span>
+            </div>
+            <div
+                ref={leftRef}
+                className="clock-hour clock-hour-left"
+                style={leftStyle}
+            >
+                <span>
+                    {currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}
+                </span>
+            </div>
+            <div
+                ref={centerRef}
+                className="clock-hour clock-hour-center"
+                style={centerStyle}
+            >
+                <span>{options[currentCenter]}</span>
+            </div>
+            <div
+                ref={rightRef}
+                className="clock-hour clock-hour-right"
+                style={rightStyle}
+            >
+                <span>
+                    {currentCenter + 1 < options.length
+                        ? options[currentCenter + 1]
+                        : ''}
+                </span>
+            </div>
+            <div
+                ref={rightHiddenRef}
+                className="clock-hour clock-hour-right-hidden"
+                style={rightHiddenStyle}
+            >
+                <span>
+                    {currentCenter + 2 < options.length
+                        ? options[currentCenter + 2]
+                        : ''}
+                </span>
+            </div>
         </div>
-        <div ref={leftRef} className="clock-hour clock-hour-left" style={leftStyle}>
-            <span>{currentCenter - 1 >= 0 ? options[currentCenter - 1] : ''}</span>
-        </div>
-        <div ref={centerRef} className="clock-hour clock-hour-center" style={centerStyle}>
-            <span>{options[currentCenter]}</span>
-        </div>
-        <div ref={rightRef} className="clock-hour clock-hour-right" style={rightStyle}>
-            <span>{currentCenter + 1 < options.length ? options[currentCenter + 1] : ''}</span>
-        </div>
-        <div ref={rightHiddenRef} className="clock-hour clock-hour-right-hidden" style={rightHiddenStyle}>
-            <span>{currentCenter + 2 < options.length ? options[currentCenter + 2] : ''}</span>
-        </div>
-
-    </div>
-
-
+    )
 }

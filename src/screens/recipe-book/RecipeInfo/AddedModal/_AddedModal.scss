@@ -1,0 +1,14 @@
+.added-modal {
+    height: 150px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.added-modal > * {
+    margin-left: 5px;
+    margin-right: 5px;
+}

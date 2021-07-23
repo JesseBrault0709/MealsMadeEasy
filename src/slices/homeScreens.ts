@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { HomeScreen } from "../screens/home/Home";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { HomeScreen } from '../screens/home/Home'
 
 export type HomeScreensState = {
     current: HomeScreen
 }
 
 const initialState: HomeScreensState = {
-    current: "Recipe Book"
+    current: 'Recipe Book'
 }
 
 export const homeScreensSlice = createSlice({

@@ -2,7 +2,7 @@ import { Story } from '@storybook/react'
 import { TagChip, TagChipProps } from './TagChip'
 
 export default {
-    title: "RecipeBook/TagChip",
+    title: 'RecipeBook/TagChip',
     component: TagChip
 }
 

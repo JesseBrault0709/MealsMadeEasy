@@ -1,35 +1,34 @@
-import './SelectMealType.css'
-import { JBButton } from "../../../inputs/Button/JBButton"
+import { JBButton } from '../../../inputs/Button/JBButton'
 import { MealName } from '../../../types/MealName'
 
 export type SelectMealTypeProps = {
     meals: ReadonlyArray<MealName>
-    onMealSelect: (meal: MealName) => void,
+    onMealSelect: (meal: MealName) => void
     activeMeal?: MealName
 }
 
 export function SelectMealType(props: SelectMealTypeProps) {
-    
     const getOnClick = (meal: MealName) => () => {
         props.onMealSelect(meal)
     }
 
-    return <div className="select-meal-type">
+    return (
+        <div className="select-meal-type">
+            <h3>Select Meal Type</h3>
 
-        <h3>Select Meal Type</h3>
-
-        <div className="select-meal-type-buttons">
-            {
-                props.meals.map((meal, index) => 
-                    <JBButton 
-                        key={`${meal}_${index}`} 
-                        onClick={getOnClick(meal)} 
+            <div className="select-meal-type-buttons">
+                {props.meals.map((meal, index) => (
+                    <JBButton
+                        key={`${meal}_${index}`}
+                        onClick={getOnClick(meal)}
                         active={meal === props.activeMeal}
                         variant="outline"
                         style={{ width: '30%' }}
-                    >{meal}</JBButton>
-                )
-            }
+                    >
+                        {meal}
+                    </JBButton>
+                ))}
+            </div>
         </div>
-    </div> 
+    )
 }

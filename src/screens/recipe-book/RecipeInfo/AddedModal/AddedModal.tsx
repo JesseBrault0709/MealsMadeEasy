@@ -1,13 +1,11 @@
 import Check from './assets/Check.png'
-import './AddedModal.css'
 
-import ReactDOM from "react-dom";
-import { BottomModal } from "../../../common/BottomModal/BottomModal";
-import { getModalEffect } from '../../../../util';
-import { useEffect } from 'react';
+import ReactDOM from 'react-dom'
+import { BottomModal } from '../../../common/BottomModal/BottomModal'
+import { getModalEffect } from '../../../../util'
+import { useEffect } from 'react'
 
 export function AddedModal() {
-
     const modalEffect = getModalEffect()
 
     useEffect(() => modalEffect(), [modalEffect])

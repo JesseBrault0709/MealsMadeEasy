@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { RecipeSelection } from "../types/DayMealPlan"
-import { MealName } from "../types/MealName"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RecipeSelection } from '../types/DayMealPlan'
+import { MealName } from '../types/MealName'
 
 type SelectionModeState = {
     mode: 'add' | 'replace'
     target?: {
-        date: Date,
-        meal: MealName,
+        date: Date
+        meal: MealName
         selection: RecipeSelection
     }
 }
@@ -19,25 +19,24 @@ export const selectionModeSlice = createSlice({
     name: 'selectionMode',
     initialState,
     reducers: {
-
-        setToAddMode: (
-            state,
-            action: PayloadAction<{ mode: 'add' }>
-        ) => {
+        setToAddMode: (state, action: PayloadAction<{ mode: 'add' }>) => {
             state.mode = action.payload.mode
         },
-        
+
         setToReplaceMode: (
             state,
             action: PayloadAction<{
-                mode: 'replace',
-                targetDate: Date,
-                targetMeal: MealName,
+                mode: 'replace'
+                targetDate: Date
+                targetMeal: MealName
                 targetSelection: RecipeSelection
             }>
         ) => {
             const {
-                mode, targetDate, targetMeal, targetSelection
+                mode,
+                targetDate,
+                targetMeal,
+                targetSelection
             } = action.payload
 
             state.mode = mode

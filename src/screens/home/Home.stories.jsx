@@ -19,7 +19,7 @@ Primary.args = {
 
     initialDayMealPlans: [
         {
-            date: new Date("July 2, 2021"),
+            date: new Date('July 2, 2021'),
             meals: [
                 {
                     mealName: 'Breakfast',
@@ -36,7 +36,7 @@ Primary.args = {
             ]
         },
         {
-            date: new Date("July 4, 2021"),
+            date: new Date('July 4, 2021'),
             meals: [
                 {
                     mealName: 'Breakfast',
