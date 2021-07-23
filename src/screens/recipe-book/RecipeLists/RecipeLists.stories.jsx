@@ -1,4 +1,4 @@
-import { RecipeLists } from "./RecipeLists";
+import { RecipeLists } from './RecipeLists'
 
 export default {
     title: 'RecipeBook/RecipeList',
@@ -20,7 +20,7 @@ Primary.args = {
     cookingTime: '30 mins',
     diet: 'Vegetarian',
     intolerances: [],
-    
+
     recipeResultSetSize: 1,
 
     onRecipeCardClick: recipe => {
@@ -41,5 +41,4 @@ Primary.args = {
             getRecipes: getRecipeGetter(['Pasta', 'Rice', 'Pork'])
         }
     ]
-
 }

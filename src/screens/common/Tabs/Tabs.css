@@ -26,6 +26,6 @@
 
 .tab.active {
     border-bottom: 1px solid var(--primary-black);
-    
+
     font-weight: 500;
 }

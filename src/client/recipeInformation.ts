@@ -10,15 +10,14 @@ export async function getRecipeInformation(
     id: number,
     params: RecipeInformationParams = {}
 ): Promise<FullRecipe> {
-    return await axios.get<FullRecipe>(
-        calcUrl(`/recipeInformation`),
-        {
+    return await axios
+        .get<FullRecipe>(calcUrl(`/recipeInformation`), {
             params: {
                 id,
                 ...params
             }
-        }
-    ).then(response => {
-        return response.data
-    })
+        })
+        .then(response => {
+            return response.data
+        })
 }

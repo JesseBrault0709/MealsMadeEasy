@@ -18,7 +18,6 @@ import { setHomeScreen } from '../../../slices/homeScreens'
 import { setRecipeBookScreen } from '../../../slices/recipeBook'
 
 export function NavBar() {
-
     const dispatch = useAppDispatch()
     const currentHomeScreen = useAppSelector(state => state.homeScreens.current)
 
@@ -31,27 +30,41 @@ export function NavBar() {
         dispatch(setHomeScreen({ screen: 'Planner' }))
     }
 
-    return <div className="nav-bar-container">
+    return (
+        <div className="nav-bar-container">
+            <div className="nav-button" onClick={onRecipeBookClick}>
+                <img
+                    src={
+                        currentHomeScreen === 'Recipe Book'
+                            ? RecipesActive
+                            : RecipesInactive
+                    }
+                    alt="Recipes"
+                />
+                <p>Recipes</p>
+            </div>
 
-        <div className="nav-button" onClick={onRecipeBookClick}>
-            <img src={currentHomeScreen === 'Recipe Book' ? RecipesActive : RecipesInactive} alt="Recipes" />
-            <p>Recipes</p>
+            <div className="nav-button" onClick={onPlannerClick}>
+                <img
+                    src={
+                        currentHomeScreen === 'Planner'
+                            ? PlannerActive
+                            : PlannerInactive
+                    }
+                    alt="Planner"
+                />
+                <p>Planner</p>
+            </div>
+
+            <div className="nav-button nav-button-disabled">
+                <img src={GroceriesInactive} alt="Groceries" />
+                <p>Groceries</p>
+            </div>
+
+            <div className="nav-button nav-button-disabled">
+                <img src={SettingsInactive} alt="Settings" />
+                <p>Settings</p>
+            </div>
         </div>
-
-        <div className="nav-button" onClick={onPlannerClick}>
-            <img src={currentHomeScreen === 'Planner' ? PlannerActive : PlannerInactive} alt="Planner" />
-            <p>Planner</p>
-        </div>
-
-        <div className="nav-button nav-button-disabled">
-            <img src={GroceriesInactive} alt="Groceries" />
-            <p>Groceries</p>
-        </div>
-
-        <div className="nav-button nav-button-disabled">
-            <img src={SettingsInactive} alt="Settings" />
-            <p>Settings</p>
-        </div>
-
-    </div>
+    )
 }

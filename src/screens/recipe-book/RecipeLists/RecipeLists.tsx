@@ -1,18 +1,21 @@
 // import './RecipeLists.css'
 
-import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
+import { TimeDietAllergies } from './TimeDietAllergies/TimeDietAllergies'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
 import { useAppDispatch, useAppSelector } from '../../../index'
-import { fetchRecipes, resetAllRecipes, setActiveList } from '../../../slices/recipeLists'
+import {
+    fetchRecipes,
+    resetAllRecipes,
+    setActiveList
+} from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {
-    onRecipeCardClick: (recipe: RecipeOverview) => void,
+    onRecipeCardClick: (recipe: RecipeOverview) => void
 }
 
 export function RecipeLists(props: RecipeListsProps) {
-
     const dispatch = useAppDispatch()
 
     const lists = useAppSelector(state => state.recipeLists.lists)
@@ -22,16 +25,16 @@ export function RecipeLists(props: RecipeListsProps) {
         throw new Error('there is no active list')
     }
 
-    return <div className="recipe-lists">
-        <TimeDietAllergies 
-            onChange={() => {
-                dispatch(resetAllRecipes())
-                dispatch(fetchRecipes(activeList))
-            }}
-        />
-        <Tabs>
-            {
-                lists.map(list => 
+    return (
+        <div className="recipe-lists">
+            <TimeDietAllergies
+                onChange={() => {
+                    dispatch(resetAllRecipes())
+                    dispatch(fetchRecipes(activeList))
+                }}
+            />
+            <Tabs>
+                {lists.map(list => (
                     <Tab
                         key={list.name}
                         onClick={() => {
@@ -39,13 +42,15 @@ export function RecipeLists(props: RecipeListsProps) {
                             dispatch(setActiveList({ listName: list.name }))
                         }}
                         active={list.name === activeList}
-                    >{list.name}</Tab>
-                )
-            }
-        </Tabs>
-        <RecipeList
-            name={activeList}
-            onRecipeCardClick={props.onRecipeCardClick}
-        />
-    </div>
+                    >
+                        {list.name}
+                    </Tab>
+                ))}
+            </Tabs>
+            <RecipeList
+                name={activeList}
+                onRecipeCardClick={props.onRecipeCardClick}
+            />
+        </div>
+    )
 }

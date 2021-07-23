@@ -1,8 +1,12 @@
-import { createAsyncThunk, createSlice, SerializedError } from "@reduxjs/toolkit";
-import { useEffect } from "react";
-import { FullRecipe } from "../client/FullRecipe";
-import { getRecipeInformation } from "../client/recipeInformation";
-import { useAppDispatch, useAppSelector } from "../index"
+import {
+    createAsyncThunk,
+    createSlice,
+    SerializedError
+} from '@reduxjs/toolkit'
+import { useEffect } from 'react'
+import { FullRecipe } from '../client/FullRecipe'
+import { getRecipeInformation } from '../client/recipeInformation'
+import { useAppDispatch, useAppSelector } from '../index'
 
 export type FullRecipesState = {
     recipes: ReadonlyArray<FullRecipe>
@@ -16,16 +20,15 @@ const initialState: FullRecipesState = {
 }
 
 export const fetchFullRecipe = createAsyncThunk(
-    'fullRecipes/fetchRecipeOverview', 
+    'fullRecipes/fetchRecipeOverview',
     async (id: number) => await getRecipeInformation(id)
 )
 
 export const fullRecipesSlice = createSlice({
     name: 'fullRecipes',
     initialState,
-    reducers: { },
+    reducers: {},
     extraReducers: builder => {
-        
         builder.addCase(fetchFullRecipe.pending, state => {
             state.fetchStatus = 'fetching'
         })
@@ -39,21 +42,21 @@ export const fullRecipesSlice = createSlice({
             state.fetchStatus = 'error'
             state.fetchError = action.error
         })
-
     }
 })
 
-export const useFullRecipe = (id: number): {
-    recipe?: FullRecipe,
-    fetchStatus: FullRecipesState['fetchStatus'],
+export const useFullRecipe = (
+    id: number
+): {
+    recipe?: FullRecipe
+    fetchStatus: FullRecipesState['fetchStatus']
     fetchError?: FullRecipesState['fetchError']
 } => {
-    
     const dispatch = useAppDispatch()
 
-    const recipe = useAppSelector(state => state.fullRecipes.recipes.find(
-        recipe => recipe.id === id
-    ))
+    const recipe = useAppSelector(state =>
+        state.fullRecipes.recipes.find(recipe => recipe.id === id)
+    )
 
     useEffect(() => {
         if (recipe === undefined) {
@@ -65,7 +68,8 @@ export const useFullRecipe = (id: number): {
     const fetchError = useAppSelector(state => state.fullRecipes.fetchError)
 
     return {
-        recipe, fetchStatus, fetchError
+        recipe,
+        fetchStatus,
+        fetchError
     }
-    
 }

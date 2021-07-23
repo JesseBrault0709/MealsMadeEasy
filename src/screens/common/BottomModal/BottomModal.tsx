@@ -5,7 +5,5 @@ export type BottomModalProps = {
 }
 
 export function BottomModal(props: BottomModalProps) {
-    return <div className="bottom-modal">
-        {props.children}
-    </div>
+    return <div className="bottom-modal">{props.children}</div>
 }

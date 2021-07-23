@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RecipePreferences } from "../types/RecipePreferences";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RecipePreferences } from '../types/RecipePreferences'
 
 type RecipePreferencesState = {
-    preferences: RecipePreferences,
+    preferences: RecipePreferences
     completedOnboarding: boolean
 }
 
@@ -19,12 +19,15 @@ export const recipePreferencesSlice = createSlice({
     name: 'recipePreferences',
     initialState,
     reducers: {
-
         setPreferences: (
             state,
             action: PayloadAction<{ preferences: RecipePreferences }>
         ) => {
-            const { cookingTime, diet, intolerances } = action.payload.preferences
+            const {
+                cookingTime,
+                diet,
+                intolerances
+            } = action.payload.preferences
 
             state.preferences = {
                 cookingTime,
@@ -34,8 +37,10 @@ export const recipePreferencesSlice = createSlice({
         },
 
         setCookingTime: (
-            state, 
-            action: PayloadAction<{ cookingTime: RecipePreferences['cookingTime'] }>
+            state,
+            action: PayloadAction<{
+                cookingTime: RecipePreferences['cookingTime']
+            }>
         ) => {
             state.preferences = {
                 ...state.preferences,
@@ -55,17 +60,19 @@ export const recipePreferencesSlice = createSlice({
 
         setIntolerances: (
             state,
-            action: PayloadAction<{ intolerances: RecipePreferences['intolerances'] }>
+            action: PayloadAction<{
+                intolerances: RecipePreferences['intolerances']
+            }>
         ) => {
-            action.payload.intolerances === undefined ?
-                state.preferences = {
-                    ...state.preferences,
-                    intolerances: []
-                } :
-                state.preferences = {
-                    ...state.preferences,
-                    intolerances: [...(action.payload.intolerances ?? [])]
-                }
+            action.payload.intolerances === undefined
+                ? (state.preferences = {
+                      ...state.preferences,
+                      intolerances: []
+                  })
+                : (state.preferences = {
+                      ...state.preferences,
+                      intolerances: [...(action.payload.intolerances ?? [])]
+                  })
         },
 
         setCompletedOnboarding: (
@@ -74,9 +81,13 @@ export const recipePreferencesSlice = createSlice({
         ) => {
             state.completedOnboarding = action.payload.completedOnboarding
         }
-
     }
 })
 
-export const { setPreferences, setCookingTime, setDiet, setIntolerances, setCompletedOnboarding } = recipePreferencesSlice.actions
-
+export const {
+    setPreferences,
+    setCookingTime,
+    setDiet,
+    setIntolerances,
+    setCompletedOnboarding
+} = recipePreferencesSlice.actions

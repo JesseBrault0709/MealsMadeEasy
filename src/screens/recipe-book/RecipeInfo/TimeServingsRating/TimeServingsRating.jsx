@@ -13,15 +13,17 @@ import { RecipeRating } from '../../RecipeRating/RecipeRating'
  * }} props
  */
 export function TimeServingsRating(props) {
-    return <div className="time-servings-rating">
-        <div className="time">
-            <img src={Clock} alt="Time" />
-            <span>{props.time} minutes</span>
+    return (
+        <div className="time-servings-rating">
+            <div className="time">
+                <img src={Clock} alt="Time" />
+                <span>{props.time} minutes</span>
+            </div>
+            <div className="servings">
+                <img src={Servings} alt="Servings" />
+                <span>{props.servings} servings</span>
+            </div>
+            <RecipeRating rating={props.rating} outOf={5} />
         </div>
-        <div className="servings">
-            <img src={Servings} alt="Servings" />
-            <span>{props.servings} servings</span>
-        </div>
-        <RecipeRating rating={props.rating} outOf={5} />
-    </div>
+    )
 }

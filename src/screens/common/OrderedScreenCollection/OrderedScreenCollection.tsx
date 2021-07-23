@@ -9,40 +9,67 @@ import { useState } from 'react'
 import { Sequence } from '../Sequence/Sequence'
 
 type OrderedScreenProps = {
-    onPrevious?: () => void,
-    onNext?: () => void,
+    onPrevious?: () => void
+    onNext?: () => void
 
-    index: number,
-    outOf: number,
+    index: number
+    outOf: number
 
     children: React.ReactNode
 }
 
 function OrderedScreen(props: OrderedScreenProps) {
-    return <div className="ordered-screen">
-        <div className="ordered-screen-children">
-            {props.children}
-        </div>
-        <div className="ordered-screen-buttons">
-            <div className="arrow-container">
-                {props.onPrevious !== undefined ? <img src={ArrowLeft} onClick={props.onPrevious} alt="previous" /> : ''}
+    return (
+        <div className="ordered-screen">
+            <div className="ordered-screen-children">{props.children}</div>
+            <div className="ordered-screen-buttons">
+                <div className="arrow-container">
+                    {props.onPrevious !== undefined ? (
+                        <img
+                            src={ArrowLeft}
+                            onClick={props.onPrevious}
+                            alt="previous"
+                        />
+                    ) : (
+                        ''
+                    )}
+                </div>
+                <Sequence
+                    value={props.index + 1}
+                    outOf={props.outOf}
+                    getCompleted={() => (
+                        <img
+                            src={BulletFilled}
+                            style={{ marginLeft: '10px', marginRight: '10px' }}
+                            alt=""
+                        />
+                    )}
+                    getIncomplete={() => (
+                        <img
+                            src={BulletEmpty}
+                            style={{ marginLeft: '10px', marginRight: '10px' }}
+                            alt=""
+                        />
+                    )}
+                />
+                <div className="arrow-container">
+                    {props.onNext !== undefined ? (
+                        <img
+                            src={ArrowRight}
+                            onClick={props.onNext}
+                            alt="next"
+                        />
+                    ) : (
+                        ''
+                    )}
+                </div>
             </div>
-            <Sequence 
-                value={props.index + 1} 
-                outOf={props.outOf} 
-                getCompleted={() => <img src={BulletFilled} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>}
-                getIncomplete={() => <img src={BulletEmpty} style={{ marginLeft: "10px" , marginRight: "10px" }} alt=""/>} 
-            />
-            <div className="arrow-container">
-                {props.onNext !== undefined ? <img src={ArrowRight} onClick={props.onNext} alt="next" /> : ''}
-            </div>
         </div>
-    </div>
+    )
 }
 
-
 export type OrderedScreenCollectionProps = {
-    children: React.ReactNodeArray,
+    children: React.ReactNodeArray
     onLastNext?: () => void
 }
 
@@ -62,13 +89,14 @@ export function OrderedScreenCollection(props: OrderedScreenCollectionProps) {
         }
     }
 
-    return <OrderedScreen
-        index={currentIndex}
-        outOf={props.children.length}
-        onPrevious={currentIndex !== 0 ? onPrevious : undefined}
-        onNext={onNext}
-    >
-        {props.children[currentIndex]}
-    </OrderedScreen>
-
+    return (
+        <OrderedScreen
+            index={currentIndex}
+            outOf={props.children.length}
+            onPrevious={currentIndex !== 0 ? onPrevious : undefined}
+            onNext={onNext}
+        >
+            {props.children[currentIndex]}
+        </OrderedScreen>
+    )
 }

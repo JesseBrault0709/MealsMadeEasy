@@ -1,26 +1,32 @@
 {
-    "availableCookingTimes": [
-        "No Limit", 15, 30, 45, 60
-    ],
+    "availableCookingTimes": ["No Limit", 15, 30, 45, 60],
     "initialCookingTime": 15,
 
     "availableDiets": [
-        "Gluten Free", "Ketogenic",
-        "Vegan", "Vegetarian",
-        "Pescetarian", "Paleo", 
+        "Gluten Free",
+        "Ketogenic",
+        "Vegan",
+        "Vegetarian",
+        "Pescetarian",
+        "Paleo",
         "Whole30"
     ],
 
     "availableIntolerances": [
-        "Dairy", "Egg", "Gluten", 
-        "Grain", "Peanut", "Seafood",
-        "Sesame", "Shellfish", "Soy",
-        "Tree Nut", "Wheat"
+        "Dairy",
+        "Egg",
+        "Gluten",
+        "Grain",
+        "Peanut",
+        "Seafood",
+        "Sesame",
+        "Shellfish",
+        "Soy",
+        "Tree Nut",
+        "Wheat"
     ],
 
-    "meals": [
-        "Breakfast", "Lunch", "Dinner"
-    ],
+    "meals": ["Breakfast", "Lunch", "Dinner"],
 
     "recipeListTabs": [
         {
@@ -36,6 +42,6 @@
             "type": "breakfast"
         }
     ],
-    
+
     "recipeListLimit": 6
 }

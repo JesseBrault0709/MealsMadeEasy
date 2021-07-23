@@ -1,7 +1,7 @@
-import { NavBar, ActiveNavBarButton } from "./NavBar";
+import { NavBar, ActiveNavBarButton } from './NavBar'
 
 export default {
-    title: "common/NavBar",
+    title: 'common/NavBar',
     component: NavBar
 }
 

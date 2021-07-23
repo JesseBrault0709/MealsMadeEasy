@@ -9,7 +9,11 @@ import { RecipePreferences } from '../../../../types/RecipePreferences'
 import { useState } from 'react'
 import { ChangeCookingTime } from './ChangeCookingTime/ChangeCookingTime'
 import { useAppDispatch, useAppSelector } from '../../../../index'
-import { setCookingTime, setDiet, setIntolerances } from '../../../../slices/recipePreferences'
+import {
+    setCookingTime,
+    setDiet,
+    setIntolerances
+} from '../../../../slices/recipePreferences'
 import { ChangeDiet } from './ChangeDiet/ChangeDiet'
 import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
@@ -18,14 +22,19 @@ export type TimeDietAllergiesProps = {
 }
 
 export function TimeDietAllergies(props: TimeDietAllergiesProps) {
-
     const dispatch = useAppDispatch()
 
-    const { cookingTime, diet, intolerances } = useAppSelector(state => state.recipePreferences.preferences)
-    
-    const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(false)
+    const { cookingTime, diet, intolerances } = useAppSelector(
+        state => state.recipePreferences.preferences
+    )
 
-    const onChangeCookingTimeSubmit = (newCookingTime: RecipePreferences['cookingTime']) => {
+    const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(
+        false
+    )
+
+    const onChangeCookingTimeSubmit = (
+        newCookingTime: RecipePreferences['cookingTime']
+    ) => {
         dispatch(setCookingTime({ cookingTime: newCookingTime }))
         setShowChangeCookingTime(false)
         props.onChange()
@@ -34,7 +43,6 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     const onChangeCookingTimeCancel = () => {
         setShowChangeCookingTime(false)
     }
-
 
     const [showChangeDiet, setShowChangeDiet] = useState(false)
 
@@ -48,10 +56,11 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
         setShowChangeDiet(false)
     }
 
-    
     const [showChangeIntolerances, setShowChangeIntolerances] = useState(false)
 
-    const onChangeIntolerancesSubmit = (newIntolerances: RecipePreferences['intolerances']) => {
+    const onChangeIntolerancesSubmit = (
+        newIntolerances: RecipePreferences['intolerances']
+    ) => {
         dispatch(setIntolerances({ intolerances: newIntolerances }))
         setShowChangeIntolerances(false)
         props.onChange()
@@ -61,76 +70,86 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
         setShowChangeIntolerances(false)
     }
 
-
-    const renderEmptyChip = (label: string, onClick: () => void) => 
+    const renderEmptyChip = (label: string, onClick: () => void) => (
         <Chip
             avatar={<img src={X} alt="" />}
             label={label}
             type="no-value"
             onClick={onClick}
         />
+    )
 
-
-    return <div className="time-diet-allergies">
-        <img className="funnel" src={Funnel} alt=""/>
-        {
-            cookingTime !== null ?
-                <Chip 
-                    avatar={<img src={Check} alt=""/>} 
-                    label={cookingTime === "No Limit" ? cookingTime : `${cookingTime} mins`} 
+    return (
+        <div className="time-diet-allergies">
+            <img className="funnel" src={Funnel} alt="" />
+            {cookingTime !== null ? (
+                <Chip
+                    avatar={<img src={Check} alt="" />}
+                    label={
+                        cookingTime === 'No Limit'
+                            ? cookingTime
+                            : `${cookingTime} mins`
+                    }
                     type="strong"
                     onClick={() => setShowChangeCookingTime(true)}
-                /> :
-                renderEmptyChip("Time", () => setShowChangeCookingTime(true))
-        }
+                />
+            ) : (
+                renderEmptyChip('Time', () => setShowChangeCookingTime(true))
+            )}
 
-        {
-            diet !== null ?
-                <Chip 
-                    avatar={<img src={Check} alt=""/>} 
+            {diet !== null ? (
+                <Chip
+                    avatar={<img src={Check} alt="" />}
                     label={diet}
                     type="strong"
                     onClick={() => setShowChangeDiet(true)}
-                /> :
-                renderEmptyChip("Diet", () => setShowChangeDiet(true))
-        }
+                />
+            ) : (
+                renderEmptyChip('Diet', () => setShowChangeDiet(true))
+            )}
 
-        {
-            intolerances === null || intolerances.length === 0 ?
-                renderEmptyChip("Allergies", () => setShowChangeIntolerances(true)):
+            {intolerances === null || intolerances.length === 0 ? (
+                renderEmptyChip('Allergies', () =>
+                    setShowChangeIntolerances(true)
+                )
+            ) : (
                 <Chip
                     avatar={intolerances.length}
                     label="Allergies"
                     type="strong"
                     onClick={() => setShowChangeIntolerances(true)}
                 />
-        }
+            )}
 
-        {
-            showChangeCookingTime ?
+            {showChangeCookingTime ? (
                 <ChangeCookingTime
                     initialCookingTime={cookingTime}
                     onSubmit={onChangeCookingTimeSubmit}
                     onCancel={onChangeCookingTimeCancel}
-                /> : ''
-        }
+                />
+            ) : (
+                ''
+            )}
 
-        {
-            showChangeDiet ?
+            {showChangeDiet ? (
                 <ChangeDiet
                     initialDiet={diet}
                     onCancel={onChangeDietCancel}
                     onSubmit={onChangeDietSubmit}
-                /> : ''
-        }
+                />
+            ) : (
+                ''
+            )}
 
-        {
-            showChangeIntolerances ?
+            {showChangeIntolerances ? (
                 <ChangeIntolerances
                     initialIntolerances={intolerances}
                     onCancel={onChangeIntolerancesCancel}
                     onSubmit={onChangeIntolerancesSubmit}
-                /> : ''
-        }
-    </div>
+                />
+            ) : (
+                ''
+            )}
+        </div>
+    )
 }

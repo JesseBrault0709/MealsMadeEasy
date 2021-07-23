@@ -9,10 +9,12 @@ export type RecipeRatingProps = {
 }
 
 export function RecipeRating(props: RecipeRatingProps) {
-    return <Sequence 
-        value={props.rating}
-        outOf={props.outOf}
-        getCompleted={() => <img src={Star} alt=""/>}
-        getIncomplete={() => <img src={DarkStar} alt=""/>}
-    />
+    return (
+        <Sequence
+            value={props.rating}
+            outOf={props.outOf}
+            getCompleted={() => <img src={Star} alt="" />}
+            getIncomplete={() => <img src={DarkStar} alt="" />}
+        />
+    )
 }

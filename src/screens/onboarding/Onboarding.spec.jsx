@@ -7,5 +7,5 @@ it('renders without throwing when given correct props', () => {
         diets: [],
         restrictions: []
     }
-    render(<Onboarding {...props}/>)
+    render(<Onboarding {...props} />)
 })

@@ -1,27 +1,36 @@
-
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider, TypedUseSelectorHook, useDispatch, useSelector, useStore } from "react-redux";
-import { appConfig } from "./appConfig";
-import { configureStore } from "@reduxjs/toolkit";
-import { appScreensSlice } from "./slices/appScreens";
-import { dayMealPlansSlice, mergeDayMealPlans } from "./slices/dayMealPlans";
-import { fullRecipesSlice } from "./slices/fullRecipes";
-import { homeScreensSlice } from "./slices/homeScreens";
-import { recipeBookSlice } from "./slices/recipeBook";
-import { recipeListsSlice } from "./slices/recipeLists";
-import { recipePreferencesSlice, setCompletedOnboarding, setPreferences } from "./slices/recipePreferences";
-import { selectionModeSlice } from "./slices/selectionMode";
-import { DayMealPlan } from "./types/DayMealPlan";
-import { RecipePreferences } from "./types/RecipePreferences";
 // import './index.css';
 import './styles.scss'
 
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import {
+    Provider,
+    TypedUseSelectorHook,
+    useDispatch,
+    useSelector,
+    useStore
+} from 'react-redux'
+import { appConfig } from './appConfig'
+import { configureStore } from '@reduxjs/toolkit'
+import { appScreensSlice } from './slices/appScreens'
+import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
+import { fullRecipesSlice } from './slices/fullRecipes'
+import { homeScreensSlice } from './slices/homeScreens'
+import { recipeBookSlice } from './slices/recipeBook'
+import { recipeListsSlice } from './slices/recipeLists'
+import {
+    recipePreferencesSlice,
+    setCompletedOnboarding,
+    setPreferences
+} from './slices/recipePreferences'
+import { selectionModeSlice } from './slices/selectionMode'
+import { DayMealPlan } from './types/DayMealPlan'
+import { RecipePreferences } from './types/RecipePreferences'
+
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
-
 
 /** The main store object from redux, and associated consts/types */
 const store = configureStore({
@@ -59,7 +68,9 @@ const hydrateDayMealPlans = () => {
     if (oldDayMealPlansJSON !== null) {
         try {
             console.log('parsing oldDayMealPlans and dispatching to store')
-            const oldDayMealPlans: ReadonlyArray<DayMealPlan> = JSON.parse(oldDayMealPlansJSON)
+            const oldDayMealPlans: ReadonlyArray<DayMealPlan> = JSON.parse(
+                oldDayMealPlansJSON
+            )
             store.dispatch(mergeDayMealPlans({ plans: oldDayMealPlans }))
         } catch (err) {
             console.error(err)
@@ -79,7 +90,10 @@ const getWriteDayMealPlans = () => {
         const state = store.getState()
         if (oldDayMealPlans !== state.dayMealPlans.plans) {
             console.log('writing dayMealPlans to localStorage')
-            localStorage.setItem(LS_DAY_MEAL_PLANS, JSON.stringify(state.dayMealPlans.plans))
+            localStorage.setItem(
+                LS_DAY_MEAL_PLANS,
+                JSON.stringify(state.dayMealPlans.plans)
+            )
             oldDayMealPlans = state.dayMealPlans.plans
         }
     }
@@ -96,7 +110,9 @@ const hydrateRecipePreferences = () => {
     const oldPreferencesJSON = localStorage.getItem(LS_RECIPE_PREFERENCES)
     if (oldPreferencesJSON !== null) {
         try {
-            const oldPreferences: RecipePreferences = JSON.parse(oldPreferencesJSON)
+            const oldPreferences: RecipePreferences = JSON.parse(
+                oldPreferencesJSON
+            )
             store.dispatch(setPreferences({ preferences: oldPreferences }))
         } catch (err) {
             console.error(err)
@@ -111,12 +127,16 @@ hydrateRecipePreferences()
 /** When recipePreferences changes, write to localStorage */
 
 const getWriteRecipePreferences = () => {
-    let oldPreferences: AppState['recipePreferences']['preferences'] = store.getState().recipePreferences.preferences
+    let oldPreferences: AppState['recipePreferences']['preferences'] = store.getState()
+        .recipePreferences.preferences
     return () => {
         const state = store.getState()
         if (state.recipePreferences.preferences !== oldPreferences) {
             console.log('writing recipePreferences to localStorage')
-            localStorage.setItem(LS_RECIPE_PREFERENCES, JSON.stringify(state.recipePreferences.preferences))
+            localStorage.setItem(
+                LS_RECIPE_PREFERENCES,
+                JSON.stringify(state.recipePreferences.preferences)
+            )
             oldPreferences = state.recipePreferences.preferences
         }
     }
@@ -126,34 +146,47 @@ store.subscribe(getWriteRecipePreferences())
 
 /** Hydrate completedOnboarding from storage */
 
-const LS_COMPLETED_ONBOARDING = 'completedOnboarding';
+const LS_COMPLETED_ONBOARDING = 'completedOnboarding'
 
-(() => {
+;(() => {
     console.log('hydrating completedOnboarding from localStorage')
-    const completedOnboardingString = localStorage.getItem(LS_COMPLETED_ONBOARDING)
+    const completedOnboardingString = localStorage.getItem(
+        LS_COMPLETED_ONBOARDING
+    )
     if (completedOnboardingString !== null) {
-        store.dispatch(setCompletedOnboarding({ completedOnboarding: completedOnboardingString === 'true' ? true : false }))
+        store.dispatch(
+            setCompletedOnboarding({
+                completedOnboarding:
+                    completedOnboardingString === 'true' ? true : false
+            })
+        )
     } else {
         console.log('no completedOnboarding in localStorage')
     }
-})();
+})()
 
 /** When completedOnboarding changes, write to localStorage */
 
 const getWriteCompletedOnboarding = () => {
-    let oldCompletedOnboarding: AppState['recipePreferences']['completedOnboarding'] = store.getState().recipePreferences.completedOnboarding
+    let oldCompletedOnboarding: AppState['recipePreferences']['completedOnboarding'] = store.getState()
+        .recipePreferences.completedOnboarding
     return () => {
         const state = store.getState()
-        if (state.recipePreferences.completedOnboarding !== oldCompletedOnboarding) {
+        if (
+            state.recipePreferences.completedOnboarding !==
+            oldCompletedOnboarding
+        ) {
             console.log('writing completedOnboarding to localStorage')
-            localStorage.setItem(LS_COMPLETED_ONBOARDING, state.recipePreferences.completedOnboarding ? 'true' : 'false')
+            localStorage.setItem(
+                LS_COMPLETED_ONBOARDING,
+                state.recipePreferences.completedOnboarding ? 'true' : 'false'
+            )
             oldCompletedOnboarding = state.recipePreferences.completedOnboarding
         }
     }
 }
 
 store.subscribe(getWriteCompletedOnboarding())
-
 
 /** Render the App */
 
@@ -165,10 +198,10 @@ ReactDOM.render(
             </Provider>
         </AppConfigContext.Provider>
     </React.StrictMode>,
-    document.getElementById("root")
-);
+    document.getElementById('root')
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()

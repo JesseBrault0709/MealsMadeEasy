@@ -1,7 +1,7 @@
-import { Tab, Tabs } from "./Tabs";
+import { Tab, Tabs } from './Tabs'
 
 export default {
-    title: "Common/Tabs",
+    title: 'Common/Tabs',
     component: Tabs
 }
 
@@ -9,8 +9,10 @@ const Template = args => <Tabs {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    children: <>
-        <Tab onClick={() => console.log("Ingredients")}>Ingredients</Tab>
-        <Tab onClick={() => console.log("Instructions")}>Instructions</Tab>
-    </>
+    children: (
+        <>
+            <Tab onClick={() => console.log('Ingredients')}>Ingredients</Tab>
+            <Tab onClick={() => console.log('Instructions')}>Instructions</Tab>
+        </>
+    )
 }

@@ -4,13 +4,13 @@ import { v1 as uuid } from 'uuid'
 /** Model types */
 
 export type RecipeSelection = {
-    selectionId: string,
-    dateAdded: number,
+    selectionId: string
+    dateAdded: number
     recipeId: number
 }
 
 export type MealPlan = {
-    name: MealName,
+    name: MealName
     recipeSelections: ReadonlyArray<RecipeSelection>
 }
 
@@ -19,10 +19,12 @@ export type DayMealPlan = {
     meals: ReadonlyArray<MealPlan>
 }
 
-
 /** Model creation functions */
 
-export const getRecipeSelection = (dateAdded: Date, recipeId: number): RecipeSelection => ({
+export const getRecipeSelection = (
+    dateAdded: Date,
+    recipeId: number
+): RecipeSelection => ({
     selectionId: uuid(),
     dateAdded: dateAdded.valueOf(),
     recipeId
@@ -33,7 +35,10 @@ export const getBlankMealPlan = (mealName: MealName): MealPlan => ({
     recipeSelections: []
 })
 
-export const getBlankDayMealPlan = (date: Date, meals: ReadonlyArray<MealName>): DayMealPlan => ({
+export const getBlankDayMealPlan = (
+    date: Date,
+    meals: ReadonlyArray<MealName>
+): DayMealPlan => ({
     date: date.valueOf(),
     meals: meals.map(mealName => ({
         name: mealName,
@@ -41,16 +46,17 @@ export const getBlankDayMealPlan = (date: Date, meals: ReadonlyArray<MealName>):
     }))
 })
 
-
 /** util functions for models */
 
-export const extractDateFromDayMealPlan = (dayMealPlan: DayMealPlan): Date => new Date(dayMealPlan.date)
+export const extractDateFromDayMealPlan = (dayMealPlan: DayMealPlan): Date =>
+    new Date(dayMealPlan.date)
 
 export const isPlanForDate = (date: Date) => (plan: DayMealPlan) => {
-
     const planDate = extractDateFromDayMealPlan(plan)
 
-    return planDate.getFullYear() === date.getFullYear() &&
+    return (
+        planDate.getFullYear() === date.getFullYear() &&
         planDate.getMonth() === date.getMonth() &&
         planDate.getDate() === date.getDate()
+    )
 }

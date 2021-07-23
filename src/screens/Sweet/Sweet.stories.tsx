@@ -1,8 +1,8 @@
-import { Story } from "@storybook/react";
-import { Sweet } from "./Sweet";
+import { Story } from '@storybook/react'
+import { Sweet } from './Sweet'
 
 export default {
-    title: "Onboarding/Sweet",
+    title: 'Onboarding/Sweet',
     component: Sweet
 }
 

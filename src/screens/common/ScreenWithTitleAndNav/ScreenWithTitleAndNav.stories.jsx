@@ -1,7 +1,7 @@
-import { ScreenWithTitleAndNav } from "./ScreenWithTitleAndNav";
+import { ScreenWithTitleAndNav } from './ScreenWithTitleAndNav'
 
 export default {
-    title: "Common/ScreenWithTitleAndNav",
+    title: 'Common/ScreenWithTitleAndNav',
     component: ScreenWithTitleAndNav
 }
 
@@ -9,9 +9,7 @@ const Template = args => <ScreenWithTitleAndNav {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-    title: "Hello world!",
-    activeNavButton: "RECIPES",
-    children: [
-        "Hello world!"
-    ]
+    title: 'Hello world!',
+    activeNavButton: 'RECIPES',
+    children: ['Hello world!']
 }

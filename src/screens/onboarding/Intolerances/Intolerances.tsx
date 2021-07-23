@@ -1,25 +1,27 @@
 // import './Intolerances.css'
 
-import { groupIntoThrees } from "../../../util"
+import { groupIntoThrees } from '../../../util'
 import React, { Reducer, useContext } from 'react'
 import { SPIntolerance } from '../../../client/spoonacularTypes'
 import { AppConfigContext } from '../../../index'
 
 export const intolerancesReducer: Reducer<
     ReadonlyArray<SPIntolerance>,
-    {
-        type: 'add' | 'remove'
-        intolerance: SPIntolerance
-    } |
-    {
-        type: 'clear'
-    }
+    | {
+          type: 'add' | 'remove'
+          intolerance: SPIntolerance
+      }
+    | {
+          type: 'clear'
+      }
 > = (state, action) => {
     switch (action.type) {
         case 'add':
             return [...state, action.intolerance]
         case 'remove':
-            return state.filter(intolerance => intolerance !== action.intolerance)
+            return state.filter(
+                intolerance => intolerance !== action.intolerance
+            )
         case 'clear':
             return []
         default:
@@ -33,20 +35,20 @@ export type IntolerancesInputProps = {
 }
 
 export function IntolerancesInput(props: IntolerancesInputProps) {
-
     const appConfig = useContext(AppConfigContext)
-    
+
     const buttons = appConfig.availableIntolerances.map(props.renderButton)
     buttons.push(props.renderNoPreference())
 
-    return <div className="restrictions-buttons">
-        {
-            groupIntoThrees(buttons).map((threesome, index) => {
-                return <div key={index} className="restriction-button-pair">
-                    {threesome}
-                </div>
-            })
-        }
-    </div>
-
+    return (
+        <div className="restrictions-buttons">
+            {groupIntoThrees(buttons).map((threesome, index) => {
+                return (
+                    <div key={index} className="restriction-button-pair">
+                        {threesome}
+                    </div>
+                )
+            })}
+        </div>
+    )
 }

@@ -1,9 +1,9 @@
-import { DEV_MODE } from "./App"
+import { DEV_MODE } from './App'
 
 export const fillWithFiller = <T>(
-    arr: Array<T>, 
-    filler: (index: number) => T, 
-    start?: number, 
+    arr: Array<T>,
+    filler: (index: number) => T,
+    start?: number,
     end?: number
 ): Array<T> => {
     for (let i = start ?? 0; i < (end ?? arr.length); i++) {
@@ -13,7 +13,6 @@ export const fillWithFiller = <T>(
 }
 
 export const getModalEffect = () => () => {
-
     // get the modalRoot and change it's classList
 
     const modalRoot = document.getElementById('modal-root')
@@ -27,7 +26,6 @@ export const getModalEffect = () => () => {
 
     // Cleanup!
     return () => {
-
         if (modalRoot !== null) {
             modalRoot.classList.remove('modal-root-active')
             modalRoot.classList.add('modal-root-inactive')
@@ -36,10 +34,11 @@ export const getModalEffect = () => () => {
         // re-enable scrolling
         document.body.style.overflow = 'visible'
     }
-
 }
 
-export const groupIntoPairs = <T>(arr: ReadonlyArray<T>): [T, T | undefined][] => {
+export const groupIntoPairs = <T>(
+    arr: ReadonlyArray<T>
+): [T, T | undefined][] => {
     const result: [T, T | undefined][] = []
     for (let i = 0; i < arr.length; i++) {
         if (i % 2 === 0) {
@@ -51,7 +50,9 @@ export const groupIntoPairs = <T>(arr: ReadonlyArray<T>): [T, T | undefined][] =
     return result
 }
 
-export const groupIntoThrees = <T>(arr: ReadonlyArray<T>): [T, T | undefined, T | undefined][] => {
+export const groupIntoThrees = <T>(
+    arr: ReadonlyArray<T>
+): [T, T | undefined, T | undefined][] => {
     const result: [T, T | undefined, T | undefined][] = []
     for (let i = 0; i < arr.length; i++) {
         if (i % 3 === 0) {
@@ -79,8 +80,8 @@ export const copyMap = <K, V>(m: ReadonlyMap<K, V>): Map<K, V> => {
 }
 
 export const copyMapAndSet = <K, V>(
-    m: ReadonlyMap<K, V>, 
-    k: K, 
+    m: ReadonlyMap<K, V>,
+    k: K,
     v: V
 ): ReadonlyMap<K, V> => {
     const copy = copyMap(m)

@@ -27,9 +27,15 @@
 }
 
 @keyframes spinning-fork-and-knife {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(360deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .fork-and-knife-logo {

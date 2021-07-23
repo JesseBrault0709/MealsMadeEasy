@@ -6,13 +6,15 @@
 /**
  * @param {{
  *  value: string
- * }} props 
+ * }} props
  */
 function TagChipBodyWithOneValue(props) {
-    return <>
-        <span className="tag-chip-number">[check mark]</span>
-        <span className="tag-chip-text">{props.value}</span>
-    </>
+    return (
+        <>
+            <span className="tag-chip-number">[check mark]</span>
+            <span className="tag-chip-text">{props.value}</span>
+        </>
+    )
 }
 
 /**
@@ -22,10 +24,14 @@ function TagChipBodyWithOneValue(props) {
  * }} props
  */
 function TagChipBodyWithZeroOrGreaterThanOneValues(props) {
-    return <>
-        <span className="tag-chip-number">{props.numberOfValues === 0 ? 'X' : props.numberOfValues}</span>
-        <span className="tag-chip-text">{props.name}</span>
-    </>
+    return (
+        <>
+            <span className="tag-chip-number">
+                {props.numberOfValues === 0 ? 'X' : props.numberOfValues}
+            </span>
+            <span className="tag-chip-text">{props.name}</span>
+        </>
+    )
 }
 
 /**
@@ -38,11 +44,16 @@ function TagChipBodyWithZeroOrGreaterThanOneValues(props) {
  */
 export function TagChip(props) {
     const { tag } = props
-    return <div className="tag-chip">
-        {
-            tag.values.length === 1
-            ? <TagChipBodyWithOneValue value={tag.values[0]} />
-            : <TagChipBodyWithZeroOrGreaterThanOneValues name={tag.name} numberOfValues={tag.values.length} />
-        }
-    </div>
+    return (
+        <div className="tag-chip">
+            {tag.values.length === 1 ? (
+                <TagChipBodyWithOneValue value={tag.values[0]} />
+            ) : (
+                <TagChipBodyWithZeroOrGreaterThanOneValues
+                    name={tag.name}
+                    numberOfValues={tag.values.length}
+                />
+            )}
+        </div>
+    )
 }

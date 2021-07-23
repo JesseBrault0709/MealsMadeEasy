@@ -1,6 +1,6 @@
-import { render } from "@testing-library/react"
-import { SearchBar } from "./SearchBar"
+import { render } from '@testing-library/react'
+import { SearchBar } from './SearchBar'
 
-it("renders without throwing", () => {
+it('renders without throwing', () => {
     render(<SearchBar />)
 })

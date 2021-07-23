@@ -5,28 +5,27 @@
  *  onClick: () => void
  *  active: boolean
  *  children: React.ReactNode
- * }} props 
+ * }} props
  */
 export function Tab(props) {
-
     const classNames = ['tab']
 
     if (props.active) {
         classNames.push('active')
     }
 
-    return <div className={classNames.join(" ")} onClick={props.onClick}>
-        {props.children}
-    </div>
+    return (
+        <div className={classNames.join(' ')} onClick={props.onClick}>
+            {props.children}
+        </div>
+    )
 }
 
 /**
  * @param {{
  *  children: React.ReactNode
- * }} props 
+ * }} props
  */
 export function Tabs(props) {
-    return <div className="tabs">
-        {props.children}
-    </div>
+    return <div className="tabs">{props.children}</div>
 }

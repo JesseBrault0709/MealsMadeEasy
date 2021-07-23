@@ -17,22 +17,22 @@
 }
 
 .primary {
-    background-color: #D95D3B;
+    background-color: #d95d3b;
     color: #111111;
 }
 
 .outline {
-    border: 1px solid #C75131;
+    border: 1px solid #c75131;
     background-color: white;
 }
 
 .outline-active {
-    background-color: #D95D3B;
+    background-color: #d95d3b;
     color: #111111;
 }
 
 .disabled {
-    background-color: #EBEBEB;
+    background-color: #ebebeb;
     color: #828282;
 }
 
@@ -54,8 +54,8 @@
 
 .circle-large,
 .circle-medium {
-    background-color: #E5E5E5;
-    
+    background-color: #e5e5e5;
+
     padding: 0px; /* override from .jb-button */
 
     overflow: hidden;
@@ -63,5 +63,5 @@
 
 .circle-large-active,
 .circle-medium-active {
-    background-color: var(--main-cta)
+    background-color: var(--main-cta);
 }

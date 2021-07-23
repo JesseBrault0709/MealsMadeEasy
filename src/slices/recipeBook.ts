@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RecipeBookScreen } from "../screens/recipe-book/RecipeBook/RecipeBook";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RecipeBookScreen } from '../screens/recipe-book/RecipeBook/RecipeBook'
 
 export type RecipeBookState = {
-    currentScreen: RecipeBookScreen,
+    currentScreen: RecipeBookScreen
     recipeInfoId?: number
 }
 
@@ -14,7 +14,6 @@ export const recipeBookSlice = createSlice({
     name: 'recipeBookScreens',
     initialState,
     reducers: {
-
         setRecipeBookScreen: (
             state,
             action: PayloadAction<{ screen: RecipeBookScreen }>
@@ -22,13 +21,9 @@ export const recipeBookSlice = createSlice({
             state.currentScreen = action.payload.screen
         },
 
-        setRecipeInfoId: (
-            state,
-            action: PayloadAction<{ id: number }>
-        ) => {
+        setRecipeInfoId: (state, action: PayloadAction<{ id: number }>) => {
             state.recipeInfoId = action.payload.id
         }
-
     }
 })
 
