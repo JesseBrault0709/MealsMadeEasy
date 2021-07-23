@@ -1,5 +1,4 @@
 import Check from './assets/Check.png'
-// import './AddedModal.css'
 
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../../../common/BottomModal/BottomModal'

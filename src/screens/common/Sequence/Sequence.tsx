@@ -1,5 +1,3 @@
-// import './Sequence.css'
-
 import React from 'react'
 import { fillWithFiller } from '../../../util'
 

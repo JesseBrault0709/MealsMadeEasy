@@ -1,7 +1,5 @@
 import ServerErrorImg from './assets/TechnicalError.png'
 
-// import './TechnicalError.css'
-
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../../common/BottomModal/BottomModal'
 import { JBButton } from '../../../inputs/Button/JBButton'

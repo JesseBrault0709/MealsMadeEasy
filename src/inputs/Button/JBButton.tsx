@@ -1,5 +1,3 @@
-// import './JBButton.css'
-
 import React from 'react'
 
 export type JBButtonProps = {

@@ -1,5 +1,3 @@
-// import './OnboardingScreen.css'
-
 export type OnboardingScreenProps = {
     title?: string
     prompt?: string

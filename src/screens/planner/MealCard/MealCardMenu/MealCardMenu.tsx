@@ -1,5 +1,3 @@
-// import './MealCardMenu.css'
-
 import Replace from './assets/Replace.png'
 import Remove from './assets/Remove.png'
 import Move from './assets/Move.png'

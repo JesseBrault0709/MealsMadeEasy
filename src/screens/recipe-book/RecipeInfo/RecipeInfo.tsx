@@ -1,5 +1,3 @@
-// import './RecipeInfo.css'
-
 import { useEffect, useState } from 'react'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
 import { Tab, Tabs } from '../../common/Tabs/Tabs'

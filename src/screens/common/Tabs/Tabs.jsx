@@ -1,5 +1,3 @@
-// import './Tabs.css'
-
 /**
  * @param {{
  *  onClick: () => void

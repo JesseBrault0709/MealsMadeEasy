@@ -1,5 +1,3 @@
-// import './RowsOfPairs.css'
-
 import { groupIntoPairs } from '../../../util'
 
 /**

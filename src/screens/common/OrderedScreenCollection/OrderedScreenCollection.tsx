@@ -3,8 +3,6 @@ import BulletEmpty from './assets/BulletEmpty.png'
 import ArrowLeft from './assets/ArrowLeft.png'
 import ArrowRight from './assets/ArrowRight.png'
 
-// import './OrderedScreenCollection.css'
-
 import { useState } from 'react'
 import { Sequence } from '../Sequence/Sequence'
 

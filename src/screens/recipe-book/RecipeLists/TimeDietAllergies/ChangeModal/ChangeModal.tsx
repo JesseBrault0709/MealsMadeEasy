@@ -1,5 +1,3 @@
-// import './ChangeModal.css'
-
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { JBButton } from '../../../../../inputs/Button/JBButton'

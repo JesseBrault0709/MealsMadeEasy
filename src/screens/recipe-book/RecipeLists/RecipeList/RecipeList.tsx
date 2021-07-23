@@ -1,5 +1,3 @@
-// import './RecipeList.css'
-
 import { RowsOfPairs } from '../../../common/RowsOfPairs/RowsOfPairs'
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 import { JBButton } from '../../../../inputs/Button/JBButton'

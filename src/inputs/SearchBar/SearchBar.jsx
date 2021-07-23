@@ -5,7 +5,6 @@
  */
 
 import MagnifyingGlass from './assets/MagnifyingGlass.png'
-// import './SearchBar.css'
 
 import { InputGroup, FormControl } from 'react-bootstrap'
 

@@ -1,5 +1,3 @@
-// import './TimeServingsRating.css'
-
 import Clock from './assets/Clock.png'
 import Servings from './assets/Servings.png'
 

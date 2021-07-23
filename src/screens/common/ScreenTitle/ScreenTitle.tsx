@@ -6,8 +6,6 @@
  *  * Put the chevron in the back button
  */
 
-// import './ScreenTitle.css'
-
 import ChevronDown from './assets/ChevronDown.png'
 
 export type ScreenTitleProps = {

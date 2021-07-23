@@ -1,5 +1,3 @@
-// import './App.css';
-
 import { useContext, useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { RecipePreferences } from './types/RecipePreferences'

@@ -1,5 +1,3 @@
-// import './ClockSlider.css'
-
 import React, { useRef } from 'react'
 
 /**

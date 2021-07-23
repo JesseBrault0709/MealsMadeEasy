@@ -1,5 +1,3 @@
-// import './CenterModal.css'
-
 export type CenterModalProps = {
     children: React.ReactNode
     style?: React.CSSProperties

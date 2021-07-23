@@ -1,5 +1,3 @@
-// import './ReplaceModal.css'
-
 import { useEffect } from 'react'
 import { getModalEffect } from '../../../../util'
 import { CenterModal } from '../../../common/CenterModal/CenterModal'

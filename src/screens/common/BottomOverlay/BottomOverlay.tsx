@@ -1,4 +1,3 @@
-// import './BottomOverlay.css'
 import React from 'react'
 
 export type BottomOverlayProps = {

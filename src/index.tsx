@@ -1,4 +1,3 @@
-// import './index.css';
 import './styles.scss'
 
 import React from 'react'

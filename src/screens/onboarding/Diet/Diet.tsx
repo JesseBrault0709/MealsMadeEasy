@@ -1,5 +1,3 @@
-// import './Diet.css'
-
 import { SPDiet } from '../../../client/spoonacularTypes'
 import React, { useContext } from 'react'
 import { groupIntoPairs } from '../../../util'

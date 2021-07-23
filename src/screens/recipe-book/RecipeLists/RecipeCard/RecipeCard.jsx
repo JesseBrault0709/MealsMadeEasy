@@ -1,5 +1,3 @@
-// import './RecipeCard.css'
-
 import { RecipeRating } from '../../RecipeRating/RecipeRating'
 
 /**

@@ -1,5 +1,3 @@
-// import './BottomModal.css'
-
 export type BottomModalProps = {
     children: React.ReactNode
 }
