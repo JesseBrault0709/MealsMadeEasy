@@ -1,6 +1,6 @@
 import ServerErrorImg from './assets/TechnicalError.png'
 
-import './TechnicalError.css'
+// import './TechnicalError.css'
 
 import ReactDOM from "react-dom";
 import { BottomModal } from "../../common/BottomModal/BottomModal";

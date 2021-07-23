@@ -1,4 +1,3 @@
-import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -17,6 +16,8 @@ import { recipePreferencesSlice, setCompletedOnboarding, setPreferences } from "
 import { selectionModeSlice } from "./slices/selectionMode";
 import { DayMealPlan } from "./types/DayMealPlan";
 import { RecipePreferences } from "./types/RecipePreferences";
+// import './index.css';
+import './styles.scss'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)

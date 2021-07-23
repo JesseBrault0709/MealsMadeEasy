@@ -1,4 +1,4 @@
-import './LoadingCircle.css'
+// import './LoadingCircle.css'
 import Circle from './assets/LoadingCircle.png'
 import React from 'react'
 

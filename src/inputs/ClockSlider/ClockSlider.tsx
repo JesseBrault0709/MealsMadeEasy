@@ -1,4 +1,4 @@
-import './ClockSlider.css'
+// import './ClockSlider.css'
 
 import React, { useRef } from 'react'
 

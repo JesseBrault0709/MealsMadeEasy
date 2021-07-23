@@ -6,7 +6,7 @@
  *  * Put the chevron in the back button
  */
 
-import './ScreenTitle.css'
+// import './ScreenTitle.css'
 
 import ChevronDown from './assets/ChevronDown.png'
 

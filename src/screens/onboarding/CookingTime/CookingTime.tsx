@@ -1,4 +1,4 @@
-import './CookingTime.css'
+// import './CookingTime.css'
 
 import { ClockSlider } from "../../../inputs/ClockSlider/ClockSlider"
 import { RecipePreferences } from "../../../types/RecipePreferences"

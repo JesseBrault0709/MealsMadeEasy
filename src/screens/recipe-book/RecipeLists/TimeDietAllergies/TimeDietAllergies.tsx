@@ -1,4 +1,4 @@
-import './TimeDietAllergies.css'
+// import './TimeDietAllergies.css'
 
 import Check from './assets/Check.png'
 import X from './assets/X.png'

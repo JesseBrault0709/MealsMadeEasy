@@ -5,7 +5,7 @@
  *      render with bullet points.
  */
 import { FullRecipe } from '../../../../client/FullRecipe'
-import './InstructionsTab.css'
+// import './InstructionsTab.css'
 
 export type InstructionsTabProps = {
     recipe: FullRecipe,

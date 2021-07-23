@@ -1,0 +1,41 @@
+.recipe-card {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0px 6px;
+    box-sizing: border-box;
+}
+
+.recipe-img {
+    width: 100%;
+}
+
+.recipe-title-rating {
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipe-title-rating h3 {
+    font-size: 14px;
+    line-height: 18px;
+
+    font-weight: normal;
+    font-style: normal;
+
+    width: 125px;
+
+    text-align: left;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

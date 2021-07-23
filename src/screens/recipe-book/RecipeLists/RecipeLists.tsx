@@ -1,4 +1,4 @@
-import './RecipeLists.css'
+// import './RecipeLists.css'
 
 import { TimeDietAllergies } from "./TimeDietAllergies/TimeDietAllergies"
 import { Tab, Tabs } from '../../common/Tabs/Tabs'

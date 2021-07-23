@@ -1,4 +1,4 @@
-import './OnboardingScreen.css'
+// import './OnboardingScreen.css'
 
 export type OnboardingScreenProps = {
     title?: string

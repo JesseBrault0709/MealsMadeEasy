@@ -1,4 +1,4 @@
-import './RecipeCard.css'
+// import './RecipeCard.css'
 
 import { RecipeRating } from '../../RecipeRating/RecipeRating'
 

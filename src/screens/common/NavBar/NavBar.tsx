@@ -4,7 +4,7 @@
  *      probably as callback props for each button.
  */
 
-import './NavBar.css'
+// import './NavBar.css'
 
 import RecipesInactive from './assets/Recipes_inactive.png'
 import RecipesActive from './assets/Recipes_active.png'

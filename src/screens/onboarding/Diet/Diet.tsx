@@ -1,4 +1,4 @@
-import './Diet.css'
+// import './Diet.css'
 
 import { SPDiet } from "../../../client/spoonacularTypes"
 import React, { useContext } from "react"

@@ -1,4 +1,4 @@
-import './CenterModal.css'
+// import './CenterModal.css'
 
 export type CenterModalProps = {
     children: React.ReactNode,

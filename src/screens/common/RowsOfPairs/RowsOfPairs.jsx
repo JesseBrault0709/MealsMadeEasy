@@ -1,4 +1,4 @@
-import './RowsOfPairs.css'
+// import './RowsOfPairs.css'
 
 import { groupIntoPairs } from '../../../util'
 

@@ -1,0 +1,13 @@
+.bottom-modal {
+    position: fixed;
+    
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    
+    background: rgba(255, 255, 255, 1);
+
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+}

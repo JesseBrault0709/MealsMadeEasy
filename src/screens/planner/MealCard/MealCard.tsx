@@ -1,6 +1,6 @@
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { useFullRecipe } from '../../../slices/fullRecipes'
-import './MealCard.css'
+// import './MealCard.css'
 
 import { MealCardMenu, MealCardMenuProps } from './MealCardMenu/MealCardMenu'
 

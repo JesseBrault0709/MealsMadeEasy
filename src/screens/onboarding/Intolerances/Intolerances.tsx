@@ -1,4 +1,4 @@
-import './Intolerances.css'
+// import './Intolerances.css'
 
 import { groupIntoThrees } from "../../../util"
 import React, { Reducer, useContext } from 'react'

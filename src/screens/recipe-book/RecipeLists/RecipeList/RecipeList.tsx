@@ -1,4 +1,4 @@
-import './RecipeList.css'
+// import './RecipeList.css'
 
 import { RowsOfPairs } from "../../../common/RowsOfPairs/RowsOfPairs"
 import { RecipeCard } from "../RecipeCard/RecipeCard"

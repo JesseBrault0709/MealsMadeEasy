@@ -1,5 +1,5 @@
-import './SelectMealType.css'
-import { JBButton } from "../../../inputs/Button/JBButton"
+// import './SelectMealType.css'
+import { JBButton } from '../../../inputs/Button/JBButton'
 import { MealName } from '../../../types/MealName'
 
 export type SelectMealTypeProps = {

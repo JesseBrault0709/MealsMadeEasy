@@ -1,4 +1,4 @@
-import './Tabs.css'
+// import './Tabs.css'
 
 /**
  * @param {{

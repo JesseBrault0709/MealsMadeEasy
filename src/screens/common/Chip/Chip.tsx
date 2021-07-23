@@ -1,4 +1,4 @@
-import './Chip.css'
+// import './Chip.css'
 import React from 'react'
 
 type AvatarProps = { }

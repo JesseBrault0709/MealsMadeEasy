@@ -1,0 +1,67 @@
+.jb-button {
+    border: none;
+
+    border-radius: 20px;
+
+    height: 40px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+
+    padding: 0px 18px;
+}
+
+.jb-button:focus {
+    outline: none;
+}
+
+.primary {
+    background-color: #D95D3B;
+    color: #111111;
+}
+
+.outline {
+    border: 1px solid #C75131;
+    background-color: white;
+}
+
+.outline-active {
+    background-color: #D95D3B;
+    color: #111111;
+}
+
+.disabled {
+    background-color: #EBEBEB;
+    color: #828282;
+}
+
+.disabled:hover {
+    cursor: default;
+}
+
+.circle-large {
+    height: 90px;
+    width: 90px;
+    border-radius: 45px;
+}
+
+.circle-medium {
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+}
+
+.circle-large,
+.circle-medium {
+    background-color: #E5E5E5;
+    
+    padding: 0px; /* override from .jb-button */
+
+    overflow: hidden;
+}
+
+.circle-large-active,
+.circle-medium-active {
+    background-color: var(--main-cta)
+}

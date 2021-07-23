@@ -1,4 +1,4 @@
-import './RecipeInfo.css'
+// import './RecipeInfo.css'
 
 import { useEffect, useState } from 'react'
 import { TimeServingsRating } from './TimeServingsRating/TimeServingsRating'
