@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { appConfig } from '../appConfig'
 import { RecipeOverview } from '../client/RecipeOverview'
 import {
     DayMealPlan,
-    getBlankDayMealPlan,
     getRecipeSelection,
     isPlanForDate,
     MealPlan,
@@ -16,11 +14,7 @@ export type DayMealPlansState = {
 }
 
 const initialState: DayMealPlansState = {
-    plans: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(dayIndex => {
-        const date = new Date()
-        date.setDate(date.getDate() + dayIndex)
-        return getBlankDayMealPlan(date, appConfig.meals)
-    })
+    plans: []
 }
 
 const findMealPlan = (
