@@ -18,7 +18,12 @@ import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
 import { homeScreensSlice } from './slices/homeScreens'
 import { recipeBookSlice } from './slices/recipeBook'
-import { recipeListsSlice } from './slices/recipeLists'
+import {
+    recipeListsSlice,
+    RecipeListsState,
+    setFetchLimit,
+    setRecipeLists
+} from './slices/recipeLists'
 import {
     recipePreferencesSlice,
     setCompletedOnboarding,
@@ -111,6 +116,28 @@ const getWriteDayMealPlans = () => {
 }
 
 store.subscribe(getWriteDayMealPlans())
+
+/** Hydrate recipeLists using appConfg */
+
+const hydrateRecipeLists = () => {
+    // create list objects from config
+
+    const lists: RecipeListsState['lists'] = appConfig.recipeLists.map(
+        ({ name, type }) => ({
+            name,
+            type,
+            currentOffset: 0,
+            recipesByOffset: []
+        })
+    )
+    store.dispatch(setRecipeLists({ lists }))
+
+    // set fetchLimit from config
+
+    store.dispatch(setFetchLimit({ fetchLimit: appConfig.recipeListLimit }))
+}
+
+hydrateRecipeLists()
 
 /** Hydrate recipePreferences from localStorage */
 
