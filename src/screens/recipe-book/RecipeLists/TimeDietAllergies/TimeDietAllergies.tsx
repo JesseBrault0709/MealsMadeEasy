@@ -16,6 +16,7 @@ import { ChangeDiet } from './ChangeDiet/ChangeDiet'
 import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
 export type TimeDietAllergiesProps = {
+    /** A callback to be run if any of the values change. */
     onChange: () => void
 }
 
@@ -35,7 +36,10 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     ) => {
         dispatch(setCookingTime({ cookingTime: newCookingTime }))
         setShowChangeCookingTime(false)
-        props.onChange()
+
+        if (newCookingTime !== cookingTime) {
+            props.onChange()
+        }
     }
 
     const onChangeCookingTimeCancel = () => {
@@ -47,7 +51,10 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     const onChangeDietSubmit = (newDiet: RecipePreferences['diet']) => {
         dispatch(setDiet({ diet: newDiet }))
         setShowChangeDiet(false)
-        props.onChange()
+
+        if (newDiet !== diet) {
+            props.onChange()
+        }
     }
 
     const onChangeDietCancel = () => {
@@ -61,7 +68,42 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     ) => {
         dispatch(setIntolerances({ intolerances: newIntolerances }))
         setShowChangeIntolerances(false)
-        props.onChange()
+
+        /**
+         * If both are not null, compare the lengths; if different,
+         * call props.onChange(); if the same, check that each array's
+         * elements are contained within the other; if no, call props.onChange().
+         *
+         * If either is null and the other is not, call props.onChange().
+         */
+        if (newIntolerances !== null && intolerances !== null) {
+            if (newIntolerances.length !== intolerances.length) {
+                props.onChange()
+            } else {
+                const oldContainsAllNew = newIntolerances.reduce<boolean>(
+                    (prev, newIntolerance) => {
+                        return prev && intolerances.includes(newIntolerance)
+                    },
+                    true
+                )
+
+                const newContainsAllOld = intolerances.reduce<boolean>(
+                    (prev, oldIntolerance) => {
+                        return prev && newIntolerances.includes(oldIntolerance)
+                    },
+                    true
+                )
+
+                if (!(oldContainsAllNew && newContainsAllOld)) {
+                    props.onChange()
+                }
+            }
+        } else if (
+            (newIntolerances === null && intolerances !== null) ||
+            (newIntolerances !== null && intolerances === null)
+        ) {
+            props.onChange()
+        }
     }
 
     const onChangeIntolerancesCancel = () => {
