@@ -4,15 +4,16 @@ import {
     PayloadAction,
     SerializedError
 } from '@reduxjs/toolkit'
-import { appConfig } from '../appConfig'
 import { getByComplexSearch } from '../client/complexSearch'
 import { RecipeOverview } from '../client/RecipeOverview'
+import { SPType } from '../client/spoonacularTypes'
 import { AppState } from '../index'
 import { setAppScreen } from './appScreens'
 
-type RecipeListsState = {
+export type RecipeListsState = {
     lists: ReadonlyArray<{
         name: string
+        type: SPType
         currentOffset: number
         recipesByOffset: ReadonlyArray<{
             offset: number
@@ -21,16 +22,15 @@ type RecipeListsState = {
     }>
     activeList?: string
 
+    fetchLimit: number
+
     fetchStatus: 'idle' | 'fetching' | 'error'
     fetchError?: SerializedError
 }
 
 const initialState: RecipeListsState = {
-    lists: appConfig.recipeLists.map(listConfig => ({
-        name: listConfig.name,
-        currentOffset: 0,
-        recipesByOffset: []
-    })),
+    lists: [],
+    fetchLimit: 0,
     fetchStatus: 'idle'
 }
 
@@ -55,7 +55,7 @@ export const fetchRecipes = createAsyncThunk<
     if (targetList === undefined) {
         throw new Error(`there is no targetList named ${listName}`)
     }
-    const { currentOffset } = targetList
+    const { currentOffset, type } = targetList
 
     const recipesForOffset = targetList.recipesByOffset.find(
         ({ offset }) => offset === currentOffset
@@ -71,13 +71,7 @@ export const fetchRecipes = createAsyncThunk<
         intolerances
     } = state.recipePreferences.preferences
 
-    const targetListConfig = appConfig.recipeLists.find(
-        config => config.name === listName
-    )
-    if (targetListConfig === undefined) {
-        throw new Error(`there is no targetListConfig named ${listName}`)
-    }
-    const { type } = targetListConfig
+    const { fetchLimit } = state.recipeLists
 
     const recipes = await getByComplexSearch({
         addRecipeInformation: true,
@@ -87,7 +81,7 @@ export const fetchRecipes = createAsyncThunk<
                 : cookingTime,
         diet: diet ?? undefined,
         intolerances: intolerances ?? undefined,
-        number: appConfig.recipeListLimit,
+        number: fetchLimit,
         offset: currentOffset,
         type
     })
@@ -107,8 +101,35 @@ export const recipeListsSlice = createSlice({
     name: 'recipeLists',
     initialState,
     reducers: {
+        setRecipeLists: (
+            state,
+            action: PayloadAction<{ lists: RecipeListsState['lists'] }>
+        ) => {
+            const { lists } = action.payload
+            state.lists = lists.map(
+                ({ name, type, currentOffset, recipesByOffset }) => ({
+                    name,
+                    type,
+                    currentOffset,
+                    recipesByOffset: recipesByOffset.map(
+                        ({ offset, recipes }) => ({
+                            offset,
+                            recipes: [...recipes]
+                        })
+                    )
+                })
+            )
+        },
+
         setActiveList: (state, action: PayloadAction<{ listName: string }>) => {
             state.activeList = action.payload.listName
+        },
+
+        setFetchLimit: (
+            state,
+            action: PayloadAction<{ fetchLimit: number }>
+        ) => {
+            state.fetchLimit = action.payload.fetchLimit
         },
 
         incrementOffset: (
@@ -123,7 +144,7 @@ export const recipeListsSlice = createSlice({
                     `there is no list named ${action.payload.listName}`
                 )
             }
-            list.currentOffset += appConfig.recipeListLimit
+            list.currentOffset += state.fetchLimit
         },
 
         setActiveListStatus: (
@@ -179,7 +200,9 @@ export const recipeListsSlice = createSlice({
 })
 
 export const {
+    setRecipeLists,
     incrementOffset,
+    setFetchLimit,
     setActiveList,
     setActiveListStatus,
     setActiveListError,

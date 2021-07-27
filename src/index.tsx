@@ -18,14 +18,19 @@ import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
 import { homeScreensSlice } from './slices/homeScreens'
 import { recipeBookSlice } from './slices/recipeBook'
-import { recipeListsSlice } from './slices/recipeLists'
+import {
+    recipeListsSlice,
+    RecipeListsState,
+    setFetchLimit,
+    setRecipeLists
+} from './slices/recipeLists'
 import {
     recipePreferencesSlice,
     setCompletedOnboarding,
     setPreferences
 } from './slices/recipePreferences'
 import { selectionModeSlice } from './slices/selectionMode'
-import { DayMealPlan } from './types/DayMealPlan'
+import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
 import { RecipePreferences } from './types/RecipePreferences'
 
 /** The AppConfig context */
@@ -62,6 +67,18 @@ export const useAppStore = () => useStore<AppState>()
 const LS_DAY_MEAL_PLANS = 'dayMealPlans'
 
 const hydrateDayMealPlans = () => {
+    // begin with a week's worth of plans starting from today's date
+
+    const newPlans = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(dayIndex => {
+        const date = new Date()
+        date.setDate(date.getDate() + dayIndex)
+        return getBlankDayMealPlan(date, appConfig.meals)
+    })
+
+    store.dispatch(mergeDayMealPlans({ plans: newPlans }))
+
+    // load old plans from localStorage
+
     console.log('loading oldDayMealPlans from localStorage')
     const oldDayMealPlansJSON = localStorage.getItem(LS_DAY_MEAL_PLANS)
     if (oldDayMealPlansJSON !== null) {
@@ -99,6 +116,28 @@ const getWriteDayMealPlans = () => {
 }
 
 store.subscribe(getWriteDayMealPlans())
+
+/** Hydrate recipeLists using appConfg */
+
+const hydrateRecipeLists = () => {
+    // create list objects from config
+
+    const lists: RecipeListsState['lists'] = appConfig.recipeLists.map(
+        ({ name, type }) => ({
+            name,
+            type,
+            currentOffset: 0,
+            recipesByOffset: []
+        })
+    )
+    store.dispatch(setRecipeLists({ lists }))
+
+    // set fetchLimit from config
+
+    store.dispatch(setFetchLimit({ fetchLimit: appConfig.recipeListLimit }))
+}
+
+hydrateRecipeLists()
 
 /** Hydrate recipePreferences from localStorage */
 
