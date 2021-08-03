@@ -1,0 +1,29 @@
+.search-bar {
+    border: 1px solid var(--dark-disabled);
+    border-radius: 19px;
+    width: 100%;
+
+    height: 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #ffffff;
+
+    img {
+        margin: 0 12px;
+    }
+
+    input {
+        width: 100%;
+        border: none;
+        color: var(--dark-disabled);
+    }
+
+    input:focus {
+        border: none;
+        outline: none;
+    }
+}

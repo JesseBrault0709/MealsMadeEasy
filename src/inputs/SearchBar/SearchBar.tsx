@@ -27,7 +27,12 @@ export function SearchBar(props: SearchBarProps) {
     return (
         <div className="search-bar">
             <img src={MagnifyingGlass} alt="" />
-            <input ref={ref} type="text" onChange={onChange} />
+            <input
+                ref={ref}
+                type="text"
+                onChange={onChange}
+                placeholder="Search"
+            />
             <img
                 src={ClearSearch}
                 alt="clear search"
