@@ -15,7 +15,10 @@ import {
     setRecipeInfoId
 } from '../../../slices/recipeBook'
 
-export type RecipeBookScreen = 'Recipe List' | 'Recipe Info'
+export type RecipeBookScreen =
+    | 'Recipe List'
+    | 'Recipe Info'
+    | 'SearchFilterSort'
 
 export function RecipeBook() {
     const dispatch = useAppDispatch()
@@ -30,30 +33,38 @@ export function RecipeBook() {
         dispatch(setRecipeBookScreen({ screen: 'Recipe Info' }))
     }
 
-    if (currentScreen === 'Recipe List') {
-        return (
-            <ScreenWithTitleAndNav title="Recipe Book">
-                <RecipeLists onRecipeCardClick={onRecipeCardClick} />
-            </ScreenWithTitleAndNav>
-        )
-    } else if (currentScreen === 'Recipe Info') {
-        if (recipeInfoId === undefined) {
-            throw new Error(
-                `current screen is 'Recipe Info' but recipeInfoId is undefined`
+    switch (currentScreen) {
+        case 'Recipe List':
+            return (
+                <ScreenWithTitleAndNav title="Recipe Book">
+                    <RecipeLists onRecipeCardClick={onRecipeCardClick} />
+                </ScreenWithTitleAndNav>
             )
-        }
 
-        return (
-            <ScreenWithTitleAndNav
-                title=""
-                onBackButtonClick={() => {
-                    dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
-                }}
-            >
-                <RecipeInfo recipeId={recipeInfoId} />
-            </ScreenWithTitleAndNav>
-        )
-    } else {
-        throw new Error('unknown value for currentScreen')
+        case 'Recipe Info':
+            if (recipeInfoId === undefined) {
+                throw new Error(
+                    `current screen is 'Recipe Info' but recipeInfoId is undefined`
+                )
+            }
+
+            return (
+                <ScreenWithTitleAndNav
+                    title=""
+                    onBackButtonClick={() => {
+                        dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+                    }}
+                >
+                    <RecipeInfo recipeId={recipeInfoId} />
+                </ScreenWithTitleAndNav>
+            )
+
+        case 'SearchFilterSort':
+            // TODO
+
+            return
+
+        default:
+            throw new Error(`unimplemented RecipeBook screen: ${currentScreen}`)
     }
 }
