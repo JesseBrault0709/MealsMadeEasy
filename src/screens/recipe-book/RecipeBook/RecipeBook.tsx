@@ -14,6 +14,7 @@ import {
     setRecipeBookScreen,
     setRecipeInfoId
 } from '../../../slices/recipeBook'
+import { SearchFilterSort } from '../SearchFilterSort/SearchFilterSort'
 
 export type RecipeBookScreen =
     | 'Recipe List'
@@ -60,9 +61,11 @@ export function RecipeBook() {
             )
 
         case 'SearchFilterSort':
-            // TODO
-
-            return
+            return (
+                <ScreenWithTitleAndNav title="Recipe Book">
+                    <SearchFilterSort />
+                </ScreenWithTitleAndNav>
+            )
 
         default:
             throw new Error(`unimplemented RecipeBook screen: ${currentScreen}`)
