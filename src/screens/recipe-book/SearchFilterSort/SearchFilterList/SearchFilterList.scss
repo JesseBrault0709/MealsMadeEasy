@@ -1,0 +1,13 @@
+.search-filter-list {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    padding: 7.5px;
+
+    > * {
+        margin: 7.5px;
+    }
+}
