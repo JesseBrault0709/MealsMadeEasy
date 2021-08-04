@@ -1,6 +1,6 @@
 import { Story } from '@storybook/react'
 import { Reducer, useReducer } from 'react'
-import { SearchFilterListElement } from '../SearchFilterList/SearchFilterListElement/SearchFilterListElement'
+import { SearchFilterListElement } from '../SearchFilterListElement/SearchFilterListElement'
 import {
     SearchFilterListContainer,
     SearchFilterListContainerProps
