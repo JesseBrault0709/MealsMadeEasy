@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { devLog } from '../util'
+import { devLog } from '../util/util'
 import type { RecipeOverview } from './RecipeOverview'
 import type { SPDiet, SPIntolerance, SPType } from './spoonacularTypes'
 import { calcUrl } from './util'

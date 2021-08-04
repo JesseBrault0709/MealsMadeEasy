@@ -1,6 +1,6 @@
 import { SPDiet } from '../../../client/spoonacularTypes'
 import React, { useContext } from 'react'
-import { groupIntoPairs } from '../../../util'
+import { groupIntoPairs } from '../../../util/util'
 import { AppConfigContext } from '../../../index'
 
 export type DietInputProps = {

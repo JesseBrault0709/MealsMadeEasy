@@ -1,4 +1,4 @@
-import { DEV_MODE } from './App'
+import { DEV_MODE } from '../App'
 
 export const fillWithFiller = <T>(
     arr: Array<T>,

@@ -1,4 +1,4 @@
-import { groupIntoPairs } from '../../../util'
+import { groupIntoPairs } from '../../../util/util'
 
 /**
  * @param {{

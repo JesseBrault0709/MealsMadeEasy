@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { getModalEffect } from '../../../../util'
+import { getModalEffect } from '../../../../util/util'
 import { CenterModal } from '../../../common/CenterModal/CenterModal'
 import ReactDOM from 'react-dom'
 import { JBButton } from '../../../../inputs/Button/JBButton'

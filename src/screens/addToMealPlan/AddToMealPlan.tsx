@@ -5,7 +5,7 @@ import { SelectMealType } from './SelectMealType/SelectMealType'
 import { MealName } from '../../types/MealName'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../common/BottomModal/BottomModal'
-import { getModalEffect } from '../../util'
+import { getModalEffect } from '../../util/util'
 import { useAppSelector } from '../../index'
 import { AppConfigContext } from '../../index'
 
