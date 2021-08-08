@@ -1,4 +1,6 @@
 import { Story } from '@storybook/react'
+import { FormEventHandler } from 'react'
+import { useRef } from 'react'
 import { SearchBar, SearchBarProps } from './SearchBar'
 
 export default {
@@ -7,9 +9,19 @@ export default {
 }
 
 export const Primary: Story<SearchBarProps> = () => {
-    const onChange: SearchBarProps['onChange'] = newInput => {
-        console.log(newInput)
+    const ref = useRef<HTMLInputElement>(null)
+
+    const onClear = () => {
+        if (ref.current !== null) {
+            ref.current.value = ''
+        }
     }
 
-    return <SearchBar onChange={onChange} />
+    const onChange: FormEventHandler<HTMLInputElement> = () => {
+        console.log(ref.current?.value)
+    }
+
+    return (
+        <SearchBar ref={ref} onClearSearchClick={onClear} onChange={onChange} />
+    )
 }
