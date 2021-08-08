@@ -3,11 +3,14 @@ import ChevronDown from './assets/ChevronDown.svg'
 import { useState } from 'react'
 import { SortFilterButton } from '../SortFilterButton/SortFilterButton'
 
-export type SortFilterDrawerProps = {}
+export type SortFilterDrawerProps = {
+    onFilter: () => void
+    onSort: () => void
+}
 
 type FilterOrSort = 'Filter' | 'Sort'
 
-export function SortFilterDrawer() {
+export function SortFilterDrawer(props: SortFilterDrawerProps) {
     const [showButtons, setShowButtons] = useState(true)
 
     const [filterOrSort, setFilterOrSort] = useState<FilterOrSort>('Filter')
@@ -17,12 +20,18 @@ export function SortFilterDrawer() {
             <SortFilterButton
                 variant="Filter"
                 active={filterOrSort === 'Filter'}
-                onClick={() => setFilterOrSort('Filter')}
+                onClick={() => {
+                    setFilterOrSort('Filter')
+                    props.onFilter()
+                }}
             />
             <SortFilterButton
                 variant="Sort"
                 active={filterOrSort === 'Sort'}
-                onClick={() => setFilterOrSort('Sort')}
+                onClick={() => {
+                    setFilterOrSort('Sort')
+                    props.onSort()
+                }}
             />
         </div>
     )

@@ -47,7 +47,10 @@ export function SearchFilterSort() {
                 onChange={onSearchBarChange}
                 onClearSearchClick={onSearchBarClear}
             />
-            <SortFilterDrawer />
+            <SortFilterDrawer
+                onFilter={() => setSubScreen('RecentSearchesAndFilters')}
+                onSort={() => setSubScreen('Sort')}
+            />
             {getSubScreen()}
         </div>
     )
