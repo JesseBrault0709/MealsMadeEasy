@@ -4,6 +4,7 @@ import { AppConfigContext, useAppDispatch, useAppSelector } from '../../..'
 import { clearAllRecentSearches } from '../../../slices/recentSearches'
 import {
     setCookingTime,
+    setCuisines,
     setDiet,
     setIntolerances
 } from '../../../slices/recipePreferences'
@@ -38,6 +39,10 @@ export function SearchFilterSort() {
 
     const currentIntolerances = useAppSelector(
         state => state.recipePreferences.preferences.intolerances
+    )
+
+    const currentCuisines = useAppSelector(
+        state => state.recipePreferences.preferences.cuisines
     )
 
     // Get available options for cookingtime, diet, allergies
@@ -157,6 +162,68 @@ export function SearchFilterSort() {
                                             ...currentIntolerances,
                                             intolerance
                                         ]
+                                    })
+                                )
+                            }
+                        }}
+                    />
+                ))}
+            </SearchFilterListContainer>
+
+            {/* Cuisines */}
+            <SearchFilterListContainer
+                title="Cuisines"
+                renderTitleButton={() => (
+                    <span
+                        className="clear-or-select-all"
+                        onClick={() =>
+                            appDispatch(
+                                setCuisines({
+                                    cuisines: [...appConfig.availableCuisines]
+                                })
+                            )
+                        }
+                    >
+                        Select All
+                    </span>
+                )}
+            >
+                {appConfig.availableCuisines.map(cuisine => (
+                    <SearchFilterListElement
+                        title={cuisine}
+                        active={
+                            currentCuisines === null
+                                ? false
+                                : currentCuisines.includes(cuisine)
+                        }
+                        onClick={() => {
+                            if (currentCuisines === null) {
+                                // no currentCuisines, so create an
+                                // array with this one in it
+                                appDispatch(
+                                    setCuisines({
+                                        cuisines: [cuisine]
+                                    })
+                                )
+                            } else if (currentCuisines.includes(cuisine)) {
+                                // this one is already selected, so
+                                // unselect it by filtering it out of the
+                                // currentCuisines
+                                appDispatch(
+                                    setCuisines({
+                                        cuisines: currentCuisines.filter(
+                                            currentCuisine =>
+                                                currentCuisine !== cuisine
+                                        )
+                                    })
+                                )
+                            } else {
+                                // this one is not yet selected, so
+                                // select it by dispatching it with the
+                                // current cuisines
+                                appDispatch(
+                                    setCuisines({
+                                        cuisines: [...currentCuisines, cuisine]
                                     })
                                 )
                             }
