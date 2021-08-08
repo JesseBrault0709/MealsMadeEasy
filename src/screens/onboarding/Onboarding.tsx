@@ -38,7 +38,8 @@ export function Onboarding(props: OnboardingProps) {
                 cookingTime,
                 diet,
                 intolerances,
-                cuisines: null
+                cuisines: null,
+                sortingOption: null
             })
         }
     }

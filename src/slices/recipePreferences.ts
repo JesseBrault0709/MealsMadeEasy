@@ -11,7 +11,8 @@ const initialState: RecipePreferencesState = {
         cookingTime: null,
         diet: null,
         intolerances: null,
-        cuisines: null
+        cuisines: null,
+        sortingOption: null
     },
     completedOnboarding: false
 }
@@ -28,14 +29,16 @@ export const recipePreferencesSlice = createSlice({
                 cookingTime,
                 diet,
                 intolerances,
-                cuisines
+                cuisines,
+                sortingOption
             } = action.payload.preferences
 
             state.preferences = {
                 cookingTime,
                 diet,
                 intolerances: intolerances === null ? [] : [...intolerances],
-                cuisines: cuisines === null ? [] : [...cuisines]
+                cuisines: cuisines === null ? [] : [...cuisines],
+                sortingOption
             }
         },
 
@@ -104,6 +107,18 @@ export const recipePreferencesSlice = createSlice({
                   })
         },
 
+        setSortingOption: (
+            state,
+            action: PayloadAction<{
+                sortingOption: RecipePreferences['sortingOption']
+            }>
+        ) => {
+            state.preferences = {
+                ...state.preferences,
+                sortingOption: action.payload.sortingOption
+            }
+        },
+
         setCompletedOnboarding: (
             state,
             action: PayloadAction<{ completedOnboarding: boolean }>
@@ -119,5 +134,6 @@ export const {
     setDiet,
     setIntolerances,
     setCuisines,
+    setSortingOption,
     setCompletedOnboarding
 } = recipePreferencesSlice.actions
