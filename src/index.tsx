@@ -32,6 +32,7 @@ import {
 import { selectionModeSlice } from './slices/selectionMode'
 import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
 import { RecipePreferences } from './types/RecipePreferences'
+import { recentSearchesSlice } from './slices/recentSearches'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -42,6 +43,7 @@ const store = configureStore({
         dayMealPlans: dayMealPlansSlice.reducer,
         fullRecipes: fullRecipesSlice.reducer,
         homeScreens: homeScreensSlice.reducer,
+        recentSearches: recentSearchesSlice.reducer,
         recipeBook: recipeBookSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         recipePreferences: recipePreferencesSlice.reducer,
