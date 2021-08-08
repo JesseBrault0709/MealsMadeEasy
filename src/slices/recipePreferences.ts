@@ -10,7 +10,8 @@ const initialState: RecipePreferencesState = {
     preferences: {
         cookingTime: null,
         diet: null,
-        intolerances: null
+        intolerances: null,
+        cuisines: null
     },
     completedOnboarding: false
 }
@@ -26,13 +27,15 @@ export const recipePreferencesSlice = createSlice({
             const {
                 cookingTime,
                 diet,
-                intolerances
+                intolerances,
+                cuisines
             } = action.payload.preferences
 
             state.preferences = {
                 cookingTime,
                 diet,
-                intolerances: intolerances === null ? [] : [...intolerances]
+                intolerances: intolerances === null ? [] : [...intolerances],
+                cuisines: cuisines === null ? [] : [...cuisines]
             }
         },
 
@@ -58,6 +61,11 @@ export const recipePreferencesSlice = createSlice({
             }
         },
 
+        /**
+         * TODO: Investigate why there is the undefined check
+         * since the RecipePreferences type can only be
+         * [] | null
+         */
         setIntolerances: (
             state,
             action: PayloadAction<{
@@ -75,6 +83,27 @@ export const recipePreferencesSlice = createSlice({
                   })
         },
 
+        /**
+         * TODO: simplfy to no null check based on the results
+         * of the above investigation
+         */
+        setCuisines: (
+            state,
+            action: PayloadAction<{
+                cuisines: RecipePreferences['cuisines']
+            }>
+        ) => {
+            action.payload.cuisines === null
+                ? (state.preferences = {
+                      ...state.preferences,
+                      cuisines: []
+                  })
+                : (state.preferences = {
+                      ...state.preferences,
+                      cuisines: [...action.payload.cuisines]
+                  })
+        },
+
         setCompletedOnboarding: (
             state,
             action: PayloadAction<{ completedOnboarding: boolean }>
@@ -89,5 +118,6 @@ export const {
     setCookingTime,
     setDiet,
     setIntolerances,
+    setCuisines,
     setCompletedOnboarding
 } = recipePreferencesSlice.actions

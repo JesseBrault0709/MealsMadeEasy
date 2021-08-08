@@ -37,7 +37,8 @@ export function Onboarding(props: OnboardingProps) {
             props.onSubmit({
                 cookingTime,
                 diet,
-                intolerances
+                intolerances,
+                cuisines: null
             })
         }
     }
