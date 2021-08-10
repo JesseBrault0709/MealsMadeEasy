@@ -1,0 +1,31 @@
+svg.jb-radio-indicator {
+    width: 16px;
+    height: 16px;
+
+    circle.jb-radio-indicator-outline {
+        cx: 8px;
+        cy: 8px;
+        r: 7px;
+
+        stroke: var(--primary-black);
+        fill: var(--primary-fill);
+    }
+
+    circle.jb-radio-indicator-selected {
+        cx: 8px;
+        cy: 8px;
+        r: 4px;
+        fill: var(--main-cta);
+    }
+}
+
+.jb-radio {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    > * {
+        margin: 6px;
+    }
+}
