@@ -12,7 +12,9 @@ import { LinksSearchFilterList } from '../LinksSearchFilterList/LinksSearchFilte
 import { SearchFilterListContainer } from '../SearchFilterListContainer/SearchFilterListContainer'
 import { SearchFilterListElement } from '../SearchFilterListElement/SearchFilterListElement'
 
-export type RecentSearchesAndFiltersProps = {}
+export type RecentSearchesAndFiltersProps = {
+    onRecentSearchClick: (recentSearch: string) => void
+}
 
 export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
     // Get app dispatch
@@ -49,7 +51,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                 )}
                 links={recentSearches.map(recentSearch => [
                     recentSearch,
-                    () => console.log(recentSearch)
+                    () => props.onRecentSearchClick(recentSearch)
                 ])}
             />
 

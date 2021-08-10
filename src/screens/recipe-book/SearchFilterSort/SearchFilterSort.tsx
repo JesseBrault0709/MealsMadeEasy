@@ -33,7 +33,16 @@ export function SearchFilterSort() {
     const getSubScreen = () => {
         switch (subScreen) {
             case 'RecentSearchesAndFilters':
-                return <RecentSearchesAndFilters />
+                return (
+                    <RecentSearchesAndFilters
+                        onRecentSearchClick={recentSearch => {
+                            if (searchBarRef.current !== null) {
+                                searchBarRef.current.value = recentSearch
+                                setCurrentSearch(searchBarRef.current.value)
+                            }
+                        }}
+                    />
+                )
             case 'Sort':
                 return <SortBy />
         }
