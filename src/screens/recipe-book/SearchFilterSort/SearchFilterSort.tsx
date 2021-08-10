@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useState } from 'react'
 import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
 import { SearchBarContainer } from './SearchBarContainer/SearchBarContainer'
+import { SortBy } from './SortBy/SortBy'
 import { SortFilterDrawer } from './SortFilterDrawer/SortFilterDrawer'
 
 type SubScreen = 'RecentSearchesAndFilters' | 'Sort'
@@ -29,14 +30,12 @@ export function SearchFilterSort() {
         }
     }
 
-    const getSort = () => <div className="sort"></div>
-
     const getSubScreen = () => {
         switch (subScreen) {
             case 'RecentSearchesAndFilters':
                 return <RecentSearchesAndFilters />
             case 'Sort':
-                return getSort()
+                return <SortBy />
         }
     }
 
