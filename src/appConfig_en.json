@@ -55,6 +55,17 @@
         "Vietnamese"
     ],
 
+    "availableSortingOptions": [
+        {
+            "apiValue": "popularity",
+            "display": "Popularity"
+        },
+        {
+            "apiValue": "meta-score",
+            "display": "Rating"
+        }
+    ],
+
     "meals": ["Breakfast", "Lunch", "Dinner"],
 
     "recipeListTabs": [
