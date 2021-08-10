@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
+import { useAppDispatch } from '../../..'
+import { setRecipeBookScreen } from '../../../slices/recipeBook'
 import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
 import { SearchBarContainer } from './SearchBarContainer/SearchBarContainer'
 import { SortBy } from './SortBy/SortBy'
@@ -9,6 +11,8 @@ import { SortFilterDrawer } from './SortFilterDrawer/SortFilterDrawer'
 type SubScreen = 'RecentSearchesAndFilters' | 'Sort'
 
 export function SearchFilterSort() {
+    const appDispatch = useAppDispatch()
+
     // SubScreen state
     const [subScreen, setSubScreen] = useState<SubScreen>(
         'RecentSearchesAndFilters'
@@ -62,6 +66,10 @@ export function SearchFilterSort() {
                 ref={searchBarRef}
                 onChange={onSearchBarChange}
                 onClearSearchClick={onSearchBarClear}
+                onBackButtonClick={() =>
+                    appDispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+                }
+                onApply={() => console.log('apply')}
             />
             <SortFilterDrawer
                 onFilter={() => setSubScreen('RecentSearchesAndFilters')}
