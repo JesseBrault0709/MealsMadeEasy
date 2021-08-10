@@ -2,10 +2,12 @@ import MagnifyingGlass from './assets/MagnifyingGlass.svg'
 import ClearSearch from './assets/ClearSearch.svg'
 import { forwardRef } from 'react'
 import { FormEventHandler } from 'react'
+import { FocusEventHandler } from 'react'
 
 export type SearchBarProps = {
     onClearSearchClick?: () => void
     onChange?: FormEventHandler<HTMLInputElement>
+    onFocus?: FocusEventHandler<HTMLInputElement>
 }
 
 export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
@@ -17,6 +19,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
                 type="text"
                 placeholder="Search"
                 onChange={props.onChange}
+                onFocus={props.onFocus}
             />
             <img
                 src={ClearSearch}

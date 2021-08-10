@@ -8,6 +8,8 @@ import {
     resetAllRecipes,
     setActiveList
 } from '../../../slices/recipeLists'
+import { SearchBarContainer } from '../SearchFilterSort/SearchBarContainer/SearchBarContainer'
+import { setRecipeBookScreen } from '../../../slices/recipeBook'
 
 export type RecipeListsProps = {
     onRecipeCardClick: (recipe: RecipeOverview) => void
@@ -25,10 +27,11 @@ export function RecipeLists(props: RecipeListsProps) {
 
     return (
         <div className="recipe-lists">
-            <TimeDietAllergies
-                onChange={() => {
-                    dispatch(resetAllRecipes())
-                    dispatch(fetchRecipes(activeList))
+            <SearchBarContainer
+                onFocus={() => {
+                    dispatch(
+                        setRecipeBookScreen({ screen: 'SearchFilterSort' })
+                    )
                 }}
             />
             <Tabs>
