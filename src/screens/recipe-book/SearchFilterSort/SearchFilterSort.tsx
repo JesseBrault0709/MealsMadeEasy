@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
 import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
@@ -29,6 +30,13 @@ export function SearchFilterSort() {
             setCurrentSearch(searchBarRef.current.value)
         }
     }
+
+    // focus the search bar input when the page first renders
+    useEffect(() => {
+        if (searchBarRef.current !== null) {
+            searchBarRef.current.focus()
+        }
+    }, [])
 
     const getSubScreen = () => {
         switch (subScreen) {
