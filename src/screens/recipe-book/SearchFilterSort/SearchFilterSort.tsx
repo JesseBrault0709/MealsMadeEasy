@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useState } from 'react'
-import { useAppDispatch } from '../../..'
+import { useAppDispatch, useAppSelector } from '../../..'
 import { setRecipeBookScreen } from '../../../slices/recipeBook'
+import { fetchRecipes, resetAllRecipes } from '../../../slices/recipeLists'
 import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
 import { SearchBarContainer } from './SearchBarContainer/SearchBarContainer'
 import { SortBy } from './SortBy/SortBy'
@@ -42,6 +43,10 @@ export function SearchFilterSort() {
         }
     }, [])
 
+    // get the active recipe list
+
+    const activeList = useAppSelector(state => state.recipeLists.activeList)
+
     const getSubScreen = () => {
         switch (subScreen) {
             case 'RecentSearchesAndFilters':
@@ -69,7 +74,13 @@ export function SearchFilterSort() {
                 onBackButtonClick={() =>
                     appDispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
                 }
-                onApply={() => console.log('apply')}
+                onApply={() => {
+                    appDispatch(resetAllRecipes())
+                    appDispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+                    if (activeList !== undefined) {
+                        appDispatch(fetchRecipes(activeList))
+                    }
+                }}
             />
             <SortFilterDrawer
                 onFilter={() => setSubScreen('RecentSearchesAndFilters')}
