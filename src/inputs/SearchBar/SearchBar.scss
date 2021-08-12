@@ -19,6 +19,10 @@
     input {
         width: 100%;
         border: none;
+        color: var(--primary-black);
+    }
+
+    input::placeholder {
         color: var(--dark-disabled);
     }
 
