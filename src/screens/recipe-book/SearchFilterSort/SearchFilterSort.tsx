@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../..'
 import { setRecipeBookScreen } from '../../../slices/recipeBook'
 import { fetchRecipes, resetAllRecipes } from '../../../slices/recipeLists'
+import { setQuery } from '../../../slices/recipePreferences'
 import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
 import { SearchBarContainer } from './SearchBarContainer/SearchBarContainer'
 import { SortBy } from './SortBy/SortBy'
@@ -77,6 +78,7 @@ export function SearchFilterSort() {
                 onApply={() => {
                     appDispatch(resetAllRecipes())
                     appDispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+                    appDispatch(setQuery({ query: currentSearch }))
                     if (activeList !== undefined) {
                         appDispatch(fetchRecipes(activeList))
                     }

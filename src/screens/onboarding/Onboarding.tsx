@@ -39,7 +39,8 @@ export function Onboarding(props: OnboardingProps) {
                 diet,
                 intolerances,
                 cuisines: null,
-                sortingOption: null
+                sortingOption: null,
+                query: null
             })
         }
     }

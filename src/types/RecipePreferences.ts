@@ -11,4 +11,5 @@ export type RecipePreferences = {
     intolerances: ReadonlyArray<SPIntolerance> | null
     cuisines: ReadonlyArray<SPCuisine> | null
     sortingOption: SPSortingOption | null
+    query: string | null
 }
