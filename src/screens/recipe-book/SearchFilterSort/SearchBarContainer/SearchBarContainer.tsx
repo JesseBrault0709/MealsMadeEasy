@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { PropsWithRef } from 'react'
-import { useAppDispatch } from '../../../..'
 import { BackButton } from '../../../../icons/BackButton/BackButton'
 import {
     SearchBar,
