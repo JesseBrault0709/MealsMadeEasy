@@ -7,7 +7,7 @@ import {
     addRecentSearches,
     recentSearchesSlice
 } from '../../../slices/recentSearches'
-import { recipePreferencesSlice } from '../../../slices/recipePreferences'
+import { onboardingPreferencesSlice } from '../../../slices/onboardingPreferences'
 import { SearchFilterSort } from './SearchFilterSort'
 
 export default {
@@ -18,7 +18,7 @@ export default {
 const store = configureStore({
     reducer: {
         recentSearches: recentSearchesSlice.reducer,
-        recipePreferences: recipePreferencesSlice.reducer
+        recipePreferences: onboardingPreferencesSlice.reducer
     }
 })
 

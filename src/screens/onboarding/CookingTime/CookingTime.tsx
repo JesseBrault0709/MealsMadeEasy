@@ -1,5 +1,5 @@
 import { ClockSlider } from '../../../inputs/ClockSlider/ClockSlider'
-import { RecipePreferences } from '../../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../../types/OnboardingPreferences'
 import { useContext } from 'react'
 import { AppConfigContext } from '../../../index'
 import {
@@ -8,8 +8,8 @@ import {
 } from '../../../util/cookingTime'
 
 export type CookingTimeInputProps = {
-    value: RecipePreferences['cookingTime']
-    onChange: (cookingTime: RecipePreferences['cookingTime']) => void
+    value: OnboardingPreferences['cookingTime']
+    onChange: (cookingTime: OnboardingPreferences['cookingTime']) => void
 }
 
 export function CookingTimeInput(props: CookingTimeInputProps) {

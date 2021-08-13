@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AppConfigContext, useAppDispatch, useAppSelector } from '../../../..'
 import { JBRadio } from '../../../../inputs/JBRadio/JBRadio'
-import { setSortingOption } from '../../../../slices/recipePreferences'
+import { setSearchSort } from '../../../../slices/searchPreferences'
 
 export function SortBy() {
     const appConfig = useContext(AppConfigContext)
@@ -9,7 +9,7 @@ export function SortBy() {
     const appDispatch = useAppDispatch()
 
     const currentSortingOption = useAppSelector(
-        state => state.recipePreferences.preferences.sortingOption
+        state => state.searchPreferences.sort
     )
 
     return (
@@ -24,11 +24,7 @@ export function SortBy() {
                             label={display}
                             selected={apiValue === currentSortingOption}
                             onClick={() =>
-                                appDispatch(
-                                    setSortingOption({
-                                        sortingOption: apiValue
-                                    })
-                                )
+                                appDispatch(setSearchSort({ sort: apiValue }))
                             }
                         />
                     )

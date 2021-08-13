@@ -1,13 +1,13 @@
 import { useContext, useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
-import { RecipePreferences } from './types/RecipePreferences'
+import { OnboardingPreferences } from './types/OnboardingPreferences'
 import { Sweet } from './screens/Sweet/Sweet'
 import { Splash } from './screens/Splash/Splash'
 import { useAppDispatch, useAppSelector } from './index'
 import {
     setCompletedOnboarding,
     setPreferences
-} from './slices/recipePreferences'
+} from './slices/onboardingPreferences'
 import { fetchRecipes, setActiveList } from './slices/recipeLists'
 import { setAppScreen } from './slices/appScreens'
 import { Home } from './screens/home/Home'
@@ -29,7 +29,7 @@ function App() {
     const currentScreen = useAppSelector(state => state.screens.current)
 
     const completedOnboarding = useAppSelector(
-        state => state.recipePreferences.completedOnboarding
+        state => state.onboardingPreferences.completedOnboarding
     )
 
     useEffect(() => {
@@ -61,7 +61,7 @@ function App() {
         if (currentScreen === 'Splash') {
             return <Splash />
         } else if (currentScreen === 'Onboarding') {
-            const onOnboardingSubmit = (preferences: RecipePreferences) => {
+            const onOnboardingSubmit = (preferences: OnboardingPreferences) => {
                 dispatch(setPreferences({ preferences }))
                 dispatch(setCompletedOnboarding({ completedOnboarding: true }))
                 dispatch(setAppScreen({ screen: 'Sweet' }))

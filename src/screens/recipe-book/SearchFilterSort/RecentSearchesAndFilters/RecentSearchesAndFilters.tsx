@@ -4,13 +4,13 @@ import { clearAllRecentSearches } from '../../../../slices/recentSearches'
 import {
     setCookingTime,
     setDiet,
-    setIntolerances,
-    setCuisines
-} from '../../../../slices/recipePreferences'
+    setIntolerances
+} from '../../../../slices/onboardingPreferences'
 import { convertCookingTimeValueToString } from '../../../../util/cookingTime'
 import { LinksSearchFilterList } from '../LinksSearchFilterList/LinksSearchFilterList'
 import { SearchFilterListContainer } from '../SearchFilterListContainer/SearchFilterListContainer'
 import { SearchFilterListElement } from '../SearchFilterListElement/SearchFilterListElement'
+import { setSearchCuisines } from '../../../../slices/searchPreferences'
 
 export type RecentSearchesAndFiltersProps = {
     onRecentSearchClick: (recentSearch: string) => void
@@ -28,9 +28,12 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
     const {
         cookingTime: currentCookingTime,
         diet: currentDiet,
-        intolerances: currentIntolerances,
-        cuisines: currentCuisines
-    } = useAppSelector(state => state.recipePreferences.preferences)
+        intolerances: currentIntolerances
+    } = useAppSelector(state => state.onboardingPreferences.preferences)
+
+    const { cuisines: currentCuisines } = useAppSelector(
+        state => state.searchPreferences
+    )
 
     // Get available options for cookingtime, diet, allergies
     // and cuisines from app config
@@ -162,7 +165,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                         className="clear-or-select-all"
                         onClick={() =>
                             appDispatch(
-                                setCuisines({
+                                setSearchCuisines({
                                     cuisines: [...appConfig.availableCuisines]
                                 })
                             )
@@ -185,7 +188,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                                 // no currentCuisines, so create an
                                 // array with this one in it
                                 appDispatch(
-                                    setCuisines({
+                                    setSearchCuisines({
                                         cuisines: [cuisine]
                                     })
                                 )
@@ -194,7 +197,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                                 // unselect it by filtering it out of the
                                 // currentCuisines
                                 appDispatch(
-                                    setCuisines({
+                                    setSearchCuisines({
                                         cuisines: currentCuisines.filter(
                                             currentCuisine =>
                                                 currentCuisine !== cuisine
@@ -206,7 +209,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                                 // select it by dispatching it with the
                                 // current cuisines
                                 appDispatch(
-                                    setCuisines({
+                                    setSearchCuisines({
                                         cuisines: [...currentCuisines, cuisine]
                                     })
                                 )

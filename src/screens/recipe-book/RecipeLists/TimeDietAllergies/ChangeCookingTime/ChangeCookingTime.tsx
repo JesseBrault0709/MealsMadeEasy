@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import { RecipePreferences } from '../../../../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../../../../types/OnboardingPreferences'
 import { ChangeModal } from '../ChangeModal/ChangeModal'
 import { CookingTimeInput } from '../../../../onboarding/CookingTime/CookingTime'
 
 export type ChangeCookingTimeProps = {
-    initialCookingTime: RecipePreferences['cookingTime']
-    onSubmit: (newCookingTime: RecipePreferences['cookingTime']) => void
+    initialCookingTime: OnboardingPreferences['cookingTime']
+    onSubmit: (newCookingTime: OnboardingPreferences['cookingTime']) => void
     onCancel: () => void
 }
 
 export function ChangeCookingTime(props: ChangeCookingTimeProps) {
     const [cookingTime, setCookingTime] = useState<
-        RecipePreferences['cookingTime']
+        OnboardingPreferences['cookingTime']
     >(props.initialCookingTime)
 
     const onCancelClick = () => {

@@ -1,7 +1,7 @@
 import { useReducer } from 'react'
 import { SPIntolerance } from '../../../../../client/spoonacularTypes'
 import { JBButton } from '../../../../../inputs/Button/JBButton'
-import { RecipePreferences } from '../../../../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../../../../types/OnboardingPreferences'
 import {
     IntolerancesInput,
     intolerancesReducer
@@ -9,7 +9,7 @@ import {
 import { ChangeModal } from '../ChangeModal/ChangeModal'
 
 export type ChangeIntolerancesProps = {
-    initialIntolerances: RecipePreferences['intolerances']
+    initialIntolerances: OnboardingPreferences['intolerances']
     onSubmit: (newIntolerances: ReadonlyArray<SPIntolerance>) => void
     onCancel: () => void
 }

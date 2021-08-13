@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { Story } from '@storybook/react'
 import { Provider } from 'react-redux'
-import { recipePreferencesSlice } from '../../../../slices/recipePreferences'
+import { onboardingPreferencesSlice } from '../../../../slices/onboardingPreferences'
 import { SortBy } from './SortBy'
 
 export default {
@@ -11,7 +11,7 @@ export default {
 
 const store = configureStore({
     reducer: {
-        recipePreferences: recipePreferencesSlice.reducer
+        recipePreferences: onboardingPreferencesSlice.reducer
     }
 })
 

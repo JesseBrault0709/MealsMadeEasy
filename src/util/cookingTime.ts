@@ -1,4 +1,4 @@
-import { RecipePreferences } from '../types/RecipePreferences'
+import { OnboardingPreferences } from '../types/OnboardingPreferences'
 
 /**
  * Converts the given value (whose type is RecipePreferences['cookingTime'])
@@ -11,7 +11,7 @@ import { RecipePreferences } from '../types/RecipePreferences'
  * @returns a string representing the given value
  */
 export const convertCookingTimeValueToString = (
-    value: RecipePreferences['cookingTime']
+    value: OnboardingPreferences['cookingTime']
 ): string => {
     if (value === 'No Limit') {
         return value
@@ -37,7 +37,7 @@ export const convertCookingTimeValueToString = (
  */
 export const convertStringToCookingTime = (
     s: string
-): RecipePreferences['cookingTime'] => {
+): OnboardingPreferences['cookingTime'] => {
     if (s === 'No Limit') {
         return s
     } else {

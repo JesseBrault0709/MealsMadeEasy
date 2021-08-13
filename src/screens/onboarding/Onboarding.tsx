@@ -1,7 +1,7 @@
 import { useContext, useReducer, useState } from 'react'
 import { AppConfigContext } from '../../index'
 import { JBButton } from '../../inputs/Button/JBButton'
-import { RecipePreferences } from '../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../types/OnboardingPreferences'
 import { OrderedScreenCollection } from '../common/OrderedScreenCollection/OrderedScreenCollection'
 import { CookingTimeInput } from './CookingTime/CookingTime'
 import { DietInput } from './Diet/Diet'
@@ -13,7 +13,7 @@ import { OnboardingScreen } from './OnboardingScreen/OnboardingScreen'
 
 export type OnboardingProps = {
     /** A callback for when the user submits their preferences */
-    onSubmit?: (preferences: RecipePreferences) => void
+    onSubmit?: (preferences: OnboardingPreferences) => void
 }
 
 /**
@@ -24,9 +24,9 @@ export function Onboarding(props: OnboardingProps) {
     const appConfig = useContext(AppConfigContext)
 
     const [cookingTime, setCookingTime] = useState<
-        RecipePreferences['cookingTime']
+        OnboardingPreferences['cookingTime']
     >(appConfig.initialCookingTime)
-    const [diet, setDiet] = useState<RecipePreferences['diet']>(null)
+    const [diet, setDiet] = useState<OnboardingPreferences['diet']>(null)
     const [intolerances, dispatchIntolerances] = useReducer(
         intolerancesReducer,
         []
@@ -37,10 +37,7 @@ export function Onboarding(props: OnboardingProps) {
             props.onSubmit({
                 cookingTime,
                 diet,
-                intolerances,
-                cuisines: null,
-                sortingOption: null,
-                query: null
+                intolerances
             })
         }
     }

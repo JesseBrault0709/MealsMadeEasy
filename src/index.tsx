@@ -25,14 +25,15 @@ import {
     setRecipeLists
 } from './slices/recipeLists'
 import {
-    recipePreferencesSlice,
+    onboardingPreferencesSlice,
     setCompletedOnboarding,
     setPreferences
-} from './slices/recipePreferences'
+} from './slices/onboardingPreferences'
 import { selectionModeSlice } from './slices/selectionMode'
 import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
-import { RecipePreferences } from './types/RecipePreferences'
+import { OnboardingPreferences } from './types/OnboardingPreferences'
 import { recentSearchesSlice } from './slices/recentSearches'
+import { searchPreferencesSlice } from './slices/searchPreferences'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -46,8 +47,9 @@ const store = configureStore({
         recentSearches: recentSearchesSlice.reducer,
         recipeBook: recipeBookSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
-        recipePreferences: recipePreferencesSlice.reducer,
+        onboardingPreferences: onboardingPreferencesSlice.reducer,
         screens: appScreensSlice.reducer,
+        searchPreferences: searchPreferencesSlice.reducer,
         selectionMode: selectionModeSlice.reducer
     }
 })
@@ -150,7 +152,7 @@ const hydrateRecipePreferences = () => {
     const oldPreferencesJSON = localStorage.getItem(LS_RECIPE_PREFERENCES)
     if (oldPreferencesJSON !== null) {
         try {
-            const oldPreferences: RecipePreferences = JSON.parse(
+            const oldPreferences: OnboardingPreferences = JSON.parse(
                 oldPreferencesJSON
             )
             store.dispatch(setPreferences({ preferences: oldPreferences }))
@@ -167,17 +169,17 @@ hydrateRecipePreferences()
 /** When recipePreferences changes, write to localStorage */
 
 const getWriteRecipePreferences = () => {
-    let oldPreferences: AppState['recipePreferences']['preferences'] = store.getState()
-        .recipePreferences.preferences
+    let oldPreferences: AppState['onboardingPreferences']['preferences'] = store.getState()
+        .onboardingPreferences.preferences
     return () => {
         const state = store.getState()
-        if (state.recipePreferences.preferences !== oldPreferences) {
+        if (state.onboardingPreferences.preferences !== oldPreferences) {
             console.log('writing recipePreferences to localStorage')
             localStorage.setItem(
                 LS_RECIPE_PREFERENCES,
-                JSON.stringify(state.recipePreferences.preferences)
+                JSON.stringify(state.onboardingPreferences.preferences)
             )
-            oldPreferences = state.recipePreferences.preferences
+            oldPreferences = state.onboardingPreferences.preferences
         }
     }
 }
@@ -208,20 +210,23 @@ const LS_COMPLETED_ONBOARDING = 'completedOnboarding'
 /** When completedOnboarding changes, write to localStorage */
 
 const getWriteCompletedOnboarding = () => {
-    let oldCompletedOnboarding: AppState['recipePreferences']['completedOnboarding'] = store.getState()
-        .recipePreferences.completedOnboarding
+    let oldCompletedOnboarding: AppState['onboardingPreferences']['completedOnboarding'] = store.getState()
+        .onboardingPreferences.completedOnboarding
     return () => {
         const state = store.getState()
         if (
-            state.recipePreferences.completedOnboarding !==
+            state.onboardingPreferences.completedOnboarding !==
             oldCompletedOnboarding
         ) {
             console.log('writing completedOnboarding to localStorage')
             localStorage.setItem(
                 LS_COMPLETED_ONBOARDING,
-                state.recipePreferences.completedOnboarding ? 'true' : 'false'
+                state.onboardingPreferences.completedOnboarding
+                    ? 'true'
+                    : 'false'
             )
-            oldCompletedOnboarding = state.recipePreferences.completedOnboarding
+            oldCompletedOnboarding =
+                state.onboardingPreferences.completedOnboarding
         }
     }
 }
