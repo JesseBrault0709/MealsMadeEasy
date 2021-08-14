@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RecipeBookScreen } from '../screens/recipe-book/RecipeBook/RecipeBook'
+import { RecipeBookScreen } from '../screens/recipe-book/RecipeBook'
 
 export type RecipeBookState = {
     currentScreen: RecipeBookScreen
@@ -7,7 +7,7 @@ export type RecipeBookState = {
 }
 
 const initialState: RecipeBookState = {
-    currentScreen: 'Recipe List'
+    currentScreen: 'RecipeListsOrSearchFilterSort'
 }
 
 export const recipeBookSlice = createSlice({

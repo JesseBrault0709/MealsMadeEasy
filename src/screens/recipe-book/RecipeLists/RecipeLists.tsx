@@ -3,8 +3,6 @@ import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
 import { useAppDispatch, useAppSelector } from '../../../index'
 import { fetchRecipes, setActiveList } from '../../../slices/recipeLists'
-import { SearchBarContainer } from '../SearchFilterSort/SearchBarContainer/SearchBarContainer'
-import { setRecipeBookScreen } from '../../../slices/recipeBook'
 
 export type RecipeListsProps = {
     onRecipeCardClick: (recipe: RecipeOverview) => void
@@ -22,13 +20,6 @@ export function RecipeLists(props: RecipeListsProps) {
 
     return (
         <div className="recipe-lists">
-            <SearchBarContainer
-                onFocus={() => {
-                    dispatch(
-                        setRecipeBookScreen({ screen: 'SearchFilterSort' })
-                    )
-                }}
-            />
             <Tabs>
                 {lists.map(list => (
                     <Tab

@@ -20,7 +20,9 @@ export function NavBar() {
     const currentHomeScreen = useAppSelector(state => state.homeScreens.current)
 
     const onRecipeBookClick = () => {
-        dispatch(setRecipeBookScreen({ screen: 'Recipe List' }))
+        dispatch(
+            setRecipeBookScreen({ screen: 'RecipeListsOrSearchFilterSort' })
+        )
         dispatch(setHomeScreen({ screen: 'Recipe Book' }))
     }
 
