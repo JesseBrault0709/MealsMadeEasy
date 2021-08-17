@@ -14,9 +14,24 @@ import { setSearchCuisines } from '../../../../slices/searchPreferences'
 import { reverseArray } from '../../../../util/util'
 
 export type RecentSearchesAndFiltersProps = {
+    /** A callback to be run when a recentSearch is clicked. */
     onRecentSearchClick: (recentSearch: string) => void
 }
 
+/**
+ * A component which renders a div containing instances of
+ * SearchFilterListContainer, each representing the following:
+ *
+ *  * Recent searches
+ *  * Cooking time options
+ *  * Diet options
+ *  * Allergies options
+ *  * Cuisine options
+ *
+ * The available options are obtained from the AppConfigContext, and
+ * the currently selected values are obtained from the global store
+ * state.
+ */
 export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
     // Get app dispatch
     const appDispatch = useAppDispatch()

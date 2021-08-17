@@ -5,13 +5,25 @@ import { useAppDispatch, useAppSelector } from '../../../index'
 import { fetchRecipes, setActiveList } from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {
+    /** A callback to be run when a RecipeCard is clicked. */
     onRecipeCardClick: (recipe: RecipeOverview) => void
 }
 
+/**
+ * A component which renders:
+ *  * A Tabs instance with child Tab instances, each
+ *      representing a particular recipe type (such as
+ *      'main course', 'side dish', etc.)
+ *  * A RecipeList instance representing the current active
+ *      tab.
+ */
 export function RecipeLists(props: RecipeListsProps) {
     const dispatch = useAppDispatch()
 
+    /** All the available recipe lists. Each will have a Tab rendered for it. */
     const lists = useAppSelector(state => state.recipeLists.lists)
+
+    /** The currently active (i.e., showing to the user) recipe list. */
     const activeList = useAppSelector(state => state.recipeLists.activeList)
 
     if (activeList === undefined) {

@@ -5,11 +5,20 @@ import FilterActive from './assets/FilterActive.svg'
 import FilterInactive from './assets/FilterInactive.svg'
 
 export type SortFilterButtonProps = {
+    /** The variant to render */
     variant: 'Sort' | 'Filter'
+
+    /** Whether this button is active or not */
     active?: boolean
+
+    /** A callback to be run when the button is clicked. */
     onClick?: () => void
 }
 
+/**
+ * A simple button which representing which subscreen SearchFilterSort is
+ * currently active. Intended to be used in SortFilterDrawer.
+ */
 export function SortFilterButton(props: SortFilterButtonProps) {
     const classNames = ['sort-filter-button']
 

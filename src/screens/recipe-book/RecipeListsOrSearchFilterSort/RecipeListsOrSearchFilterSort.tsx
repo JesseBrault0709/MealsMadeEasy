@@ -13,19 +13,42 @@ import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/Screen
 import { RecipeLists } from '../RecipeLists/RecipeLists'
 import { SearchFilterSort } from '../SearchFilterSort/SearchFilterSort'
 
+/** The possible values for the subScreen state of RecentListsOrSearchFilterSort */
 type SubScreen = 'RecipeLists' | 'SearchFilterSort'
 
+/**
+ * A component which is in one of two primary states: 'RecipeLists' (default)
+ * or 'SearchFilterSort', stored in the subScreen const.
+ *
+ * Both states return a ScreenWithTitleAndNav entitled
+ * 'RecipeBook' whose first child is a div containing a SearchBar.
+ *
+ * If the subScreen is 'RecipeLists', it renders beneath the SearchBar
+ * a RecipeLists instance.
+ *
+ * If the subScreen is 'SearchFilterSort', it renders beneath the SearchBar
+ * a SearchFilterSort instance, as well as a back button to the left of the
+ * SearchBar and an 'Apply' button to the right of the SearchBar.
+ */
 export function RecipeListsOrSearchFilterSort() {
     const appDispatch = useAppDispatch()
 
     const [subScreen, setSubScreen] = useState<SubScreen>('RecipeLists')
 
+    /** The current search query. This value is displayed in the search bar */
     const currentQuery = useAppSelector(state => state.searchPreferences.query)
 
+    /** The current active recipe list (eg. 'main course', 'side dish') */
     const activeRecipeList = useAppSelector(
         state => state.recipeLists.activeList
     )
 
+    /**
+     * A function to be run when the user begins a search. This
+     * is done via either clicking the 'Apply' button to the right
+     * of the search bar or via clicking on a recentSearch under 'Recent
+     * Searches' (located within SearchFilterSort).
+     */
     const onApply = () => {
         appDispatch(resetAllRecipes())
         if (currentQuery !== null) {

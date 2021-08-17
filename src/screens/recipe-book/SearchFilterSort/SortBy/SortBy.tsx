@@ -3,6 +3,11 @@ import { AppConfigContext, useAppDispatch, useAppSelector } from '../../../..'
 import { JBRadio } from '../../../../inputs/JBRadio/JBRadio'
 import { setSearchSort } from '../../../../slices/searchPreferences'
 
+/**
+ * A component which simply renders a list of JBRadio instances,
+ * each for the possible sorting options obtained from the appConfig
+ * (via the AppConfigContext).
+ */
 export function SortBy() {
     const appConfig = useContext(AppConfigContext)
 

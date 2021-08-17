@@ -5,11 +5,26 @@ import {
 } from '../SearchFilterList/SearchFilterList'
 
 export type SearchFilterListContainerProps = {
+    /** The title of this list */
     title: string
+
+    /**
+     * A supplier of a button to be rendered to the right
+     * of the title.
+     */
     renderTitleButton?: () => ReactNode
+
+    /**
+     * Forwarded to the SearchFilterList instance.
+     */
     children: SearchFilterListProps['children']
 }
 
+/**
+ * A container component which renders a div containing
+ * a title-and-button div, and beneath it, an instance of
+ * SearchFilterList.
+ */
 export function SearchFilterListContainer(
     props: SearchFilterListContainerProps
 ) {
