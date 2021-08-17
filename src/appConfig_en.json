@@ -58,7 +58,8 @@
     "availableSortingOptions": [
         {
             "apiValue": "meta-score",
-            "display": "Rating"
+            "display": "Rating",
+            "default": true
         },
         {
             "apiValue": "popularity",

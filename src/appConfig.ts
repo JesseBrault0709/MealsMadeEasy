@@ -22,6 +22,7 @@ export type AppConfig = {
     availbleSortingOptions: ReadonlyArray<{
         apiValue: SPSortingOption
         display: string
+        default?: boolean
     }>
 
     initialCookingTime: 'No Limit' | number

@@ -33,7 +33,10 @@ import { selectionModeSlice } from './slices/selectionMode'
 import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
 import { OnboardingPreferences } from './types/OnboardingPreferences'
 import { setRecentSearches, recentSearchesSlice } from './slices/recentSearches'
-import { searchPreferencesSlice } from './slices/searchPreferences'
+import {
+    searchPreferencesSlice,
+    setSearchSort
+} from './slices/searchPreferences'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -270,6 +273,17 @@ const getWriteRecentSearches = () => {
 }
 
 store.subscribe(getWriteRecentSearches())
+
+/** Set the current sort option from appConfig's default option */
+;(() => {
+    console.log('setting current sort option from appConfig')
+    const defaultSortingOption = appConfig.availbleSortingOptions.find(
+        sortingOption => sortingOption.default
+    )
+    if (defaultSortingOption !== undefined) {
+        store.dispatch(setSearchSort({ sort: defaultSortingOption.apiValue }))
+    }
+})()
 
 /** Render the App */
 
