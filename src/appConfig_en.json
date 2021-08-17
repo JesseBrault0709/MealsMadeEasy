@@ -57,12 +57,12 @@
 
     "availableSortingOptions": [
         {
-            "apiValue": "popularity",
-            "display": "Popularity"
-        },
-        {
             "apiValue": "meta-score",
             "display": "Rating"
+        },
+        {
+            "apiValue": "popularity",
+            "display": "Popularity"
         }
     ],
 
