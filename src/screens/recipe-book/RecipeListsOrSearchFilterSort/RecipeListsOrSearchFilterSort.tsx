@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../..'
 import { BackButton } from '../../../icons/BackButton/BackButton'
 import { SearchBar } from '../../../inputs/SearchBar/SearchBar'
-import { addRecentSearch } from '../../../slices/recentSearches'
+import { addRecentSearchIfNotPresent } from '../../../slices/recentSearches'
 import {
     setRecipeBookScreen,
     setRecipeInfoId
@@ -80,7 +80,9 @@ export function RecipeListsOrSearchFilterSort() {
                             appDispatch(resetAllRecipes())
                             if (currentQuery !== null) {
                                 appDispatch(
-                                    addRecentSearch({ search: currentQuery })
+                                    addRecentSearchIfNotPresent({
+                                        search: currentQuery
+                                    })
                                 )
                             }
                             if (activeRecipeList === undefined) {

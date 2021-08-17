@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { AppConfigContext } from '../../..'
 import { appConfig } from '../../../appConfig'
 import {
-    addRecentSearches,
+    setRecentSearches,
     recentSearchesSlice
 } from '../../../slices/recentSearches'
 import { onboardingPreferencesSlice } from '../../../slices/onboardingPreferences'
@@ -27,7 +27,7 @@ type TemplateArgs = {
 }
 
 const Template: Story<TemplateArgs> = args => {
-    store.dispatch(addRecentSearches({ searches: args.recentSearches }))
+    store.dispatch(setRecentSearches({ searches: args.recentSearches }))
 
     return (
         <AppConfigContext.Provider value={appConfig}>

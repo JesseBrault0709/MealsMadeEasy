@@ -32,7 +32,7 @@ import {
 import { selectionModeSlice } from './slices/selectionMode'
 import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
 import { OnboardingPreferences } from './types/OnboardingPreferences'
-import { addRecentSearches, recentSearchesSlice } from './slices/recentSearches'
+import { setRecentSearches, recentSearchesSlice } from './slices/recentSearches'
 import { searchPreferencesSlice } from './slices/searchPreferences'
 
 /** The AppConfig context */
@@ -245,7 +245,7 @@ const LS_RECENT_SEARCHES = 'recentSearches'
             const recentSearches: ReadonlyArray<string> = JSON.parse(
                 recentSearchesString
             )
-            store.dispatch(addRecentSearches({ searches: recentSearches }))
+            store.dispatch(setRecentSearches({ searches: recentSearches }))
         } catch (err) {
             console.error(`error while parsing recentSearchesString: ${err}`)
         }

@@ -12,11 +12,17 @@ export const recentSearchesSlice = createSlice({
     name: 'recentSearches',
     initialState,
     reducers: {
-        addRecentSearch: (state, action: PayloadAction<{ search: string }>) => {
-            state.searches.push(action.payload.search)
+        addRecentSearchIfNotPresent: (
+            state,
+            action: PayloadAction<{ search: string }>
+        ) => {
+            const { search } = action.payload
+            if (!state.searches.includes(search)) {
+                state.searches.push(search)
+            }
         },
 
-        addRecentSearches: (
+        setRecentSearches: (
             state,
             action: PayloadAction<{ searches: ReadonlyArray<string> }>
         ) => {
@@ -30,7 +36,7 @@ export const recentSearchesSlice = createSlice({
 })
 
 export const {
-    addRecentSearch,
-    addRecentSearches,
+    addRecentSearchIfNotPresent,
+    setRecentSearches,
     clearAllRecentSearches
 } = recentSearchesSlice.actions
