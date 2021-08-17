@@ -17,7 +17,11 @@ export function LinksSearchFilterList(props: LinksSearchFilterListProps) {
             renderTitleButton={props.renderTitleButton}
         >
             {props.links.map(([link, onSelect]) => (
-                <SearchFilterListElement title={link} onClick={onSelect} />
+                <SearchFilterListElement
+                    key={link}
+                    title={link}
+                    onClick={onSelect}
+                />
             ))}
         </SearchFilterListContainer>
     )

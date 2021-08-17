@@ -65,6 +65,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                 {appConfig.availableCookingTimes.map(cookingTime => (
                     <SearchFilterListElement
                         title={convertCookingTimeValueToString(cookingTime)}
+                        key={convertCookingTimeValueToString(cookingTime)}
                         active={cookingTime === currentCookingTime}
                         onClick={() =>
                             appDispatch(setCookingTime({ cookingTime }))
@@ -78,6 +79,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                 {appConfig.availableDiets.map(diet => (
                     <SearchFilterListElement
                         title={diet}
+                        key={diet}
                         active={diet === currentDiet}
                         onClick={() => {
                             if (diet === currentDiet) {
@@ -114,6 +116,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                 {appConfig.availableIntolerances.map(intolerance => (
                     <SearchFilterListElement
                         title={intolerance}
+                        key={intolerance}
                         active={
                             currentIntolerances === null
                                 ? false
@@ -180,6 +183,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                 {appConfig.availableCuisines.map(cuisine => (
                     <SearchFilterListElement
                         title={cuisine}
+                        key={cuisine}
                         active={
                             currentCuisines === null
                                 ? false

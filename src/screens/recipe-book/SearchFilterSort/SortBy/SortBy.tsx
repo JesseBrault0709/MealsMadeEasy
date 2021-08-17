@@ -22,6 +22,7 @@ export function SortBy() {
                     ({ apiValue, display }) => (
                         <JBRadio
                             label={display}
+                            key={display}
                             selected={apiValue === currentSortingOption}
                             onClick={() =>
                                 appDispatch(setSearchSort({ sort: apiValue }))
