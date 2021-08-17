@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../..'
 import { BackButton } from '../../../icons/BackButton/BackButton'
 import { SearchBar } from '../../../inputs/SearchBar/SearchBar'
+import { addRecentSearch } from '../../../slices/recentSearches'
 import {
     setRecipeBookScreen,
     setRecipeInfoId
@@ -39,7 +40,7 @@ export function RecipeListsOrSearchFilterSort() {
         }
     }
 
-    const [searchBarInput, setSearchBarInput] = useState<string | null>(null)
+    const currentQuery = useAppSelector(state => state.searchPreferences.query)
 
     const activeRecipeList = useAppSelector(
         state => state.recipeLists.activeList
@@ -53,7 +54,7 @@ export function RecipeListsOrSearchFilterSort() {
                 ) : null}
 
                 <SearchBar
-                    value={searchBarInput ?? ''}
+                    value={currentQuery ?? ''}
                     onFocus={() => {
                         if (subScreen === 'RecipeLists') {
                             setSubScreen('SearchFilterSort')
@@ -62,12 +63,14 @@ export function RecipeListsOrSearchFilterSort() {
                     onChange={event => {
                         const { value } = event.currentTarget
                         if (value.length === 0) {
-                            setSearchBarInput(null)
+                            appDispatch(setSearchQuery({ query: null }))
                         } else {
-                            setSearchBarInput(value)
+                            appDispatch(setSearchQuery({ query: value }))
                         }
                     }}
-                    onClearSearchClick={() => setSearchBarInput(null)}
+                    onClearSearchClick={() =>
+                        appDispatch(setSearchQuery({ query: null }))
+                    }
                 />
 
                 {subScreen === 'SearchFilterSort' ? (
@@ -75,9 +78,11 @@ export function RecipeListsOrSearchFilterSort() {
                         className="search-bar-container-apply"
                         onClick={() => {
                             appDispatch(resetAllRecipes())
-                            appDispatch(
-                                setSearchQuery({ query: searchBarInput })
-                            )
+                            if (currentQuery !== null) {
+                                appDispatch(
+                                    addRecentSearch({ search: currentQuery })
+                                )
+                            }
                             if (activeRecipeList === undefined) {
                                 throw new Error(
                                     `cannot fetch recipes when activeRecipeList is undefined`

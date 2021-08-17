@@ -32,7 +32,7 @@ import {
 import { selectionModeSlice } from './slices/selectionMode'
 import { DayMealPlan, getBlankDayMealPlan } from './types/DayMealPlan'
 import { OnboardingPreferences } from './types/OnboardingPreferences'
-import { recentSearchesSlice } from './slices/recentSearches'
+import { addRecentSearches, recentSearchesSlice } from './slices/recentSearches'
 import { searchPreferencesSlice } from './slices/searchPreferences'
 
 /** The AppConfig context */
@@ -232,6 +232,44 @@ const getWriteCompletedOnboarding = () => {
 }
 
 store.subscribe(getWriteCompletedOnboarding())
+
+/** Hydrate recentSearches from local storage */
+
+const LS_RECENT_SEARCHES = 'recentSearches'
+
+;(() => {
+    console.log('hydrating recentSearches from localStorage')
+    const recentSearchesString = localStorage.getItem(LS_RECENT_SEARCHES)
+    if (recentSearchesString !== null) {
+        try {
+            const recentSearches: ReadonlyArray<string> = JSON.parse(
+                recentSearchesString
+            )
+            store.dispatch(addRecentSearches({ searches: recentSearches }))
+        } catch (err) {
+            console.error(`error while parsing recentSearchesString: ${err}`)
+        }
+    } else {
+        console.log(`no recentSearchesString in localStorage`)
+    }
+})()
+
+/** When recentSearches changes, write to localStorage */
+
+const getWriteRecentSearches = () => {
+    let oldRecentSearches = store.getState().recentSearches.searches
+
+    return () => {
+        const { searches } = store.getState().recentSearches
+        if (searches !== oldRecentSearches) {
+            console.log('writing recentSearches to localStorage')
+            localStorage.setItem(LS_RECENT_SEARCHES, JSON.stringify(searches))
+            oldRecentSearches = searches
+        }
+    }
+}
+
+store.subscribe(getWriteRecentSearches())
 
 /** Render the App */
 
