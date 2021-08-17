@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../..'
-import { setSearchQuery } from '../../../slices/searchPreferences'
-import { RecentSearchesAndFilters } from './RecentSearchesAndFilters/RecentSearchesAndFilters'
+import {
+    RecentSearchesAndFilters,
+    RecentSearchesAndFiltersProps
+} from './RecentSearchesAndFilters/RecentSearchesAndFilters'
 import { SortBy } from './SortBy/SortBy'
 import { SortFilterDrawer } from './SortFilterDrawer/SortFilterDrawer'
 
 type SubScreen = 'RecentSearchesAndFilters' | 'Sort'
 
-export function SearchFilterSort() {
-    const appDispatch = useAppDispatch()
+export type SearchFilterSortProps = {
+    onRecentSearchClick: RecentSearchesAndFiltersProps['onRecentSearchClick']
+}
 
+export function SearchFilterSort(props: SearchFilterSortProps) {
     // SubScreen state
     const [subScreen, setSubScreen] = useState<SubScreen>(
         'RecentSearchesAndFilters'
@@ -20,9 +23,7 @@ export function SearchFilterSort() {
             case 'RecentSearchesAndFilters':
                 return (
                     <RecentSearchesAndFilters
-                        onRecentSearchClick={recentSearch => {
-                            appDispatch(setSearchQuery({ query: recentSearch }))
-                        }}
+                        onRecentSearchClick={props.onRecentSearchClick}
                     />
                 )
             case 'Sort':

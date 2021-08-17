@@ -20,6 +20,30 @@ export function RecipeListsOrSearchFilterSort() {
 
     const [subScreen, setSubScreen] = useState<SubScreen>('RecipeLists')
 
+    const currentQuery = useAppSelector(state => state.searchPreferences.query)
+
+    const activeRecipeList = useAppSelector(
+        state => state.recipeLists.activeList
+    )
+
+    const onApply = () => {
+        appDispatch(resetAllRecipes())
+        if (currentQuery !== null) {
+            appDispatch(
+                addRecentSearchIfNotPresent({
+                    search: currentQuery
+                })
+            )
+        }
+        if (activeRecipeList === undefined) {
+            throw new Error(
+                `cannot fetch recipes when activeRecipeList is undefined`
+            )
+        }
+        appDispatch(fetchRecipes(activeRecipeList))
+        setSubScreen('RecipeLists')
+    }
+
     const getSubScreen = () => {
         switch (subScreen) {
             case 'RecipeLists':
@@ -36,15 +60,16 @@ export function RecipeListsOrSearchFilterSort() {
                     />
                 )
             case 'SearchFilterSort':
-                return <SearchFilterSort />
+                return (
+                    <SearchFilterSort
+                        onRecentSearchClick={recentSearch => {
+                            appDispatch(setSearchQuery({ query: recentSearch }))
+                            onApply()
+                        }}
+                    />
+                )
         }
     }
-
-    const currentQuery = useAppSelector(state => state.searchPreferences.query)
-
-    const activeRecipeList = useAppSelector(
-        state => state.recipeLists.activeList
-    )
 
     return (
         <ScreenWithTitleAndNav title="Recipe Book">
@@ -76,23 +101,7 @@ export function RecipeListsOrSearchFilterSort() {
                 {subScreen === 'SearchFilterSort' ? (
                     <span
                         className="search-bar-container-apply"
-                        onClick={() => {
-                            appDispatch(resetAllRecipes())
-                            if (currentQuery !== null) {
-                                appDispatch(
-                                    addRecentSearchIfNotPresent({
-                                        search: currentQuery
-                                    })
-                                )
-                            }
-                            if (activeRecipeList === undefined) {
-                                throw new Error(
-                                    `cannot fetch recipes when activeRecipeList is undefined`
-                                )
-                            }
-                            appDispatch(fetchRecipes(activeRecipeList))
-                            setSubScreen('RecipeLists')
-                        }}
+                        onClick={onApply}
                     >
                         Apply
                     </span>

@@ -9,6 +9,7 @@ import {
 } from '../../../slices/recentSearches'
 import { onboardingPreferencesSlice } from '../../../slices/onboardingPreferences'
 import { SearchFilterSort } from './SearchFilterSort'
+import { setSearchQuery } from '../../../slices/searchPreferences'
 
 export default {
     title: 'SearchFilterSort/SearchFilterSort',
@@ -32,7 +33,11 @@ const Template: Story<TemplateArgs> = args => {
     return (
         <AppConfigContext.Provider value={appConfig}>
             <Provider store={store}>
-                <SearchFilterSort />
+                <SearchFilterSort
+                    onRecentSearchClick={recentSearch =>
+                        store.dispatch(setSearchQuery({ query: recentSearch }))
+                    }
+                />
             </Provider>
         </AppConfigContext.Provider>
     )
