@@ -11,6 +11,7 @@ import { LinksSearchFilterList } from '../LinksSearchFilterList/LinksSearchFilte
 import { SearchFilterListContainer } from '../SearchFilterListContainer/SearchFilterListContainer'
 import { SearchFilterListElement } from '../SearchFilterListElement/SearchFilterListElement'
 import { setSearchCuisines } from '../../../../slices/searchPreferences'
+import { reverseArray } from '../../../../util/util'
 
 export type RecentSearchesAndFiltersProps = {
     onRecentSearchClick: (recentSearch: string) => void
@@ -52,7 +53,8 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                         Clear All
                     </span>
                 )}
-                links={recentSearches.map(recentSearch => [
+                /** reverse the array so that the most recent search appears first */
+                links={reverseArray(recentSearches).map(recentSearch => [
                     recentSearch,
                     () => props.onRecentSearchClick(recentSearch)
                 ])}

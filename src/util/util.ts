@@ -124,3 +124,10 @@ export const mapToArray = <K, V, T>(
     })
     return results
 }
+
+export const reverseArray = <T>(arr: ReadonlyArray<T>): ReadonlyArray<T> => {
+    return arr.reduceRight<T[]>((arr, cur) => {
+        arr.push(cur)
+        return arr
+    }, [])
+}
