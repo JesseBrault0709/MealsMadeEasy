@@ -16,15 +16,15 @@
     border-bottom: 1px solid var(--dark-disabled);
 }
 
-.sort-filter-drawer-chevron {
+.sort-filter-drawer-chevron-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 
     height: 17px;
+}
 
-    img {
-        padding: 5px;
-    }
+.sort-filter-drawer-chevron {
+    stroke: var(--dark-disabled);
 }

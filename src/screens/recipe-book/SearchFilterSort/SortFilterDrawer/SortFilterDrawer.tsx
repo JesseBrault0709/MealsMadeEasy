@@ -51,11 +51,17 @@ export function SortFilterDrawer(props: SortFilterDrawerProps) {
     )
 
     const getChevron = () => (
-        <div className="sort-filter-drawer-chevron">
+        <div className="sort-filter-drawer-chevron-container">
             {showButtons ? (
-                <ChevronUp onClick={() => setShowButtons(false)} />
+                <ChevronUp
+                    className="sort-filter-drawer-chevron"
+                    onClick={() => setShowButtons(false)}
+                />
             ) : (
-                <ChevronDown onClick={() => setShowButtons(true)} />
+                <ChevronDown
+                    className="sort-filter-drawer-chevron"
+                    onClick={() => setShowButtons(true)}
+                />
             )}
         </div>
     )
