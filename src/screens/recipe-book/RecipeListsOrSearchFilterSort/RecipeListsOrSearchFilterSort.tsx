@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../..'
 import { BackButton } from '../../../icons/BackButton/BackButton'
 import { SearchBar } from '../../../inputs/SearchBar/SearchBar'
@@ -94,6 +94,8 @@ export function RecipeListsOrSearchFilterSort() {
         }
     }
 
+    const searchBarInputRef = useRef<HTMLInputElement>(null)
+
     return (
         <ScreenWithTitleAndNav title="Recipe Book">
             <div className="search-bar-container">
@@ -104,34 +106,46 @@ export function RecipeListsOrSearchFilterSort() {
                     />
                 ) : null}
 
-                <SearchBar
-                    value={currentQuery ?? ''}
-                    onFocus={() => {
-                        if (subScreen === 'RecipeLists') {
-                            setSubScreen('SearchFilterSort')
+                <form
+                    className="search-bar-container-form"
+                    onSubmit={event => {
+                        event.preventDefault()
+                        if (searchBarInputRef.current !== null) {
+                            searchBarInputRef.current.blur()
                         }
+                        onApply()
                     }}
-                    onChange={event => {
-                        const { value } = event.currentTarget
-                        if (value.length === 0) {
+                >
+                    <SearchBar
+                        ref={searchBarInputRef}
+                        value={currentQuery ?? ''}
+                        onFocus={() => {
+                            if (subScreen === 'RecipeLists') {
+                                setSubScreen('SearchFilterSort')
+                            }
+                        }}
+                        onChange={event => {
+                            const { value } = event.currentTarget
+                            if (value.length === 0) {
+                                appDispatch(setSearchQuery({ query: null }))
+                            } else {
+                                appDispatch(setSearchQuery({ query: value }))
+                            }
+                        }}
+                        onClearSearchClick={() =>
                             appDispatch(setSearchQuery({ query: null }))
-                        } else {
-                            appDispatch(setSearchQuery({ query: value }))
                         }
-                    }}
-                    onClearSearchClick={() =>
-                        appDispatch(setSearchQuery({ query: null }))
-                    }
-                />
+                    />
 
-                {subScreen === 'SearchFilterSort' ? (
-                    <span
-                        className="search-bar-container-apply"
-                        onClick={onApply}
-                    >
-                        Apply
-                    </span>
-                ) : null}
+                    {subScreen === 'SearchFilterSort' ? (
+                        <button
+                            type="submit"
+                            className="search-bar-container-apply"
+                        >
+                            Apply
+                        </button>
+                    ) : null}
+                </form>
             </div>
             {getSubScreen()}
         </ScreenWithTitleAndNav>

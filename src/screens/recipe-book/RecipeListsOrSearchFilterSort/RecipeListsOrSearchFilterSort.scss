@@ -11,16 +11,25 @@
 
     border-bottom: 1px solid var(--dark-disabled);
 
-    > * {
+    * {
         margin: 7px;
-    }
-
-    .search-bar-container-apply {
-        font-size: 14px;
-        color: var(--main-cta);
     }
 
     .search-bar-container-back-button {
         stroke: var(--dark-disabled);
+    }
+
+    .search-bar-container-form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-bar-container-apply {
+            font-size: 14px;
+            color: var(--main-cta);
+            background-color: unset;
+            border: none;
+        }
     }
 }
