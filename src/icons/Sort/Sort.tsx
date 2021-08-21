@@ -13,8 +13,8 @@ export function Sort(props: IconProps) {
         >
             <path
                 d="M10.5846 16L15.8125 11.0276M6.22794 1.04144V15.9586V1.04144ZM1 5.97238L6.22794 1L1 5.97238ZM10.5846 16V1.08287V16Z"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     )
