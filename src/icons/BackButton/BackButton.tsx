@@ -1,11 +1,9 @@
-export type BackButtonProps = {
-    onClick?: () => void
-}
+import { IconProps } from '../IconProps'
 
-export function BackButton(props: BackButtonProps) {
+export function BackButton(props: IconProps) {
     return (
         <svg
-            className="back-button"
+            className={props.className ?? 'back-button'}
             onClick={props.onClick}
             width="8"
             height="14"
