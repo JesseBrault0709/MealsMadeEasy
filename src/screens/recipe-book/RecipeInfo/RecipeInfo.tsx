@@ -15,6 +15,8 @@ import { setToAddMode } from '../../../slices/selectionMode'
 import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
 import { useFullRecipe } from '../../../slices/fullRecipes'
+import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
+import { setRecipeBookScreen } from '../../../slices/recipeBook'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -217,5 +219,18 @@ export function RecipeInfo(props: RecipeInfoProps) {
         }
     }
 
-    return <div className="recipe-info">{getScreen()}</div>
+    return (
+        <ScreenWithTitleAndNav
+            title=""
+            onBackButtonClick={() => {
+                dispatch(
+                    setRecipeBookScreen({
+                        screen: 'RecipeListsOrSearchFilterSort'
+                    })
+                )
+            }}
+        >
+            <div className="recipe-info">{getScreen()}</div>
+        </ScreenWithTitleAndNav>
+    )
 }
