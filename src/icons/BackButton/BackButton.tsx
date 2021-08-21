@@ -3,7 +3,7 @@ import { IconProps } from '../IconProps'
 export function BackButton(props: IconProps) {
     return (
         <svg
-            className={props.className ?? 'back-button'}
+            className={props.className}
             onClick={props.onClick}
             width="8"
             height="14"

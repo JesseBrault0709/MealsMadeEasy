@@ -3,7 +3,7 @@ import { IconProps } from '../IconProps'
 export function ChevronUp(props: IconProps) {
     return (
         <svg
-            className={props.className ?? 'chevron-up'}
+            className={props.className}
             onClick={props.onClick}
             width="24"
             height="6"
