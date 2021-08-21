@@ -1,6 +1,6 @@
-import ChevronUp from './assets/ChevronUp.svg'
-import ChevronDown from './assets/ChevronDown.svg'
 import { useState } from 'react'
+import { ChevronDown } from '../../../../icons/ChevronDown/ChevronDown'
+import { ChevronUp } from '../../../../icons/ChevronUp/ChevronUp'
 import { SortFilterButton } from '../SortFilterButton/SortFilterButton'
 
 export type SortFilterDrawerProps = {
@@ -53,17 +53,9 @@ export function SortFilterDrawer(props: SortFilterDrawerProps) {
     const getChevron = () => (
         <div className="sort-filter-drawer-chevron">
             {showButtons ? (
-                <img
-                    src={ChevronUp}
-                    alt="hide filter and sort buttons"
-                    onClick={() => setShowButtons(false)}
-                />
+                <ChevronUp onClick={() => setShowButtons(false)} />
             ) : (
-                <img
-                    src={ChevronDown}
-                    alt="show filter and sort buttons"
-                    onClick={() => setShowButtons(true)}
-                />
+                <ChevronDown onClick={() => setShowButtons(true)} />
             )}
         </div>
     )
