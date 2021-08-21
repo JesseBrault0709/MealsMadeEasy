@@ -1,8 +1,5 @@
-import SortActive from './assets/SortActive.svg'
-import SortInactive from './assets/SortInactive.svg'
-
-import FilterActive from './assets/FilterActive.svg'
-import FilterInactive from './assets/FilterInactive.svg'
+import { Filter } from '../../../../icons/Filter/Filter'
+import { Sort } from '../../../../icons/Sort/Sort'
 
 export type SortFilterButtonProps = {
     /** The variant to render */
@@ -31,15 +28,15 @@ export function SortFilterButton(props: SortFilterButtonProps) {
     const getImg = () => {
         if (props.active) {
             return props.variant === 'Sort' ? (
-                <img src={SortActive} alt="" />
+                <Sort className="sort-active" />
             ) : (
-                <img src={FilterActive} alt="" />
+                <Filter className="filter-active" />
             )
         } else {
             return props.variant === 'Sort' ? (
-                <img src={SortInactive} alt="" />
+                <Sort className="sort-inactive" />
             ) : (
-                <img src={FilterInactive} alt="" />
+                <Filter className="filter-inactive" />
             )
         }
     }

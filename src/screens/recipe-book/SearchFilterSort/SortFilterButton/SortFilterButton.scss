@@ -16,3 +16,13 @@
 .sort-filter-button-active {
     color: var(--main-cta);
 }
+
+.sort-active,
+.filter-active {
+    stroke: var(--main-cta);
+}
+
+.sort-inactive,
+.filter-inactive {
+    stroke: #333333;
+}
