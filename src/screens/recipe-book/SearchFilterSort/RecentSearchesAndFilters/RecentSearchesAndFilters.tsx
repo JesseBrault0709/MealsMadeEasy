@@ -7,7 +7,6 @@ import {
     setIntolerances
 } from '../../../../slices/onboardingPreferences'
 import { convertCookingTimeValueToString } from '../../../../util/cookingTime'
-import { LinksSearchFilterList } from '../LinksSearchFilterList/LinksSearchFilterList'
 import { SearchFilterListContainer } from '../SearchFilterListContainer/SearchFilterListContainer'
 import { SearchFilterListElement } from '../SearchFilterListElement/SearchFilterListElement'
 import { setSearchCuisines } from '../../../../slices/searchPreferences'
@@ -58,7 +57,7 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
     return (
         <div className="recent-searches-and-filters">
             {/* Recent Searches */}
-            <LinksSearchFilterList
+            <SearchFilterListContainer
                 title="Recent Searches"
                 renderTitleButton={() => (
                     <span
@@ -68,12 +67,15 @@ export function RecentSearchesAndFilters(props: RecentSearchesAndFiltersProps) {
                         Clear All
                     </span>
                 )}
-                /** reverse the array so that the most recent search appears first */
-                links={reverseArray(recentSearches).map(recentSearch => [
-                    recentSearch,
-                    () => props.onRecentSearchClick(recentSearch)
-                ])}
-            />
+            >
+                {reverseArray(recentSearches).map(recentSearch => (
+                    <SearchFilterListElement
+                        title={recentSearch}
+                        key={recentSearch}
+                        onClick={() => props.onRecentSearchClick(recentSearch)}
+                    />
+                ))}
+            </SearchFilterListContainer>
 
             {/* Time */}
             <SearchFilterListContainer title="Time">
