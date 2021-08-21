@@ -98,7 +98,10 @@ export function RecipeListsOrSearchFilterSort() {
         <ScreenWithTitleAndNav title="Recipe Book">
             <div className="search-bar-container">
                 {subScreen === 'SearchFilterSort' ? (
-                    <BackButton onClick={() => setSubScreen('RecipeLists')} />
+                    <BackButton
+                        className="search-bar-container-back-button"
+                        onClick={() => setSubScreen('RecipeLists')}
+                    />
                 ) : null}
 
                 <SearchBar
