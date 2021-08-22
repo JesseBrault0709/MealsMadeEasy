@@ -14,7 +14,7 @@ export type RecipeListProps = {
 export function RecipeList(props: RecipeListProps) {
     const dispatch = useAppDispatch()
 
-    const status = useAppSelector(state => state.recipeLists.fetchStatus)
+    const fetchStatus = useAppSelector(state => state.recipeLists.fetchStatus)
     const error = useAppSelector(state => state.recipeLists.fetchError)
 
     const recipes = useAppSelector(state => {
@@ -59,14 +59,14 @@ export function RecipeList(props: RecipeListProps) {
     )
 
     const getContent = () => {
-        if (status === 'idle') {
+        if (fetchStatus === 'success') {
             return (
                 <>
                     {rowsInPairs}
                     {loadMore}
                 </>
             )
-        } else if (status === 'fetching') {
+        } else if (fetchStatus === 'fetching') {
             return (
                 <>
                     {rowsInPairs}
@@ -76,7 +76,7 @@ export function RecipeList(props: RecipeListProps) {
                     {loadMore}
                 </>
             )
-        } else if (status === 'error') {
+        } else if (fetchStatus === 'error') {
             return (
                 <>
                     {rowsInPairs}

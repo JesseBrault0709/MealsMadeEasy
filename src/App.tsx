@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
-import { OnboardingPreferences } from './types/OnboardingPreferences'
 import { Sweet } from './screens/Sweet/Sweet'
 import { Splash } from './screens/Splash/Splash'
 import { useAppDispatch, useAppSelector } from './index'
@@ -8,16 +7,17 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import { fetchRecipes, setActiveList } from './slices/recipeLists'
-import { setAppScreen } from './slices/appScreens'
+import {
+    clearFetchStatus,
+    fetchRecipes,
+    setActiveList
+} from './slices/recipeLists'
 import { Home } from './screens/home/Home'
 import { AppConfigContext } from '.'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 
 /** Set to true for dev mode. */
 export const DEV_MODE: boolean = true
-
-/** The possible screens */
-export type AppScreen = 'Splash' | 'Onboarding' | 'Sweet' | 'Home'
 
 function App() {
     const config = useContext(AppConfigContext)
@@ -26,56 +26,75 @@ function App() {
 
     /** Various effects for transitioning between screens */
 
-    const currentScreen = useAppSelector(state => state.screens.current)
-
     const completedOnboarding = useAppSelector(
         state => state.onboardingPreferences.completedOnboarding
     )
 
+    const fetchStatus = useAppSelector(state => state.recipeLists.fetchStatus)
+
+    const history = useHistory()
+    const location = useLocation()
+
     useEffect(() => {
-        if (currentScreen === 'Splash') {
+        if (location.pathname === '/') {
+            // i.e., splash screen
             setTimeout(() => {
                 if (!completedOnboarding) {
-                    dispatch(setAppScreen({ screen: 'Onboarding' }))
+                    history.push('/onboarding')
+                    history.goForward()
                 } else {
                     const firstListName = config.recipeLists[0].name
                     dispatch(setActiveList({ listName: firstListName }))
                     dispatch(fetchRecipes(firstListName))
-                    dispatch(setAppScreen({ screen: 'Home' }))
+                    history.push('/home')
+                    history.goForward()
                 }
             }, 2000)
-        }
-    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
-
-    useEffect(() => {
-        if (currentScreen === 'Sweet') {
-            const firstListName = config.recipeLists[0].name
-            dispatch(setActiveList({ listName: firstListName }))
-            dispatch(fetchRecipes(firstListName))
-        }
-    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
-
-    /** Main getScreen function */
-
-    const getScreen = () => {
-        if (currentScreen === 'Splash') {
-            return <Splash />
-        } else if (currentScreen === 'Onboarding') {
-            const onOnboardingSubmit = (preferences: OnboardingPreferences) => {
-                dispatch(setPreferences({ preferences }))
-                dispatch(setCompletedOnboarding({ completedOnboarding: true }))
-                dispatch(setAppScreen({ screen: 'Sweet' }))
+        } else if (location.pathname === '/sweet') {
+            if (fetchStatus === 'idle') {
+                const firstListName = config.recipeLists[0].name
+                dispatch(setActiveList({ listName: firstListName }))
+                dispatch(fetchRecipes(firstListName))
+            } else if (fetchStatus === 'success') {
+                dispatch(clearFetchStatus())
+                history.push('/home')
+                history.goForward()
             }
-
-            return <Onboarding onSubmit={onOnboardingSubmit} />
-        } else if (currentScreen === 'Sweet') {
-            return <Sweet />
-        } else if (currentScreen === 'Home') {
-            return <Home />
         }
-    }
+    }, [location.pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    return <div className="app">{getScreen()}</div>
+    return (
+        <div className="app">
+            <Switch>
+                <Route path="/onboarding">
+                    <Onboarding
+                        onSubmit={preferences => {
+                            dispatch(setPreferences({ preferences }))
+                            dispatch(
+                                setCompletedOnboarding({
+                                    completedOnboarding: true
+                                })
+                            )
+                            history.push('/sweet')
+                            history.goForward()
+                        }}
+                    />
+                </Route>
+
+                <Route path="/sweet">
+                    <Sweet />
+                </Route>
+
+                <Route path="/home">
+                    <Home />
+                </Route>
+
+                <Route path="/">
+                    <Splash />
+                </Route>
+            </Switch>
+        </div>
+    )
 }
 
 export default App

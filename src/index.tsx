@@ -13,7 +13,6 @@ import {
 } from 'react-redux'
 import { appConfig } from './appConfig'
 import { configureStore } from '@reduxjs/toolkit'
-import { appScreensSlice } from './slices/appScreens'
 import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
 import { homeScreensSlice } from './slices/homeScreens'
@@ -37,6 +36,7 @@ import {
     searchPreferencesSlice,
     setSearchSort
 } from './slices/searchPreferences'
+import { BrowserRouter } from 'react-router-dom'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -51,7 +51,6 @@ const store = configureStore({
         recipeBook: recipeBookSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         onboardingPreferences: onboardingPreferencesSlice.reducer,
-        screens: appScreensSlice.reducer,
         searchPreferences: searchPreferencesSlice.reducer,
         selectionMode: selectionModeSlice.reducer
     }
@@ -291,7 +290,9 @@ ReactDOM.render(
     <React.StrictMode>
         <AppConfigContext.Provider value={appConfig}>
             <Provider store={store}>
-                <App />
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
             </Provider>
         </AppConfigContext.Provider>
     </React.StrictMode>,
