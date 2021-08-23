@@ -20,6 +20,7 @@ import { recipeBookSlice } from './slices/recipeBook'
 import {
     recipeListsSlice,
     RecipeListsState,
+    setActiveList,
     setFetchLimit,
     setRecipeLists
 } from './slices/recipeLists'
@@ -141,6 +142,16 @@ const hydrateRecipeLists = () => {
     // set fetchLimit from config
 
     store.dispatch(setFetchLimit({ fetchLimit: appConfig.recipeListLimit }))
+
+    // set initially active list from config
+
+    const initiallyActiveList = appConfig.recipeLists.find(
+        recipeList => recipeList.initiallyActive
+    )
+    if (initiallyActiveList === undefined) {
+        throw new Error(`There is no initiallyActive recipeList in the config`)
+    }
+    store.dispatch(setActiveList({ listName: initiallyActiveList.name }))
 }
 
 hydrateRecipeLists()
