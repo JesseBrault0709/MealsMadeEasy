@@ -7,14 +7,11 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import {
-    clearFetchStatus,
-    fetchRecipes,
-    setActiveList
-} from './slices/recipeLists'
-import { Home } from './screens/home/Home'
+import { fetchRecipes, setActiveList } from './slices/recipeLists'
 import { AppConfigContext } from '.'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { RecipeBook } from './screens/recipe-book/RecipeBook'
+import { Planner } from './screens/planner/Planner'
 
 /** Set to true for dev mode. */
 export const DEV_MODE: boolean = true
@@ -46,7 +43,7 @@ function App() {
                     const firstListName = config.recipeLists[0].name
                     dispatch(setActiveList({ listName: firstListName }))
                     dispatch(fetchRecipes(firstListName))
-                    history.push('/home')
+                    history.push('/recipebook')
                     history.goForward()
                 }
             }, 2000)
@@ -56,8 +53,7 @@ function App() {
                 dispatch(setActiveList({ listName: firstListName }))
                 dispatch(fetchRecipes(firstListName))
             } else if (fetchStatus === 'success') {
-                dispatch(clearFetchStatus())
-                history.push('/home')
+                history.push('/recipebook')
                 history.goForward()
             }
         }
@@ -85,8 +81,12 @@ function App() {
                     <Sweet />
                 </Route>
 
-                <Route path="/home">
-                    <Home />
+                <Route path="/recipebook">
+                    <RecipeBook />
+                </Route>
+
+                <Route path="/planner">
+                    <Planner />
                 </Route>
 
                 <Route path="/">
