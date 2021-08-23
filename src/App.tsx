@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
 import { Sweet } from './screens/Sweet/Sweet'
 import { Splash } from './screens/Splash/Splash'
@@ -7,8 +7,7 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import { fetchRecipes, setActiveList } from './slices/recipeLists'
-import { AppConfigContext } from '.'
+import { fetchRecipes } from './slices/recipeLists'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { RecipeBook } from './screens/recipe-book/RecipeBook'
 import { Planner } from './screens/planner/Planner'
@@ -17,8 +16,6 @@ import { Planner } from './screens/planner/Planner'
 export const DEV_MODE: boolean = true
 
 function App() {
-    const config = useContext(AppConfigContext)
-
     const dispatch = useAppDispatch()
 
     /** Various effects for transitioning between screens */
@@ -32,6 +29,10 @@ function App() {
     const history = useHistory()
     const location = useLocation()
 
+    const activeRecipeList = useAppSelector(
+        state => state.recipeLists.activeList
+    )
+
     useEffect(() => {
         if (location.pathname === '/') {
             // i.e., splash screen
@@ -40,18 +41,20 @@ function App() {
                     history.push('/onboarding')
                     history.goForward()
                 } else {
-                    const firstListName = config.recipeLists[0].name
-                    dispatch(setActiveList({ listName: firstListName }))
-                    dispatch(fetchRecipes(firstListName))
+                    if (activeRecipeList === undefined) {
+                        throw new Error('activeRecipeList is undefined')
+                    }
+                    dispatch(fetchRecipes(activeRecipeList))
                     history.push('/recipebook')
                     history.goForward()
                 }
             }, 2000)
         } else if (location.pathname === '/sweet') {
             if (fetchStatus === 'idle') {
-                const firstListName = config.recipeLists[0].name
-                dispatch(setActiveList({ listName: firstListName }))
-                dispatch(fetchRecipes(firstListName))
+                if (activeRecipeList === undefined) {
+                    throw new Error('activeRecipeList is undefined')
+                }
+                dispatch(fetchRecipes(activeRecipeList))
             } else if (fetchStatus === 'success') {
                 history.push('/recipebook')
                 history.goForward()
