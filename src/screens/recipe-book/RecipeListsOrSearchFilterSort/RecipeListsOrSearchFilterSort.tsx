@@ -7,7 +7,7 @@ import {
     setRecipeBookScreen,
     setRecipeInfoId
 } from '../../../slices/recipeBook'
-import { fetchRecipes, resetAllRecipes } from '../../../slices/recipeLists'
+import { resetAllRecipes } from '../../../slices/recipeLists'
 import { setSearchQuery } from '../../../slices/searchPreferences'
 import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { RecipeLists } from '../RecipeLists/RecipeLists'
@@ -63,7 +63,6 @@ export function RecipeListsOrSearchFilterSort() {
                 `cannot fetch recipes when activeRecipeList is undefined`
             )
         }
-        appDispatch(fetchRecipes(activeRecipeList))
         setSubScreen('RecipeLists')
     }
 

@@ -7,7 +7,6 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import { fetchRecipes } from './slices/recipeLists'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { RecipeBook } from './screens/recipe-book/RecipeBook'
 import { Planner } from './screens/planner/Planner'
@@ -24,43 +23,23 @@ function App() {
         state => state.onboardingPreferences.completedOnboarding
     )
 
-    const fetchStatus = useAppSelector(state => state.recipeLists.fetchStatus)
-
     const history = useHistory()
     const location = useLocation()
 
-    const activeRecipeList = useAppSelector(
-        state => state.recipeLists.activeList
-    )
-
     useEffect(() => {
+        /** if we are on splash screen, go to recipebook or onboarding */
         if (location.pathname === '/') {
-            // i.e., splash screen
             setTimeout(() => {
-                if (!completedOnboarding) {
-                    history.push('/onboarding')
+                if (completedOnboarding) {
+                    history.push('/recipebook')
                     history.goForward()
                 } else {
-                    if (activeRecipeList === undefined) {
-                        throw new Error('activeRecipeList is undefined')
-                    }
-                    dispatch(fetchRecipes(activeRecipeList))
-                    history.push('/recipebook')
+                    history.push('/onboarding')
                     history.goForward()
                 }
             }, 2000)
-        } else if (location.pathname === '/sweet') {
-            if (fetchStatus === 'idle') {
-                if (activeRecipeList === undefined) {
-                    throw new Error('activeRecipeList is undefined')
-                }
-                dispatch(fetchRecipes(activeRecipeList))
-            } else if (fetchStatus === 'success') {
-                history.push('/recipebook')
-                history.goForward()
-            }
         }
-    }, [location.pathname]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [location.pathname, completedOnboarding, history])
 
     return (
         <div className="app">
@@ -74,7 +53,7 @@ function App() {
                                     completedOnboarding: true
                                 })
                             )
-                            history.push('/sweet')
+                            history.push('/recipebook')
                             history.goForward()
                         }}
                     />
