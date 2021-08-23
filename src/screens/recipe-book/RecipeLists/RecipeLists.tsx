@@ -26,10 +26,6 @@ export function RecipeLists(props: RecipeListsProps) {
     /** The currently active (i.e., showing to the user) recipe list. */
     const activeList = useAppSelector(state => state.recipeLists.activeList)
 
-    if (activeList === undefined) {
-        throw new Error('there is no active list')
-    }
-
     return (
         <div className="recipe-lists">
             <Tabs>
@@ -46,10 +42,12 @@ export function RecipeLists(props: RecipeListsProps) {
                     </Tab>
                 ))}
             </Tabs>
-            <RecipeList
-                name={activeList}
-                onRecipeCardClick={props.onRecipeCardClick}
-            />
+            {activeList !== undefined ? (
+                <RecipeList
+                    name={activeList}
+                    onRecipeCardClick={props.onRecipeCardClick}
+                />
+            ) : null}
         </div>
     )
 }
