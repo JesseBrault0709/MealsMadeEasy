@@ -11,9 +11,6 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { RecipeBook } from './screens/recipe-book/RecipeBook'
 import { Planner } from './screens/planner/Planner'
 
-/** Set to true for dev mode. */
-export const DEV_MODE: boolean = true
-
 function App() {
     const dispatch = useAppDispatch()
 
