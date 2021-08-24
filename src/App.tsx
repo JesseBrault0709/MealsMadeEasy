@@ -60,7 +60,7 @@ function App() {
                     <Sweet />
                 </Route>
 
-                <Route path={`recipebook/:recipeId`}>
+                <Route path="/recipebook/:recipeId">
                     {({ match }) => (
                         <RecipeInfo
                             recipeId={parseInt(match!.params.recipeId)}
