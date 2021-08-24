@@ -8,8 +8,9 @@ import {
     setPreferences
 } from './slices/onboardingPreferences'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
-import { RecipeBook } from './screens/recipe-book/RecipeBook'
 import { Planner } from './screens/planner/Planner'
+import { RecipeListsOrSearchFilterSort } from './screens/recipe-book/RecipeListsOrSearchFilterSort/RecipeListsOrSearchFilterSort'
+import { RecipeInfo } from './screens/recipe-book/RecipeInfo/RecipeInfo'
 
 function App() {
     const dispatch = useAppDispatch()
@@ -60,8 +61,16 @@ function App() {
                     <Sweet />
                 </Route>
 
+                <Route path={`recipebook/:recipeId`}>
+                    {({ match }) => (
+                        <RecipeInfo
+                            recipeId={parseInt(match!.params.recipeId)}
+                        />
+                    )}
+                </Route>
+
                 <Route path="/recipebook">
-                    <RecipeBook />
+                    <RecipeListsOrSearchFilterSort />
                 </Route>
 
                 <Route path="/planner">
