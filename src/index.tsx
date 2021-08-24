@@ -15,7 +15,6 @@ import { appConfig } from './appConfig'
 import { configureStore } from '@reduxjs/toolkit'
 import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
-import { homeScreensSlice } from './slices/homeScreens'
 import {
     recipeListsSlice,
     RecipeListsState,
@@ -46,7 +45,6 @@ const store = configureStore({
     reducer: {
         dayMealPlans: dayMealPlansSlice.reducer,
         fullRecipes: fullRecipesSlice.reducer,
-        homeScreens: homeScreensSlice.reducer,
         recentSearches: recentSearchesSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         onboardingPreferences: onboardingPreferencesSlice.reducer,
