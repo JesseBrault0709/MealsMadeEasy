@@ -16,7 +16,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
 import { homeScreensSlice } from './slices/homeScreens'
-import { recipeBookSlice } from './slices/recipeBook'
 import {
     recipeListsSlice,
     RecipeListsState,
@@ -49,7 +48,6 @@ const store = configureStore({
         fullRecipes: fullRecipesSlice.reducer,
         homeScreens: homeScreensSlice.reducer,
         recentSearches: recentSearchesSlice.reducer,
-        recipeBook: recipeBookSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         onboardingPreferences: onboardingPreferencesSlice.reducer,
         searchPreferences: searchPreferencesSlice.reducer,

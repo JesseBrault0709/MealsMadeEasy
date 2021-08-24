@@ -1,4 +1,4 @@
-import { useAppSelector } from '../..'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { RecipeInfo } from './RecipeInfo/RecipeInfo'
 import { RecipeListsOrSearchFilterSort } from './RecipeListsOrSearchFilterSort/RecipeListsOrSearchFilterSort'
 
@@ -13,27 +13,19 @@ export type RecipeBookScreen = 'RecipeListsOrSearchFilterSort' | 'RecipeInfo'
  * RecipeListsOrSearchFilterSort or RecipeInfo.
  */
 export function RecipeBook() {
-    const {
-        /** The current screen to show */
-        currentScreen,
+    const match = useRouteMatch()
 
-        /**
-         * The id number of the recipe to show in
-         * a RecipeInfo instance if the currentScreen
-         * is 'RecipeInfo'.
-         */
-        recipeInfoId
-    } = useAppSelector(state => state.recipeBook)
+    return (
+        <Switch>
+            <Route path={`${match.path}/:recipeId`}>
+                {({ match }) => (
+                    <RecipeInfo recipeId={parseInt(match!.params.recipeId)} />
+                )}
+            </Route>
 
-    switch (currentScreen) {
-        case 'RecipeListsOrSearchFilterSort':
-            return <RecipeListsOrSearchFilterSort />
-        case 'RecipeInfo':
-            if (recipeInfoId === undefined) {
-                throw new Error(
-                    `Cannot show RecipeInfo when recipeInfoId is undefined`
-                )
-            }
-            return <RecipeInfo recipeId={recipeInfoId} />
-    }
+            <Route path={match.path}>
+                <RecipeListsOrSearchFilterSort />
+            </Route>
+        </Switch>
+    )
 }

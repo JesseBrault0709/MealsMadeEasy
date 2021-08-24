@@ -8,12 +8,11 @@ import { MealName } from '../../types/MealName'
 import { EmptyMealCard, MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../index'
-import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
-import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext, useState } from 'react'
 import { AppConfigContext } from '../../index'
 import { setToReplaceMode } from '../../slices/selectionMode'
+import { useHistory } from 'react-router-dom'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -51,7 +50,7 @@ function MealCol(props: {
     menuOwner: RecipeSelection['selectionId'] | undefined
     setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
-    const dispatch = useAppDispatch()
+    const history = useHistory()
 
     if (props.selections !== undefined && props.selections.length !== 0) {
         return (
@@ -71,13 +70,8 @@ function MealCol(props: {
                         menuPlacement={props.mealCardMenuPlacement}
                         recipeId={selection.recipeId}
                         onViewRecipe={() => {
-                            dispatch(
-                                setRecipeInfoId({ id: selection.recipeId })
-                            )
-                            dispatch(
-                                setRecipeBookScreen({ screen: 'RecipeInfo' })
-                            )
-                            dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+                            history.push(`/recipebook/${selection.recipeId}`)
+                            history.goForward()
                         }}
                         onReplaceRecipe={() => {
                             if (props.onReplaceRecipe !== undefined) {
@@ -120,6 +114,8 @@ function DayRow(props: {
         today.getFullYear() === planDate.getFullYear() &&
         today.getMonth() === planDate.getMonth() &&
         today.getDate() === planDate.getDate()
+
+    const history = useHistory()
 
     return (
         <div className={['day-row', `day-row-${props.variant}`].join(' ')}>
@@ -164,16 +160,8 @@ function DayRow(props: {
                                 targetSelection: selection
                             })
                         )
-                        dispatch(
-                            setRecipeBookScreen({
-                                screen: 'RecipeListsOrSearchFilterSort'
-                            })
-                        )
-                        dispatch(
-                            setHomeScreen({
-                                screen: 'Recipe Book'
-                            })
-                        )
+                        history.push('/recipebook')
+                        history.goForward()
                     }}
                 />
             ))}

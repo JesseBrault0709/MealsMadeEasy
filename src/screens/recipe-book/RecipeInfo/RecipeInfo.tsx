@@ -16,7 +16,7 @@ import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
 import { useFullRecipe } from '../../../slices/fullRecipes'
 import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
-import { setRecipeBookScreen } from '../../../slices/recipeBook'
+import { useHistory } from 'react-router-dom'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -219,15 +219,14 @@ export function RecipeInfo(props: RecipeInfoProps) {
         }
     }
 
+    const history = useHistory()
+
     return (
         <ScreenWithTitleAndNav
             title=""
             onBackButtonClick={() => {
-                dispatch(
-                    setRecipeBookScreen({
-                        screen: 'RecipeListsOrSearchFilterSort'
-                    })
-                )
+                history.push('/recipebook')
+                history.goForward()
             }}
         >
             <div className="recipe-info">{getScreen()}</div>
