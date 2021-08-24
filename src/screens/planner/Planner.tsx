@@ -155,7 +155,7 @@ function DayRow(props: {
                         dispatch(
                             setToReplaceMode({
                                 mode: 'replace',
-                                targetDate: planDate,
+                                targetDate: planDate.valueOf(),
                                 targetMeal: meal,
                                 targetSelection: selection
                             })

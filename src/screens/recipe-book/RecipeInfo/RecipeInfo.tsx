@@ -83,7 +83,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
 
         return showReplaceModal ? (
             <ReplaceRecipeModal
-                targetDate={selectionTarget!.date}
+                targetDate={new Date(selectionTarget!.date)}
                 targetMeal={selectionTarget!.meal}
                 oldRecipeId={selectionTarget!.selection.recipeId}
                 newRecipeTitle={recipe.title}
