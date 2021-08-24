@@ -7,10 +7,11 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { Route, Switch, useLocation } from 'react-router-dom'
 import { Planner } from './screens/planner/Planner'
 import { RecipeListsOrSearchFilterSort } from './screens/recipe-book/RecipeListsOrSearchFilterSort/RecipeListsOrSearchFilterSort'
 import { RecipeInfo } from './screens/recipe-book/RecipeInfo/RecipeInfo'
+import { useAppNavigators } from './util/hooks'
 
 function App() {
     const dispatch = useAppDispatch()
@@ -21,23 +22,22 @@ function App() {
         state => state.onboardingPreferences.completedOnboarding
     )
 
-    const history = useHistory()
     const location = useLocation()
+
+    const { goToRecipeBook, goToOnboarding } = useAppNavigators()
 
     useEffect(() => {
         /** if we are on splash screen, go to recipebook or onboarding */
         if (location.pathname === '/') {
             setTimeout(() => {
                 if (completedOnboarding) {
-                    history.push('/recipebook')
-                    history.goForward()
+                    goToRecipeBook()
                 } else {
-                    history.push('/onboarding')
-                    history.goForward()
+                    goToOnboarding()
                 }
             }, 2000)
         }
-    }, [location.pathname, completedOnboarding, history])
+    }, [location.pathname, completedOnboarding, goToRecipeBook, goToOnboarding])
 
     return (
         <div className="app">
@@ -51,8 +51,7 @@ function App() {
                                     completedOnboarding: true
                                 })
                             )
-                            history.push('/recipebook')
-                            history.goForward()
+                            goToRecipeBook()
                         }}
                     />
                 </Route>
