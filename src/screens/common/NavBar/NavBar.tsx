@@ -26,7 +26,7 @@ export function NavBar() {
             <div className="nav-button" onClick={onRecipeBookClick}>
                 <img
                     src={
-                        location.pathname === '/recipebook'
+                        location.pathname.startsWith('/recipebook')
                             ? RecipesActive
                             : RecipesInactive
                     }
