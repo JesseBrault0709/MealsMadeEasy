@@ -5,25 +5,17 @@ import PlannerActive from './assets/Planner_active.png'
 
 import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useAppNavigators } from '../../../util/hooks'
 
 export function NavBar() {
-    const history = useHistory()
     const location = useLocation()
 
-    const onRecipeBookClick = () => {
-        history.push('/recipebook')
-        history.goForward()
-    }
-
-    const onPlannerClick = () => {
-        history.push('/planner')
-        history.goForward()
-    }
+    const { goToRecipeBook, goToPlanner } = useAppNavigators()
 
     return (
         <div className="nav-bar-container">
-            <div className="nav-button" onClick={onRecipeBookClick}>
+            <div className="nav-button" onClick={() => goToRecipeBook()}>
                 <img
                     src={
                         location.pathname.startsWith('/recipebook')
@@ -35,7 +27,7 @@ export function NavBar() {
                 <p>Recipes</p>
             </div>
 
-            <div className="nav-button" onClick={onPlannerClick}>
+            <div className="nav-button" onClick={() => goToPlanner()}>
                 <img
                     src={
                         location.pathname === '/planner'

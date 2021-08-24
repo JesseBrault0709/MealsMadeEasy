@@ -16,7 +16,7 @@ import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
 import { useFullRecipe } from '../../../slices/fullRecipes'
 import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
-import { useHistory } from 'react-router-dom'
+import { useAppNavigators } from '../../../util/hooks'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -219,14 +219,13 @@ export function RecipeInfo(props: RecipeInfoProps) {
         }
     }
 
-    const history = useHistory()
+    const { goToRecipeBook } = useAppNavigators()
 
     return (
         <ScreenWithTitleAndNav
             title=""
             onBackButtonClick={() => {
-                history.push('/recipebook')
-                history.goForward()
+                goToRecipeBook()
             }}
         >
             <div className="recipe-info">{getScreen()}</div>

@@ -12,7 +12,7 @@ import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext, useState } from 'react'
 import { AppConfigContext } from '../../index'
 import { setToReplaceMode } from '../../slices/selectionMode'
-import { useHistory } from 'react-router-dom'
+import { useAppNavigators } from '../../util/hooks'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -50,7 +50,7 @@ function MealCol(props: {
     menuOwner: RecipeSelection['selectionId'] | undefined
     setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
-    const history = useHistory()
+    const { goToRecipeInfo } = useAppNavigators()
 
     if (props.selections !== undefined && props.selections.length !== 0) {
         return (
@@ -70,8 +70,7 @@ function MealCol(props: {
                         menuPlacement={props.mealCardMenuPlacement}
                         recipeId={selection.recipeId}
                         onViewRecipe={() => {
-                            history.push(`/recipebook/${selection.recipeId}`)
-                            history.goForward()
+                            goToRecipeInfo(selection.recipeId)
                         }}
                         onReplaceRecipe={() => {
                             if (props.onReplaceRecipe !== undefined) {
@@ -108,14 +107,14 @@ function DayRow(props: {
 }) {
     const dispatch = useAppDispatch()
 
+    const { goToRecipeBook } = useAppNavigators()
+
     const today = new Date()
     const planDate = extractDateFromDayMealPlan(props.dayMealPlan)
     const accented =
         today.getFullYear() === planDate.getFullYear() &&
         today.getMonth() === planDate.getMonth() &&
         today.getDate() === planDate.getDate()
-
-    const history = useHistory()
 
     return (
         <div className={['day-row', `day-row-${props.variant}`].join(' ')}>
@@ -160,8 +159,7 @@ function DayRow(props: {
                                 targetSelection: selection
                             })
                         )
-                        history.push('/recipebook')
-                        history.goForward()
+                        goToRecipeBook()
                     }}
                 />
             ))}
