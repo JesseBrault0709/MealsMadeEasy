@@ -3,7 +3,7 @@ import ServerErrorImg from './assets/TechnicalError.png'
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../../common/BottomModal/BottomModal'
 import { JBButton } from '../../../inputs/Button/JBButton'
-import { getModalEffect } from '../../../util'
+import { getModalEffect } from '../../../util/util'
 import { useEffect } from 'react'
 
 export type TechnicalErrorProps = {

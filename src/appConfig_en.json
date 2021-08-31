@@ -26,6 +26,47 @@
         "Wheat"
     ],
 
+    "availableCuisines": [
+        "African",
+        "American",
+        "British",
+        "Cajun",
+        "Caribbean",
+        "Chinese",
+        "Eastern European",
+        "European",
+        "French",
+        "German",
+        "Greek",
+        "Indian",
+        "Irish",
+        "Italian",
+        "Japanese",
+        "Jewish",
+        "Korean",
+        "Latin American",
+        "Mediterranean",
+        "Mexican",
+        "Middle Eastern",
+        "Nordic",
+        "Southern",
+        "Spanish",
+        "Thai",
+        "Vietnamese"
+    ],
+
+    "availableSortingOptions": [
+        {
+            "apiValue": "meta-score",
+            "display": "Rating",
+            "default": true
+        },
+        {
+            "apiValue": "popularity",
+            "display": "Popularity"
+        }
+    ],
+
     "meals": ["Breakfast", "Lunch", "Dinner"],
 
     "recipeListTabs": [

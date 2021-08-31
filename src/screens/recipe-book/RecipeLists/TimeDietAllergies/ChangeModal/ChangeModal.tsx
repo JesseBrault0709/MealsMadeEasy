@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { JBButton } from '../../../../../inputs/Button/JBButton'
-import { getModalEffect } from '../../../../../util'
+import { getModalEffect } from '../../../../../util/util'
 import { BottomModal } from '../../../../common/BottomModal/BottomModal'
 
 export type ChangeModalProps = {

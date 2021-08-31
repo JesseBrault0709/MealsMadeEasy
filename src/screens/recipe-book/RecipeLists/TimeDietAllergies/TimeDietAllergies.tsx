@@ -3,7 +3,7 @@ import X from './assets/X.png'
 import Funnel from './assets/Funnel.png'
 
 import { Chip } from '../../../common/Chip/Chip'
-import { RecipePreferences } from '../../../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../../../types/OnboardingPreferences'
 import { useState } from 'react'
 import { ChangeCookingTime } from './ChangeCookingTime/ChangeCookingTime'
 import { useAppDispatch, useAppSelector } from '../../../../index'
@@ -11,7 +11,7 @@ import {
     setCookingTime,
     setDiet,
     setIntolerances
-} from '../../../../slices/recipePreferences'
+} from '../../../../slices/onboardingPreferences'
 import { ChangeDiet } from './ChangeDiet/ChangeDiet'
 import { ChangeIntolerances } from './ChangeIntolerances/ChangeIntolerances'
 
@@ -24,7 +24,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     const dispatch = useAppDispatch()
 
     const { cookingTime, diet, intolerances } = useAppSelector(
-        state => state.recipePreferences.preferences
+        state => state.onboardingPreferences.preferences
     )
 
     const [showChangeCookingTime, setShowChangeCookingTime] = useState<boolean>(
@@ -32,7 +32,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     )
 
     const onChangeCookingTimeSubmit = (
-        newCookingTime: RecipePreferences['cookingTime']
+        newCookingTime: OnboardingPreferences['cookingTime']
     ) => {
         dispatch(setCookingTime({ cookingTime: newCookingTime }))
         setShowChangeCookingTime(false)
@@ -48,7 +48,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
 
     const [showChangeDiet, setShowChangeDiet] = useState(false)
 
-    const onChangeDietSubmit = (newDiet: RecipePreferences['diet']) => {
+    const onChangeDietSubmit = (newDiet: OnboardingPreferences['diet']) => {
         dispatch(setDiet({ diet: newDiet }))
         setShowChangeDiet(false)
 
@@ -64,7 +64,7 @@ export function TimeDietAllergies(props: TimeDietAllergiesProps) {
     const [showChangeIntolerances, setShowChangeIntolerances] = useState(false)
 
     const onChangeIntolerancesSubmit = (
-        newIntolerances: RecipePreferences['intolerances']
+        newIntolerances: OnboardingPreferences['intolerances']
     ) => {
         dispatch(setIntolerances({ intolerances: newIntolerances }))
         setShowChangeIntolerances(false)

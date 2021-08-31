@@ -1,0 +1,15 @@
+.recent-searches-and-filters {
+    background-color: #f8f8f8;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    padding-top: 10px;
+}
+
+.clear-or-select-all {
+    font-size: 14px;
+    color: var(--main-cta);
+}

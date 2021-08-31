@@ -1,6 +1,12 @@
 import AppConfig_en from './appConfig_en.json'
 
-import { SPDiet, SPIntolerance, SPType } from './client/spoonacularTypes'
+import {
+    SPCuisine,
+    SPDiet,
+    SPIntolerance,
+    SPSortingOption,
+    SPType
+} from './client/spoonacularTypes'
 import { MealName } from './types/MealName'
 
 export type RecipeListConfig = {
@@ -12,6 +18,12 @@ export type AppConfig = {
     availableCookingTimes: ReadonlyArray<'No Limit' | number>
     availableDiets: ReadonlyArray<SPDiet>
     availableIntolerances: ReadonlyArray<SPIntolerance>
+    availableCuisines: ReadonlyArray<SPCuisine>
+    availbleSortingOptions: ReadonlyArray<{
+        apiValue: SPSortingOption
+        display: string
+        default?: boolean
+    }>
 
     initialCookingTime: 'No Limit' | number
 
@@ -24,6 +36,8 @@ export const appConfig: AppConfig = {
     availableCookingTimes: AppConfig_en.availableCookingTimes,
     availableDiets: AppConfig_en.availableDiets,
     availableIntolerances: AppConfig_en.availableIntolerances,
+    availableCuisines: AppConfig_en.availableCuisines,
+    availbleSortingOptions: AppConfig_en.availableSortingOptions,
 
     initialCookingTime: AppConfig_en.initialCookingTime,
 

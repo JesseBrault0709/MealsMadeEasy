@@ -1,4 +1,4 @@
-import { DEV_MODE } from './App'
+import { DEV_MODE } from '../App'
 
 export const fillWithFiller = <T>(
     arr: Array<T>,
@@ -123,4 +123,11 @@ export const mapToArray = <K, V, T>(
         results.push(mapper(k, v))
     })
     return results
+}
+
+export const reverseArray = <T>(arr: ReadonlyArray<T>): ReadonlyArray<T> => {
+    return arr.reduceRight<T[]>((arr, cur) => {
+        arr.push(cur)
+        return arr
+    }, [])
 }

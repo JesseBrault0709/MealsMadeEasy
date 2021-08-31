@@ -1,5 +1,5 @@
 import React from 'react'
-import { fillWithFiller } from '../../../util'
+import { fillWithFiller } from '../../../util/util'
 
 export type SequenceProps = {
     value: number

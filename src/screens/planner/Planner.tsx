@@ -75,7 +75,7 @@ function MealCol(props: {
                                 setRecipeInfoId({ id: selection.recipeId })
                             )
                             dispatch(
-                                setRecipeBookScreen({ screen: 'Recipe Info' })
+                                setRecipeBookScreen({ screen: 'RecipeInfo' })
                             )
                             dispatch(setHomeScreen({ screen: 'Recipe Book' }))
                         }}
@@ -166,7 +166,7 @@ function DayRow(props: {
                         )
                         dispatch(
                             setRecipeBookScreen({
-                                screen: 'Recipe List'
+                                screen: 'RecipeListsOrSearchFilterSort'
                             })
                         )
                         dispatch(

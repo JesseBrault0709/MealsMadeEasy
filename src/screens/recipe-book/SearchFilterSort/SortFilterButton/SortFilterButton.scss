@@ -1,0 +1,28 @@
+.sort-filter-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    line-height: 32px;
+
+    img,
+    span {
+        margin: 0 4px;
+    }
+}
+
+.sort-filter-button-active {
+    color: var(--main-cta);
+}
+
+.sort-active,
+.filter-active {
+    stroke: var(--main-cta);
+}
+
+.sort-inactive,
+.filter-inactive {
+    stroke: #333333;
+}

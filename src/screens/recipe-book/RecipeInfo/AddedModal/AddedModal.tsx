@@ -2,7 +2,7 @@ import Check from './assets/Check.png'
 
 import ReactDOM from 'react-dom'
 import { BottomModal } from '../../../common/BottomModal/BottomModal'
-import { getModalEffect } from '../../../../util'
+import { getModalEffect } from '../../../../util/util'
 import { useEffect } from 'react'
 
 export function AddedModal() {

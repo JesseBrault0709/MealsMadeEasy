@@ -1,6 +1,6 @@
-import { RecipeBook } from '../recipe-book/RecipeBook/RecipeBook'
 import { Planner } from '../planner/Planner'
 import { useAppSelector } from '../../index'
+import { RecipeBook } from '../recipe-book/RecipeBook'
 
 export type HomeScreen = 'Recipe Book' | 'Planner' | 'Grocery List' | 'Settings'
 

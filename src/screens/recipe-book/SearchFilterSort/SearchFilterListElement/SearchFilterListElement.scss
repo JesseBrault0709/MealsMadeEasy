@@ -1,0 +1,22 @@
+.search-filter-list-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: max-content;
+    height: 30px;
+
+    border-radius: 20px;
+    background-color: var(--zebra-dark);
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    padding: 0px 10px;
+}
+
+.search-filter-list-element-active {
+    background-color: var(--main-cta);
+}

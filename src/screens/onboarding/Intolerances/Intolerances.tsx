@@ -1,4 +1,4 @@
-import { groupIntoThrees } from '../../../util'
+import { groupIntoThrees } from '../../../util/util'
 import React, { Reducer, useContext } from 'react'
 import { SPIntolerance } from '../../../client/spoonacularTypes'
 import { AppConfigContext } from '../../../index'

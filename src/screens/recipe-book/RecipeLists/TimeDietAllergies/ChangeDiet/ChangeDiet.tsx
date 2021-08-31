@@ -1,19 +1,19 @@
 import { useState } from 'react'
 import { JBButton } from '../../../../../inputs/Button/JBButton'
-import { RecipePreferences } from '../../../../../types/RecipePreferences'
+import { OnboardingPreferences } from '../../../../../types/OnboardingPreferences'
 import { DietInput } from '../../../../onboarding/Diet/Diet'
 import { ChangeModal } from '../ChangeModal/ChangeModal'
 
 export type ChangeDietProps = {
-    initialDiet: RecipePreferences['diet']
-    onSubmit: (newDiet: RecipePreferences['diet']) => void
+    initialDiet: OnboardingPreferences['diet']
+    onSubmit: (newDiet: OnboardingPreferences['diet']) => void
     onCancel: () => void
 }
 
 export function ChangeDiet(props: ChangeDietProps) {
-    const [selectedDiet, setSelectedDiet] = useState<RecipePreferences['diet']>(
-        props.initialDiet
-    )
+    const [selectedDiet, setSelectedDiet] = useState<
+        OnboardingPreferences['diet']
+    >(props.initialDiet)
 
     const onCancelClick = () => {
         props.onCancel()

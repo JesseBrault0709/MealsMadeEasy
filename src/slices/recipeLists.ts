@@ -69,7 +69,9 @@ export const fetchRecipes = createAsyncThunk<
         cookingTime,
         diet,
         intolerances
-    } = state.recipePreferences.preferences
+    } = state.onboardingPreferences.preferences
+
+    const { query, cuisines, sort } = state.searchPreferences
 
     const { fetchLimit } = state.recipeLists
 
@@ -81,9 +83,12 @@ export const fetchRecipes = createAsyncThunk<
                 : cookingTime,
         diet: diet ?? undefined,
         intolerances: intolerances ?? undefined,
+        cuisine: cuisines ?? undefined,
+        sort: sort ?? undefined,
         number: fetchLimit,
         offset: currentOffset,
-        type
+        type,
+        query: query ?? undefined
     })
 
     thunkApi.dispatch(setAppScreen({ screen: 'Home' }))
