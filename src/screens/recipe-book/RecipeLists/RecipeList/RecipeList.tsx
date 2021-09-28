@@ -1,4 +1,3 @@
-import { RowsOfPairs } from '../../../common/RowsOfPairs/RowsOfPairs'
 import { RecipeCard } from '../RecipeCard/RecipeCard'
 import { JBButton } from '../../../../inputs/Button/JBButton'
 import { RecipeOverview } from '../../../../client/RecipeOverview'
@@ -46,8 +45,8 @@ export function RecipeList(props: RecipeListProps) {
         dispatch(fetchRecipes(props.name))
     }
 
-    const rowsInPairs = (
-        <RowsOfPairs>
+    const recipeCards = (
+        <div className="recipe-cards-container">
             {recipes.map(recipe => (
                 <RecipeCard
                     key={recipe.title}
@@ -55,7 +54,7 @@ export function RecipeList(props: RecipeListProps) {
                     onClick={getOnRecipeCardClick(recipe)}
                 />
             ))}
-        </RowsOfPairs>
+        </div>
     )
 
     const loadMore = (
@@ -68,14 +67,14 @@ export function RecipeList(props: RecipeListProps) {
         if (fetchStatus === 'success') {
             return (
                 <>
-                    {rowsInPairs}
+                    {recipeCards}
                     {loadMore}
                 </>
             )
         } else if (fetchStatus === 'fetching') {
             return (
                 <>
-                    {rowsInPairs}
+                    {recipeCards}
                     <LoadingCircle
                         style={{ marginTop: '10px', marginBottom: '10px' }}
                     />
@@ -85,7 +84,7 @@ export function RecipeList(props: RecipeListProps) {
         } else if (fetchStatus === 'error') {
             return (
                 <>
-                    {rowsInPairs}
+                    {recipeCards}
                     Error: {fetchError?.message}
                     {loadMore}
                 </>
