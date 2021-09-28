@@ -1,13 +1,10 @@
 import { useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../..'
 import { BackButton } from '../../../icons/BackButton/BackButton'
 import { SearchBar } from '../../../inputs/SearchBar/SearchBar'
 import { addRecentSearchIfNotPresent } from '../../../slices/recentSearches'
-import {
-    setRecipeBookScreen,
-    setRecipeInfoId
-} from '../../../slices/recipeBook'
-import { fetchRecipes, resetAllRecipes } from '../../../slices/recipeLists'
+import { resetAllRecipes } from '../../../slices/recipeLists'
 import { setSearchQuery } from '../../../slices/searchPreferences'
 import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
 import { RecipeLists } from '../RecipeLists/RecipeLists'
@@ -43,6 +40,8 @@ export function RecipeListsOrSearchFilterSort() {
         state => state.recipeLists.activeList
     )
 
+    const history = useHistory()
+
     /**
      * A function to be run when the user begins a search. This
      * is done via either clicking the 'Apply' button to the right
@@ -63,7 +62,6 @@ export function RecipeListsOrSearchFilterSort() {
                 `cannot fetch recipes when activeRecipeList is undefined`
             )
         }
-        appDispatch(fetchRecipes(activeRecipeList))
         setSubScreen('RecipeLists')
     }
 
@@ -73,12 +71,8 @@ export function RecipeListsOrSearchFilterSort() {
                 return (
                     <RecipeLists
                         onRecipeCardClick={recipeOverview => {
-                            appDispatch(
-                                setRecipeInfoId({ id: recipeOverview.id })
-                            )
-                            appDispatch(
-                                setRecipeBookScreen({ screen: 'RecipeInfo' })
-                            )
+                            history.push(`/recipebook/${recipeOverview.id}`)
+                            history.goForward()
                         }}
                     />
                 )

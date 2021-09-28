@@ -1,9 +1,3 @@
-/**
- * TODO as of 6/28/21:
- *  * Write logic for switching between buttons,
- *      probably as callback props for each button.
- */
-
 import RecipesInactive from './assets/Recipes_inactive.png'
 import RecipesActive from './assets/Recipes_active.png'
 import PlannerInactive from './assets/Planner_inactive.png'
@@ -11,31 +5,20 @@ import PlannerActive from './assets/Planner_active.png'
 
 import GroceriesInactive from './assets/Groceries_inactive.png'
 import SettingsInactive from './assets/Settings_inactive.png'
-import { useAppDispatch, useAppSelector } from '../../../index'
-import { setHomeScreen } from '../../../slices/homeScreens'
-import { setRecipeBookScreen } from '../../../slices/recipeBook'
+import { useLocation } from 'react-router-dom'
+import { useAppNavigators } from '../../../util/hooks'
 
 export function NavBar() {
-    const dispatch = useAppDispatch()
-    const currentHomeScreen = useAppSelector(state => state.homeScreens.current)
+    const location = useLocation()
 
-    const onRecipeBookClick = () => {
-        dispatch(
-            setRecipeBookScreen({ screen: 'RecipeListsOrSearchFilterSort' })
-        )
-        dispatch(setHomeScreen({ screen: 'Recipe Book' }))
-    }
-
-    const onPlannerClick = () => {
-        dispatch(setHomeScreen({ screen: 'Planner' }))
-    }
+    const { goToRecipeBook, goToPlanner } = useAppNavigators()
 
     return (
         <div className="nav-bar-container">
-            <div className="nav-button" onClick={onRecipeBookClick}>
+            <div className="nav-button" onClick={() => goToRecipeBook()}>
                 <img
                     src={
-                        currentHomeScreen === 'Recipe Book'
+                        location.pathname.startsWith('/recipebook')
                             ? RecipesActive
                             : RecipesInactive
                     }
@@ -44,10 +27,10 @@ export function NavBar() {
                 <p>Recipes</p>
             </div>
 
-            <div className="nav-button" onClick={onPlannerClick}>
+            <div className="nav-button" onClick={() => goToPlanner()}>
                 <img
                     src={
-                        currentHomeScreen === 'Planner'
+                        location.pathname === '/planner'
                             ? PlannerActive
                             : PlannerInactive
                     }

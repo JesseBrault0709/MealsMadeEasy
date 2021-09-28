@@ -1,6 +1,5 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Onboarding } from './screens/onboarding/Onboarding'
-import { OnboardingPreferences } from './types/OnboardingPreferences'
 import { Sweet } from './screens/Sweet/Sweet'
 import { Splash } from './screens/Splash/Splash'
 import { useAppDispatch, useAppSelector } from './index'
@@ -8,74 +7,81 @@ import {
     setCompletedOnboarding,
     setPreferences
 } from './slices/onboardingPreferences'
-import { fetchRecipes, setActiveList } from './slices/recipeLists'
-import { setAppScreen } from './slices/appScreens'
-import { Home } from './screens/home/Home'
-import { AppConfigContext } from '.'
-
-/** Set to true for dev mode. */
-export const DEV_MODE: boolean = true
-
-/** The possible screens */
-export type AppScreen = 'Splash' | 'Onboarding' | 'Sweet' | 'Home'
+import { Route, Switch, useLocation } from 'react-router-dom'
+import { Planner } from './screens/planner/Planner'
+import { RecipeListsOrSearchFilterSort } from './screens/recipe-book/RecipeListsOrSearchFilterSort/RecipeListsOrSearchFilterSort'
+import { RecipeInfo } from './screens/recipe-book/RecipeInfo/RecipeInfo'
+import { useAppNavigators } from './util/hooks'
 
 function App() {
-    const config = useContext(AppConfigContext)
-
     const dispatch = useAppDispatch()
 
     /** Various effects for transitioning between screens */
-
-    const currentScreen = useAppSelector(state => state.screens.current)
 
     const completedOnboarding = useAppSelector(
         state => state.onboardingPreferences.completedOnboarding
     )
 
+    const location = useLocation()
+
+    const { goToRecipeBook, goToOnboarding } = useAppNavigators()
+
     useEffect(() => {
-        if (currentScreen === 'Splash') {
+        /** if we are on splash screen, go to recipebook or onboarding */
+        if (location.pathname === '/') {
             setTimeout(() => {
-                if (!completedOnboarding) {
-                    dispatch(setAppScreen({ screen: 'Onboarding' }))
+                if (completedOnboarding) {
+                    goToRecipeBook()
                 } else {
-                    const firstListName = config.recipeLists[0].name
-                    dispatch(setActiveList({ listName: firstListName }))
-                    dispatch(fetchRecipes(firstListName))
-                    dispatch(setAppScreen({ screen: 'Home' }))
+                    goToOnboarding()
                 }
             }, 2000)
         }
-    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [location.pathname, completedOnboarding, goToRecipeBook, goToOnboarding])
 
-    useEffect(() => {
-        if (currentScreen === 'Sweet') {
-            const firstListName = config.recipeLists[0].name
-            dispatch(setActiveList({ listName: firstListName }))
-            dispatch(fetchRecipes(firstListName))
-        }
-    }, [currentScreen]) // eslint-disable-line react-hooks/exhaustive-deps
+    return (
+        <div className="app">
+            <Switch>
+                <Route path="/onboarding">
+                    <Onboarding
+                        onSubmit={preferences => {
+                            dispatch(setPreferences({ preferences }))
+                            dispatch(
+                                setCompletedOnboarding({
+                                    completedOnboarding: true
+                                })
+                            )
+                            goToRecipeBook()
+                        }}
+                    />
+                </Route>
 
-    /** Main getScreen function */
+                <Route path="/sweet">
+                    <Sweet />
+                </Route>
 
-    const getScreen = () => {
-        if (currentScreen === 'Splash') {
-            return <Splash />
-        } else if (currentScreen === 'Onboarding') {
-            const onOnboardingSubmit = (preferences: OnboardingPreferences) => {
-                dispatch(setPreferences({ preferences }))
-                dispatch(setCompletedOnboarding({ completedOnboarding: true }))
-                dispatch(setAppScreen({ screen: 'Sweet' }))
-            }
+                <Route path="/recipebook/:recipeId">
+                    {({ match }) => (
+                        <RecipeInfo
+                            recipeId={parseInt(match!.params.recipeId)}
+                        />
+                    )}
+                </Route>
 
-            return <Onboarding onSubmit={onOnboardingSubmit} />
-        } else if (currentScreen === 'Sweet') {
-            return <Sweet />
-        } else if (currentScreen === 'Home') {
-            return <Home />
-        }
-    }
+                <Route path="/recipebook">
+                    <RecipeListsOrSearchFilterSort />
+                </Route>
 
-    return <div className="app">{getScreen()}</div>
+                <Route path="/planner">
+                    <Planner />
+                </Route>
+
+                <Route path="/">
+                    <Splash />
+                </Route>
+            </Switch>
+        </div>
+    )
 }
 
 export default App

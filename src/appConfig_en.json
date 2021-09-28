@@ -72,7 +72,8 @@
     "recipeListTabs": [
         {
             "name": "Main Course",
-            "type": "main course"
+            "type": "main course",
+            "initiallyActive": true
         },
         {
             "name": "Sides",

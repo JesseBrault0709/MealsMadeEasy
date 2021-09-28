@@ -13,14 +13,12 @@ import {
 } from 'react-redux'
 import { appConfig } from './appConfig'
 import { configureStore } from '@reduxjs/toolkit'
-import { appScreensSlice } from './slices/appScreens'
 import { dayMealPlansSlice, mergeDayMealPlans } from './slices/dayMealPlans'
 import { fullRecipesSlice } from './slices/fullRecipes'
-import { homeScreensSlice } from './slices/homeScreens'
-import { recipeBookSlice } from './slices/recipeBook'
 import {
     recipeListsSlice,
     RecipeListsState,
+    setActiveList,
     setFetchLimit,
     setRecipeLists
 } from './slices/recipeLists'
@@ -37,6 +35,7 @@ import {
     searchPreferencesSlice,
     setSearchSort
 } from './slices/searchPreferences'
+import { BrowserRouter } from 'react-router-dom'
 
 /** The AppConfig context */
 export const AppConfigContext = React.createContext(appConfig)
@@ -46,12 +45,9 @@ const store = configureStore({
     reducer: {
         dayMealPlans: dayMealPlansSlice.reducer,
         fullRecipes: fullRecipesSlice.reducer,
-        homeScreens: homeScreensSlice.reducer,
         recentSearches: recentSearchesSlice.reducer,
-        recipeBook: recipeBookSlice.reducer,
         recipeLists: recipeListsSlice.reducer,
         onboardingPreferences: onboardingPreferencesSlice.reducer,
-        screens: appScreensSlice.reducer,
         searchPreferences: searchPreferencesSlice.reducer,
         selectionMode: selectionModeSlice.reducer
     }
@@ -142,6 +138,16 @@ const hydrateRecipeLists = () => {
     // set fetchLimit from config
 
     store.dispatch(setFetchLimit({ fetchLimit: appConfig.recipeListLimit }))
+
+    // set initially active list from config
+
+    const initiallyActiveList = appConfig.recipeLists.find(
+        recipeList => recipeList.initiallyActive
+    )
+    if (initiallyActiveList === undefined) {
+        throw new Error(`There is no initiallyActive recipeList in the config`)
+    }
+    store.dispatch(setActiveList({ listName: initiallyActiveList.name }))
 }
 
 hydrateRecipeLists()
@@ -291,7 +297,9 @@ ReactDOM.render(
     <React.StrictMode>
         <AppConfigContext.Provider value={appConfig}>
             <Provider store={store}>
-                <App />
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
             </Provider>
         </AppConfigContext.Provider>
     </React.StrictMode>,

@@ -8,12 +8,11 @@ import { MealName } from '../../types/MealName'
 import { EmptyMealCard, MealCard } from './MealCard/MealCard'
 import { MealCardMenuProps } from './MealCard/MealCardMenu/MealCardMenu'
 import { useAppDispatch, useAppSelector } from '../../index'
-import { setRecipeBookScreen, setRecipeInfoId } from '../../slices/recipeBook'
-import { setHomeScreen } from '../../slices/homeScreens'
 import { removeSelectionFromMealPlan } from '../../slices/dayMealPlans'
 import { useContext, useState } from 'react'
 import { AppConfigContext } from '../../index'
 import { setToReplaceMode } from '../../slices/selectionMode'
+import { useAppNavigators } from '../../util/hooks'
 
 function getDayAbbrev(day: number) {
     switch (day) {
@@ -51,7 +50,7 @@ function MealCol(props: {
     menuOwner: RecipeSelection['selectionId'] | undefined
     setMenuOwner: (owner: RecipeSelection['selectionId'] | undefined) => void
 }) {
-    const dispatch = useAppDispatch()
+    const { goToRecipeInfo } = useAppNavigators()
 
     if (props.selections !== undefined && props.selections.length !== 0) {
         return (
@@ -71,13 +70,7 @@ function MealCol(props: {
                         menuPlacement={props.mealCardMenuPlacement}
                         recipeId={selection.recipeId}
                         onViewRecipe={() => {
-                            dispatch(
-                                setRecipeInfoId({ id: selection.recipeId })
-                            )
-                            dispatch(
-                                setRecipeBookScreen({ screen: 'RecipeInfo' })
-                            )
-                            dispatch(setHomeScreen({ screen: 'Recipe Book' }))
+                            goToRecipeInfo(selection.recipeId)
                         }}
                         onReplaceRecipe={() => {
                             if (props.onReplaceRecipe !== undefined) {
@@ -113,6 +106,8 @@ function DayRow(props: {
     menuPosition: 'upper' | 'lower'
 }) {
     const dispatch = useAppDispatch()
+
+    const { goToRecipeBook } = useAppNavigators()
 
     const today = new Date()
     const planDate = extractDateFromDayMealPlan(props.dayMealPlan)
@@ -159,21 +154,12 @@ function DayRow(props: {
                         dispatch(
                             setToReplaceMode({
                                 mode: 'replace',
-                                targetDate: planDate,
+                                targetDate: planDate.valueOf(),
                                 targetMeal: meal,
                                 targetSelection: selection
                             })
                         )
-                        dispatch(
-                            setRecipeBookScreen({
-                                screen: 'RecipeListsOrSearchFilterSort'
-                            })
-                        )
-                        dispatch(
-                            setHomeScreen({
-                                screen: 'Recipe Book'
-                            })
-                        )
+                        goToRecipeBook()
                     }}
                 />
             ))}

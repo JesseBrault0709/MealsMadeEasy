@@ -12,6 +12,7 @@ import { MealName } from './types/MealName'
 export type RecipeListConfig = {
     name: MealName
     type: SPType
+    initiallyActive?: boolean
 }
 
 export type AppConfig = {

@@ -16,7 +16,7 @@ import { ReplaceRecipeModal } from './ReplaceModal/ReplaceModal'
 import { AddedModal } from './AddedModal/AddedModal'
 import { useFullRecipe } from '../../../slices/fullRecipes'
 import { ScreenWithTitleAndNav } from '../../common/ScreenWithTitleAndNav/ScreenWithTitleAndNav'
-import { setRecipeBookScreen } from '../../../slices/recipeBook'
+import { useAppNavigators } from '../../../util/hooks'
 
 export type RecipeInfoProps = {
     recipeId: number
@@ -83,7 +83,7 @@ export function RecipeInfo(props: RecipeInfoProps) {
 
         return showReplaceModal ? (
             <ReplaceRecipeModal
-                targetDate={selectionTarget!.date}
+                targetDate={new Date(selectionTarget!.date)}
                 targetMeal={selectionTarget!.meal}
                 oldRecipeId={selectionTarget!.selection.recipeId}
                 newRecipeTitle={recipe.title}
@@ -219,15 +219,13 @@ export function RecipeInfo(props: RecipeInfoProps) {
         }
     }
 
+    const { goToRecipeBook } = useAppNavigators()
+
     return (
         <ScreenWithTitleAndNav
             title=""
             onBackButtonClick={() => {
-                dispatch(
-                    setRecipeBookScreen({
-                        screen: 'RecipeListsOrSearchFilterSort'
-                    })
-                )
+                goToRecipeBook()
             }}
         >
             <div className="recipe-info">{getScreen()}</div>

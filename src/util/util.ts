@@ -1,5 +1,3 @@
-import { DEV_MODE } from '../App'
-
 export const fillWithFiller = <T>(
     arr: Array<T>,
     filler: (index: number) => T,
@@ -66,7 +64,7 @@ export const groupIntoThrees = <T>(
 }
 
 export const devLog = (msg: any) => {
-    if (DEV_MODE) {
+    if (process.env.NODE_ENV === 'development') {
         console.log(msg)
     }
 }

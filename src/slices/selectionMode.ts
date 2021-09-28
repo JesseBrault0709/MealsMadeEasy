@@ -5,7 +5,7 @@ import { MealName } from '../types/MealName'
 type SelectionModeState = {
     mode: 'add' | 'replace'
     target?: {
-        date: Date
+        date: number
         meal: MealName
         selection: RecipeSelection
     }
@@ -27,7 +27,7 @@ export const selectionModeSlice = createSlice({
             state,
             action: PayloadAction<{
                 mode: 'replace'
-                targetDate: Date
+                targetDate: number
                 targetMeal: MealName
                 targetSelection: RecipeSelection
             }>

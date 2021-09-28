@@ -5,6 +5,7 @@ import { RecipeOverview } from '../../../../client/RecipeOverview'
 import { fetchRecipes, incrementOffset } from '../../../../slices/recipeLists'
 import { useAppDispatch, useAppSelector } from '../../../../index'
 import { LoadingCircle } from '../../../common/LoadingCircle/LoadingCircle'
+import { useEffect } from 'react'
 
 export type RecipeListProps = {
     name: string
@@ -12,25 +13,30 @@ export type RecipeListProps = {
 }
 
 export function RecipeList(props: RecipeListProps) {
+    /** fetch recipes on render or when props.name changes */
+    useEffect(() => {
+        dispatch(fetchRecipes(props.name))
+    }, [props.name]) // eslint-disable-line react-hooks/exhaustive-deps
+
     const dispatch = useAppDispatch()
 
-    const status = useAppSelector(state => state.recipeLists.fetchStatus)
-    const error = useAppSelector(state => state.recipeLists.fetchError)
-
-    const recipes = useAppSelector(state => {
+    const { fetchStatus, fetchError } = useAppSelector(
+        state => state.recipeLists
+    )
+    const { recipesByOffset } = useAppSelector(state => {
         const listState = state.recipeLists.lists.find(
             list => list.name === props.name
         )
         if (listState === undefined) {
             throw new Error(`there is no listState for ${props.name}`)
         }
-        const sortedByOffset = listState.recipesByOffset
-            .slice()
-            .sort((a, b) => a.offset - b.offset)
-        return sortedByOffset.flatMap(
-            recipesByOffset => recipesByOffset.recipes
-        )
+        return listState
     })
+
+    const recipes = recipesByOffset
+        .slice()
+        .sort((a, b) => a.offset - b.offset)
+        .flatMap(sortedList => sortedList.recipes)
 
     const getOnRecipeCardClick = (recipe: RecipeOverview) => () =>
         props.onRecipeCardClick(recipe)
@@ -59,14 +65,14 @@ export function RecipeList(props: RecipeListProps) {
     )
 
     const getContent = () => {
-        if (status === 'idle') {
+        if (fetchStatus === 'success') {
             return (
                 <>
                     {rowsInPairs}
                     {loadMore}
                 </>
             )
-        } else if (status === 'fetching') {
+        } else if (fetchStatus === 'fetching') {
             return (
                 <>
                     {rowsInPairs}
@@ -76,11 +82,11 @@ export function RecipeList(props: RecipeListProps) {
                     {loadMore}
                 </>
             )
-        } else if (status === 'error') {
+        } else if (fetchStatus === 'error') {
             return (
                 <>
                     {rowsInPairs}
-                    Error: {error?.message}
+                    Error: {fetchError?.message}
                     {loadMore}
                 </>
             )

@@ -8,7 +8,6 @@ import { getByComplexSearch } from '../client/complexSearch'
 import { RecipeOverview } from '../client/RecipeOverview'
 import { SPType } from '../client/spoonacularTypes'
 import { AppState } from '../index'
-import { setAppScreen } from './appScreens'
 
 export type RecipeListsState = {
     lists: ReadonlyArray<{
@@ -24,7 +23,7 @@ export type RecipeListsState = {
 
     fetchLimit: number
 
-    fetchStatus: 'idle' | 'fetching' | 'error'
+    fetchStatus: 'idle' | 'fetching' | 'error' | 'success'
     fetchError?: SerializedError
 }
 
@@ -90,8 +89,6 @@ export const fetchRecipes = createAsyncThunk<
         type,
         query: query ?? undefined
     })
-
-    thunkApi.dispatch(setAppScreen({ screen: 'Home' }))
 
     return {
         listName,
@@ -171,6 +168,10 @@ export const recipeListsSlice = createSlice({
                 list.currentOffset = 0
                 list.recipesByOffset = []
             })
+        },
+
+        clearFetchStatus: state => {
+            state.fetchStatus = 'idle'
         }
     },
     extraReducers: builder => {
@@ -179,7 +180,7 @@ export const recipeListsSlice = createSlice({
         })
 
         builder.addCase(fetchRecipes.fulfilled, (state, action) => {
-            state.fetchStatus = 'idle'
+            state.fetchStatus = 'success'
 
             if (action.payload !== undefined) {
                 const targetList = state.lists.find(
@@ -211,5 +212,6 @@ export const {
     setActiveList,
     setActiveListStatus,
     setActiveListError,
-    resetAllRecipes
+    resetAllRecipes,
+    clearFetchStatus
 } = recipeListsSlice.actions

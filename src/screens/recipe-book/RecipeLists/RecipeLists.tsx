@@ -2,7 +2,7 @@ import { Tab, Tabs } from '../../common/Tabs/Tabs'
 import { RecipeOverview } from '../../../client/RecipeOverview'
 import { RecipeList } from './RecipeList/RecipeList'
 import { useAppDispatch, useAppSelector } from '../../../index'
-import { fetchRecipes, setActiveList } from '../../../slices/recipeLists'
+import { setActiveList } from '../../../slices/recipeLists'
 
 export type RecipeListsProps = {
     /** A callback to be run when a RecipeCard is clicked. */
@@ -26,10 +26,6 @@ export function RecipeLists(props: RecipeListsProps) {
     /** The currently active (i.e., showing to the user) recipe list. */
     const activeList = useAppSelector(state => state.recipeLists.activeList)
 
-    if (activeList === undefined) {
-        throw new Error('there is no active list')
-    }
-
     return (
         <div className="recipe-lists">
             <Tabs>
@@ -37,7 +33,6 @@ export function RecipeLists(props: RecipeListsProps) {
                     <Tab
                         key={list.name}
                         onClick={() => {
-                            dispatch(fetchRecipes(list.name))
                             dispatch(setActiveList({ listName: list.name }))
                         }}
                         active={list.name === activeList}
@@ -46,10 +41,12 @@ export function RecipeLists(props: RecipeListsProps) {
                     </Tab>
                 ))}
             </Tabs>
-            <RecipeList
-                name={activeList}
-                onRecipeCardClick={props.onRecipeCardClick}
-            />
+            {activeList !== undefined ? (
+                <RecipeList
+                    name={activeList}
+                    onRecipeCardClick={props.onRecipeCardClick}
+                />
+            ) : null}
         </div>
     )
 }
